@@ -1,0 +1,51 @@
+<div class="episode-card" ...attributes>
+  <div class="episode-card-contents">
+    <div class="row align-center gap-single">
+      <LinkTo
+        @route="podcast.episode"
+        @models={{array @episode.podcast @episode}}
+        @disabled={{not @expand-link}}
+        class="row align-center gap-single fill"
+      >
+        {{#if this.hasEpisodeNumber}}
+          <div class="episode-number">{{@episode.episode}}</div>
+        {{/if}}
+        <div class="fill column gap-half">
+          <div class="episode-name">{{@episode.name}}</div>
+          <div class="row gap-half">
+            <div class="badge secondary">{{@episode.publishedString}}</div>
+            <div class="badge tertiary">{{@episode.durationString}}</div>
+          </div>
+        </div>
+      </LinkTo>
+
+      {{#if @expand-link}}
+        <LinkTo
+          @route="podcast.episode"
+          @models={{array @episode.podcast @episode}}
+          class="material-symbols-outlined icon link secondary"
+          title="Läs mer"
+        >expand_content</LinkTo>
+      {{/if}}
+      {{#if this.isPlaying}}
+        <span
+          class="material-symbols-outlined icon link tertiary"
+          role="button"
+          title="Pausa"
+          {{on "click" this.audio.pause}}
+        >pause</span>
+      {{else}}
+        <span
+          class="material-symbols-outlined icon link tertiary"
+          role="button"
+          title="Spela"
+          {{on "click" this.play}}
+        >play_arrow</span>
+      {{/if}}
+      <a href={{@episode.audio-file}} title="Ladda ned">
+        <span class="material-symbols-outlined icon link primary">download</span>
+      </a>
+    </div>
+    {{yield}}
+  </div>
+</div>

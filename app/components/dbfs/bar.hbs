@@ -1,0 +1,18 @@
+<div
+  class="dbfs"
+  {{on "click" this.onClick}}
+  {{on "mouseover" this.onMouseOver}}
+  {{on "mouseleave" this.onMouseLeave}}
+  role="fitta"
+  ...attributes
+>
+  {{#if this.showTooltip}}
+    <div class="tooltip" style={{this.tooltipStyle}}>
+      <div class="tooltip-box small">{{this.tooltipContent}}</div>
+      <div class="tooltip-line"></div>
+    </div>
+  {{/if}}
+  {{#each this.columns as |column|}}
+    <Dbfs::Column @column={{column}} @column-count={{this.columnCount}} />
+  {{/each}}
+</div>

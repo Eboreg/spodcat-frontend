@@ -1,0 +1,24 @@
+{{head-layout}}
+{{outlet}}
+<footer>
+  <audio src="/airhorn.opus" preload="auto" {{on-audio-insert this.setAirhornElement}}></audio>
+
+  <div class="attribution">
+    Webbsidan tillverkades av
+    <a
+      href="https://robert.huseli.us/"
+      class="bold"
+      target="_blank"
+      {{on "mouseenter" this.onMouseEnterRobert}}
+    >Robert</a>
+  </div>
+
+  {{#if this.showFlash}}
+    <div class="flash-overlay" {{on "animationend" this.onFlashAnimationEnd}}></div>
+  {{/if}}
+
+  {{#if this.audio.episode}}
+    {{set-body-class "show-player-bar"}}
+    <PlayerBar @episode={{this.audio.episode}} />
+  {{/if}}
+</footer>

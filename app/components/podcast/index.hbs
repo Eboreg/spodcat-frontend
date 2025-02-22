@@ -1,0 +1,5 @@
+<Podcast::Base @podcast={{@podcast}}>
+  {{#each @podcast.episodes as |episode|}}
+    <EpisodeCard @episode={{episode}} @expand-link={{true}} />
+  {{/each}}
+</Podcast::Base>

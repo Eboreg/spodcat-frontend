@@ -1,0 +1,41 @@
+<div class="player-bar" ...attributes>
+  <audio
+    autoplay
+    preload="auto"
+    src={{@episode.audio-file}}
+    {{on-audio-insert this.audio.setElement}}
+    {{on "timeupdate" this.audio.onTimeUpdate}}
+    {{on "durationchange" this.audio.updateAudioData}}
+    {{on "loadeddata" this.audio.updateAudioData}}
+    {{on "canplay" this.audio.updateAudioData}}
+    {{on "canplaythrough" this.audio.updateAudioData}}
+    {{on "progress" this.audio.updateAudioData}}
+    {{on "play" this.audio.updateAudioData}}
+    {{on "pause" this.audio.updateAudioData}}
+    {{on "volumechange" this.audio.updateVolume}}
+  ></audio>
+
+  <LinkTo @route="podcast.episode" @models={{array @episode.podcast @episode}} class="row gap-single align-center">
+    {{#if @episode.episode}}
+      <div class="episode-number">{{@episode.episode}}</div>
+    {{else if @episode.podcast.cover-thumbnail}}
+      <img src={{@episode.podcast.cover-thumbnail}} alt="" />
+    {{/if}}
+    <div class="episode">
+      <div class="bold ellipsis oneliner">{{@episode.name}}</div>
+      <div class="small ellipsis oneliner">{{@episode.podcast.name}}</div>
+    </div>
+  </LinkTo>
+
+  {{#if this.audio.isPlaying}}
+    <span class="material-symbols-outlined button" role="button" {{on "click" this.audio.pause}}>pause</span>
+  {{else}}
+    <span class="material-symbols-outlined button" role="button" {{on "click" this.audio.play}}>play_arrow</span>
+  {{/if}}
+
+  <div class="small">{{this.audio.currentTimeString}}</div>
+  <Dbfs::Bar @episode={{@episode}} />
+  <div class="small">{{this.audio.durationString}}</div>
+
+  <VolumeControl />
+</div>

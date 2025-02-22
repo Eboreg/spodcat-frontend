@@ -1,0 +1,24 @@
+<main class="content-width" ...attributes>
+  <header>
+    {{#if @podcast.banner}}
+      <img src="{{@podcast.banner}}" alt="" class="podcast-banner" />
+    {{/if}}
+    <div class="row gap-single align-center m-single">
+      {{#if @podcast.cover-thumbnail}}
+        <img src="{{@podcast.cover-thumbnail}}" alt="" class="podcast-cover" />
+      {{/if}}
+      <div>
+        <div class="podcast-name">{{@podcast.name}}</div>
+        {{#if @podcast.tagline}}
+          <div class="podcast-tagline">{{@podcast.tagline}}</div>
+        {{/if}}
+      </div>
+    </div>
+  </header>
+  <div class="row gap-single">
+    <div class="fill column gap-half">
+      {{yield}}
+    </div>
+    <Podcast::Aside @podcast={{@podcast}} />
+  </div>
+</main>

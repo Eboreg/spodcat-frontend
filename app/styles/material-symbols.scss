@@ -1,0 +1,23 @@
+@font-face {
+    font-family: "Material Symbols Outlined";
+    font-style: normal;
+    /* font-weight: 400; */
+    src:
+        url(/material-symbols.ttf) format("ttf"),
+        url(/material-symbols.woff2) format("woff2");
+}
+
+.material-symbols-outlined {
+    direction: ltr;
+    display: inline-block;
+    font-family: "Material Symbols Outlined";
+    font-size: 24px;
+    font-style: normal;
+    font-variation-settings: "FILL" 1;
+    font-weight: normal;
+    letter-spacing: normal;
+    line-height: 1;
+    text-transform: none;
+    white-space: nowrap;
+    word-wrap: normal;
+}

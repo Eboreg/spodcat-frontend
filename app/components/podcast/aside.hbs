@@ -1,0 +1,15 @@
+<aside>
+  <a href={{@podcast.rss-url}} target="_blank" class="button primary" rel="noopener noreferrer">
+    <span class="material-symbols-outlined icon">rss_feed</span>
+    <span class="label">RSS-feed</span>
+  </a>
+
+  {{#each @podcast.links as |link|}}
+    <a href={{link.url}} target="_blank" class="button primary" rel="noopener noreferrer">
+      <FaIcon @icon={{link.icon}} class="icon" />
+      <span class="label">{{link.label}}</span>
+    </a>
+  {{/each}}
+
+  {{yield}}
+</aside>
