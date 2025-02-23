@@ -1,0 +1,28 @@
+<div class="playback-rate-control" {{on-outside-click this.onOutsideClick}}>
+  <span
+    class="material-symbols-outlined button"
+    role="button"
+    {{on "click" this.togglePopup}}
+    title="Ändra hastighet"
+  >settings_timelapse</span>
+
+  {{#if this.popupVisible}}
+    <div class="rate-popup-container">
+      <div class="rate-popup">
+        <div class="rate-header">Hastighet</div>
+        {{#each this.playbackRates as |rate|}}
+          <div class="rate-row" {{on "click" (fn this.onRateClick rate.rate)}}>
+            <div class="rate-check">
+              {{#if (eq rate.rate this.audio.playbackRate)}}
+                <span class="material-symbols-outlined">check</span>
+              {{/if}}
+            </div>
+            <div class="rate-label">{{rate.label}}</div>
+          </div>
+        {{/each}}
+      </div>
+      <div class="arrow"></div>
+    </div>
+  {{/if}}
+
+</div>

@@ -3,7 +3,7 @@
     {{#if @podcast.banner}}
       <img src="{{@podcast.banner}}" alt="" class="podcast-banner" />
     {{/if}}
-    <div class="row gap-single align-center m-single">
+    <LinkTo class="row gap-single align-center m-single" @route="podcast" @model={{@podcast}}>
       {{#if @podcast.cover-thumbnail}}
         <img src="{{@podcast.cover-thumbnail}}" alt="" class="podcast-cover" />
       {{/if}}
@@ -13,7 +13,7 @@
           <div class="podcast-tagline">{{@podcast.tagline}}</div>
         {{/if}}
       </div>
-    </div>
+    </LinkTo>
   </header>
   <div class="row gap-single">
     <div class="fill column gap-half">

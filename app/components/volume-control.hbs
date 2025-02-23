@@ -1,8 +1,18 @@
 <div class="row gap-single">
   {{#if this.audio.isMuted}}
-    <span class="material-symbols-outlined button" role="button" {{on "click" this.unmute}}>volume_off</span>
+    <span
+      class="material-symbols-outlined button"
+      role="button"
+      {{on "click" this.unmute}}
+      title="Sätt på ljud"
+    >volume_off</span>
   {{else}}
-    <span class="material-symbols-outlined button" role="button" {{on "click" this.mute}}>volume_up</span>
+    <span
+      class="material-symbols-outlined button"
+      role="button"
+      {{on "click" this.mute}}
+      title="Stäng av ljud"
+    >volume_up</span>
   {{/if}}
   <input
     type="range"

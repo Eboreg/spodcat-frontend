@@ -5,12 +5,15 @@ import type EpisodeCard from "podcast-frontend/components/episode-card";
 import type DbfsBar from "podcast-frontend/components/dbfs/bar";
 import type DbfsColumn from "podcast-frontend/components/dbfs/column";
 import type PlayerBar from "podcast-frontend/components/player-bar";
-import type upper from "podcast-frontend/helpers/upper";
 import type staticUrl from "podcast-frontend/helpers/static-url";
 import type onAudioInsert from "podcast-frontend/modifiers/on-audio-insert";
 import type PlayerBar from "podcast-frontend/components/player-bar";
 import type VolumeControl from "podcast-frontend/components/volume-control";
 import type htmlSafe from "podcast-frontend/helpers/html-safe";
+import type PodcastIndex from "podcast-frontend/components/podcast/index";
+import type PodcastBase from "podcast-frontend/components/podcast/base";
+import type PodcastAside from "podcast-frontend/components/podcast/aside";
+import type ProgressCircle from "podcast-frontend/components/progress-circle";
 
 declare module "@glint/environment-ember-loose/registry" {
     import { HelperLike } from "@glint/template";
@@ -30,10 +33,13 @@ declare module "@glint/environment-ember-loose/registry" {
         "html-safe": typeof htmlSafe;
         "on-audio-insert": typeof onAudioInsert;
         "page-title": PageTitle;
+        "Podcast::Aside": typeof PodcastAside;
+        "Podcast::Base": typeof PodcastBase;
+        "Podcast::Index": typeof PodcastIndex;
         "static-url": typeof staticUrl;
         EpisodeCard: typeof EpisodeCard;
         PlayerBar: typeof PlayerBar;
-        upper: typeof upper;
+        ProgressCircle: typeof ProgressCircle;
         VolumeControl: typeof VolumeControl;
     }
 }

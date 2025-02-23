@@ -3,16 +3,18 @@
     autoplay
     preload="auto"
     src={{@episode.audio-file}}
-    {{on-audio-insert this.audio.setElement}}
+    {{on-audio-insert this.audio.setAudioElement}}
     {{on "timeupdate" this.audio.onTimeUpdate}}
-    {{on "durationchange" this.audio.updateAudioData}}
-    {{on "loadeddata" this.audio.updateAudioData}}
-    {{on "canplay" this.audio.updateAudioData}}
-    {{on "canplaythrough" this.audio.updateAudioData}}
-    {{on "progress" this.audio.updateAudioData}}
-    {{on "play" this.audio.updateAudioData}}
-    {{on "pause" this.audio.updateAudioData}}
-    {{on "volumechange" this.audio.updateVolume}}
+    {{on "durationchange" this.audio.refreshAudioData}}
+    {{on "loadeddata" this.audio.refreshAudioData}}
+    {{on "canplay" this.audio.refreshAudioData}}
+    {{on "canplaythrough" this.audio.refreshAudioData}}
+    {{on "progress" this.audio.refreshAudioData}}
+    {{on "play" this.audio.refreshAudioData}}
+    {{on "pause" this.audio.refreshAudioData}}
+    {{on "volumechange" this.audio.refreshVolume}}
+    {{on "seeking" this.audio.onSeeking}}
+    {{on "seeked" this.audio.onSeeked}}
   ></audio>
 
   <LinkTo @route="podcast.episode" @models={{array @episode.podcast @episode}} class="row gap-single align-center">
@@ -27,10 +29,22 @@
     </div>
   </LinkTo>
 
-  {{#if this.audio.isPlaying}}
-    <span class="material-symbols-outlined button" role="button" {{on "click" this.audio.pause}}>pause</span>
+  {{#if this.audio.isSeeking}}
+    <ProgressCircle />
+  {{else if this.audio.isPlaying}}
+    <span
+      class="material-symbols-outlined button"
+      role="button"
+      {{on "click" this.audio.pause}}
+      title="Pausa"
+    >pause</span>
   {{else}}
-    <span class="material-symbols-outlined button" role="button" {{on "click" this.audio.play}}>play_arrow</span>
+    <span
+      class="material-symbols-outlined button"
+      role="button"
+      {{on "click" this.audio.play}}
+      title="Spela"
+    >play_arrow</span>
   {{/if}}
 
   <div class="small">{{this.audio.currentTimeString}}</div>
@@ -38,4 +52,6 @@
   <div class="small">{{this.audio.durationString}}</div>
 
   <VolumeControl />
+
+  <PlaybackSpeedControl />
 </div>
