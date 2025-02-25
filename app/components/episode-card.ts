@@ -18,10 +18,6 @@ export interface EpisodeCardSignature {
 export default class EpisodeCard extends Component<EpisodeCardSignature> {
     @service declare audio: AudioService;
 
-    get hasEpisodeNumber() {
-        return this.args.episode.episode != undefined;
-    }
-
     get isPlaying() {
         return this.audio.episode == this.args.episode && this.audio.isPlaying;
     }

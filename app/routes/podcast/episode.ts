@@ -10,6 +10,6 @@ export default class PodcastEpisodeRoute extends Route<EpisodeModel> {
     model(params: { episode_id: string }) {
         const podcast = this.modelFor("podcast") as PodcastModel;
 
-        return podcast.episodes.find((e) => e.slug == params.episode_id);
+        return podcast.contents.filter((e) => e instanceof EpisodeModel).find((e) => e.slug == params.episode_id);
     }
 }

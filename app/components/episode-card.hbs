@@ -7,8 +7,8 @@
         @disabled={{not @expand-link}}
         class="row align-center gap-single fill"
       >
-        {{#if this.hasEpisodeNumber}}
-          <div class="episode-number">{{@episode.episode}}</div>
+        {{#if @episode.hasNumber}}
+          <div class="episode-number">{{@episode.number}}</div>
         {{/if}}
         <div class="fill column gap-half">
           <div class="episode-name">{{@episode.name}}</div>

@@ -10,16 +10,15 @@ export default class PodcastRoute extends Route<PodcastModel> {
 
     model(params: { podcast_id: string }) {
         return this.store.findRecord<PodcastModel>("podcast", params.podcast_id, {
-            include: ["episodes", "categories", "links"],
+            include: ["contents", "categories", "links"],
         });
     }
 
     afterModel(model: PodcastModel) {
-        if (model.favicon && model["favicon-content-type"]) {
-            this.headData.favicon = {
-                url: model.favicon,
-                contentType: model["favicon-content-type"],
-            };
-        }
+        this.headData.favicon = model.faviconData;
+        this.headData.ogTitle = model.name;
+        this.headData.ogDescription = model.description || model.tagline;
+        this.headData.ogImage = model.bannerData;
+        this.headData.rss = { title: model.name, url: model["rss-url"] };
     }
 }

@@ -18,8 +18,8 @@
   ></audio>
 
   <LinkTo @route="podcast.episode" @models={{array @episode.podcast @episode}} class="row gap-single align-center">
-    {{#if @episode.episode}}
-      <div class="episode-number">{{@episode.episode}}</div>
+    {{#if @episode.hasNumber}}
+      <div class="episode-number">{{@episode.number}}</div>
     {{else if @episode.podcast.cover-thumbnail}}
       <img src={{@episode.podcast.cover-thumbnail}} alt="" />
     {{/if}}

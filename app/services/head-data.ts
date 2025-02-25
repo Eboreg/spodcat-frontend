@@ -1,13 +1,28 @@
 import Service from "@ember/service";
 import { tracked } from "@glimmer/tracking";
 
-interface Favicon {
+export interface Favicon {
     url: string;
     contentType: string;
 }
 
+interface Rss {
+    title: string;
+    url: string;
+}
+
+export interface Image {
+    url: string;
+    height: number;
+    width: number;
+}
+
 export default class HeadDataService extends Service {
-    @tracked declare favicon: Favicon;
+    @tracked declare favicon?: Favicon;
+    @tracked declare ogDescription?: string;
+    @tracked declare ogTitle?: string;
+    @tracked declare ogImage?: Image;
+    @tracked declare rss?: Rss;
 }
 
 declare module "@ember/service" {

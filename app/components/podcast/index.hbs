@@ -1,5 +1,5 @@
 <Podcast::Base @podcast={{@podcast}} ...attributes>
-  {{#each @podcast.episodes as |episode|}}
-    <EpisodeCard @episode={{episode}} @expand-link={{true}} />
+  {{#each @podcast.contents as |content|}}
+    <EpisodeCard @episode={{content}} @expand-link={{true}} />
   {{/each}}
 </Podcast::Base>

@@ -6,3 +6,21 @@
 {{#if this.model.favicon}}
   <link rel="shortcut icon" href={{this.model.favicon.url}} type={{this.model.favicon.contentType}} />
 {{/if}}
+{{#if this.model.ogDescription}}
+  <meta name="description" content={{html-safe this.model.ogDescription}} />
+  <meta property="og:description" content={{html-safe this.model.ogDescription}} />
+  <meta name="twitter:description" content={{html-safe this.model.ogDescription}} />
+{{/if}}
+{{#if this.model.ogTitle}}
+  <meta property="og:title" content={{html-safe this.model.ogTitle}} />
+  <meta name="twitter:title" content={{html-safe this.model.ogTitle}} />
+{{/if}}
+{{#if this.model.ogImage}}
+  <meta property="og:image" content={{this.model.ogImage.url}} />
+  <meta property="og:image:width" content={{this.model.ogImage.width}} />
+  <meta property="og:image:height" content={{this.model.ogImage.height}} />
+  <meta name="twitter:image" content={{this.model.ogImage.url}} />
+{{/if}}
+{{#if this.model.rss}}
+  <link type="application/rss+xml" rel="alternate" title={{this.model.rss.title}} href={{this.model.rss.url}} />
+{{/if}}

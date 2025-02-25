@@ -8,7 +8,7 @@ export default class HomeRoute extends Route<PodcastModel[]> {
 
     model() {
         return this.store.findAll<PodcastModel>("podcast", {
-            include: ["episodes", "categories", "links"],
+            include: ["contents", "categories", "links"],
         });
     }
 }
