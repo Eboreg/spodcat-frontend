@@ -1,10 +1,11 @@
-{{page-title @model.name}}
+{{page-title this.pageTitle}}
 <Podcast::Base @podcast={{@model.podcast}}>
-  <LinkTo @route="podcast" @model={{@model.podcast}} class="button secondary">
-    <span class="material-symbols-outlined icon">arrow_back</span>
+  <Button @route="podcast" @model={{@model.podcast}} @theme="secondary" @material-icon="arrow_back">
     <span class="label">Till {{@model.podcast.name}}</span>
-  </LinkTo>
-  <EpisodeCard @episode={{@model}}>
-    <div class="episode-description">{{html-safe @model.description-html}}</div>
+  </Button>
+  <EpisodeCard @episode={{@model}} @start={{this.start}}>
+    {{#if @model.description-html}}
+      <div class="episode-description">{{html-safe @model.description-html}}</div>
+    {{/if}}
   </EpisodeCard>
 </Podcast::Base>

@@ -13,12 +13,14 @@ module.exports = function (environment) {
                 // e.g. EMBER_NATIVE_DECORATOR_SUPPORT: true
             },
         },
-
         APP: {
             // Here you can pass flags/options to your application instance
             // when it is created
             BACKEND_HOST: "http://localhost:8000",
             API_URL_NAMESPACE: "",
+        },
+        fastboot: {
+            hostWhitelist: [/^localhost:\d+$/],
         },
     };
 

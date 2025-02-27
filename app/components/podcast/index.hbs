@@ -1,5 +1,15 @@
 <Podcast::Base @podcast={{@podcast}} ...attributes>
-  {{#each @podcast.contents as |content|}}
-    <EpisodeCard @episode={{content}} @expand-link={{true}} />
-  {{/each}}
+  <:before>
+    {{#if @podcast.description-html}}
+      <div class="podcast-description">
+        <div class="podcast-description-content">{{html-safe @podcast.description-html}}</div>
+      </div>
+    {{/if}}
+  </:before>
+  <:default>
+    {{#each @podcast.contents as |content|}}
+      {{! TODO: filter for content type etc }}
+      <EpisodeCard @episode={{content}} @expand-link={{true}} />
+    {{/each}}
+  </:default>
 </Podcast::Base>

@@ -68,7 +68,7 @@ export default class DbfsBar extends Component<DbfsBarSignature> {
 
     @action onClick(event: MouseEvent) {
         const progress = this.getMouseProgress(event);
-        if (progress != null) this.audio.seekTo(progress);
+        if (progress != null) this.audio.seekToProgress(progress);
     }
 
     @action onMouseLeave() {

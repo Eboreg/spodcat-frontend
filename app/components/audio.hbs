@@ -1,0 +1,15 @@
+<audio
+  {{on-audio-insert this.setAudioElement}}
+  {{on "timeupdate" this.refreshCurrentTime}}
+  {{on "durationchange" this.refreshAudioData}}
+  {{on "loadeddata" this.refreshAudioData}}
+  {{on "canplay" this.refreshAudioData}}
+  {{on "canplaythrough" this.refreshAudioData}}
+  {{on "progress" this.refreshAudioData}}
+  {{on "play" this.refreshAudioData}}
+  {{on "pause" this.refreshAudioData}}
+  {{on "volumechange" this.refreshVolume}}
+  {{on "seeking" this.onSeeking}}
+  {{on "seeked" this.onSeeked}}
+  ...attributes
+></audio>

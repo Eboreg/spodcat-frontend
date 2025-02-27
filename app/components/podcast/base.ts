@@ -6,6 +6,7 @@ export interface PodcastBaseSignature {
         podcast: PodcastModel;
     };
     Blocks: {
+        before: [];
         default: [];
     };
     Element: HTMLElement;

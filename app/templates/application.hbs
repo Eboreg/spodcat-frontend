@@ -1,8 +1,14 @@
-{{head-layout}}
+<HeadLayout />
 
 {{outlet}}
 
 <footer>
+  <Audio
+    preload="auto"
+    @on-add={{this.audio.setAudioElement}}
+    @on-buffer-update={{this.audio.onBufferUpdate}}
+    @on-time-update={{this.audio.onTimeUpdate}}
+  />
   {{#if this.audio.episode}}
     {{set-body-class "show-player-bar"}}
     <PlayerBar @episode={{this.audio.episode}} />

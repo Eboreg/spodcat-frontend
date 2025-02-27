@@ -1,25 +1,45 @@
 import Model, { attr, belongsTo } from "@ember-data/model";
 import { Type } from "@warp-drive/core-types/symbols";
 import type PodcastModel from "./podcast";
-import { faFacebook, faDiscord, faPatreon, type IconDefinition } from "@fortawesome/free-brands-svg-icons";
+import {
+    faFacebook,
+    faDiscord,
+    faPatreon,
+    type IconDefinition,
+    faApple,
+    faAndroid,
+    faSpotify,
+    faItunes,
+} from "@fortawesome/free-brands-svg-icons";
 
 export default class PodcastLinkModel extends Model {
-    @attr declare "link-type": "facebook" | "discord" | "patreon";
+    @attr declare icon?: "facebook" | "discord" | "patreon" | "apple" | "android" | "spotify" | "itunes";
+    @attr declare "custom-icon"?: string;
     @attr declare url: string;
     @attr declare label: string;
+    @attr declare theme: "primary" | "secondary" | "tertiary";
 
     @belongsTo<PodcastModel>("podcast", { async: false, inverse: "links" })
     declare podcast: PodcastModel;
 
-    get icon(): IconDefinition {
-        switch (this["link-type"]) {
+    get faIcon(): IconDefinition | undefined {
+        switch (this["icon"]) {
             case "facebook":
                 return faFacebook;
             case "discord":
                 return faDiscord;
             case "patreon":
                 return faPatreon;
+            case "apple":
+                return faApple;
+            case "android":
+                return faAndroid;
+            case "spotify":
+                return faSpotify;
+            case "itunes":
+                return faItunes;
         }
+        return;
     }
 
     [Type] = "podcast-link" as const;

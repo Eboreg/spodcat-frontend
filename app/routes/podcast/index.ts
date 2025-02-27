@@ -4,21 +4,24 @@ import { service } from "@ember/service";
 import PodcastModel from "podcast-frontend/models/podcast";
 import type HeadDataService from "podcast-frontend/services/head-data";
 
-export default class PodcastRoute extends Route<PodcastModel> {
+export default class PodcastIndexRoute extends Route<PodcastModel> {
     @service declare store: Store;
     @service declare headData: HeadDataService;
 
-    model(params: { podcast_id: string }) {
-        return this.store.findRecord<PodcastModel>("podcast", params.podcast_id, {
+    async model() {
+        const params = this.paramsFor("podcast") as { podcast_id: string };
+
+        return await this.store.findRecord<PodcastModel>("podcast", params.podcast_id, {
             include: ["contents", "categories", "links"],
+            reload: true,
         });
     }
 
     afterModel(model: PodcastModel) {
         this.headData.favicon = model.faviconData;
         this.headData.ogTitle = model.name;
-        this.headData.ogDescription = model.description || model.tagline;
+        this.headData.ogDescription = model.tagline;
         this.headData.ogImage = model.bannerData;
-        this.headData.rss = { title: model.name, url: model["rss-url"] };
+        this.headData.rss = model.rssData;
     }
 }

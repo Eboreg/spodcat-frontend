@@ -6,7 +6,7 @@ export interface Favicon {
     contentType: string;
 }
 
-interface Rss {
+export interface Rss {
     title: string;
     url: string;
 }

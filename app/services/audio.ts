@@ -1,81 +1,79 @@
 import { action } from "@ember/object";
 import Service from "@ember/service";
 import { tracked } from "@glimmer/tracking";
+import type Audio from "podcast-frontend/components/audio";
 import type EpisodeModel from "podcast-frontend/models/episode";
-import { coerceBetween, timeString } from "podcast-frontend/utils";
+import { timeString } from "podcast-frontend/utils";
+
+interface AudioEventListener {
+    type: string;
+    callback: (event: Event) => any;
+    once: boolean;
+}
 
 export default class AudioService extends Service {
-    @tracked bufferEnd: number = 0;
-    @tracked duration: number = 0;
-    @tracked currentTime: number = 0;
-    @tracked element?: HTMLAudioElement;
-    @tracked volume: number = 0;
+    _listeners: AudioEventListener[] = [];
 
     @tracked bufferProgress: number = 0;
     @tracked currentProgress: number = 0;
+    @tracked element?: Audio;
     @tracked episode?: EpisodeModel;
-    @tracked isMuted: boolean = false;
-    @tracked isPlaying: boolean = false;
-    @tracked isSeeking: boolean = false;
-    @tracked playbackRate: number = 1;
 
     get currentTimeString() {
-        return timeString(this.currentTime);
+        return timeString(this.element?.currentTime || 0);
     }
 
-    get displayedVolume() {
+    get playbackRate() {
+        return this.element?.playbackRate || 1;
+    }
+
+    get volume() {
         if (this.isMuted) return 0;
-        return this.volume;
+        return this.element?.volume || 0;
+    }
+
+    get duration() {
+        return this.element?.duration || 0;
     }
 
     get durationString() {
         return timeString(this.duration);
     }
 
-    #updateBufferProgress() {
+    get isMuted() {
+        return this.element?.isMuted == true;
+    }
+
+    get isPlaying() {
+        return this.element?.isPlaying == true;
+    }
+
+    get isSeeking() {
+        return this.element?.isSeeking == true;
+    }
+
+    @action on(eventType: string, callback: (event: Event) => any) {
+        if (this.element) this.element.on(eventType, callback);
+        else this._listeners.push({ type: eventType, callback: callback, once: false });
+    }
+
+    @action onBufferUpdate(bufferEnd: number) {
         if (this.episode && this.duration > 0) {
-            const progress = Math.floor((this.bufferEnd / this.duration) * this.episode["dbfs-array"].length);
+            const progress = Math.floor((bufferEnd / this.duration) * this.episode["dbfs-array"].length);
             if (progress != this.bufferProgress) this.bufferProgress = progress;
         }
     }
 
-    #updateCurrentProgress() {
+    @action onTimeUpdate(currentTime: number) {
         if (this.episode && this.duration > 0) {
-            const progress = Math.floor((this.currentTime / this.duration) * this.episode["dbfs-array"].length);
+            const progress = Math.floor((currentTime / this.duration) * this.episode["dbfs-array"].length);
             if (progress != this.currentProgress) this.currentProgress = progress;
         }
     }
 
-    @action onKeyDown(event: KeyboardEvent) {
-        if (event.metaKey) return;
-
-        if (event.key == " " && !event.ctrlKey) {
-            this.playOrPause();
-        } else if (event.key == "ArrowRight") {
-            if (!event.ctrlKey) this.seek(30);
-            else this.seek(180);
-        } else if (event.key == "ArrowLeft") {
-            if (!event.ctrlKey) this.seek(-10);
-            else this.seek(-60);
-        } else return;
-
-        event.preventDefault();
-    }
-
-    @action onSeeked() {
-        this.isSeeking = false;
-    }
-
-    @action onSeeking() {
-        this.isSeeking = true;
-    }
-
-    @action onTimeUpdate() {
-        if (this.element) {
-            this.currentTime = this.element.currentTime;
-            this.#updateCurrentProgress();
-            this.#updateBufferProgress();
-        }
+    @action once(eventType: string, callback: (event: Event) => any) {
+        if (this.element) this.element.once(eventType, callback);
+        else this._listeners.push({ type: eventType, callback: callback, once: true });
     }
 
     @action pause() {
@@ -83,76 +81,54 @@ export default class AudioService extends Service {
     }
 
     @action play() {
-        void this.element?.play();
+        this.element?.play();
+    }
+
+    @action playFrom(start: number) {
+        this.element?.seekToTime(start);
+        this.play();
     }
 
     @action playOrPause() {
-        if (this.isPlaying) this.pause();
-        else this.play();
+        this.element?.playOrPause();
     }
 
-    @action refreshAudioData() {
-        const element = this.element;
-
-        if (element) {
-            if (!isNaN(element.duration)) this.duration = element.duration;
-            this.isPlaying = !element.paused && !element.ended;
-            this.onTimeUpdate();
-            this.refreshVolume();
-            if (element.buffered.length > 0) {
-                this.bufferEnd = Math.max(
-                    ...[...Array(element.buffered.length).keys()].map((i: number) => element.buffered.end(i)),
-                );
-            }
-        }
+    @action seekToProgress(progress: number) {
+        this.element?.seekToProgress(progress);
     }
 
-    @action refreshVolume() {
-        if (this.element) {
-            this.volume = this.element.volume;
-            this.isMuted = this.element.muted;
-        }
+    @action seekToTime(time: number) {
+        this.element?.seekToTime(time);
     }
 
-    @action seek(seconds: number) {
-        if (this.element) {
-            const time = coerceBetween(this.currentTime + seconds, 0, this.duration);
-
-            this.currentTime = time;
-            this.element.currentTime = time;
-        }
-    }
-
-    @action seekTo(progress: number) {
-        if (this.element) this.element.currentTime = this.duration * progress;
-    }
-
-    @action setAudioElement(element: HTMLAudioElement) {
+    @action setAudioElement(element: Audio) {
         this.element = element;
-        document.addEventListener("keydown", (event) => {
-            this.onKeyDown(event);
-        });
+        if (this.episode) element.setSrc(this.episode["audio-file"]);
+
+        let listener = this._listeners.shift();
+
+        while (listener != undefined) {
+            if (listener.once) element.once(listener.type, listener.callback);
+            else element.on(listener.type, listener.callback);
+            listener = this._listeners.shift();
+        }
+    }
+
+    @action setEpisode(value: EpisodeModel) {
+        this.episode = value;
+        this.element?.setSrc(value["audio-file"]);
     }
 
     @action setIsMuted(value: boolean) {
-        if (this.element) {
-            this.isMuted = value;
-            this.element.muted = value;
-        }
+        this.element?.setIsMuted(value);
     }
 
     @action setPlaybackRate(value: number) {
-        if (this.element) {
-            this.playbackRate = value;
-            this.element.playbackRate = value;
-        }
+        this.element?.setPlaybackRate(value);
     }
 
     @action setVolume(value: number) {
-        if (this.element) {
-            this.volume = value;
-            this.element.volume = value;
-        }
+        this.element?.setVolume(value);
     }
 }
 

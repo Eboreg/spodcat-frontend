@@ -1,14 +1,17 @@
 <aside ...attributes>
-  <a href={{@podcast.rss-url}} target="_blank" class="button primary" rel="noopener noreferrer">
-    <span class="material-symbols-outlined icon">rss_feed</span>
+  <Button @href={{@podcast.rss-url}} @new-tab={{true}} @theme="primary" @material-icon="rss_feed">
     <span class="label">RSS-feed</span>
-  </a>
+  </Button>
 
   {{#each @podcast.links as |link|}}
-    <a href={{link.url}} target="_blank" class="button primary" rel="noopener noreferrer">
-      <FaIcon @icon={{link.icon}} class="icon" />
+    <Button @href={{link.url}} @new-tab={{true}} @theme={{link.theme}}>
+      {{#if link.custom-icon}}
+        <img src={{link.custom-icon}} alt="" class="icon" />
+      {{else if link.faIcon}}
+        <FaIcon @icon={{link.faIcon}} class="icon" />
+      {{/if}}
       <span class="label">{{link.label}}</span>
-    </a>
+    </Button>
   {{/each}}
 
   <audio src="/airhorn.opus" preload="auto" {{on-audio-insert this.setAirhornElement}}></audio>

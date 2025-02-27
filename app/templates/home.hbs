@@ -1,4 +1,4 @@
 {{#if this.isSingleton}}
-  {{page-title this.singleton.name}}
+  {{page-title this.singleton.name replace=true}}
   <Podcast::Index @podcast={{this.singleton}} />
 {{/if}}

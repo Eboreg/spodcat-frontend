@@ -14,6 +14,13 @@ import type PodcastIndex from "podcast-frontend/components/podcast/index";
 import type PodcastBase from "podcast-frontend/components/podcast/base";
 import type PodcastAside from "podcast-frontend/components/podcast/aside";
 import type ProgressCircle from "podcast-frontend/components/progress-circle";
+import type PlaybackSpeedControl from "podcast-frontend/components/playback-speed-control";
+import type Audio from "podcast-frontend/components/audio";
+import type setBodyClass from "ember-set-body-class/addon/helpers/set-body-class";
+import type Button from "podcast-frontend/components/button";
+import type HeadLayout from "ember-cli-head/addon/components/head-layout";
+import type ButtonContent from "podcast-frontend/components/button/content";
+import type onOutsideClick from "podcast-frontend/modifiers/on-outside-click";
 
 declare module "@glint/environment-ember-loose/registry" {
     import { HelperLike } from "@glint/template";
@@ -28,16 +35,23 @@ declare module "@glint/environment-ember-loose/registry" {
     >;
 
     export default interface Registry extends EmberFontAwesomeRegistry, EmberTruthRegistry {
+        "Button::Content": typeof ButtonContent;
         "Dbfs::Bar": typeof DbfsBar;
         "Dbfs::Column": typeof DbfsColumn;
         "html-safe": typeof htmlSafe;
         "on-audio-insert": typeof onAudioInsert;
+        "on-outside-click": typeof onOutsideClick;
         "page-title": PageTitle;
         "Podcast::Aside": typeof PodcastAside;
         "Podcast::Base": typeof PodcastBase;
         "Podcast::Index": typeof PodcastIndex;
+        "set-body-class": typeof setBodyClass;
         "static-url": typeof staticUrl;
+        Audio: typeof Audio;
+        Button: typeof Button;
         EpisodeCard: typeof EpisodeCard;
+        HeadLayout: typeof HeadLayout;
+        PlaybackSpeedControl: typeof PlaybackSpeedControl;
         PlayerBar: typeof PlayerBar;
         ProgressCircle: typeof ProgressCircle;
         VolumeControl: typeof VolumeControl;

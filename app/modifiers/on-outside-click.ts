@@ -1,4 +1,5 @@
 import { modifier } from "ember-modifier";
+import { elementIsChildOf } from "podcast-frontend/utils";
 
 interface OnOutsideClickSignature {
     Element: HTMLElement;
@@ -9,7 +10,7 @@ interface OnOutsideClickSignature {
 
 const onOutsideClick = modifier<OnOutsideClickSignature>((element, [callback]) => {
     function listener(event: MouseEvent) {
-        if (event.target instanceof HTMLElement && !event.target.isChildOf(element)) {
+        if (event.target instanceof HTMLElement && !elementIsChildOf(event.target, element)) {
             callback(event);
         }
     }

@@ -3,9 +3,9 @@
     <div class="row align-center gap-single">
       <LinkTo
         @route="podcast.episode"
-        @models={{array @episode.podcast @episode}}
+        @models={{array @episode.podcast @episode.slug}}
         @disabled={{not @expand-link}}
-        class="row align-center gap-single fill"
+        class="row align-center gap-single fill p-single"
       >
         {{#if @episode.hasNumber}}
           <div class="episode-number">{{@episode.number}}</div>
@@ -19,33 +19,38 @@
         </div>
       </LinkTo>
 
-      {{#if @expand-link}}
-        <LinkTo
-          @route="podcast.episode"
-          @models={{array @episode.podcast @episode}}
-          class="material-symbols-outlined icon link secondary"
-          title="Läs mer"
-        >expand_content</LinkTo>
-      {{/if}}
-      {{#if this.isPlaying}}
-        <span
-          class="material-symbols-outlined icon link tertiary"
-          role="button"
-          title="Pausa"
-          {{on "click" this.audio.pause}}
-        >pause</span>
-      {{else}}
-        <span
-          class="material-symbols-outlined icon link tertiary"
-          role="button"
-          title="Spela"
-          {{on "click" this.play}}
-        >play_arrow</span>
-      {{/if}}
-      <a href={{@episode.audio-file}} title="Ladda ned">
-        <span class="material-symbols-outlined icon link primary">download</span>
-      </a>
+      <div class="row gap-single p-single">
+        {{#if @expand-link}}
+          <LinkTo
+            @route="podcast.episode"
+            @models={{array @episode.podcast @episode.slug}}
+            class="material-symbols-outlined icon link secondary"
+            title="Läs mer"
+          >expand_content</LinkTo>
+        {{/if}}
+        {{#if this.isLoadingAudio}}
+          <ProgressCircle class="tertiary" />
+        {{else if this.isPlaying}}
+          <span
+            class="material-symbols-outlined icon link tertiary"
+            role="button"
+            title="Pausa"
+            {{on "click" this.audio.pause}}
+          >pause</span>
+        {{else}}
+          <span
+            class="material-symbols-outlined icon link tertiary"
+            role="button"
+            title="Spela"
+            {{on "click" this.play}}
+          >play_arrow</span>
+        {{/if}}
+        <a href={{@episode.audio-file}} title="Ladda ned">
+          <span class="material-symbols-outlined icon link primary">download</span>
+        </a>
+      </div>
     </div>
+
     {{yield}}
   </div>
 </div>

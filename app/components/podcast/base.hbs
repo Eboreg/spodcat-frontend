@@ -15,10 +15,14 @@
       </div>
     </LinkTo>
   </header>
-  <div class="row gap-single">
-    <div class="fill column gap-half">
-      {{yield}}
+
+  <div class="column gap-single">
+    {{yield to="before"}}
+    <div class="row gap-single">
+      <div class="fill column gap-half">
+        {{yield}}
+      </div>
+      <Podcast::Aside @podcast={{@podcast}} />
     </div>
-    <Podcast::Aside @podcast={{@podcast}} />
   </div>
 </main>
