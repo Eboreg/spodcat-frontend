@@ -1,4 +1,4 @@
-import FastBootAppServer from "fastboot-app-server";
+const FastBootAppServer = require("fastboot-app-server");
 
 const server = new FastBootAppServer({
     distPath: "dist",
