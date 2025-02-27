@@ -20,7 +20,7 @@ module.exports = function (environment) {
             API_URL_NAMESPACE: "",
         },
         fastboot: {
-            hostWhitelist: [/^localhost:\d+$/],
+            hostWhitelist: [/^localhost:\d+$/, "musikensmakt.huseli.us"],
         },
     };
 
