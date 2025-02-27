@@ -1,4 +1,4 @@
-<main class="content-width" ...attributes>
+<main class="content-width {{if this.audio.episode 'show-player-bar'}}" ...attributes>
   <header>
     {{#if @podcast.banner}}
       <img src="{{@podcast.banner}}" alt="" class="podcast-banner" />

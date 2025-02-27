@@ -79,7 +79,6 @@
         "ember-page-title": "^9.0.1",
         "ember-qunit": "^9.0.1",
         "ember-resolver": "^13.1.0",
-        "ember-set-body-class": "^1.0.2",
         "ember-source": "~6.2.0",
         "ember-template-imports": "^4.3.0",
         "ember-template-lint": "^6.1.0",

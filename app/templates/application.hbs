@@ -10,7 +10,6 @@
     @on-time-update={{this.audio.onTimeUpdate}}
   />
   {{#if this.audio.episode}}
-    {{set-body-class "show-player-bar"}}
     <PlayerBar @episode={{this.audio.episode}} />
   {{/if}}
 </footer>

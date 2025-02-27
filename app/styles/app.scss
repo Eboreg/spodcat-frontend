@@ -118,10 +118,6 @@ body {
     font-family: sans-serif;
     margin: 0;
     min-height: 100vh;
-
-    &.show-player-bar main {
-        margin-bottom: calc(20px + var(--mm-player-bar-height));
-    }
 }
 
 footer {
@@ -198,6 +194,10 @@ input[type="range"] {
 
 main {
     margin-bottom: 20px;
+
+    &.show-player-bar {
+        margin-bottom: calc(20px + var(--mm-player-bar-height));
+    }
 }
 
 /** VARIOUS ATTRIBUTES *******************************************************/
@@ -427,7 +427,7 @@ main {
     .episode-description {
         font-size: 14px;
         line-height: 1.5;
-        padding: 0 1rem;
+        padding: 0 1rem 1rem 1rem;
 
         & > :first-child {
             margin-top: 0;
@@ -480,6 +480,8 @@ main {
 }
 
 .icon {
+    aspect-ratio: 1/1;
+    overflow: hidden;
     position: relative;
 
     &:active {
@@ -628,8 +630,10 @@ main {
     }
 
     .button {
+        aspect-ratio: 1/1;
         font-size: 40px;
         height: 40px;
+        overflow: hidden;
     }
 
     .loader {
