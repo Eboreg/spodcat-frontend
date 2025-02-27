@@ -45,7 +45,7 @@ module.exports = function (environment) {
     }
 
     if (environment === "production") {
-        // here you can enable a production-specific feature
+        ENV.APP.BACKEND_HOST = "https://backend.musikensmakt.huseli.us";
     }
 
     return ENV;
