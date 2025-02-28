@@ -17,11 +17,7 @@ export default class PodcastEpisodeRoute extends Route<EpisodeModel> {
     }
 
     afterModel(model: EpisodeModel) {
-        this.headData.favicon = model.podcast.faviconData;
-        this.headData.ogTitle = `${model.name} | ${model.podcast.name}`;
-        this.headData.ogDescription = model.description || model.podcast.tagline;
-        this.headData.ogImage = model.podcast.bannerData;
-        this.headData.rss = model.podcast.rssData;
+        this.headData.updateFromEpisode(model);
         if (model["dbfs-array"] && !this.audio.episode) this.audio.setEpisode(model);
     }
 }

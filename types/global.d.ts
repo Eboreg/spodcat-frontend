@@ -21,6 +21,7 @@ import type Button from "podcast-frontend/components/button";
 import type HeadLayout from "ember-cli-head/addon/components/head-layout";
 import type ButtonContent from "podcast-frontend/components/button/content";
 import type onOutsideClick from "podcast-frontend/modifiers/on-outside-click";
+import type Attribution from "podcast-frontend/components/attribution";
 
 declare module "@glint/environment-ember-loose/registry" {
     import { HelperLike } from "@glint/template";
@@ -55,5 +56,6 @@ declare module "@glint/environment-ember-loose/registry" {
         PlayerBar: typeof PlayerBar;
         ProgressCircle: typeof ProgressCircle;
         VolumeControl: typeof VolumeControl;
+        Attribution: typeof Attribution;
     }
 }

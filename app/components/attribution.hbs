@@ -1,0 +1,15 @@
+<audio src="/airhorn.opus" preload="auto" {{on-audio-insert this.setAudioElement}}></audio>
+
+<div class="text-center small attribution" ...attributes>
+  Webbsidan tillverkades av
+  <a
+    href="https://robert.huseli.us/"
+    class="bold"
+    target="_blank"
+    rel="noopener noreferrer"
+    {{on "mouseenter" this.onMouseEnter}}
+  >Robert</a>
+</div>
+{{#if this.showFlash}}
+  <div class="flash-overlay" {{on "animationend" this.onFlashAnimationEnd}}></div>
+{{/if}}

@@ -18,10 +18,6 @@ export default class PodcastIndexRoute extends Route<PodcastModel> {
     }
 
     afterModel(model: PodcastModel) {
-        this.headData.favicon = model.faviconData;
-        this.headData.ogTitle = model.name;
-        this.headData.ogDescription = model.tagline;
-        this.headData.ogImage = model.bannerData;
-        this.headData.rss = model.rssData;
+        this.headData.updateFromPodcast(model);
     }
 }

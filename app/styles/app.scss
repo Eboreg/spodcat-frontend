@@ -1,6 +1,15 @@
+@use "sass:map";
 @use "material-symbols";
 
 /** VARIABLES ****************************************************************/
+
+$min-sizes: (
+    "sm": "576px",
+    "md": "768px",
+    "lg": "992px",
+    "xl": "1200px",
+    "xxl": "1400px",
+);
 
 $lengths: (
     "quarter": 0.25rem,
@@ -11,35 +20,109 @@ $lengths: (
     "4x": 4rem,
 );
 
-@each $name, $length in $lengths {
-    .gap-#{$name} {
+@mixin min($size) {
+    @media screen and (min-width: map.get($min-sizes, $size)) {
+        @content;
+    }
+}
+
+.d-none {
+    display: none;
+}
+.d-block {
+    display: block;
+}
+.d-flex {
+    display: flex;
+}
+@each $sname, $size in $min-sizes {
+    @include min(#{$sname}) {
+        .d-#{$sname}-none {
+            display: none;
+        }
+        .d-#{$sname}-block {
+            display: block;
+        }
+        .d-#{$sname}-flex {
+            display: flex;
+        }
+    }
+}
+
+.wrap-wrap {
+    flex-wrap: wrap;
+}
+.wrap-nowrap {
+    flex-wrap: nowrap;
+}
+@each $sname, $size in $min-sizes {
+    @include min(#{$sname}) {
+        .wrap-#{$sname}-wrap {
+            flex-wrap: wrap;
+        }
+        .wrap-#{$sname}-nowrap {
+            flex-wrap: nowrap;
+        }
+    }
+}
+
+@each $lname, $length in $lengths {
+    @each $sname, $size in $min-sizes {
+        @include min(#{$sname}) {
+            .gap-#{$sname}-#{$lname} {
+                gap: #{$length};
+            }
+
+            .m-#{$sname}-#{$lname} {
+                margin: #{$length};
+            }
+            .mx-#{$sname}-#{$lname} {
+                margin-left: #{$length};
+                margin-right: #{$length};
+            }
+            .my-#{$sname}-#{$lname} {
+                margin-top: #{$length};
+                margin-bottom: #{$length};
+            }
+
+            .p-#{$sname}-#{$lname} {
+                padding: #{$length};
+            }
+            .px-#{$sname}-#{$lname} {
+                padding-left: #{$length};
+                padding-right: #{$length};
+            }
+            .py-#{$sname}-#{$lname} {
+                padding-top: #{$length};
+                padding-bottom: #{$length};
+            }
+        }
+    }
+
+    .gap-#{$lname} {
         gap: #{$length};
     }
 
-    .m-#{$name} {
+    .m-#{$lname} {
         margin: #{$length};
     }
-
-    .mx-#{$name} {
+    .mx-#{$lname} {
         margin-left: #{$length};
         margin-right: #{$length};
     }
-
-    .my-#{$name} {
+    .my-#{$lname} {
         margin-top: #{$length};
         margin-bottom: #{$length};
     }
 
-    .p-#{$name} {
+    .p-#{$lname} {
         padding: #{$length};
     }
-
-    .px-#{$name} {
+    .px-#{$lname} {
         padding-left: #{$length};
         padding-right: #{$length};
     }
-
-    .py-#{$name} {
+    .py-#{$lname} {
         padding-top: #{$length};
         padding-bottom: #{$length};
     }
@@ -104,8 +187,12 @@ a {
 aside {
     display: flex;
     flex-direction: column;
-    flex: 0 0 250px;
+    flex: 0 0 100%;
     gap: 10px;
+
+    @include min(md) {
+        flex: 0 0 250px;
+    }
 }
 
 body {
@@ -116,15 +203,30 @@ body {
     display: flex;
     flex-direction: column;
     font-family: sans-serif;
+    font-size: 14px;
     margin: 0;
     min-height: 100vh;
+
+    @include min(sm) {
+        font-size: 16px;
+    }
+}
+
+body,
+html {
+    height: 100vh;
+    max-width: 100vw;
+    overflow-x: hidden;
 }
 
 footer {
-    bottom: 0;
+    /* bottom: 0; */
+    box-shadow: 0 0 10px -3px black;
     display: flex;
     flex-direction: column;
-    position: fixed;
+    flex-shrink: 0;
+    overflow: hidden;
+    /* position: fixed; */
     width: 100%;
 }
 
@@ -132,9 +234,10 @@ header {
     aspect-ratio: 3/1;
     border: 10px dotted var(--mm-primary);
     display: flex;
+    flex: 0 0 auto;
     flex-direction: column;
     justify-content: end;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
     overflow: hidden;
     position: relative;
 
@@ -154,13 +257,21 @@ header {
 
     .podcast-name {
         font-family: UnifrakturCook;
-        font-size: 72px;
+        font-size: 50px;
         line-height: 1;
         text-shadow:
             -2px 0 0 black,
             0 -2px 0 black,
             0 2px 0 black,
             2px 0 0 black;
+
+        @include min(sm) {
+            font-size: 60px;
+        }
+
+        @include min(md) {
+            font-size: 72px;
+        }
     }
 
     .podcast-name-alt {
@@ -193,7 +304,14 @@ input[type="range"] {
 }
 
 main {
-    margin-bottom: 20px;
+    align-items: center;
+    display: flex;
+    flex: 1 1 100%;
+    flex-direction: column;
+    /* margin-bottom: 20px; */
+    overflow-y: scroll;
+    padding: 10px 0;
+    width: 100%;
 
     &.show-player-bar {
         margin-bottom: calc(20px + var(--mm-player-bar-height));
@@ -248,11 +366,23 @@ main {
 }
 
 .small {
-    font-size: 14px;
+    font-size: 12px;
+
+    @include min(sm) {
+        font-size: 14px;
+    }
 }
 
 .text-center {
     text-align: center;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.wrap {
+    flex-wrap: wrap;
 }
 
 /** OTHER CLASSES ************************************************************/
@@ -398,19 +528,6 @@ main {
     }
 }
 
-.episode-number {
-    align-items: center;
-    aspect-ratio: 1/1;
-    background: var(--mm-primary);
-    border-radius: 100%;
-    display: flex;
-    font-size: 20px;
-    font-weight: bold;
-    height: 40px;
-    justify-content: center;
-    width: 40px;
-}
-
 .episode-card {
     border: 3px dashed var(--mm-primary);
 
@@ -452,6 +569,51 @@ main {
         height: 30px;
         padding: 0 5px;
         width: 30px;
+    }
+}
+
+.podcast-episode-list {
+    aside {
+        order: 0;
+    }
+    .episode-container {
+        flex: 0 0 100%;
+        order: 1;
+    }
+    .attribution {
+        order: 2;
+    }
+
+    @include min(md) {
+        .episode-container {
+            flex: 0 0 calc(100% - 250px - 1rem);
+            order: unset;
+        }
+        aside {
+            order: unset;
+        }
+        .attribution {
+            order: unset;
+        }
+    }
+}
+
+.episode-number {
+    align-items: center;
+    aspect-ratio: 1/1;
+    background: var(--mm-primary);
+    border-radius: 100%;
+    display: flex;
+    font-size: 16px;
+    font-weight: bold;
+    height: 35px;
+    justify-content: center;
+    width: 35px;
+
+    @include min(sm) {
+        font-size: 20px;
+        height: 40px;
+        width: 40px;
     }
 }
 
@@ -621,7 +783,9 @@ main {
     position: relative;
 
     .episode {
-        width: 300px;
+        @include min(sm) {
+            width: 300px;
+        }
     }
 
     img {
