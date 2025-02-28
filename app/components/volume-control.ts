@@ -1,6 +1,7 @@
 import { action } from "@ember/object";
 import { service } from "@ember/service";
 import Component from "@glimmer/component";
+import { tracked } from "@glimmer/tracking";
 import type AudioService from "podcast-frontend/services/audio";
 
 export interface VolumeControlSignature {
@@ -9,18 +10,13 @@ export interface VolumeControlSignature {
 
 export default class VolumeControl extends Component<VolumeControlSignature> {
     @service declare audio: AudioService;
+    @tracked popupVisible: boolean = false;
 
-    @action mute() {
-        this.audio.setIsMuted(true);
+    @action onOutsideClick() {
+        this.popupVisible = false;
     }
 
-    @action onVolumeInput(event: Event) {
-        if (event.target instanceof HTMLInputElement) {
-            this.audio.setVolume(event.target.valueAsNumber);
-        }
-    }
-
-    @action unmute() {
-        this.audio.setIsMuted(false);
+    @action togglePopup() {
+        this.popupVisible = !this.popupVisible;
     }
 }

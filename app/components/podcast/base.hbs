@@ -1,30 +1,24 @@
-<main ...attributes>
-  <div class="content-width">
-    <header>
-      {{#if @podcast.banner}}
-        <img src="{{@podcast.banner}}" alt="" class="podcast-banner" />
+<main class="content-width" ...attributes>
+  <header>
+    {{#if @podcast.banner}}
+      <img src="{{@podcast.banner}}" alt="" class="podcast-banner" />
+    {{/if}}
+    <LinkTo class="row gap-single align-center m-single" @route="podcast" @model={{@podcast}}>
+      {{#if @podcast.cover-thumbnail}}
+        <img src="{{@podcast.cover-thumbnail}}" alt="" class="podcast-cover d-none d-sm-block" />
       {{/if}}
-      <LinkTo class="row gap-single align-center m-single" @route="podcast" @model={{@podcast}}>
-        {{#if @podcast.cover-thumbnail}}
-          <img src="{{@podcast.cover-thumbnail}}" alt="" class="podcast-cover d-none d-sm-block" />
+      <div>
+        <div class="podcast-name">{{@podcast.name}}</div>
+        {{#if @podcast.tagline}}
+          <div class="podcast-tagline d-none d-sm-block">{{@podcast.tagline}}</div>
         {{/if}}
-        <div>
-          <div class="podcast-name">{{@podcast.name}}</div>
-          {{#if @podcast.tagline}}
-            <div class="podcast-tagline d-none d-sm-block">{{@podcast.tagline}}</div>
-          {{/if}}
-        </div>
-      </LinkTo>
-    </header>
-    <div class="column gap-half">
-      {{yield to="before"}}
-      <div class="row gap-half wrap-wrap">
-        <div class="fill column gap-half w-100 episode-container">
-          {{yield}}
-        </div>
-        <Podcast::Aside @podcast={{@podcast}} />
-        <Attribution />
       </div>
-    </div>
+    </LinkTo>
+  </header>
+  {{yield to="before"}}
+  <div class="fill column gap-half w-100 episode-container">
+    {{yield}}
   </div>
+  <Podcast::Aside @podcast={{@podcast}} />
+  <Attribution />
 </main>

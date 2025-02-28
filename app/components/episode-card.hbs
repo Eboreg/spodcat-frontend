@@ -5,12 +5,12 @@
         @route="podcast.episode"
         @models={{array @episode.podcast @episode.slug}}
         @disabled={{not @expand-link}}
-        class="row align-center gap-single fill p-single"
+        class="row align-center gap-single fill episode-link-block"
       >
         {{#if @episode.hasNumber}}
           <div class="episode-number">{{@episode.number}}</div>
         {{/if}}
-        <div class="fill column gap-half">
+        <div class="fill column gap-quarter">
           <div class="episode-name">{{@episode.name}}</div>
           <div class="row gap-half">
             <div class="badge secondary">{{@episode.publishedString}}</div>
@@ -19,7 +19,7 @@
         </div>
       </LinkTo>
 
-      <div class="row gap-single p-single">
+      <div class="row gap-single p-single align-center">
         {{#if @expand-link}}
           <LinkTo
             @route="podcast.episode"

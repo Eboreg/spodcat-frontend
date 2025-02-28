@@ -84,11 +84,6 @@ export default class AudioService extends Service {
         this.element?.play();
     }
 
-    @action playFrom(start: number) {
-        this.element?.seekToTime(start);
-        this.play();
-    }
-
     @action playOrPause() {
         this.element?.playOrPause();
     }
@@ -119,16 +114,16 @@ export default class AudioService extends Service {
         this.element?.setSrc(value["audio-file"]);
     }
 
-    @action setIsMuted(value: boolean) {
-        this.element?.setIsMuted(value);
-    }
-
     @action setPlaybackRate(value: number) {
         this.element?.setPlaybackRate(value);
     }
 
     @action setVolume(value: number) {
         this.element?.setVolume(value);
+    }
+
+    @action toggleMute() {
+        this.element?.toggleMute();
     }
 }
 

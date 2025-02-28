@@ -1,7 +1,11 @@
-<Podcast::Base @podcast={{@podcast}} class="podcast-episode-list" ...attributes>
+<Podcast::Base
+  @podcast={{@podcast}}
+  class="podcast-episode-list {{if @podcast.description-html 'has-before'}}"
+  ...attributes
+>
   <:before>
     {{#if @podcast.description-html}}
-      <div class="podcast-description">
+      <div class="podcast-description before">
         <div class="podcast-description-content">{{html-safe @podcast.description-html}}</div>
       </div>
     {{/if}}

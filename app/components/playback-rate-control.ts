@@ -4,7 +4,7 @@ import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import type AudioService from "podcast-frontend/services/audio";
 
-export interface PlaybackSpeedControlSignature {
+export interface PlaybackRateControlSignature {
     Element: null;
 }
 
@@ -13,7 +13,7 @@ interface PlaybackRate {
     label: string;
 }
 
-export default class PlaybackSpeedControl extends Component<PlaybackSpeedControlSignature> {
+export default class PlaybackRateControl extends Component<PlaybackRateControlSignature> {
     playbackRates: PlaybackRate[] = [
         { rate: 0.25, label: "0,25" },
         { rate: 0.5, label: "0,5" },

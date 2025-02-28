@@ -4,6 +4,11 @@
     <span class="label">Till {{@model.podcast.name}}</span>
   </Button>
   <EpisodeCard @episode={{@model}} @start={{this.start}}>
+    {{#if @model.descriptionIsUndefined}}
+      <div class="episode-description">
+        <ProgressCircle class="icon" />
+      </div>
+    {{/if}}
     {{#if @model.description-html}}
       <div class="episode-description">{{html-safe @model.description-html}}</div>
     {{/if}}

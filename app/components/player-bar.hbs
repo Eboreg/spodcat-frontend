@@ -1,39 +1,54 @@
 <div class="player-bar" ...attributes>
-  <LinkTo @route="podcast.episode" @models={{array @episode.podcast @episode}} class="row gap-single align-center">
-    {{#if @episode.hasNumber}}
-      <div class="episode-number">{{@episode.number}}</div>
-    {{else if @episode.podcast.cover-thumbnail}}
-      <img src={{@episode.podcast.cover-thumbnail}} alt="" />
-    {{/if}}
-    <div class="episode">
-      <div class="bold ellipsis oneliner">{{@episode.name}}</div>
-      <div class="small ellipsis oneliner">{{@episode.podcast.name}}</div>
-    </div>
-  </LinkTo>
-
-  {{#if this.audio.isSeeking}}
-    <ProgressCircle />
-  {{else if this.audio.isPlaying}}
-    <span
-      class="material-symbols-outlined button"
-      role="button"
-      {{on "click" this.audio.pause}}
-      title="Pausa"
-    >pause</span>
-  {{else}}
-    <span
-      class="material-symbols-outlined button"
-      role="button"
-      {{on "click" this.audio.play}}
-      title="Spela"
-    >play_arrow</span>
+  {{#if this.isExpanded}}
+    <PlayerBar::Expanded @episode={{@episode}} class="d-xl-none" />
   {{/if}}
 
-  <div class="small">{{this.audio.currentTimeString}}</div>
-  <Dbfs::Bar @episode={{@episode}} />
-  <div class="small">{{this.audio.durationString}}</div>
+  <div class="row align-center">
+    <LinkTo
+      @route="podcast.episode"
+      @models={{array @episode.podcast @episode}}
+      class="row gap-single align-center episode ellipsis oneliner"
+    >
+      {{#if @episode.hasNumber}}
+        <div class="episode-number">{{@episode.number}}</div>
+      {{else if @episode.podcast.cover-thumbnail}}
+        <img src={{@episode.podcast.cover-thumbnail}} alt="" />
+      {{/if}}
+      <div class="ellipsis">
+        <div class="bold ellipsis">{{@episode.name}}</div>
+        <div class="small ellipsis">{{@episode.podcast.name}}</div>
+      </div>
+    </LinkTo>
+    {{#if this.audio.isSeeking}}
+      <ProgressCircle />
+    {{else if this.audio.isPlaying}}
+      <span
+        class="material-symbols-outlined button"
+        role="button"
+        {{on "click" this.audio.pause}}
+        title="Pausa"
+      >pause</span>
+    {{else}}
+      <span
+        class="material-symbols-outlined button"
+        role="button"
+        {{on "click" this.audio.play}}
+        title="Spela"
+      >play_arrow</span>
+    {{/if}}
 
-  <VolumeControl />
+    <PlayerBar::Expanded @episode={{@episode}} class="d-none d-xl-flex fill" />
 
-  <PlaybackSpeedControl />
+    <div class="d-xl-none">
+      {{#if this.isExpanded}}
+        <span
+          class="material-symbols-outlined button"
+          role="button"
+          {{on "click" this.collapse}}
+        >keyboard_arrow_down</span>
+      {{else}}
+        <span class="material-symbols-outlined button" role="button" {{on "click" this.expand}}>keyboard_arrow_up</span>
+      {{/if}}
+    </div>
+  </div>
 </div>

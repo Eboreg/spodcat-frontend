@@ -102,7 +102,7 @@ export default class Audio extends Component<AudioSignature> {
     }
 
     @action refreshVolume() {
-        this.volume = this.audioElement.volume;
+        this.volume = Math.sqrt(this.audioElement.volume);
         this.isMuted = this.audioElement.muted;
     }
 
@@ -130,11 +130,6 @@ export default class Audio extends Component<AudioSignature> {
         if (this.args["on-add"]) this.args["on-add"](this);
     }
 
-    @action setIsMuted(value: boolean) {
-        this.isMuted = value;
-        this.audioElement.muted = value;
-    }
-
     @action setPlaybackRate(value: number) {
         this.playbackRate = value;
         this.audioElement.playbackRate = value;
@@ -148,6 +143,13 @@ export default class Audio extends Component<AudioSignature> {
 
     @action setVolume(value: number) {
         this.volume = value;
-        this.audioElement.volume = value;
+        this.audioElement.volume = Math.pow(value, 2);
+    }
+
+    @action toggleMute() {
+        const isMuted = !this.isMuted;
+
+        this.isMuted = isMuted;
+        this.audioElement.muted = isMuted;
     }
 }

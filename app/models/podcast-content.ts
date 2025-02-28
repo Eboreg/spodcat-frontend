@@ -13,5 +13,9 @@ export default class PodcastContentModel extends Model {
     @belongsTo<PodcastModel>("podcast", { async: false, inverse: "contents", as: "podcast-content" })
     declare podcast: PodcastModel;
 
+    get descriptionIsUndefined() {
+        return this.description == undefined;
+    }
+
     [Type]: "podcast-content" | "episode" = "podcast-content" as const;
 }

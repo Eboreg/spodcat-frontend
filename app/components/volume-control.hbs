@@ -1,27 +1,20 @@
-<div class="row">
-  {{#if this.audio.isMuted}}
-    <span
-      class="material-symbols-outlined button"
-      role="button"
-      {{on "click" this.unmute}}
-      title="Sätt på ljud"
-    >volume_off</span>
-  {{else}}
-    <span
-      class="material-symbols-outlined button"
-      role="button"
-      {{on "click" this.mute}}
-      title="Stäng av ljud"
-    >volume_up</span>
+<VolumeControl::Inner class="d-none d-lg-flex" />
+
+<div class="d-lg-none pos-relative" {{on-outside-click this.onOutsideClick}}>
+  <span class="material-symbols-outlined button" role="button" {{on "click" this.togglePopup}} title="Volym">
+    {{#if this.audio.isMuted}}
+      volume_off
+    {{else}}
+      volume_up
+    {{/if}}
+  </span>
+
+  {{#if this.popupVisible}}
+    <div class="popup-container">
+      <div class="popup volume-control-popup">
+        <VolumeControl::Inner />
+      </div>
+      <div class="arrow"></div>
+    </div>
   {{/if}}
-  <input
-    type="range"
-    name="volume"
-    value={{this.audio.volume}}
-    min="0"
-    max="1"
-    step="0.01"
-    {{on "input" this.onVolumeInput}}
-    disabled={{this.audio.isMuted}}
-  />
 </div>

@@ -3,6 +3,14 @@
 
 /** VARIABLES ****************************************************************/
 
+$max-sizes: (
+    "xs": "575px",
+    "sm": "767px",
+    "md": "991px",
+    "lg": "1199px",
+    "xl": "1399px",
+);
+
 $min-sizes: (
     "sm": "576px",
     "md": "768px",
@@ -20,6 +28,12 @@ $lengths: (
     "4x": 4rem,
 );
 
+@mixin max($size) {
+    @media screen and (max-width: map.get($max-sizes, $size)) {
+        @content;
+    }
+}
+
 @mixin min($size) {
     @media screen and (min-width: map.get($min-sizes, $size)) {
         @content;
@@ -27,41 +41,41 @@ $lengths: (
 }
 
 .d-none {
-    display: none;
+    display: none !important;
 }
 .d-block {
-    display: block;
+    display: block !important;
 }
 .d-flex {
-    display: flex;
+    display: flex !important;
 }
 @each $sname, $size in $min-sizes {
     @include min(#{$sname}) {
         .d-#{$sname}-none {
-            display: none;
+            display: none !important;
         }
         .d-#{$sname}-block {
-            display: block;
+            display: block !important;
         }
         .d-#{$sname}-flex {
-            display: flex;
+            display: flex !important;
         }
     }
 }
 
 .wrap-wrap {
-    flex-wrap: wrap;
+    flex-wrap: wrap !important;
 }
 .wrap-nowrap {
-    flex-wrap: nowrap;
+    flex-wrap: nowrap !important;
 }
 @each $sname, $size in $min-sizes {
     @include min(#{$sname}) {
         .wrap-#{$sname}-wrap {
-            flex-wrap: wrap;
+            flex-wrap: wrap !important;
         }
         .wrap-#{$sname}-nowrap {
-            flex-wrap: nowrap;
+            flex-wrap: nowrap !important;
         }
     }
 }
@@ -187,12 +201,8 @@ a {
 aside {
     display: flex;
     flex-direction: column;
-    flex: 0 0 100%;
     gap: 10px;
-
-    @include min(md) {
-        flex: 0 0 250px;
-    }
+    grid-area: aside;
 }
 
 body {
@@ -220,24 +230,24 @@ html {
 }
 
 footer {
-    /* bottom: 0; */
+    bottom: 0;
     box-shadow: 0 0 10px -3px black;
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
-    overflow: hidden;
-    /* position: fixed; */
+    position: sticky;
     width: 100%;
+    z-index: 30;
 }
 
 header {
     aspect-ratio: 3/1;
     border: 10px dotted var(--mm-primary);
     display: flex;
-    flex: 0 0 auto;
     flex-direction: column;
+    flex: 0 0 auto;
+    grid-area: header;
     justify-content: end;
-    margin-bottom: 0.5rem;
     overflow: hidden;
     position: relative;
 
@@ -304,17 +314,38 @@ input[type="range"] {
 }
 
 main {
-    align-items: center;
-    display: flex;
-    flex: 1 1 100%;
-    flex-direction: column;
-    /* margin-bottom: 20px; */
-    overflow-y: scroll;
+    display: grid;
+    flex: 1 1 auto;
+    gap: 0.5rem;
+    grid-template-rows: auto auto 1fr;
     padding: 10px 0;
     width: 100%;
 
-    &.show-player-bar {
-        margin-bottom: calc(20px + var(--mm-player-bar-height));
+    @include max(sm) {
+        grid-template-areas: "header" "aside" "episode-container" "attr";
+        grid-template-columns: 1fr;
+
+        &.podcast-episode-detail {
+            grid-template-areas: "header" "episode-container" "aside" "attr";
+        }
+
+        &.has-before {
+            grid-template-areas: "header" "before" "aside" "episode-container" "attr";
+            grid-template-rows: auto auto auto 1fr;
+
+            &.podcast-episode-detail {
+                grid-template-areas: "header" "before" "episode-container" "aside" "attr";
+            }
+        }
+    }
+
+    @include min(md) {
+        grid-template-areas: "header header" "episode-container aside" "episode-container attr";
+        grid-template-columns: 1fr 250px;
+
+        &.has-before {
+            grid-template-areas: "header header" "before before" "episode-container aside" "episode-container attr";
+        }
     }
 }
 
@@ -360,6 +391,14 @@ main {
     white-space: nowrap;
 }
 
+.pos-absolute {
+    position: absolute;
+}
+
+.pos-relative {
+    position: relative;
+}
+
 .row {
     display: flex;
     flex-direction: row;
@@ -388,6 +427,7 @@ main {
 /** OTHER CLASSES ************************************************************/
 
 .attribution {
+    grid-area: attr;
     z-index: 20;
 }
 
@@ -489,22 +529,22 @@ main {
 
     .dbfs-column {
         flex-grow: 1;
-        flex-shrink: 0;
+        flex-shrink: 1;
 
         div {
             height: 100%;
-            width: 50%;
+            width: max(50%, 3px);
 
             &.buffered {
-                background-color: darkred;
+                background-color: rgb(100, 100, 100);
             }
 
             &.played {
-                background-color: var(--mm-primary);
+                background-color: var(--mm-text-color);
             }
 
             &.unbuffered {
-                background-color: rgb(80, 80, 80);
+                background-color: rgb(70, 70, 70);
             }
         }
     }
@@ -537,6 +577,10 @@ main {
         flex-direction: column;
     }
 
+    .episode-link-block {
+        padding: 1rem 0 1rem 1rem;
+    }
+
     .episode-name {
         font-weight: bold;
     }
@@ -560,16 +604,51 @@ main {
     }
 
     .icon {
-        font-size: 40px;
-        height: 40px;
-        width: 40px;
+        aspect-ratio: 1/1;
+        font-size: 30px;
+        height: 30px;
+
+        @include min(sm) {
+            font-size: 40px;
+            height: 40px;
+        }
     }
 
     .loader {
-        height: 30px;
+        aspect-ratio: 1/1;
+        font-size: 20px;
+        height: 20px;
         padding: 0 5px;
-        width: 30px;
+
+        @include min(sm) {
+            font-size: 20px;
+            height: 30px;
+        }
     }
+}
+
+.content-grid {
+    display: grid;
+    grid-template-areas: "before before" "episode-container aside" "episode-container attr";
+    grid-template-columns: 1fr 250px;
+    grid-template-rows: auto auto 1fr;
+
+    .before {
+        grid-area: before;
+    }
+    .episode-container {
+        grid-area: episode-container;
+    }
+    aside {
+        grid-area: aside;
+    }
+    .attribution {
+        grid-area: attr;
+    }
+}
+
+.episode-container {
+    grid-area: episode-container;
 }
 
 .podcast-episode-list {
@@ -695,12 +774,15 @@ main {
 }
 
 .loader {
-    .circular-loader {
+    aspect-ratio: 1/1;
+    line-height: 1;
+
+    .progress-circle {
         animation-timing-function: linear;
         animation-iteration-count: infinite;
         animation-name: rotate;
 
-        .loader-path {
+        .circle {
             stroke-dasharray: 10, 10;
             animation-name: animate-stroke;
             animation-timing-function: ease-in-out;
@@ -711,80 +793,83 @@ main {
         }
     }
 
-    &.primary .circular-loader .loader-path {
+    &.primary .circle {
         stroke: var(--mm-primary) !important;
     }
-    &.secondary .circular-loader .loader-path {
+    &.secondary .circle {
         stroke: var(--mm-secondary) !important;
     }
-    &.tertiary .circular-loader .loader-path {
+    &.tertiary .circle {
         stroke: var(--mm-tertiary) !important;
     }
 }
 
-.playback-rate-control {
-    .rate-popup-container {
-        bottom: calc(100% + 10px);
-        position: absolute;
-        right: 10px;
+.popup-container {
+    bottom: calc(100% + 10px);
+    position: absolute;
+    right: 0;
 
-        .rate-popup {
-            background-color: var(--mm-background-color-opaque);
-            border-radius: 5px;
-            border: 2px solid var(--mm-primary);
-            box-shadow: 0 2px 5px black;
+    .popup {
+        background-color: var(--mm-background-color-opaque);
+        border-radius: 5px;
+        border: 2px solid var(--mm-primary);
+        box-shadow: 0 2px 5px black;
+        display: flex;
+        flex-direction: column;
+        padding-bottom: 5px;
+
+        .popup-header {
+            border-bottom: 1px solid var(--mm-primary);
+            padding: 10px 15px;
+        }
+
+        .popup-row {
+            align-items: center;
+            cursor: pointer;
             display: flex;
-            flex-direction: column;
-            padding-bottom: 5px;
+            gap: 10px;
+            padding: 5px 15px 5px 10px;
 
-            .rate-header {
-                border-bottom: 1px solid var(--mm-primary);
-                padding: 10px 15px;
-            }
-
-            .rate-row {
-                cursor: pointer;
-                display: flex;
-                align-items: center;
-                gap: 10px;
-                padding: 5px 15px 5px 10px;
-
-                .rate-check {
-                    width: 24px;
-                    height: 24px;
-                }
+            .popup-row-check {
+                height: 24px;
+                width: 24px;
             }
         }
+    }
 
-        .arrow {
-            background-color: var(--mm-background-color-opaque);
-            border-color: var(--mm-primary);
-            border-style: solid;
-            border-width: 0 2px 2px 0;
-            bottom: -6px;
-            box-shadow: 0 2px 5px black;
-            height: 10px;
-            position: absolute;
-            right: 25px;
-            transform: rotate(45deg);
-            width: 10px;
-        }
+    .arrow {
+        background-color: var(--mm-background-color-opaque);
+        border-color: var(--mm-primary);
+        border-style: solid;
+        border-width: 0 2px 2px 0;
+        bottom: -6px;
+        box-shadow: 0 2px 5px black;
+        height: 10px;
+        position: absolute;
+        right: 25px;
+        transform: rotate(45deg);
+        width: 10px;
     }
 }
 
 .player-bar {
-    align-items: center;
     background: var(--mm-background-color-opaque);
     border-top: 5px solid var(--mm-primary);
     display: flex;
-    gap: 16px;
-    height: var(--mm-player-bar-height);
+    flex-direction: column;
     padding: 0 10px;
     position: relative;
 
+    .row {
+        height: var(--mm-player-bar-height);
+    }
+
     .episode {
-        @include min(sm) {
-            width: 300px;
+        flex-grow: 1;
+        width: 350px;
+
+        @include min(xl) {
+            flex-grow: 0;
         }
     }
 
@@ -795,15 +880,21 @@ main {
 
     .button {
         aspect-ratio: 1/1;
-        font-size: 40px;
-        height: 40px;
+        flex: 0 0 auto;
+        font-size: 30px;
+        height: 30px;
         overflow: hidden;
+
+        @include min(sm) {
+            font-size: 40px;
+            height: 40px;
+        }
     }
 
     .loader {
-        padding: 15px;
-        width: 30px;
+        font-size: 30px;
         height: 30px;
+        padding: 15px;
     }
 
     .dbfs {
@@ -831,4 +922,8 @@ main {
             font-weight: bold;
         }
     }
+}
+
+.volume-control-popup {
+    padding-right: 1rem;
 }

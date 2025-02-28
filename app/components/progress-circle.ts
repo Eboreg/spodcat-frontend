@@ -19,7 +19,7 @@ export default class ProgressCircle extends Component<ProgressCircleSignature> {
     get circleStyle(): SafeString {
         const rows = [
             `animation-duration: ${this.args["inner-duration"] || 1.5}s`,
-            `stroke-width: ${this.args["stroke-width"] || 5}px`,
+            `stroke-width: ${this.args["stroke-width"] || 8}px`,
         ];
         return htmlSafe(rows.join("; "));
     }
