@@ -521,6 +521,26 @@ main {
     }
 }
 
+.content-grid {
+    display: grid;
+    grid-template-areas: "before before" "episode-container aside" "episode-container attr";
+    grid-template-columns: 1fr 250px;
+    grid-template-rows: auto auto 1fr;
+
+    .before {
+        grid-area: before;
+    }
+    .episode-container {
+        grid-area: episode-container;
+    }
+    aside {
+        grid-area: aside;
+    }
+    .attribution {
+        grid-area: attr;
+    }
+}
+
 .dbfs {
     align-items: center;
     display: flex;
@@ -627,54 +647,8 @@ main {
     }
 }
 
-.content-grid {
-    display: grid;
-    grid-template-areas: "before before" "episode-container aside" "episode-container attr";
-    grid-template-columns: 1fr 250px;
-    grid-template-rows: auto auto 1fr;
-
-    .before {
-        grid-area: before;
-    }
-    .episode-container {
-        grid-area: episode-container;
-    }
-    aside {
-        grid-area: aside;
-    }
-    .attribution {
-        grid-area: attr;
-    }
-}
-
 .episode-container {
     grid-area: episode-container;
-}
-
-.podcast-episode-list {
-    aside {
-        order: 0;
-    }
-    .episode-container {
-        flex: 0 0 100%;
-        order: 1;
-    }
-    .attribution {
-        order: 2;
-    }
-
-    @include min(md) {
-        .episode-container {
-            flex: 0 0 calc(100% - 250px - 1rem);
-            order: unset;
-        }
-        aside {
-            order: unset;
-        }
-        .attribution {
-            order: unset;
-        }
-    }
 }
 
 .episode-number {
@@ -693,6 +667,17 @@ main {
         font-size: 20px;
         height: 40px;
         width: 40px;
+    }
+}
+
+.err404 {
+    height: 100%;
+    display: flex;
+    align-items: center;
+
+    h1 {
+        font-size: calc(100vw * 0.3 * 1.5);
+        line-height: 1;
     }
 }
 
@@ -804,54 +789,6 @@ main {
     }
 }
 
-.popup-container {
-    bottom: calc(100% + 10px);
-    position: absolute;
-    right: 0;
-
-    .popup {
-        background-color: var(--mm-background-color-opaque);
-        border-radius: 5px;
-        border: 2px solid var(--mm-primary);
-        box-shadow: 0 2px 5px black;
-        display: flex;
-        flex-direction: column;
-        padding-bottom: 5px;
-
-        .popup-header {
-            border-bottom: 1px solid var(--mm-primary);
-            padding: 10px 15px;
-        }
-
-        .popup-row {
-            align-items: center;
-            cursor: pointer;
-            display: flex;
-            gap: 10px;
-            padding: 5px 15px 5px 10px;
-
-            .popup-row-check {
-                height: 24px;
-                width: 24px;
-            }
-        }
-    }
-
-    .arrow {
-        background-color: var(--mm-background-color-opaque);
-        border-color: var(--mm-primary);
-        border-style: solid;
-        border-width: 0 2px 2px 0;
-        bottom: -6px;
-        box-shadow: 0 2px 5px black;
-        height: 10px;
-        position: absolute;
-        right: 25px;
-        transform: rotate(45deg);
-        width: 10px;
-    }
-}
-
 .player-bar {
     background: var(--mm-background-color-opaque);
     border-top: 5px solid var(--mm-primary);
@@ -921,6 +858,79 @@ main {
         a {
             font-weight: bold;
         }
+    }
+}
+
+.podcast-episode-list {
+    aside {
+        order: 0;
+    }
+    .episode-container {
+        flex: 0 0 100%;
+        order: 1;
+    }
+    .attribution {
+        order: 2;
+    }
+
+    @include min(md) {
+        .episode-container {
+            order: unset;
+        }
+        aside {
+            order: unset;
+        }
+        .attribution {
+            order: unset;
+        }
+    }
+}
+
+.popup-container {
+    bottom: calc(100% + 10px);
+    position: absolute;
+    right: 0;
+
+    .popup {
+        background-color: var(--mm-background-color-opaque);
+        border-radius: 5px;
+        border: 2px solid var(--mm-primary);
+        box-shadow: 0 2px 5px black;
+        display: flex;
+        flex-direction: column;
+        padding-bottom: 5px;
+
+        .popup-header {
+            border-bottom: 1px solid var(--mm-primary);
+            padding: 10px 15px;
+        }
+
+        .popup-row {
+            align-items: center;
+            cursor: pointer;
+            display: flex;
+            gap: 10px;
+            padding: 5px 15px 5px 10px;
+
+            .popup-row-check {
+                height: 24px;
+                width: 24px;
+            }
+        }
+    }
+
+    .arrow {
+        background-color: var(--mm-background-color-opaque);
+        border-color: var(--mm-primary);
+        border-style: solid;
+        border-width: 0 2px 2px 0;
+        bottom: -6px;
+        box-shadow: 0 2px 5px black;
+        height: 10px;
+        position: absolute;
+        right: 25px;
+        transform: rotate(45deg);
+        width: 10px;
     }
 }
 
