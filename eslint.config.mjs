@@ -53,7 +53,16 @@ export default ts.config(
      * https://eslint.org/docs/latest/use/configure/ignore
      */
     {
-        ignores: ["dist/", "node_modules/", "coverage/", "!**/.*"],
+        ignores: [
+            "dist/",
+            "node_modules/",
+            "coverage/",
+            "!**/.*",
+            "/blueprints/*/files/",
+            "/.node_modules.ember-try/",
+            "/.ember-cli",
+            "tmp",
+        ],
     },
     /**
      * https://eslint.org/docs/latest/use/configure/configuration-files#configuring-linter-options
@@ -93,6 +102,7 @@ export default ts.config(
         rules: {
             "@typescript-eslint/no-explicit-any": "off",
             "@typescript-eslint/no-unsafe-argument": "off",
+            "@typescript-eslint/no-unsafe-member-access": "off",
         },
     },
     {
