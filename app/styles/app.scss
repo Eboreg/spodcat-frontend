@@ -684,10 +684,10 @@ main {
     &.tertiary {
         background: var(--mm-tertiary);
     }
-}
 
-.podcast-content-card.post .podcast-content-leading-icon {
-    font-size: 24px;
+    &.material-symbols {
+        font-size: 24px;
+    }
 }
 
 .err404 {

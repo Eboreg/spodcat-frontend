@@ -10,9 +10,11 @@
       class="row gap-single align-center episode ellipsis oneliner"
     >
       {{#if @episode.hasNumber}}
-        <div class="podcast-content-leading-icon">{{@episode.number}}</div>
+        <div class="podcast-content-leading-icon primary">{{@episode.number}}</div>
       {{else if @episode.podcast.cover-thumbnail}}
         <img src={{@episode.podcast.cover-thumbnail}} alt="" />
+      {{else}}
+        <span class="material-symbols podcast-content-leading-icon primary">podcasts</span>
       {{/if}}
       <div class="ellipsis">
         <div class="bold ellipsis">{{@episode.name}}</div>

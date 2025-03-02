@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -e
+
+SCRIPT_PATH="$(dirname "${BASH_SOURCE[0]}")"
+# shellcheck disable=SC1091
+. "${SCRIPT_PATH}/../.env"
+ember deploy production
+ssh "${SCP_USERNAME}"@"${SCP_HOST}" sudo systemctl restart podcast-frontend.service
