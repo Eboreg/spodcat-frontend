@@ -7,6 +7,7 @@ module.exports = async function (defaults) {
     const app = new EmberApp(defaults, {
         "ember-cli-babel": { enableTypeScriptTransform: true },
         babel: { sourceMaps: "inline" },
+        "ember-cli-terser": { enabled: false },
     });
 
     setConfig(app, __dirname, {

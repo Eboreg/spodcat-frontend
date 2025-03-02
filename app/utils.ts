@@ -1,3 +1,5 @@
+import ENV from "podcast-frontend/config/environment";
+
 export function timeString(time: number): string {
     const seconds = Math.floor(time % 60);
     const minutes = Math.floor((time / 60) % 60);
@@ -26,5 +28,5 @@ export function makeAbsoluteUrl(url: string): string {
     const conditionalSlash = url.startsWith("/") ? "" : "/";
 
     if (url.match(/^https?:\/\/.*/)) return url;
-    return location.origin + conditionalSlash + url;
+    return ENV.APP.FRONTEND_HOST + conditionalSlash + url;
 }

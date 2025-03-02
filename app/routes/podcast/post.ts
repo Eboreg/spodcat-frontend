@@ -25,7 +25,7 @@ export default class PodcastPostRoute extends Route<PostModel> {
     @action error(error: any, transition: Transition) {
         if (error.isAdapterError && error.errors && error.errors[0].status == "404") {
             if (transition.to?.parent?.params?.["podcast_id"]) {
-                this.router.transitionTo("podcast.index", transition.to.parent.params["podcast_id"]);
+                this.router.replaceWith("podcast", transition.to.parent.params["podcast_id"]);
                 return false;
             }
         }

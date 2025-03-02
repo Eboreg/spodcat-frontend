@@ -31,7 +31,7 @@ export default class PodcastEpisodeRoute extends Route<EpisodeModel> {
             // when running ember serve with fastboot. Says store is
             // destroyed. Works in production though:
             if (transition.to?.parent?.params?.["podcast_id"]) {
-                this.router.transitionTo("podcast.index", transition.to.parent.params["podcast_id"]);
+                this.router.replaceWith("podcast", transition.to.parent.params["podcast_id"]);
                 return false;
             }
         }

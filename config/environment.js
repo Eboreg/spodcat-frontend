@@ -16,8 +16,9 @@ module.exports = function (environment) {
         APP: {
             // Here you can pass flags/options to your application instance
             // when it is created
-            BACKEND_HOST: "http://localhost:8000",
             API_URL_NAMESPACE: "",
+            BACKEND_HOST: "http://localhost:8000",
+            FRONTEND_HOST: "http://localhost:4200",
         },
         fastboot: {
             hostWhitelist: [/^localhost:\d+$/, "musikensmakt.huseli.us"],
@@ -46,6 +47,7 @@ module.exports = function (environment) {
 
     if (environment === "production") {
         ENV.APP.BACKEND_HOST = "https://backend.musikensmakt.huseli.us";
+        ENV.APP.FRONTEND_HOST = "https://musikensmakt.huseli.us";
     }
 
     return ENV;

@@ -4,13 +4,14 @@
  */
 declare const config: {
     environment: string;
+    locationType: "history" | "hash" | "none";
     modulePrefix: string;
     podModulePrefix: string;
-    locationType: "history" | "hash" | "none";
     rootURL: string;
     APP: {
-        BACKEND_HOST: string;
         API_URL_NAMESPACE: string;
+        BACKEND_HOST: string;
+        FRONTEND_HOST: string;
     };
 };
 

@@ -58,7 +58,7 @@ export default class HeadDataService extends Service {
         this.ogAudioType = value["audio-content-type"];
         this.musicDuration = value["duration-seconds"].toString();
         this.musicReleaseDate = value.published?.toISOString();
-        this.ogUrl = makeAbsoluteUrl(this.router.urlFor("podcast.episode", value));
+        this.ogUrl = makeAbsoluteUrl(this.router.urlFor("podcast.episode", value.podcast, value));
         this.ogType = "music.song";
         this.#updateFromPodcastContent(value as PodcastContentModel);
     }
@@ -71,7 +71,7 @@ export default class HeadDataService extends Service {
     }
 
     updateFromPost(value: PostModel) {
-        this.ogUrl = makeAbsoluteUrl(this.router.urlFor("podcast.post", value));
+        this.ogUrl = makeAbsoluteUrl(this.router.urlFor("podcast.post", value.podcast, value));
         this.ogType = "article";
         this.#updateFromPodcastContent(value);
     }
