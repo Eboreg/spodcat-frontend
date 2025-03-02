@@ -21,3 +21,10 @@ export function coerceBetween(value: number, min: number, max: number) {
     if (value > max) return max;
     return value;
 }
+
+export function makeAbsoluteUrl(url: string): string {
+    const conditionalSlash = url.startsWith("/") ? "" : "/";
+
+    if (url.match(/^https?:\/\/.*/)) return url;
+    return location.origin + conditionalSlash + url;
+}

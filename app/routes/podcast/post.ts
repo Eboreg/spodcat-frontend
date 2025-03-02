@@ -19,7 +19,7 @@ export default class PodcastPostRoute extends Route<PostModel> {
     }
 
     afterModel(model: PostModel) {
-        this.headData.updateFromPodcastContent(model);
+        this.headData.updateFromPost(model);
     }
 
     @action error(error: any, transition: Transition) {

@@ -3,6 +3,7 @@
   here. The 'model' available in this template can be populated by
   setting values on the 'head-data' service.
 }}
+<meta property="og:type" content={{this.model.ogType}} />
 {{#if this.model.favicon}}
   <link rel="shortcut icon" href={{this.model.favicon.url}} type={{this.model.favicon.contentType}} />
 {{/if}}
@@ -23,4 +24,23 @@
 {{/if}}
 {{#if this.model.rss}}
   <link type="application/rss+xml" rel="alternate" title={{this.model.rss.title}} href={{this.model.rss.url}} />
+{{/if}}
+{{#if this.model.musicDuration}}
+  <meta name="music:duration" content={{this.model.musicDuration}} />
+{{/if}}
+{{#if this.model.musicReleaseDate}}
+  <meta name="music:release_date" content={{this.model.musicReleaseDate}} />
+{{/if}}
+{{#if this.model.ogAudio}}
+  <meta property="og:audio" content={{this.model.ogAudio}} />
+{{/if}}
+{{#if this.model.ogAudioType}}
+  <meta property="og:audio:type" content={{this.model.ogAudioType}} />
+{{/if}}
+{{#if this.model.ogLocale}}
+  <meta property="og:locale" content={{this.model.ogLocale}} />
+{{/if}}
+{{#if this.model.ogUrl}}
+  <meta property="og:url" content={{this.model.ogUrl}} />
+  <link rel="canonical" href={{this.model.ogUrl}} />
 {{/if}}

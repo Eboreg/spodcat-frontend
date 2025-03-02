@@ -5,7 +5,6 @@ import type RouterService from "@ember/routing/router-service";
 import type Transition from "@ember/routing/transition";
 import { service } from "@ember/service";
 import EpisodeModel from "podcast-frontend/models/episode";
-import type PodcastContentModel from "podcast-frontend/models/podcast-content";
 import type AudioService from "podcast-frontend/services/audio";
 import type HeadDataService from "podcast-frontend/services/head-data";
 
@@ -22,7 +21,7 @@ export default class PodcastEpisodeRoute extends Route<EpisodeModel> {
     }
 
     afterModel(model: EpisodeModel) {
-        this.headData.updateFromPodcastContent(model as PodcastContentModel);
+        this.headData.updateFromEpisode(model);
         if (model["dbfs-array"] && !this.audio.episode) this.audio.setEpisode(model);
     }
 
