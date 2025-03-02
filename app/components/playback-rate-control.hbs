@@ -1,6 +1,6 @@
 <div class="pos-relative" {{on-outside-click this.onOutsideClick}}>
   <span
-    class="material-symbols-outlined button"
+    class="material-symbols button"
     role="button"
     {{on "click" this.togglePopup}}
     title="Ändra hastighet"
@@ -14,7 +14,7 @@
           <div class="popup-row" {{on "click" (fn this.onRateClick rate.rate)}}>
             <div class="popup-row-check">
               {{#if (eq rate.rate this.audio.playbackRate)}}
-                <span class="material-symbols-outlined">check</span>
+                <span class="material-symbols">check</span>
               {{/if}}
             </div>
             <div class="popup-row-label">{{rate.label}}</div>

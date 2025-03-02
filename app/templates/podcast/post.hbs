@@ -1,0 +1,9 @@
+{{page-title @model.pageTitle}}
+<Podcast::Base @podcast={{@model.podcast}} class="podcast-content-detail">
+  <Button @route="podcast" @model={{@model.podcast}} @theme="secondary" @material-icon="arrow_back">
+    <span class="label">Till {{@model.podcast.name}}</span>
+  </Button>
+  <Podcast::Content::PostCard @post={{@model}}>
+    <Podcast::Content::Description @model={{@model}} />
+  </Podcast::Content::PostCard>
+</Podcast::Base>

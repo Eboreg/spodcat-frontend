@@ -10,7 +10,7 @@
       class="row gap-single align-center episode ellipsis oneliner"
     >
       {{#if @episode.hasNumber}}
-        <div class="episode-number">{{@episode.number}}</div>
+        <div class="podcast-content-leading-icon">{{@episode.number}}</div>
       {{else if @episode.podcast.cover-thumbnail}}
         <img src={{@episode.podcast.cover-thumbnail}} alt="" />
       {{/if}}
@@ -22,32 +22,18 @@
     {{#if this.audio.isSeeking}}
       <ProgressCircle />
     {{else if this.audio.isPlaying}}
-      <span
-        class="material-symbols-outlined button"
-        role="button"
-        {{on "click" this.audio.pause}}
-        title="Pausa"
-      >pause</span>
+      <span class="material-symbols button" role="button" {{on "click" this.audio.pause}} title="Pausa">pause</span>
     {{else}}
-      <span
-        class="material-symbols-outlined button"
-        role="button"
-        {{on "click" this.audio.play}}
-        title="Spela"
-      >play_arrow</span>
+      <span class="material-symbols button" role="button" {{on "click" this.audio.play}} title="Spela">play_arrow</span>
     {{/if}}
 
     <PlayerBar::Expanded @episode={{@episode}} class="d-none d-xl-flex fill" />
 
     <div class="d-xl-none">
       {{#if this.isExpanded}}
-        <span
-          class="material-symbols-outlined button"
-          role="button"
-          {{on "click" this.collapse}}
-        >keyboard_arrow_down</span>
+        <span class="material-symbols button" role="button" {{on "click" this.collapse}}>keyboard_arrow_down</span>
       {{else}}
-        <span class="material-symbols-outlined button" role="button" {{on "click" this.expand}}>keyboard_arrow_up</span>
+        <span class="material-symbols button" role="button" {{on "click" this.expand}}>keyboard_arrow_up</span>
       {{/if}}
     </div>
   </div>

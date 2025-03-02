@@ -1,0 +1,58 @@
+<article class="podcast-content-card episode" ...attributes>
+  <div class="podcast-content-card-contents">
+    <div class="row align-center">
+      <LinkTo
+        @route="podcast.episode"
+        @models={{array @episode.podcast @episode.slug}}
+        @disabled={{not @expand-link}}
+        class="row align-center gap-single fill podcast-content-link-block"
+      >
+        {{#if @episode.hasNumber}}
+          <div class="podcast-content-leading-icon primary">{{@episode.number}}</div>
+        {{else}}
+          <span class="material-symbols podcast-content-leading-icon primary">podcasts</span>
+        {{/if}}
+        <div class="fill column gap-quarter">
+          <div class="podcast-content-name">{{@episode.name}}</div>
+          <div class="row gap-half">
+            <div class="badge secondary">{{@episode.publishedString}}</div>
+            <div class="badge tertiary d-none d-sm-block">{{@episode.durationString}}</div>
+          </div>
+        </div>
+      </LinkTo>
+
+      <div class="row gap-single p-single align-center">
+        {{#if @expand-link}}
+          <LinkTo
+            @route="podcast.episode"
+            @models={{array @episode.podcast @episode.slug}}
+            class="material-symbols icon link secondary d-none d-sm-block"
+            title="Läs mer"
+          >expand_content</LinkTo>
+        {{/if}}
+        {{#if this.isLoadingAudio}}
+          <ProgressCircle class="tertiary" />
+        {{else if this.isPlaying}}
+          <span
+            class="material-symbols icon link tertiary"
+            role="button"
+            title="Pausa"
+            {{on "click" this.audio.pause}}
+          >pause</span>
+        {{else}}
+          <span
+            class="material-symbols icon link tertiary"
+            role="button"
+            title="Spela"
+            {{on "click" this.play}}
+          >play_arrow</span>
+        {{/if}}
+        <a href={{@episode.audio-url}} title="Ladda ned">
+          <span class="material-symbols icon link primary">download</span>
+        </a>
+      </div>
+    </div>
+
+    {{yield}}
+  </div>
+</article>

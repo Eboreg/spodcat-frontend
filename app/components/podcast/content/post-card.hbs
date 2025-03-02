@@ -1,0 +1,33 @@
+<article class="podcast-content-card post" ...attributes>
+  <div class="podcast-content-card-contents">
+    <div class="row align-center">
+      <LinkTo
+        @route="podcast.post"
+        @models={{array @post.podcast @post.slug}}
+        @disabled={{not @expand-link}}
+        class="row align-center gap-single fill podcast-content-link-block"
+      >
+        <span class="material-symbols podcast-content-leading-icon secondary">article</span>
+        <div class="fill column gap-quarter">
+          <div class="podcast-content-name">{{@post.name}}</div>
+          <div class="row gap-half">
+            <div class="badge secondary">{{@post.publishedString}}</div>
+          </div>
+        </div>
+      </LinkTo>
+
+      <div class="row gap-single p-single align-center">
+        {{#if @expand-link}}
+          <LinkTo
+            @route="podcast.post"
+            @models={{array @post.podcast @post.slug}}
+            class="material-symbols icon link secondary d-none d-sm-block"
+            title="Läs mer"
+          >expand_content</LinkTo>
+        {{/if}}
+      </div>
+    </div>
+
+    {{yield}}
+  </div>
+</article>

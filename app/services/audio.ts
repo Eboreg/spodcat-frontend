@@ -98,7 +98,7 @@ export default class AudioService extends Service {
 
     @action setAudioElement(element: Audio) {
         this.element = element;
-        if (this.episode) element.setSrc(this.episode["audio-file"]);
+        if (this.episode) element.setSrc(this.episode["audio-url"]);
 
         let listener = this._listeners.shift();
 
@@ -111,7 +111,7 @@ export default class AudioService extends Service {
 
     @action setEpisode(value: EpisodeModel) {
         this.episode = value;
-        this.element?.setSrc(value["audio-file"]);
+        this.element?.setSrc(value["audio-url"]);
     }
 
     @action setPlaybackRate(value: number) {

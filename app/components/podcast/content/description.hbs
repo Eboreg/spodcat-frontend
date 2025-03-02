@@ -1,0 +1,8 @@
+{{#if @model.descriptionIsUndefined}}
+  <div class="podcast-content-description">
+    <ProgressCircle class="icon" />
+  </div>
+{{/if}}
+{{#if @model.description-html}}
+  <div class="podcast-content-description">{{html-safe @model.description-html}}</div>
+{{/if}}

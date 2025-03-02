@@ -1,16 +1,9 @@
-{{page-title this.pageTitle}}
-<Podcast::Base @podcast={{@model.podcast}} class="podcast-episode-detail">
+{{page-title @model.pageTitle}}
+<Podcast::Base @podcast={{@model.podcast}} class="podcast-content-detail">
   <Button @route="podcast" @model={{@model.podcast}} @theme="secondary" @material-icon="arrow_back">
     <span class="label">Till {{@model.podcast.name}}</span>
   </Button>
-  <EpisodeCard @episode={{@model}} @start={{this.start}}>
-    {{#if @model.descriptionIsUndefined}}
-      <div class="episode-description">
-        <ProgressCircle class="icon" />
-      </div>
-    {{/if}}
-    {{#if @model.description-html}}
-      <div class="episode-description">{{html-safe @model.description-html}}</div>
-    {{/if}}
-  </EpisodeCard>
+  <Podcast::Content::EpisodeCard @episode={{@model}} @start={{this.start}}>
+    <Podcast::Content::Description @model={{@model}} />
+  </Podcast::Content::EpisodeCard>
 </Podcast::Base>

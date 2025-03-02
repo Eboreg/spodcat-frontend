@@ -10,6 +10,7 @@ export default class EpisodeModel extends PodcastContentModel {
     @attr declare "dbfs-array": number[];
     @attr declare "audio-content-type": string;
     @attr declare "audio-file-length": number;
+    @attr declare "audio-url": string;
 
     get durationString() {
         return timeString(this["duration-seconds"]);
@@ -19,8 +20,8 @@ export default class EpisodeModel extends PodcastContentModel {
         return this.number != undefined;
     }
 
-    get publishedString() {
-        return this.published?.toLocaleDateString();
+    get isEpisode() {
+        return true;
     }
 
     [Type] = "episode" as const;

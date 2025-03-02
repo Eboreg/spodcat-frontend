@@ -17,5 +17,22 @@ export default class PodcastContentModel extends Model {
         return this.description == undefined;
     }
 
-    [Type]: "podcast-content" | "episode" = "podcast-content" as const;
+    get isEpisode(): boolean {
+        return false;
+    }
+
+    get isPost(): boolean {
+        return false;
+    }
+
+    get pageTitle() {
+        return `${this.name} | ${this.podcast.name}`;
+    }
+
+    get publishedString() {
+        if (this.podcast.language) return this.published?.toLocaleDateString(this.podcast.language);
+        return this.published?.toLocaleDateString();
+    }
+
+    [Type]: "podcast-content" | "episode" | "post" = "podcast-content" as const;
 }

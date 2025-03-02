@@ -22,6 +22,8 @@ import type HeadLayout from "ember-cli-head/addon/components/head-layout";
 import type ButtonContent from "podcast-frontend/components/button/content";
 import type onOutsideClick from "podcast-frontend/modifiers/on-outside-click";
 import type Attribution from "podcast-frontend/components/attribution";
+import type PodcastContentEpisodeCard from "podcast-frontend/components/podcast/content/episode-card";
+import type PodcastContentPostCard from "podcast-frontend/components/podcast/content/post-card";
 
 declare module "@glint/environment-ember-loose/registry" {
     import { HelperLike } from "@glint/template";
@@ -57,5 +59,7 @@ declare module "@glint/environment-ember-loose/registry" {
         ProgressCircle: typeof ProgressCircle;
         VolumeControl: typeof VolumeControl;
         Attribution: typeof Attribution;
+        "Podcast::Content::EpisodeCard": PodcastContentEpisodeCard;
+        "Podcast::Content::PostCard": PodcastContentPostCard;
     }
 }

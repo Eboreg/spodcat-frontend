@@ -12,8 +12,11 @@
   </:before>
   <:default>
     {{#each @podcast.contents as |content|}}
-      {{! TODO: filter for content type etc }}
-      <EpisodeCard @episode={{content}} @expand-link={{true}} />
+      {{#if content.isEpisode}}
+        <Podcast::Content::EpisodeCard @episode={{content}} @expand-link={{true}} />
+      {{else if content.isPost}}
+        <Podcast::Content::PostCard @post={{content}} @expand-link={{true}} />
+      {{/if}}
     {{/each}}
   </:default>
 </Podcast::Base>

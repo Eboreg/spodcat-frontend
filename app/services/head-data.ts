@@ -1,7 +1,7 @@
 import Service from "@ember/service";
 import { tracked } from "@glimmer/tracking";
-import type EpisodeModel from "podcast-frontend/models/episode";
 import type PodcastModel from "podcast-frontend/models/podcast";
+import type PodcastContentModel from "podcast-frontend/models/podcast-content";
 
 export interface Favicon {
     url: string;
@@ -26,7 +26,7 @@ export default class HeadDataService extends Service {
     @tracked declare ogImage?: Image;
     @tracked declare rss?: Rss;
 
-    updateFromEpisode(value: EpisodeModel) {
+    updateFromPodcastContent(value: PodcastContentModel) {
         this.ogTitle = `${value.name} | ${value.podcast.name}`;
         this.ogDescription = value.description || value.podcast.tagline;
         this.updateFromPodcastBase(value.podcast);

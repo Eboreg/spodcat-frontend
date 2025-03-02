@@ -5,6 +5,7 @@ import type RouterService from "@ember/routing/router-service";
 import type Transition from "@ember/routing/transition";
 import { service } from "@ember/service";
 import EpisodeModel from "podcast-frontend/models/episode";
+import type PodcastContentModel from "podcast-frontend/models/podcast-content";
 import type AudioService from "podcast-frontend/services/audio";
 import type HeadDataService from "podcast-frontend/services/head-data";
 
@@ -21,7 +22,7 @@ export default class PodcastEpisodeRoute extends Route<EpisodeModel> {
     }
 
     afterModel(model: EpisodeModel) {
-        this.headData.updateFromEpisode(model);
+        this.headData.updateFromPodcastContent(model as PodcastContentModel);
         if (model["dbfs-array"] && !this.audio.episode) this.audio.setEpisode(model);
     }
 
@@ -32,10 +33,8 @@ export default class PodcastEpisodeRoute extends Route<EpisodeModel> {
             // destroyed. Works in production though:
             if (transition.to?.parent?.params?.["podcast_id"]) {
                 this.router.transitionTo("podcast.index", transition.to.parent.params["podcast_id"]);
-            } else {
-                this.router.transitionTo("home");
+                return false;
             }
-            return false;
         }
         return true;
     }

@@ -178,10 +178,13 @@ $lengths: (
     --mm-background-color: rgba(0, 0, 0, 0.8);
     --mm-content-width: min(980px, calc(100vw - 20px));
     --mm-player-bar-height: 60px;
+    --mm-primary-dark: rgb(147, 13, 40);
     --mm-primary-light: rgb(250, 50, 90);
     --mm-primary: rgb(220, 20, 60);
+    --mm-secondary-dark: rgb(53, 13, 107);
     --mm-secondary-light: rgb(110, 50, 190);
     --mm-secondary: rgb(80, 20, 160);
+    --mm-tertiary-dark: rgb(40, 67, 40);
     --mm-tertiary-light: rgb(90, 130, 90);
     --mm-tertiary: rgb(60, 100, 60);
     --mm-text-color: rgb(238, 238, 238);
@@ -208,7 +211,7 @@ aside {
 body {
     align-items: center;
     background-attachment: fixed !important;
-    background: radial-gradient(circle at 100%, #33d, #333 55%, #f33 75%, #000 85%);
+    background: radial-gradient(circle at 100%, #33d, #333 60%, #f33 80%, #000 90%);
     color: var(--mm-text-color);
     display: flex;
     flex-direction: column;
@@ -242,6 +245,8 @@ footer {
 
 header {
     aspect-ratio: 3/1;
+    border-bottom-color: var(--mm-primary-dark);
+    border-right-color: var(--mm-primary-dark);
     border: 10px dotted var(--mm-primary);
     display: flex;
     flex-direction: column;
@@ -322,29 +327,29 @@ main {
     width: 100%;
 
     @include max(sm) {
-        grid-template-areas: "header" "aside" "episode-container" "attr";
+        grid-template-areas: "header" "aside" "podcast-content-container" "attr";
         grid-template-columns: 1fr;
 
-        &.podcast-episode-detail {
-            grid-template-areas: "header" "episode-container" "aside" "attr";
+        &.podcast-content-detail {
+            grid-template-areas: "header" "podcast-content-container" "aside" "attr";
         }
 
         &.has-before {
-            grid-template-areas: "header" "before" "aside" "episode-container" "attr";
+            grid-template-areas: "header" "before" "aside" "podcast-content-container" "attr";
             grid-template-rows: auto auto auto 1fr;
 
-            &.podcast-episode-detail {
-                grid-template-areas: "header" "before" "episode-container" "aside" "attr";
+            &.podcast-content-detail {
+                grid-template-areas: "header" "before" "podcast-content-container" "aside" "attr";
             }
         }
     }
 
     @include min(md) {
-        grid-template-areas: "header header" "episode-container aside" "episode-container attr";
+        grid-template-areas: "header header" "podcast-content-container aside" "podcast-content-container attr";
         grid-template-columns: 1fr 250px;
 
         &.has-before {
-            grid-template-areas: "header header" "before before" "episode-container aside" "episode-container attr";
+            grid-template-areas: "header header" "before before" "podcast-content-container aside" "podcast-content-container attr";
         }
     }
 }
@@ -523,15 +528,15 @@ main {
 
 .content-grid {
     display: grid;
-    grid-template-areas: "before before" "episode-container aside" "episode-container attr";
+    grid-template-areas: "before before" "podcast-content-container aside" "podcast-content-container attr";
     grid-template-columns: 1fr 250px;
     grid-template-rows: auto auto 1fr;
 
     .before {
         grid-area: before;
     }
-    .episode-container {
-        grid-area: episode-container;
+    .podcast-content-container {
+        grid-area: podcast-content-container;
     }
     aside {
         grid-area: aside;
@@ -588,24 +593,26 @@ main {
     }
 }
 
-.episode-card {
+.podcast-content-card {
+    border-bottom-color: var(--mm-primary-dark);
+    border-right-color: var(--mm-primary-dark);
     border: 3px dashed var(--mm-primary);
 
-    .episode-card-contents {
+    .podcast-content-card-contents {
         background: var(--mm-background-color);
         display: flex;
         flex-direction: column;
     }
 
-    .episode-link-block {
+    .podcast-content-link-block {
         padding: 1rem 0 1rem 1rem;
     }
 
-    .episode-name {
+    .podcast-content-name {
         font-weight: bold;
     }
 
-    .episode-description {
+    .podcast-content-description {
         font-size: 14px;
         line-height: 1.5;
         padding: 0 1rem 1rem 1rem;
@@ -647,14 +654,13 @@ main {
     }
 }
 
-.episode-container {
-    grid-area: episode-container;
+.podcast-content-container {
+    grid-area: podcast-content-container;
 }
 
-.episode-number {
+.podcast-content-leading-icon {
     align-items: center;
     aspect-ratio: 1/1;
-    background: var(--mm-primary);
     border-radius: 100%;
     display: flex;
     font-size: 16px;
@@ -668,6 +674,20 @@ main {
         height: 40px;
         width: 40px;
     }
+
+    &.primary {
+        background: var(--mm-primary);
+    }
+    &.secondary {
+        background: var(--mm-secondary);
+    }
+    &.tertiary {
+        background: var(--mm-tertiary);
+    }
+}
+
+.podcast-content-card.post .podcast-content-leading-icon {
+    font-size: 24px;
 }
 
 .err404 {
@@ -840,6 +860,8 @@ main {
 }
 
 .podcast-description {
+    border-bottom-color: var(--mm-primary-dark);
+    border-right-color: var(--mm-primary-dark);
     border: 5px dashed var(--mm-primary);
 
     .podcast-description-content {
@@ -865,7 +887,7 @@ main {
     aside {
         order: 0;
     }
-    .episode-container {
+    .podcast-content-container {
         flex: 0 0 100%;
         order: 1;
     }
@@ -874,7 +896,7 @@ main {
     }
 
     @include min(md) {
-        .episode-container {
+        .podcast-content-container {
             order: unset;
         }
         aside {
@@ -893,7 +915,9 @@ main {
 
     .popup {
         background-color: var(--mm-background-color-opaque);
+        border-bottom-color: var(--mm-primary-dark);
         border-radius: 5px;
+        border-right-color: var(--mm-primary-dark);
         border: 2px solid var(--mm-primary);
         box-shadow: 0 2px 5px black;
         display: flex;
@@ -921,7 +945,7 @@ main {
 
     .arrow {
         background-color: var(--mm-background-color-opaque);
-        border-color: var(--mm-primary);
+        border-color: var(--mm-primary-dark);
         border-style: solid;
         border-width: 0 2px 2px 0;
         bottom: -6px;
