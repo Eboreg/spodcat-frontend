@@ -8,16 +8,15 @@ export default class PodcastIndexRoute extends Route<PodcastModel> {
     @service declare store: Store;
     @service declare headData: HeadDataService;
 
-    model() {
+    async model() {
         const params = this.paramsFor("podcast") as { podcast_id: string };
 
         return this.store.findRecord<PodcastModel>("podcast", params.podcast_id, {
             include: ["contents", "categories", "links"],
-            reload: true,
         });
     }
 
     afterModel(model: PodcastModel) {
-        this.headData.updateFromPodcast(model);
+        if (model) this.headData.updateFromPodcast(model);
     }
 }

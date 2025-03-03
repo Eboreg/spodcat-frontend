@@ -4,6 +4,7 @@ import Route from "@ember/routing/route";
 import type RouterService from "@ember/routing/router-service";
 import type Transition from "@ember/routing/transition";
 import { service } from "@ember/service";
+import type FastBoot from "ember-cli-fastboot/services/fastboot";
 import type PostModel from "podcast-frontend/models/post";
 import type HeadDataService from "podcast-frontend/services/head-data";
 
@@ -11,11 +12,15 @@ export default class PodcastPostRoute extends Route<PostModel> {
     @service declare store: Store;
     @service declare headData: HeadDataService;
     @service declare router: RouterService;
+    @service declare fastboot: FastBoot;
 
     model(params: { post_id: string }) {
-        return this.store.findRecord<PostModel>("post", params.post_id, {
-            include: ["podcast.categories", "podcast.links", "podcast.owners"],
-        });
+        if (this.fastboot.isFastBoot) {
+            return this.store.findRecord<PostModel>("post", params.post_id, {
+                include: ["podcast.categories", "podcast.links", "podcast.owners", "podcast.contents"],
+            });
+        }
+        return this.store.findRecord<PostModel>("post", params.post_id);
     }
 
     afterModel(model: PostModel) {
