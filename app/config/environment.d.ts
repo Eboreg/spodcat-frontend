@@ -12,6 +12,7 @@ declare const config: {
         API_URL_NAMESPACE: string;
         BACKEND_HOST: string;
         FRONTEND_HOST: string;
+        IS_SINGLETON: boolean; // site hosts just one podcast
     };
 };
 

@@ -3,7 +3,7 @@
     {{#if @podcast.banner}}
       <img src="{{@podcast.banner}}" alt="" class="podcast-banner" />
     {{/if}}
-    <LinkTo class="row gap-single align-center m-single" @route="podcast" @model={{@podcast}}>
+    <LinkTo class="row gap-single align-center m-single" @route={{@podcast.route}} @models={{@podcast.routeModels}}>
       {{#if @podcast.cover-thumbnail}}
         <img src="{{@podcast.cover-thumbnail}}" alt="" class="podcast-cover d-none d-sm-block" />
       {{/if}}

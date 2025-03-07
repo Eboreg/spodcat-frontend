@@ -1,0 +1,23 @@
+{{page-title @episode.pageTitle}}
+<Podcast::Base @podcast={{@podcast}} class="podcast-content-detail" ...attributes>
+  <Button @route={{@podcast.route}} @models={{@podcast.routeModels}} @theme="secondary" @material-icon="arrow_back">
+    <span class="label">Till {{@podcast.name}}</span>
+  </Button>
+  <Podcast::Content::EpisodeCard @episode={{@episode}} @start={{@start}}>
+    <Podcast::Content::Description @model={{@episode}} />
+    {{#if this.showSongs}}
+      {{#if @episode.songs}}
+        <div class="episode-tracklist">
+          <h3>Låtar</h3>
+          {{#each @episode.songs as |song|}}
+            <div class="episode-track" {{on "click" (fn this.onSongClick song)}}>
+              {{#if song.artistString}}{{song.artistString}} –{{/if}}
+              {{song.name}}
+              {{#if song.comment}}({{song.comment}}){{/if}}
+            </div>
+          {{/each}}
+        </div>
+      {{/if}}
+    {{/if}}
+  </Podcast::Content::EpisodeCard>
+</Podcast::Base>

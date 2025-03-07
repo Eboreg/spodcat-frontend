@@ -1,3 +1,4 @@
+import ENV from "podcast-frontend/config/environment";
 import type RouterService from "@ember/routing/router-service";
 import Service from "@ember/service";
 import { service } from "@ember/service";
@@ -58,22 +59,31 @@ export default class HeadDataService extends Service {
         this.ogAudioType = value["audio-content-type"];
         this.musicDuration = value["duration-seconds"].toString();
         this.musicReleaseDate = value.published?.toISOString();
-        this.ogUrl = makeAbsoluteUrl(this.router.urlFor("podcast.episode", value.podcast, value));
         this.ogType = "music.song";
+
+        if (ENV.APP.IS_SINGLETON) this.ogUrl = makeAbsoluteUrl(this.router.urlFor("episode", value));
+        else this.ogUrl = makeAbsoluteUrl(this.router.urlFor("podcast.episode", value.podcast, value));
+
         this.#updateFromPodcastContent(value as PodcastContentModel);
     }
 
     updateFromPodcast(value: PodcastModel) {
         this.ogTitle = value.name;
         this.ogDescription = value.tagline;
-        this.ogUrl = makeAbsoluteUrl(this.router.urlFor("podcast", value));
+
+        if (ENV.APP.IS_SINGLETON) this.ogUrl = makeAbsoluteUrl(this.router.urlFor("home"));
+        else this.ogUrl = makeAbsoluteUrl(this.router.urlFor("podcast", value));
+
         this.#updateFromPodcastBase(value);
     }
 
     updateFromPost(value: PostModel) {
-        this.ogUrl = makeAbsoluteUrl(this.router.urlFor("podcast.post", value.podcast, value));
         this.ogType = "article";
-        this.#updateFromPodcastContent(value);
+
+        if (ENV.APP.IS_SINGLETON) this.ogUrl = makeAbsoluteUrl(this.router.urlFor("post", value));
+        else this.ogUrl = makeAbsoluteUrl(this.router.urlFor("podcast.post", value.podcast, value));
+
+        this.#updateFromPodcastContent(value as PodcastContentModel);
     }
 }
 

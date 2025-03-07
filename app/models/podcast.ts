@@ -1,3 +1,4 @@
+import ENV from "podcast-frontend/config/environment";
 import Model, { attr, hasMany, type AsyncHasMany, type HasMany } from "@ember-data/model";
 import { Type } from "@warp-drive/core-types/symbols";
 import type UserModel from "./user";
@@ -42,6 +43,16 @@ export default class PodcastModel extends Model {
             return { url: this.favicon, contentType: this["favicon-content-type"] };
         }
         return;
+    }
+
+    get route() {
+        if (ENV.APP.IS_SINGLETON) return "home";
+        return "podcast";
+    }
+
+    get routeModels() {
+        if (ENV.APP.IS_SINGLETON) return [];
+        return [this];
     }
 
     get rssData(): Rss | undefined {

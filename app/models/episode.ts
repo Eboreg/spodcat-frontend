@@ -1,3 +1,4 @@
+import ENV from "podcast-frontend/config/environment";
 import { attr, hasMany, type HasMany } from "@ember-data/model";
 import { Type } from "@warp-drive/core-types/symbols";
 import { timeString } from "podcast-frontend/utils";
@@ -26,6 +27,16 @@ export default class EpisodeModel extends PodcastContentModel {
 
     get isEpisode() {
         return true;
+    }
+
+    get route() {
+        if (ENV.APP.IS_SINGLETON) return "episode";
+        return "podcast.episode";
+    }
+
+    get routeModels() {
+        if (ENV.APP.IS_SINGLETON) return [this.slug];
+        return [this.podcast, this.slug];
     }
 
     [Type] = "episode" as const;

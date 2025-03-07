@@ -5,8 +5,8 @@
 
   <div class="row align-center">
     <LinkTo
-      @route="podcast.episode"
-      @models={{array @episode.podcast @episode}}
+      @route={{@episode.route}}
+      @models={{@episode.routeModels}}
       class="row gap-single align-center episode ellipsis oneliner"
     >
       {{#if @episode.hasNumber}}

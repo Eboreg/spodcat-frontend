@@ -2,8 +2,8 @@
   <div class="podcast-content-card-contents">
     <div class="row align-center">
       <LinkTo
-        @route="podcast.post"
-        @models={{array @post.podcast @post.slug}}
+        @route={{@post.route}}
+        @models={{@post.routeModels}}
         @disabled={{not @expand-link}}
         class="row align-center gap-single fill podcast-content-link-block"
       >
@@ -19,8 +19,8 @@
       <div class="row gap-single p-single align-center">
         {{#if @expand-link}}
           <LinkTo
-            @route="podcast.post"
-            @models={{array @post.podcast @post.slug}}
+            @route={{@post.route}}
+            @models={{@post.routeModels}}
             class="material-symbols icon link secondary d-none d-sm-block"
             title="Läs mer"
           >expand_content</LinkTo>
