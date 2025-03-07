@@ -1,6 +1,8 @@
 import { action } from "@ember/object";
 import Service from "@ember/service";
+import { service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
+import type FastBoot from "ember-cli-fastboot/services/fastboot";
 import type Audio from "podcast-frontend/components/audio";
 import type EpisodeModel from "podcast-frontend/models/episode";
 import { timeString } from "podcast-frontend/utils";
@@ -14,11 +16,21 @@ interface AudioEventListener {
 export default class AudioService extends Service {
     _listeners: AudioEventListener[] = [];
 
+    @service declare fastboot: FastBoot;
+
     @tracked bufferProgress: number = 0;
     @tracked currentProgress: number = 0;
     @tracked element?: Audio;
     @tracked episode?: EpisodeModel;
     @tracked isLoadingEpisode?: string;
+
+    constructor(...args: ConstructorParameters<typeof Service>) {
+        super(...args);
+        if (this.mediaSessionAvailable) {
+            navigator.mediaSession.metadata = null;
+            navigator.mediaSession.setPositionState();
+        }
+    }
 
     get currentTimeString() {
         return timeString(this.element?.currentTime || 0);
@@ -26,6 +38,10 @@ export default class AudioService extends Service {
 
     get playbackRate() {
         return this.element?.playbackRate || 1;
+    }
+
+    get mediaSessionAvailable() {
+        return !this.fastboot.isFastBoot && "mediaSession" in navigator;
     }
 
     get volume() {
@@ -127,6 +143,14 @@ export default class AudioService extends Service {
     @action setEpisode(value: EpisodeModel) {
         this.episode = value;
         this.element?.setSrc(value["audio-url"]);
+
+        if (!this.fastboot.isFastBoot && "mediaSession" in navigator) {
+            navigator.mediaSession.metadata = new MediaMetadata({
+                title: value.name,
+                artist: value.podcast.name,
+                artwork: value.podcast.coverMediaImages,
+            });
+        }
     }
 
     @action setPlaybackRate(value: number) {

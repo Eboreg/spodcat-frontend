@@ -16,6 +16,7 @@ export interface AudioSignature {
 
 export default class Audio extends Component<AudioSignature> {
     @service declare fastboot: FastBoot;
+
     declare audioElement: HTMLAudioElement;
 
     @tracked bufferEnd: number = 0;
@@ -34,6 +35,30 @@ export default class Audio extends Component<AudioSignature> {
                 this.onKeyDown(event);
             });
         }
+        if (this.mediaSessionAvailable) {
+            navigator.mediaSession.setActionHandler("play", () => {
+                this.play();
+            });
+            navigator.mediaSession.setActionHandler("pause", () => {
+                this.pause();
+            });
+            navigator.mediaSession.setActionHandler("stop", () => {
+                this.pause();
+            });
+            navigator.mediaSession.setActionHandler("seekbackward", (details) => {
+                this.seek((details.seekOffset || 10) * -1);
+            });
+            navigator.mediaSession.setActionHandler("seekforward", (details) => {
+                this.seek(details.seekOffset || 30);
+            });
+            navigator.mediaSession.setActionHandler("seekto", (details) => {
+                if (details.seekTime) this.seekToTime(details.seekTime, details.fastSeek);
+            });
+        }
+    }
+
+    get mediaSessionAvailable() {
+        return !this.fastboot.isFastBoot && "mediaSession" in navigator;
     }
 
     @action on(eventType: string, callback: (event: Event) => any) {
@@ -46,6 +71,18 @@ export default class Audio extends Component<AudioSignature> {
             this.audioElement.removeEventListener(eventType, finalCallback);
         };
         this.audioElement.addEventListener(eventType, finalCallback);
+    }
+
+    @action onDurationChange() {
+        if (!isNaN(this.audioElement.duration)) {
+            this.duration = this.audioElement.duration;
+            this.setMediaSessionPositionState();
+        }
+    }
+
+    @action onEnded() {
+        this.isPlaying = false;
+        if (this.mediaSessionAvailable) navigator.mediaSession.playbackState = "none";
     }
 
     @action onKeyDown(event: KeyboardEvent) {
@@ -64,12 +101,40 @@ export default class Audio extends Component<AudioSignature> {
         event.preventDefault();
     }
 
+    @action onPause() {
+        this.isPlaying = false;
+        if (this.mediaSessionAvailable) navigator.mediaSession.playbackState = "paused";
+    }
+
+    @action onPlay() {
+        this.isPlaying = true;
+        if (this.mediaSessionAvailable) navigator.mediaSession.playbackState = "playing";
+    }
+
+    @action onRateChange() {
+        this.playbackRate = this.audioElement.playbackRate;
+        this.setMediaSessionPositionState();
+    }
+
     @action onSeeked() {
         this.isSeeking = false;
     }
 
     @action onSeeking() {
         this.isSeeking = true;
+    }
+
+    @action onTimeUpdate() {
+        if (this.audioElement.currentTime != this.currentTime) {
+            this.currentTime = this.audioElement.currentTime;
+            if (this.args["on-time-update"]) this.args["on-time-update"](this.currentTime);
+            this.setMediaSessionPositionState();
+        }
+    }
+
+    @action onVolumeChange() {
+        this.volume = Math.sqrt(this.audioElement.volume);
+        this.isMuted = this.audioElement.muted;
     }
 
     @action pause() {
@@ -85,14 +150,6 @@ export default class Audio extends Component<AudioSignature> {
         else this.play();
     }
 
-    @action refreshAudioData() {
-        if (!isNaN(this.audioElement.duration)) this.duration = this.audioElement.duration;
-        this.isPlaying = !this.audioElement.paused && !this.audioElement.ended;
-        this.refreshCurrentTime();
-        this.refreshVolume();
-        this.refreshBufferEnd();
-    }
-
     @action refreshBufferEnd() {
         const bufferEnd = Math.max(
             ...[...Array(this.audioElement.buffered.length).keys()].map((i: number) =>
@@ -106,18 +163,6 @@ export default class Audio extends Component<AudioSignature> {
         }
     }
 
-    @action refreshCurrentTime() {
-        if (this.audioElement.currentTime != this.currentTime) {
-            this.currentTime = this.audioElement.currentTime;
-            if (this.args["on-time-update"]) this.args["on-time-update"](this.currentTime);
-        }
-    }
-
-    @action refreshVolume() {
-        this.volume = Math.sqrt(this.audioElement.volume);
-        this.isMuted = this.audioElement.muted;
-    }
-
     @action seek(seconds: number) {
         const time = coerceBetween(this.currentTime + seconds, 0, this.duration);
 
@@ -129,13 +174,18 @@ export default class Audio extends Component<AudioSignature> {
         this.seekToTime(this.duration * progress);
     }
 
-    @action seekToTime(time: number) {
+    @action seekToTime(time: number, fastSeek?: boolean) {
         this.currentTime = time;
-        this.audioElement.currentTime = time;
+        if (fastSeek) this.audioElement.fastSeek(time);
+        else this.audioElement.currentTime = time;
     }
 
     @action setAudioElement(element: HTMLAudioElement) {
         this.audioElement = element;
+        this.playbackRate = this.audioElement.playbackRate;
+        if (!isNaN(this.audioElement.duration)) this.duration = this.audioElement.duration;
+        this.currentTime = this.audioElement.currentTime;
+        this.onVolumeChange();
         if (this.args["on-add"]) this.args["on-add"](this);
     }
 
@@ -160,5 +210,15 @@ export default class Audio extends Component<AudioSignature> {
 
         this.isMuted = isMuted;
         this.audioElement.muted = isMuted;
+    }
+
+    setMediaSessionPositionState() {
+        if (this.mediaSessionAvailable) {
+            navigator.mediaSession.setPositionState({
+                duration: this.audioElement.duration,
+                playbackRate: this.audioElement.playbackRate,
+                position: this.audioElement.currentTime,
+            });
+        }
     }
 }

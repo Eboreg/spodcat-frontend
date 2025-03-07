@@ -12,7 +12,13 @@ export default class PodcastModel extends Model {
     @attr declare "banner-height"?: number;
     @attr declare "banner-width"?: number;
     @attr declare cover?: string;
+    @attr declare "cover-height"?: number;
+    @attr declare "cover-width"?: number;
+    @attr declare "cover-mimetype"?: string;
     @attr declare "cover-thumbnail"?: string;
+    @attr declare "cover-thumbnail-height"?: number;
+    @attr declare "cover-thumbnail-width"?: number;
+    @attr declare "cover-thumbnail-mimetype"?: string;
     @attr declare favicon?: string;
     @attr declare "favicon-content-type"?: string;
     @attr declare language?: string;
@@ -36,6 +42,27 @@ export default class PodcastModel extends Model {
             return { url: this.banner, height: this["banner-height"], width: this["banner-width"] };
         }
         return;
+    }
+
+    get coverMediaImages(): MediaImage[] {
+        const result: MediaImage[] = [];
+
+        if (this.cover) {
+            result.push({
+                src: this.cover,
+                sizes: `${this["cover-height"]}x${this["cover-width"]}`,
+                type: this["cover-mimetype"],
+            });
+        }
+        if (this["cover-thumbnail"]) {
+            result.push({
+                src: this["cover-thumbnail"],
+                sizes: `${this["cover-thumbnail-width"]}x${this["cover-thumbnail-height"]}`,
+                type: this["cover-thumbnail-mimetype"],
+            });
+        }
+
+        return result;
     }
 
     get faviconData(): Favicon | undefined {
