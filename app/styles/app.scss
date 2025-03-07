@@ -729,13 +729,16 @@ main {
 }
 
 .err404 {
-    height: 100%;
-    display: flex;
     align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
 
     h1 {
         font-size: calc(100dvw * 0.3 * 1.5);
         line-height: 1;
+        margin: 0;
     }
 }
 

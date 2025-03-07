@@ -17,4 +17,5 @@ Router.map(function () {
         this.route("episode", { path: "episode/:episode_id" });
         this.route("post", { path: "post/:post_id" });
     });
+    this.route("404", { path: "/*path" });
 });

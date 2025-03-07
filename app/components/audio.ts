@@ -49,7 +49,7 @@ export default class Audio extends Component<AudioSignature> {
     }
 
     @action onKeyDown(event: KeyboardEvent) {
-        if (event.metaKey) return;
+        if (event.metaKey || event.altKey) return;
 
         if (event.key == " " && !event.ctrlKey) {
             this.playOrPause();
