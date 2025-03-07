@@ -102,6 +102,9 @@ $lengths: (
             .p-#{$sname}-#{$lname} {
                 padding: #{$length};
             }
+            .pb-#{$sname}-#{$lname} {
+                padding-bottom: #{$length};
+            }
             .px-#{$sname}-#{$lname} {
                 padding-left: #{$length};
                 padding-right: #{$length};
@@ -131,6 +134,9 @@ $lengths: (
 
     .p-#{$lname} {
         padding: #{$length};
+    }
+    .pb-#{$lname} {
+        padding-bottom: #{$length};
     }
     .px-#{$lname} {
         padding-left: #{$length};
@@ -392,6 +398,24 @@ main {
     flex-grow: 1;
 }
 
+.keyboard-key {
+    padding: 0 10px;
+    background: linear-gradient(to right top, #444, #666);
+    border-style: outset;
+    border-color: #666;
+    border-width: 2px 5px 5px 2px;
+    border-radius: 5px;
+    display: inline-block;
+    height: 25px;
+    display: flex;
+    align-items: center;
+
+    .text {
+        font-size: 12px;
+        font-family: monospace;
+    }
+}
+
 .oneliner {
     white-space: nowrap;
 }
@@ -612,6 +636,20 @@ main {
         font-weight: bold;
     }
 
+    .episode-tracklist {
+        padding: 0 1rem 1rem 1rem;
+
+        h3 {
+            margin-top: 0;
+        }
+
+        .episode-track {
+            cursor: pointer;
+            font-size: 14px;
+            margin: 0.5rem 0;
+        }
+    }
+
     .podcast-content-description {
         font-size: 14px;
         line-height: 1.5;
@@ -817,7 +855,7 @@ main {
     padding: 0 10px;
     position: relative;
 
-    .row {
+    & > .row {
         height: var(--mm-player-bar-height);
     }
 
@@ -842,9 +880,11 @@ main {
         height: 30px;
         overflow: hidden;
 
-        @include min(sm) {
-            font-size: 40px;
-            height: 40px;
+        &.larger {
+            @include min(sm) {
+                font-size: 40px;
+                height: 40px;
+            }
         }
     }
 
@@ -922,7 +962,6 @@ main {
         box-shadow: 0 2px 5px black;
         display: flex;
         flex-direction: column;
-        padding-bottom: 5px;
 
         .popup-header {
             border-bottom: 1px solid var(--mm-primary);

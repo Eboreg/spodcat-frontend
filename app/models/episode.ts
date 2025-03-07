@@ -1,7 +1,8 @@
-import { attr } from "@ember-data/model";
+import { attr, hasMany, type HasMany } from "@ember-data/model";
 import { Type } from "@warp-drive/core-types/symbols";
 import { timeString } from "podcast-frontend/utils";
 import PodcastContentModel from "./podcast-content";
+import type EpisodeSongModel from "./episode-song";
 
 export default class EpisodeModel extends PodcastContentModel {
     @attr declare number?: number;
@@ -11,6 +12,9 @@ export default class EpisodeModel extends PodcastContentModel {
     @attr declare "audio-content-type": string;
     @attr declare "audio-file-length": number;
     @attr declare "audio-url": string;
+
+    @hasMany<EpisodeSongModel>("episode-song", { async: false, inverse: "episode" })
+    declare songs: HasMany<EpisodeSongModel>;
 
     get durationString() {
         return timeString(this["duration-seconds"]);

@@ -18,6 +18,7 @@ export default class AudioService extends Service {
     @tracked currentProgress: number = 0;
     @tracked element?: Audio;
     @tracked episode?: EpisodeModel;
+    @tracked isLoadingEpisode?: string;
 
     get currentTimeString() {
         return timeString(this.element?.currentTime || 0);
@@ -82,6 +83,20 @@ export default class AudioService extends Service {
 
     @action play() {
         this.element?.play();
+    }
+
+    @action async playEpisode(episode: EpisodeModel, start?: number, alwaysSeek?: boolean) {
+        if (this.episode != episode) {
+            this.isLoadingEpisode = episode.slug;
+            this.once("play", () => {
+                this.isLoadingEpisode = undefined;
+            });
+            if (episode["dbfs-array"] == undefined) await episode.reload();
+            this.setEpisode(episode);
+            if (start && !alwaysSeek) this.seekToTime(start);
+        }
+        if (start && alwaysSeek) this.seekToTime(start);
+        this.play();
     }
 
     @action playOrPause() {

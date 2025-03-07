@@ -21,12 +21,23 @@
         <div class="small ellipsis">{{@episode.podcast.name}}</div>
       </div>
     </LinkTo>
+
     {{#if this.audio.isSeeking}}
       <ProgressCircle />
     {{else if this.audio.isPlaying}}
-      <span class="material-symbols button" role="button" {{on "click" this.audio.pause}} title="Pausa">pause</span>
+      <span
+        class="material-symbols button larger"
+        role="button"
+        {{on "click" this.audio.pause}}
+        title="Pausa"
+      >pause</span>
     {{else}}
-      <span class="material-symbols button" role="button" {{on "click" this.audio.play}} title="Spela">play_arrow</span>
+      <span
+        class="material-symbols button larger"
+        role="button"
+        {{on "click" this.audio.play}}
+        title="Spela"
+      >play_arrow</span>
     {{/if}}
 
     <PlayerBar::Expanded @episode={{@episode}} class="d-none d-xl-flex fill" />

@@ -1,4 +1,4 @@
-<div class="pos-relative" {{on-outside-click this.onOutsideClick}}>
+<div class="pos-relative" {{on-outside-click this.closePopup}}>
   <span
     class="material-symbols button"
     role="button"
@@ -7,22 +7,18 @@
   >settings_timelapse</span>
 
   {{#if this.popupVisible}}
-    <div class="popup-container">
-      <div class="popup">
-        <div class="popup-header">Hastighet</div>
-        {{#each this.playbackRates as |rate|}}
-          <div class="popup-row" {{on "click" (fn this.onRateClick rate.rate)}}>
-            <div class="popup-row-check">
-              {{#if (eq rate.rate this.audio.playbackRate)}}
-                <span class="material-symbols">check</span>
-              {{/if}}
-            </div>
-            <div class="popup-row-label">{{rate.label}}</div>
+    <Popup class="pb-half">
+      <div class="popup-header">Hastighet</div>
+      {{#each this.playbackRates as |rate|}}
+        <div class="popup-row" {{on "click" (fn this.onRateClick rate.rate)}}>
+          <div class="popup-row-check">
+            {{#if (eq rate.rate this.audio.playbackRate)}}
+              <span class="material-symbols">check</span>
+            {{/if}}
           </div>
-        {{/each}}
-      </div>
-      <div class="arrow"></div>
-    </div>
+          <div class="popup-row-label">{{rate.label}}</div>
+        </div>
+      {{/each}}
+    </Popup>
   {{/if}}
-
 </div>

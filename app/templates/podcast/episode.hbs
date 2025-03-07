@@ -5,5 +5,17 @@
   </Button>
   <Podcast::Content::EpisodeCard @episode={{@model}} @start={{this.start}}>
     <Podcast::Content::Description @model={{@model}} />
+    {{#if @model.songs}}
+      <div class="episode-tracklist">
+        <h3>Låtar</h3>
+        {{#each @model.songs as |song|}}
+          <div class="episode-track" {{on "click" (fn this.onSongClick song)}}>
+            {{#if song.artistString}}{{song.artistString}} –{{/if}}
+            {{song.name}}
+            {{#if song.comment}}({{song.comment}}){{/if}}
+          </div>
+        {{/each}}
+      </div>
+    {{/if}}
   </Podcast::Content::EpisodeCard>
 </Podcast::Base>

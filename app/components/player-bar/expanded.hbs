@@ -4,6 +4,44 @@
     <Dbfs::Bar @episode={{@episode}} />
     <div class="small d-none d-sm-block">{{this.audio.durationString}}</div>
   </div>
+
   <VolumeControl />
   <PlaybackRateControl />
+
+  <div class="pos-relative" {{on-outside-click this.closeKeyboardHelp}}>
+    <span
+      class="material-symbols button"
+      role="button"
+      {{on "click" this.toggleKeyboardHelp}}
+      title="Tangentbordskommandon"
+    >keyboard</span>
+    {{#if this.isKeyboardHelpOpen}}
+      <Popup class="gap-half p-single">
+        <div class="oneliner row align-center gap-half">
+          <div class="keyboard-key"><span class="text">Mellanslag</span></div>
+          <span>Spela/pausa</span>
+        </div>
+        <div class="oneliner row align-center gap-half">
+          <div class="keyboard-key"><span class="material-symbols">arrow_left</span></div>
+          <span>Bakåt 10 sekunder</span>
+        </div>
+        <div class="oneliner row align-center gap-half">
+          <div class="keyboard-key"><span class="material-symbols">arrow_right</span></div>
+          <span>Framåt 30 sekunder</span>
+        </div>
+        <div class="oneliner row align-center gap-half">
+          <div class="keyboard-key"><span class="text">Ctrl</span></div>
+          +
+          <div class="keyboard-key"><span class="material-symbols">arrow_left</span></div>
+          <span>Bakåt 60 sekunder</span>
+        </div>
+        <div class="oneliner row align-center gap-half">
+          <div class="keyboard-key"><span class="text">Ctrl</span></div>
+          +
+          <div class="keyboard-key"><span class="material-symbols">arrow_right</span></div>
+          <span>Framåt 180 sekunder</span>
+        </div>
+      </Popup>
+    {{/if}}
+  </div>
 </div>

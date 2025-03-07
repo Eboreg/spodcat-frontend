@@ -12,7 +12,7 @@ export default class VolumeControl extends Component<VolumeControlSignature> {
     @service declare audio: AudioService;
     @tracked popupVisible: boolean = false;
 
-    @action onOutsideClick() {
+    @action closePopup() {
         this.popupVisible = false;
     }
 

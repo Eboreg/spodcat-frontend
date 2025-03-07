@@ -27,7 +27,7 @@ export default class PlaybackRateControl extends Component<PlaybackRateControlSi
     @service declare audio: AudioService;
     @tracked popupVisible: boolean = false;
 
-    @action onOutsideClick() {
+    @action closePopup() {
         this.popupVisible = false;
     }
 

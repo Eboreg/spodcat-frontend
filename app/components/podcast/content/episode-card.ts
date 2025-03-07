@@ -1,7 +1,6 @@
 import { action } from "@ember/object";
 import { service } from "@ember/service";
 import Component from "@glimmer/component";
-import { tracked } from "@glimmer/tracking";
 import type EpisodeModel from "podcast-frontend/models/episode";
 import type AudioService from "podcast-frontend/services/audio";
 
@@ -19,7 +18,10 @@ export interface PodcastContentEpisodeCardSignature {
 
 export default class PodcastContentEpisodeCard extends Component<PodcastContentEpisodeCardSignature> {
     @service declare audio: AudioService;
-    @tracked isLoadingAudio: boolean = false;
+
+    get isLoadingAudio() {
+        return this.audio.isLoadingEpisode == this.args.episode.slug;
+    }
 
     get isPlaying() {
         return this.audio.episode == this.args.episode && this.audio.isPlaying;
@@ -33,16 +35,7 @@ export default class PodcastContentEpisodeCard extends Component<PodcastContentE
         return;
     }
 
-    @action async play() {
-        if (this.audio.episode != this.args.episode) {
-            this.isLoadingAudio = true;
-            this.audio.once("play", () => {
-                this.isLoadingAudio = false;
-            });
-            if (this.args.episode["dbfs-array"] == undefined) await this.args.episode.reload();
-            this.audio.setEpisode(this.args.episode);
-            if (this.start) this.audio.seekToTime(this.start);
-        }
-        this.audio.play();
+    @action play() {
+        void this.audio.playEpisode(this.args.episode, this.start);
     }
 }

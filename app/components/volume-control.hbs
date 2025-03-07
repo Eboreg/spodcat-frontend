@@ -1,6 +1,6 @@
 <VolumeControl::Inner class="d-none d-lg-flex" />
 
-<div class="d-lg-none pos-relative" {{on-outside-click this.onOutsideClick}}>
+<div class="d-lg-none pos-relative" {{on-outside-click this.closePopup}}>
   <span class="material-symbols button" role="button" {{on "click" this.togglePopup}} title="Volym">
     {{#if this.audio.isMuted}}
       volume_off
@@ -10,11 +10,8 @@
   </span>
 
   {{#if this.popupVisible}}
-    <div class="popup-container">
-      <div class="popup volume-control-popup">
-        <VolumeControl::Inner />
-      </div>
-      <div class="arrow"></div>
-    </div>
+    <Popup class="volume-control-popup">
+      <VolumeControl::Inner />
+    </Popup>
   {{/if}}
 </div>

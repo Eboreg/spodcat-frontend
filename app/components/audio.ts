@@ -1,6 +1,8 @@
 import { action } from "@ember/object";
+import { service } from "@ember/service";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
+import type FastBoot from "ember-cli-fastboot/services/fastboot";
 import { coerceBetween } from "podcast-frontend/utils";
 
 export interface AudioSignature {
@@ -13,6 +15,7 @@ export interface AudioSignature {
 }
 
 export default class Audio extends Component<AudioSignature> {
+    @service declare fastboot: FastBoot;
     declare audioElement: HTMLAudioElement;
 
     @tracked bufferEnd: number = 0;
@@ -23,6 +26,15 @@ export default class Audio extends Component<AudioSignature> {
     @tracked isSeeking: boolean = false;
     @tracked playbackRate: number = 1;
     @tracked volume: number = 0;
+
+    constructor(...args: ConstructorParameters<typeof Component<AudioSignature>>) {
+        super(...args);
+        if (!this.fastboot.isFastBoot) {
+            document.addEventListener("keydown", (event) => {
+                this.onKeyDown(event);
+            });
+        }
+    }
 
     @action on(eventType: string, callback: (event: Event) => any) {
         this.audioElement.addEventListener(eventType, callback);
@@ -123,9 +135,6 @@ export default class Audio extends Component<AudioSignature> {
     }
 
     @action setAudioElement(element: HTMLAudioElement) {
-        document.addEventListener("keydown", (event) => {
-            this.onKeyDown(event);
-        });
         this.audioElement = element;
         if (this.args["on-add"]) this.args["on-add"](this);
     }

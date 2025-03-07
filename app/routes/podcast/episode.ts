@@ -19,10 +19,10 @@ export default class PodcastEpisodeRoute extends Route<EpisodeModel> {
     model(params: { episode_id: string }) {
         if (this.fastboot.isFastBoot) {
             return this.store.findRecord<EpisodeModel>("episode", params.episode_id, {
-                include: ["podcast.categories", "podcast.links", "podcast.owners", "podcast.contents"],
+                include: ["podcast.categories", "podcast.links", "podcast.owners", "podcast.contents", "songs.artists"],
             });
         }
-        return this.store.findRecord<EpisodeModel>("episode", params.episode_id);
+        return this.store.findRecord<EpisodeModel>("episode", params.episode_id, { include: ["songs.artists"] });
     }
 
     afterModel(model: EpisodeModel) {
