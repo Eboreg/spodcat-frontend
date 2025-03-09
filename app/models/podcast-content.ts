@@ -13,7 +13,7 @@ export default class PodcastContentModel extends Model {
     @belongsTo<PodcastModel>("podcast", { async: false, inverse: "contents", as: "podcast-content" })
     declare podcast: PodcastModel;
 
-    get descriptionIsUndefined() {
+    get descriptionIsLoading() {
         return this.description == undefined;
     }
 

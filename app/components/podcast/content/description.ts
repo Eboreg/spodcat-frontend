@@ -5,7 +5,10 @@ export interface PodcastContentDescriptionSignature {
     Args: {
         model: PodcastContentModel;
     };
-    Element: null;
+    Element: HTMLDivElement;
+    Blocks: {
+        default: [];
+    };
 }
 
 export default templateOnly<PodcastContentDescriptionSignature>();

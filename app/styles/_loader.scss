@@ -1,0 +1,51 @@
+@keyframes rotate {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes animate-stroke {
+    0% {
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0;
+    }
+    50% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -35;
+    }
+    100% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -124;
+    }
+}
+
+.loader {
+    aspect-ratio: 1/1;
+    line-height: 1;
+
+    .progress-circle {
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+        animation-name: rotate;
+
+        .circle {
+            stroke-dasharray: 10, 10;
+            animation-name: animate-stroke;
+            animation-timing-function: ease-in-out;
+            animation-iteration-count: infinite;
+            fill: none;
+            stroke: var(--mm-text-color);
+            stroke-linecap: round;
+        }
+    }
+
+    &.primary .circle {
+        stroke: var(--mm-primary) !important;
+    }
+    &.secondary .circle {
+        stroke: var(--mm-secondary) !important;
+    }
+    &.tertiary .circle {
+        stroke: var(--mm-tertiary) !important;
+    }
+}

@@ -1,0 +1,14 @@
+@use "sass:map";
+@use "variables" as *;
+
+@mixin max($size) {
+    @media screen and (max-width: map.get($max-sizes, $size)) {
+        @content;
+    }
+}
+
+@mixin min($size) {
+    @media screen and (min-width: map.get($min-sizes, $size)) {
+        @content;
+    }
+}

@@ -1,8 +1,11 @@
-{{#if @model.descriptionIsUndefined}}
-  <div class="podcast-content-description">
-    <ProgressCircle class="icon" />
-  </div>
-{{/if}}
-{{#if @model.description-html}}
-  <div class="podcast-content-description">{{html-safe @model.description-html}}</div>
-{{/if}}
+<div class="podcast-content-description" ...attributes>
+  {{#if @model.description-html}}
+    {{html-safe @model.description-html}}
+  {{/if}}
+
+  {{yield}}
+
+  {{#if @model.descriptionIsLoading}}
+    <ProgressCircle class="icon mb-single" />
+  {{/if}}
+</div>

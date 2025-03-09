@@ -1,0 +1,41 @@
+$max-sizes: (
+    "xs": "575px",
+    "sm": "767px",
+    "md": "991px",
+    "lg": "1199px",
+    "xl": "1399px",
+);
+
+$min-sizes: (
+    "sm": "576px",
+    "md": "768px",
+    "lg": "992px",
+    "xl": "1200px",
+    "xxl": "1400px",
+);
+
+$lengths: (
+    "quarter": 0.25rem,
+    "half": 0.5rem,
+    "single": 1rem,
+    "double": 2rem,
+    "3x": 3rem,
+    "4x": 4rem,
+);
+
+:root {
+    --mm-background-color-opaque: #111;
+    --mm-background-color: rgba(0, 0, 0, 0.8);
+    --mm-content-width: min(980px, calc(100dvw - 20px));
+    --mm-player-bar-height: 60px;
+    --mm-primary-dark: rgb(147, 13, 40);
+    --mm-primary-light: rgb(250, 50, 90);
+    --mm-primary: rgb(220, 20, 60);
+    --mm-secondary-dark: rgb(53, 13, 107);
+    --mm-secondary-light: rgb(110, 50, 190);
+    --mm-secondary: rgb(80, 20, 160);
+    --mm-tertiary-dark: rgb(40, 67, 40);
+    --mm-tertiary-light: rgb(90, 130, 90);
+    --mm-tertiary: rgb(60, 100, 60);
+    --mm-text-color: rgb(238, 238, 238);
+}

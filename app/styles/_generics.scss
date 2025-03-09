@@ -1,0 +1,166 @@
+@use "variables" as *;
+@use "mixins";
+
+/** display ******************************************************************/
+
+.d-none {
+    display: none !important;
+}
+.d-block {
+    display: block !important;
+}
+.d-flex {
+    display: flex !important;
+}
+
+@each $sname, $size in $min-sizes {
+    @include mixins.min(#{$sname}) {
+        .d-#{$sname}-none {
+            display: none !important;
+        }
+        .d-#{$sname}-block {
+            display: block !important;
+        }
+        .d-#{$sname}-flex {
+            display: flex !important;
+        }
+    }
+}
+
+/** gap/margin/padding *******************************************************/
+
+@each $lname, $length in $lengths {
+    @each $sname, $size in $min-sizes {
+        @include mixins.min(#{$sname}) {
+            .gap-#{$sname}-#{$lname} {
+                gap: #{$length};
+            }
+
+            .m-#{$sname}-#{$lname} {
+                margin: #{$length};
+            }
+            .mx-#{$sname}-#{$lname} {
+                margin-left: #{$length};
+                margin-right: #{$length};
+            }
+            .my-#{$sname}-#{$lname} {
+                margin-top: #{$length};
+                margin-bottom: #{$length};
+            }
+
+            .p-#{$sname}-#{$lname} {
+                padding: #{$length};
+            }
+            .pb-#{$sname}-#{$lname} {
+                padding-bottom: #{$length};
+            }
+            .px-#{$sname}-#{$lname} {
+                padding-left: #{$length};
+                padding-right: #{$length};
+            }
+            .py-#{$sname}-#{$lname} {
+                padding-top: #{$length};
+                padding-bottom: #{$length};
+            }
+        }
+    }
+
+    .gap-#{$lname} {
+        gap: #{$length};
+    }
+
+    .m-#{$lname} {
+        margin: #{$length};
+    }
+    .mb-#{$lname} {
+        margin-bottom: #{$length};
+    }
+    .mx-#{$lname} {
+        margin-left: #{$length};
+        margin-right: #{$length};
+    }
+    .my-#{$lname} {
+        margin-top: #{$length};
+        margin-bottom: #{$length};
+    }
+
+    .p-#{$lname} {
+        padding: #{$length};
+    }
+    .pb-#{$lname} {
+        padding-bottom: #{$length};
+    }
+    .px-#{$lname} {
+        padding-left: #{$length};
+        padding-right: #{$length};
+    }
+    .py-#{$lname} {
+        padding-top: #{$length};
+        padding-bottom: #{$length};
+    }
+}
+
+/** GENERIC CLASSES **********************************************************/
+
+.align-center {
+    align-items: center;
+}
+
+.align-start {
+    align-items: start;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+}
+
+.content-width {
+    width: var(--mm-content-width);
+}
+
+.ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.fill {
+    flex-grow: 1;
+}
+
+.oneliner {
+    white-space: nowrap;
+}
+
+.pos-absolute {
+    position: absolute;
+}
+
+.pos-relative {
+    position: relative;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.small {
+    font-size: 12px;
+
+    @include mixins.min(sm) {
+        font-size: 14px;
+    }
+}
+
+.text-center {
+    text-align: center;
+}
+
+.w-100 {
+    width: 100%;
+}
