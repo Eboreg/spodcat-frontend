@@ -4,7 +4,7 @@
       <LinkTo
         @route={{@post.route}}
         @models={{@post.routeModels}}
-        @disabled={{not @expand-link}}
+        @disabled={{@expand}}
         class="row align-center gap-single fill podcast-content-link-block"
       >
         <span class="material-symbols podcast-content-leading-icon secondary">article</span>
@@ -15,19 +15,7 @@
           </div>
         </div>
       </LinkTo>
-
-      <div class="row gap-single p-single align-center">
-        {{#if @expand-link}}
-          <LinkTo
-            @route={{@post.route}}
-            @models={{@post.routeModels}}
-            class="material-symbols icon link secondary d-none d-sm-block"
-            title="Läs mer"
-          >expand_content</LinkTo>
-        {{/if}}
-      </div>
     </div>
-
     {{yield}}
   </div>
 </article>

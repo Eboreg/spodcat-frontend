@@ -13,9 +13,9 @@
   <:default>
     {{#each @podcast.contents as |content|}}
       {{#if content.isEpisode}}
-        <Podcast::Content::EpisodeCard @episode={{content}} @expand-link={{true}} />
+        <Podcast::Content::EpisodeCard @episode={{content}} @expand={{false}} />
       {{else if content.isPost}}
-        <Podcast::Content::PostCard @post={{content}} @expand-link={{true}} />
+        <Podcast::Content::PostCard @post={{content}} @expand={{false}} />
       {{/if}}
     {{/each}}
   </:default>

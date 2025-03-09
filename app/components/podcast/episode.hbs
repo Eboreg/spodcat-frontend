@@ -3,19 +3,17 @@
   <Button @route={{@podcast.route}} @models={{@podcast.routeModels}} @theme="secondary" @material-icon="arrow_back">
     <span class="label">Till {{@podcast.name}}</span>
   </Button>
-  <Podcast::Content::EpisodeCard @episode={{@episode}} @start={{@start}}>
+  <Podcast::Content::EpisodeCard @episode={{@episode}} @start={{@start}} @expand={{true}}>
     <Podcast::Content::Description @model={{@episode}}>
-      {{#if this.showSongs}}
-        {{#if @episode.songs}}
-          <h3>Låtar</h3>
-          {{#each @episode.songs as |song|}}
-            <p class="episode-track" {{on "click" (fn this.onSongClick song)}}>
-              {{#if song.artistString}}{{song.artistString}} –{{/if}}
-              {{song.name}}
-              {{#if song.comment}}({{song.comment}}){{/if}}
-            </p>
-          {{/each}}
-        {{/if}}
+      {{#if (and this.showSongs @episode.songs)}}
+        <h3>Låtar</h3>
+        {{#each @episode.songs as |song|}}
+          <p class="cursor-pointer" {{on "click" (fn this.onSongClick song)}}>
+            {{#if song.artistString}}{{song.artistString}} –{{/if}}
+            {{song.name}}
+            {{#if song.comment}}({{song.comment}}){{/if}}
+          </p>
+        {{/each}}
       {{/if}}
     </Podcast::Content::Description>
   </Podcast::Content::EpisodeCard>

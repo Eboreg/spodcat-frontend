@@ -13,6 +13,7 @@ export default class EpisodeModel extends PodcastContentModel {
     @attr declare "audio-content-type": string;
     @attr declare "audio-file-length": number;
     @attr declare "audio-url": string;
+    @attr declare "has-songs": boolean;
 
     @hasMany<EpisodeSongModel>("episode-song", { async: false, inverse: "episode" })
     declare songs: HasMany<EpisodeSongModel>;

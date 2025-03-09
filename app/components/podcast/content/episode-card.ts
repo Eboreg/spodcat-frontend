@@ -7,7 +7,7 @@ import type AudioService from "podcast-frontend/services/audio";
 export interface PodcastContentEpisodeCardSignature {
     Args: {
         episode: EpisodeModel;
-        "expand-link"?: boolean;
+        expand?: boolean;
         start?: string | null;
     };
     Element: HTMLDivElement;

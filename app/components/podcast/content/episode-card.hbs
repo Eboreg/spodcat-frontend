@@ -4,7 +4,7 @@
       <LinkTo
         @route={{@episode.route}}
         @models={{@episode.routeModels}}
-        @disabled={{not @expand-link}}
+        @disabled={{@expand}}
         class="row align-center gap-single fill podcast-content-link-block"
       >
         {{#if @episode.hasNumber}}
@@ -21,35 +21,35 @@
         </div>
       </LinkTo>
 
-      <div class="row gap-single p-single align-center">
-        {{#if @expand-link}}
+      <div class="row px-half align-center">
+        {{#if (and @episode.has-songs (not @expand))}}
           <LinkTo
             @route={{@episode.route}}
             @models={{@episode.routeModels}}
-            class="material-symbols icon link secondary d-none d-sm-block"
-            title="Läs mer"
-          >expand_content</LinkTo>
+            class="material-symbols icon secondary d-none d-sm-block px-half py-single"
+            title="Har låtlista"
+          >queue_music</LinkTo>
         {{/if}}
+        <a href={{@episode.audio-url}} title="Ladda ned">
+          <span class="material-symbols icon primary px-half py-single">download</span>
+        </a>
         {{#if this.isLoadingAudio}}
-          <ProgressCircle class="tertiary" />
+          <ProgressCircle class="tertiary px-half py-single" />
         {{else if this.isPlaying}}
           <span
-            class="material-symbols icon link tertiary"
+            class="material-symbols icon tertiary px-half py-single"
             role="button"
             title="Pausa"
             {{on "click" this.audio.pause}}
           >pause</span>
         {{else}}
           <span
-            class="material-symbols icon link tertiary"
+            class="material-symbols icon tertiary px-half py-single"
             role="button"
             title="Spela"
             {{on "click" this.play}}
           >play_arrow</span>
         {{/if}}
-        <a href={{@episode.audio-url}} title="Ladda ned">
-          <span class="material-symbols icon link primary">download</span>
-        </a>
       </div>
     </div>
 
