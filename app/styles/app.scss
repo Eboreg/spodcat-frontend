@@ -62,73 +62,6 @@ footer {
     z-index: 30;
 }
 
-header {
-    aspect-ratio: 3/1;
-    border: 10px dotted var(--mm-primary);
-    border-bottom-color: var(--mm-primary-dark);
-    border-right-color: var(--mm-primary-dark);
-    display: flex;
-    flex-direction: column;
-    flex: 0 0 auto;
-    grid-area: header;
-    justify-content: end;
-    overflow: hidden;
-    position: relative;
-
-    .podcast-banner {
-        aspect-ratio: 3/1;
-        position: absolute;
-        width: 100%;
-        z-index: -1;
-    }
-
-    .podcast-cover {
-        aspect-ratio: 1/1;
-        border: 5px outset var(--mm-primary);
-        border-radius: 100%;
-        width: 100px;
-    }
-
-    .podcast-name {
-        font-family: UnifrakturCook;
-        font-size: 50px;
-        line-height: 1;
-        text-shadow:
-            -2px 0 0 black,
-            0 -2px 0 black,
-            0 2px 0 black,
-            2px 0 0 black;
-
-        @include mixins.min(sm) {
-            font-size: 60px;
-        }
-
-        @include mixins.min(md) {
-            font-size: 72px;
-        }
-    }
-
-    .podcast-name-alt {
-        font-family: "Deutsche Uncialis";
-        font-size: 80px;
-        line-height: 1;
-        text-shadow:
-            -2px 0 0 black,
-            0 -2px 0 black,
-            0 2px 0 black,
-            2px 0 0 black;
-    }
-
-    .podcast-tagline {
-        font-size: 14px;
-        text-shadow:
-            -1px 0 1px black,
-            0 -1px 1px black,
-            0 1px 1px black,
-            1px 0 1px black;
-    }
-}
-
 img {
     max-width: 100%;
 }
@@ -137,39 +70,29 @@ input[type="range"] {
     accent-color: var(--mm-primary);
 }
 
-main {
+main.podcast-details {
+    column-gap: 0.5rem;
     display: grid;
     flex: 1 1 auto;
-    gap: 0.5rem;
-    grid-template-rows: auto auto 1fr;
+    grid-template-rows: auto auto auto 1fr;
     padding: 10px 0;
-    width: 100%;
+
+    & > * {
+        margin-bottom: 0.5rem;
+    }
 
     @include mixins.max(sm) {
-        grid-template-areas: "header" "aside" "podcast-content-container" "attr";
+        grid-template-areas: "header" "before" "aside" "podcast-content-container" "attr";
         grid-template-columns: 1fr;
 
         &.podcast-content-detail {
-            grid-template-areas: "header" "podcast-content-container" "aside" "attr";
-        }
-
-        &.has-before {
-            grid-template-areas: "header" "before" "aside" "podcast-content-container" "attr";
-            grid-template-rows: auto auto auto 1fr;
-
-            &.podcast-content-detail {
-                grid-template-areas: "header" "before" "podcast-content-container" "aside" "attr";
-            }
+            grid-template-areas: "header" "before" "podcast-content-container" "aside" "attr";
         }
     }
 
     @include mixins.min(md) {
-        grid-template-areas: "header header" "podcast-content-container aside" "podcast-content-container attr";
+        grid-template-areas: "header header" "before before" "podcast-content-container aside" "podcast-content-container attr";
         grid-template-columns: 1fr 250px;
-
-        &.has-before {
-            grid-template-areas: "header header" "before before" "podcast-content-container aside" "podcast-content-container attr";
-        }
     }
 }
 
@@ -179,7 +102,7 @@ main {
     cursor: pointer;
 }
 
-/** OTHER CLASSES ************************************************************/
+/** CLASSES ******************************************************************/
 
 .attribution {
     grid-area: attr;
@@ -228,6 +151,12 @@ main {
     .attribution {
         grid-area: attr;
     }
+}
+
+.dotted-border {
+    border: 10px dotted var(--mm-primary);
+    border-bottom-color: var(--mm-primary-dark);
+    border-right-color: var(--mm-primary-dark);
 }
 
 .err404 {
@@ -323,7 +252,6 @@ main {
     border-top: 5px solid var(--mm-primary);
     display: flex;
     flex-direction: column;
-    padding: 0 10px;
     position: relative;
 
     & > .row {
@@ -332,6 +260,7 @@ main {
 
     .episode {
         flex-grow: 1;
+        height: 100%;
         width: 350px;
 
         @include mixins.min(xl) {
@@ -367,6 +296,99 @@ main {
 
     .dbfs {
         height: 50px;
+    }
+}
+
+.podcast-details .podcast-banner {
+    aspect-ratio: 3/1;
+
+    .podcast-banner-image {
+        aspect-ratio: 3/1;
+    }
+}
+
+.podcast-list .podcast-banner {
+    border-radius: 5px;
+
+    .podcast-cover {
+        width: 80px;
+    }
+}
+
+.outlined-text {
+    text-shadow:
+        -2px 0 0 black,
+        0 -2px 0 black,
+        0 2px 0 black,
+        2px 0 0 black;
+}
+
+.podcast-banner {
+    display: flex;
+    flex-direction: column;
+    /* flex: 0 0 auto; */
+    grid-area: header;
+    justify-content: end;
+    overflow: hidden;
+    position: relative;
+
+    .podcast-banner-image {
+        object-fit: cover;
+        object-position: center;
+        position: absolute;
+        width: 100%;
+        z-index: -1;
+    }
+
+    .podcast-cover {
+        aspect-ratio: 1/1;
+        border: 5px outset var(--mm-primary);
+        border-radius: 100%;
+        object-fit: cover;
+        object-position: center;
+        width: 100px;
+    }
+
+    .podcast-name {
+        font-family: UnifrakturCook;
+        font-size: 40px;
+        line-height: 1;
+
+        &.small {
+            font-size: 30px;
+        }
+
+        @include mixins.min(md) {
+            font-size: 50px;
+
+            &.small {
+                font-size: 35px;
+            }
+        }
+
+        @include mixins.min(lg) {
+            font-size: 60px;
+
+            &.small {
+                font-size: 45px;
+            }
+        }
+    }
+
+    .podcast-name-alt {
+        font-family: "Deutsche Uncialis";
+        font-size: 80px;
+        line-height: 1;
+        text-shadow:
+            -2px 0 0 black,
+            0 -2px 0 black,
+            0 2px 0 black,
+            2px 0 0 black;
+    }
+
+    .podcast-tagline {
+        font-size: 14px;
+        margin-top: 5px;
     }
 }
 
@@ -471,6 +493,10 @@ main {
     border-bottom-color: var(--mm-primary-dark);
     border-right-color: var(--mm-primary-dark);
 
+    &.before {
+        grid-area: before;
+    }
+
     .podcast-description-content {
         background: var(--mm-background-color);
         line-height: 1.5;
@@ -490,28 +516,32 @@ main {
     }
 }
 
-.podcast-episode-list {
-    aside {
-        order: 0;
-    }
-    .podcast-content-container {
-        flex: 0 0 100%;
-        order: 1;
-    }
-    .attribution {
-        order: 2;
+.toast {
+    @include mixins.filled-outset-block;
+
+    align-items: start;
+    bottom: calc(100% + 10px);
+    opacity: 0;
+    position: fixed;
+    scale: 0;
+    transition-duration: 300ms;
+    transition-property: left, bottom, scale, opacity;
+    transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    width: var(--mm-toast-width);
+    z-index: 40;
+
+    .toast-icon {
+        align-self: center;
+        padding: 10px;
     }
 
-    @include mixins.min(md) {
-        .podcast-content-container {
-            order: unset;
-        }
-        aside {
-            order: unset;
-        }
-        .attribution {
-            order: unset;
-        }
+    .toast-text {
+        padding: 10px;
+    }
+
+    .toast-close-icon {
+        cursor: pointer;
+        padding: 10px;
     }
 }
 

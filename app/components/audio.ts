@@ -10,6 +10,7 @@ export interface AudioSignature {
         "on-add"?: (element: Audio) => any;
         "on-buffer-update"?: (bufferEnd: number) => any;
         "on-time-update"?: (currentTime: number) => any;
+        "on-error"?: (error: string) => any;
     };
     Element: HTMLAudioElement;
 }
@@ -142,7 +143,10 @@ export default class Audio extends Component<AudioSignature> {
     }
 
     @action play() {
-        void this.audioElement.play();
+        this.audioElement.play().catch((reason) => {
+            this.pause();
+            if (this.args["on-error"]) this.args["on-error"](String(reason));
+        });
     }
 
     @action playOrPause() {

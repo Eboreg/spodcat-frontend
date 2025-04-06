@@ -6,6 +6,7 @@ import type CategoryModel from "./category";
 import type PodcastLinkModel from "./podcast-link";
 import type PodcastContentModel from "./podcast-content";
 import type { Favicon, Image, Rss } from "podcast-frontend/services/head-data";
+import { htmlSafe, type SafeString } from "@ember/template";
 
 export default class PodcastModel extends Model {
     @attr declare banner?: string;
@@ -70,6 +71,17 @@ export default class PodcastModel extends Model {
             return { url: this.favicon, contentType: this["favicon-content-type"] };
         }
         return;
+    }
+
+    get nameCssClass(): SafeString {
+        const upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ";
+        const uppercaseCount = Array.from(this.name).filter((c) => upper.includes(c)).length;
+        // One uppercase letter is wide as ~1.59 lowercase ones in our font
+        const weightedLength = this.name.length + 0.59 * uppercaseCount;
+
+        // Weighted length >= 30: use smaller font
+        if (weightedLength >= 30) return htmlSafe("small");
+        return htmlSafe("");
     }
 
     get route() {

@@ -10,6 +10,8 @@ import EpisodeModel from "podcast-frontend/models/episode";
 import type AudioService from "podcast-frontend/services/audio";
 import type HeadDataService from "podcast-frontend/services/head-data";
 
+class EpisodeNotFoundError extends Error {}
+
 export default class EpisodeRoute extends Route<EpisodeModel> {
     @service declare store: Store;
     @service declare headData: HeadDataService;
@@ -17,13 +19,21 @@ export default class EpisodeRoute extends Route<EpisodeModel> {
     @service declare router: RouterService;
     @service declare fastboot: FastBoot;
 
-    model(params: { episode_id: string }) {
-        if (this.fastboot.isFastBoot) {
-            return this.store.findRecord<EpisodeModel>("episode", params.episode_id, {
-                include: ["podcast.categories", "podcast.links", "podcast.owners", "podcast.contents", "songs.artists"],
-            });
-        }
-        return this.store.findRecord<EpisodeModel>("episode", params.episode_id, { include: ["songs.artists"] });
+    async model(params: { episode_id: string }) {
+        const { podcast_id } = this.paramsFor("podcast") as { podcast_id: string };
+        const result = await this.store.query<EpisodeModel>("episode", {
+            include: this.fastboot.isFastBoot
+                ? ["podcast.categories", "podcast.links", "podcast.owners", "podcast.contents", "songs.artists"]
+                : ["songs.artists"],
+            filter: {
+                podcast: podcast_id,
+                slug: params.episode_id,
+            },
+        });
+
+        if (result.length == 0) throw new EpisodeNotFoundError();
+
+        return result[0]!;
     }
 
     afterModel(model: EpisodeModel) {
@@ -32,7 +42,10 @@ export default class EpisodeRoute extends Route<EpisodeModel> {
     }
 
     @action error(error: any, transition: Transition) {
-        if (error.isAdapterError && error.errors && error.errors[0].status == "404") {
+        if (
+            (error.isAdapterError && error.errors && error.errors[0].status == "404") ||
+            error instanceof EpisodeNotFoundError
+        ) {
             // TODO: For some fucking reason, this refuses to work, at least
             // when running ember serve with fastboot. Says store is
             // destroyed. Works in production though:

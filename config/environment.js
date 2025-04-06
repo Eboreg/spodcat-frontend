@@ -19,10 +19,10 @@ module.exports = function (environment) {
             API_URL_NAMESPACE: "",
             BACKEND_HOST: "http://localhost:8000",
             FRONTEND_HOST: "http://localhost:4200",
-            IS_SINGLETON: true,
+            IS_SINGLETON: false,
         },
         fastboot: {
-            hostWhitelist: [/^localhost:\d+$/, "musikensmakt.huseli.us"],
+            hostWhitelist: [/^localhost:\d+$/, "musikensmakt.huseli.us", "podd.huseli.us"],
         },
     };
 
@@ -47,8 +47,8 @@ module.exports = function (environment) {
     }
 
     if (environment === "production") {
-        ENV.APP.BACKEND_HOST = "https://backend.musikensmakt.huseli.us";
-        ENV.APP.FRONTEND_HOST = "https://musikensmakt.huseli.us";
+        ENV.APP.BACKEND_HOST = "https://backend.podd.huseli.us";
+        ENV.APP.FRONTEND_HOST = "https://podd.huseli.us";
     }
 
     return ENV;

@@ -1,22 +1,22 @@
-<main class="content-width" ...attributes>
-  <header>
+<main class="content-width podcast-details" ...attributes>
+  <header class="podcast-banner dotted-border">
     {{#if @podcast.banner}}
-      <img src="{{@podcast.banner}}" alt="" class="podcast-banner" />
+      <img src="{{@podcast.banner}}" alt="" class="podcast-banner-image" />
     {{/if}}
     <LinkTo class="row gap-single align-center m-single" @route={{@podcast.route}} @models={{@podcast.routeModels}}>
       {{#if @podcast.cover-thumbnail}}
         <img src="{{@podcast.cover-thumbnail}}" alt="" class="podcast-cover d-none d-sm-block" />
       {{/if}}
       <div>
-        <div class="podcast-name">{{@podcast.name}}</div>
+        <div class="podcast-name outlined-text {{@podcast.nameCssClass}}">{{@podcast.name}}</div>
         {{#if @podcast.tagline}}
-          <div class="podcast-tagline d-none d-sm-block">{{@podcast.tagline}}</div>
+          <div class="podcast-tagline outlined-text d-none d-sm-block">{{@podcast.tagline}}</div>
         {{/if}}
       </div>
     </LinkTo>
   </header>
   {{yield to="before"}}
-  <div class="fill column gap-half w-100 podcast-content-container">
+  <div class="column gap-half podcast-content-container">
     {{yield}}
   </div>
   <Podcast::Aside @podcast={{@podcast}} />

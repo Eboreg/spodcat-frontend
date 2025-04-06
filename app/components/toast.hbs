@@ -1,0 +1,15 @@
+<div
+  class="toast {{this.color}}"
+  style={{this.style}}
+  {{on-size-change this.onSizeChange}}
+  {{on "transitionend" this.onTransitionEnd}}
+  {{on "mouseenter" this.onMouseEnter}}
+  {{on "mouseleave" this.onMouseLeave}}
+  ...attributes
+>
+  {{#if @message.icon}}
+    <span class="material-symbols toast-icon">{{@message.icon}}</span>
+  {{/if}}
+  <div class="toast-text">{{@message.text}}</div>
+  <span class="material-symbols toast-close-icon" {{on "click" this.onCloseClick}}>close</span>
+</div>

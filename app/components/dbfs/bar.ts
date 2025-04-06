@@ -79,7 +79,7 @@ export default class DbfsBar extends Component<DbfsBarSignature> {
         this.showTooltip = false;
     }
 
-    @action onMouseOver(event: MouseEvent) {
+    @action onMouseMove(event: MouseEvent) {
         const progress = this.getMouseProgress(event);
 
         if (progress != null) {

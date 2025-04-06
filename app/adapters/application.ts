@@ -18,8 +18,8 @@ export default class ApplicationAdapter extends JSONAPIAdapter {
         return url.endsWith("/") ? url : `${url}/`;
     }
 
-    cacheKeyFor(modelName: string, id: string) {
-        return modelName && id ? `${modelName}-${id}` : "default-store";
+    cacheKeyFor(modelName: string, id?: string) {
+        return modelName && id ? `${modelName}-${id}` : `${modelName}-default-store`;
     }
 
     async findRecord(store: Store, type: ModelSchema, id: string, snapshot: Snapshot): Promise<AdapterPayload> {
@@ -28,7 +28,7 @@ export default class ApplicationAdapter extends JSONAPIAdapter {
         if (this.fastboot.isFastBoot) {
             const result = await super.findRecord(store, type, id, snapshot);
 
-            if (!Array.isArray(result)) this.saveToShoebox(result, key);
+            this.saveToShoebox(result, key);
             return result;
         }
 
@@ -41,28 +41,39 @@ export default class ApplicationAdapter extends JSONAPIAdapter {
         return result;
     }
 
-    saveToShoebox(payload: Record<string, unknown>, key: string) {
+    saveToShoebox(payload: Record<string, unknown> | unknown[], key: string) {
         this.fastboot.shoebox.put(key, JSON.stringify(payload));
 
-        if (payload["included"] && Array.isArray(payload["included"])) {
-            for (const inc of payload["included"]) {
-                if (
-                    typeof inc["type"] == "string" &&
-                    typeof inc["id"] == "string" &&
-                    !["post", "episode"].includes(inc["type"])
-                ) {
-                    const incKey = this.cacheKeyFor(inc["type"], inc["id"]);
-
-                    this.saveToShoebox({ data: inc }, incKey);
+        /*
+        if (!Array.isArray(payload)) {
+            console.log("saveToShoebox, är ej array", key);
+            if (payload["included"] && Array.isArray(payload["included"])) {
+                for (const inc of payload["included"]) {
+                    if (
+                        typeof inc["type"] == "string" &&
+                        typeof inc["id"] == "string" &&
+                        !["post", "episode"].includes(inc["type"])
+                    ) {
+                        const incKey = this.cacheKeyFor(inc["type"], inc["id"]);
+                        this.saveToShoebox({ data: inc }, incKey);
+                    }
                 }
             }
+        } else {
+            console.log("saveToShoebox, är array", key);
         }
+        */
     }
 
-    query(store: Store, type: ModelSchema, query: Record<string, unknown>): Promise<AdapterPayload> {
+    queryRecord(
+        store: Store,
+        type: ModelSchema,
+        query: Record<string, unknown>,
+        adapterOptions: Record<string, unknown>,
+    ): Promise<AdapterPayload> {
         if (Array.isArray(query["include"])) {
             query["include"] = query["include"].join();
         }
-        return super.query(store, type, query);
+        return super.queryRecord(store, type, query, adapterOptions);
     }
 }

@@ -36,19 +36,6 @@ export default class AudioService extends Service {
         return timeString(this.element?.currentTime || 0);
     }
 
-    get playbackRate() {
-        return this.element?.playbackRate || 1;
-    }
-
-    get mediaSessionAvailable() {
-        return !this.fastboot.isFastBoot && "mediaSession" in navigator;
-    }
-
-    get volume() {
-        if (this.isMuted) return 0;
-        return this.element?.volume || 0;
-    }
-
     get duration() {
         return this.element?.duration || 0;
     }
@@ -67,6 +54,19 @@ export default class AudioService extends Service {
 
     get isSeeking() {
         return this.element?.isSeeking == true;
+    }
+
+    get mediaSessionAvailable() {
+        return !this.fastboot.isFastBoot && "mediaSession" in navigator;
+    }
+
+    get playbackRate() {
+        return this.element?.playbackRate || 1;
+    }
+
+    get volume() {
+        if (this.isMuted) return 0;
+        return this.element?.volume || 0;
     }
 
     @action on(eventType: string, callback: (event: Event) => any) {

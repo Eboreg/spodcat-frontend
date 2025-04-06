@@ -39,6 +39,18 @@
             .m-#{$sname}-#{$lname} {
                 margin: #{$length};
             }
+            .mt-#{$sname}-#{$lname} {
+                margin-top: #{$length};
+            }
+            .mr-#{$sname}-#{$lname} {
+                margin-right: #{$length};
+            }
+            .mb-#{$sname}-#{$lname} {
+                margin-bottom: #{$length};
+            }
+            .ml-#{$sname}-#{$lname} {
+                margin-left: #{$length};
+            }
             .mx-#{$sname}-#{$lname} {
                 margin-left: #{$length};
                 margin-right: #{$length};
@@ -51,8 +63,17 @@
             .p-#{$sname}-#{$lname} {
                 padding: #{$length};
             }
+            .pt-#{$sname}-#{$lname} {
+                padding-top: #{$length};
+            }
+            .pr-#{$sname}-#{$lname} {
+                padding-right: #{$length};
+            }
             .pb-#{$sname}-#{$lname} {
                 padding-bottom: #{$length};
+            }
+            .pl-#{$sname}-#{$lname} {
+                padding-left: #{$length};
             }
             .px-#{$sname}-#{$lname} {
                 padding-left: #{$length};
@@ -72,8 +93,17 @@
     .m-#{$lname} {
         margin: #{$length};
     }
+    .mt-#{$lname} {
+        margin-top: #{$length};
+    }
+    .mr-#{$lname} {
+        margin-right: #{$length};
+    }
     .mb-#{$lname} {
         margin-bottom: #{$length};
+    }
+    .ml-#{$lname} {
+        margin-left: #{$length};
     }
     .mx-#{$lname} {
         margin-left: #{$length};
@@ -87,8 +117,17 @@
     .p-#{$lname} {
         padding: #{$length};
     }
+    .pt-#{$lname} {
+        padding-top: #{$length};
+    }
+    .pr-#{$lname} {
+        padding-right: #{$length};
+    }
     .pb-#{$lname} {
         padding-bottom: #{$length};
+    }
+    .pl-#{$lname} {
+        padding-left: #{$length};
     }
     .px-#{$lname} {
         padding-left: #{$length};

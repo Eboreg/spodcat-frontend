@@ -30,3 +30,7 @@ export function makeAbsoluteUrl(url: string): string {
     if (url.match(/^https?:\/\/.*/)) return url;
     return ENV.APP.FRONTEND_HOST + conditionalSlash + url;
 }
+
+export function getRandomEntry<T>(arr: Array<T>): T {
+    return arr[Math.floor(Math.random() * arr.length)] as T;
+}

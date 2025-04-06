@@ -63,3 +63,8 @@ declare module "@glint/environment-ember-loose/registry" {
         "Podcast::Content::PostCard": PodcastContentPostCard;
     }
 }
+
+export interface Size {
+    width: number;
+    height: number;
+}

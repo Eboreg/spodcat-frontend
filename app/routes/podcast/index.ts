@@ -13,6 +13,7 @@ export default class PodcastIndexRoute extends Route<PodcastModel> {
 
         return this.store.findRecord<PodcastModel>("podcast", params.podcast_id, {
             include: ["contents", "categories", "links"],
+            backgroundReload: false,
         });
     }
 

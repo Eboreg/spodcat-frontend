@@ -1,6 +1,6 @@
 <div class="player-bar" ...attributes>
   {{#if this.isExpanded}}
-    <PlayerBar::Expanded @episode={{@episode}} class="d-xl-none" />
+    <PlayerBar::Expanded @episode={{@episode}} class="d-xl-none ml-half" />
   {{/if}}
 
   <div class="row align-center">
@@ -10,11 +10,11 @@
       class="row gap-single align-center episode ellipsis oneliner"
     >
       {{#if @episode.hasNumber}}
-        <div class="podcast-content-leading-icon primary">{{@episode.number}}</div>
+        <div class="podcast-content-leading-icon primary ml-half">{{@episode.number}}</div>
       {{else if @episode.podcast.cover-thumbnail}}
         <img src={{@episode.podcast.cover-thumbnail}} alt="" />
       {{else}}
-        <span class="material-symbols podcast-content-leading-icon primary">podcasts</span>
+        <span class="material-symbols podcast-content-leading-icon primary ml-half">podcasts</span>
       {{/if}}
       <div class="ellipsis">
         <div class="bold ellipsis">{{@episode.name}}</div>

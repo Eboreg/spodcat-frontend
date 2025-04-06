@@ -2,12 +2,23 @@
 
 {{outlet}}
 
+{{#each this.message.toasts as |toast|}}
+  <Toast
+    @message={{toast.message}}
+    @id={{toast.id}}
+    @bottom-offset={{toast.bottomOffset}}
+    @on-size-change={{this.message.onToastSizeChange}}
+    @on-hidden={{this.message.onToastHidden}}
+  />
+{{/each}}
+
 <footer>
   <Audio
     preload="auto"
     @on-add={{this.audio.setAudioElement}}
     @on-buffer-update={{this.audio.onBufferUpdate}}
     @on-time-update={{this.audio.onTimeUpdate}}
+    @on-error={{this.onAudioError}}
   />
   {{#if this.audio.episode}}
     <PlayerBar @episode={{this.audio.episode}} />

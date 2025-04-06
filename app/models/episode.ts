@@ -7,11 +7,9 @@ import type EpisodeSongModel from "./episode-song";
 
 export default class EpisodeModel extends PodcastContentModel {
     @attr declare number?: number;
-    @attr declare "audio-file": string;
     @attr declare "duration-seconds": number;
     @attr declare "dbfs-array": number[];
     @attr declare "audio-content-type": string;
-    @attr declare "audio-file-length": number;
     @attr declare "audio-url": string;
     @attr declare "has-songs": boolean;
 
