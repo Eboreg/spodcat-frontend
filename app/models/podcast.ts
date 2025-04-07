@@ -1,5 +1,12 @@
 import ENV from "podcast-frontend/config/environment";
-import Model, { attr, hasMany, type AsyncHasMany, type HasMany } from "@ember-data/model";
+import Model, {
+    attr,
+    belongsTo,
+    hasMany,
+    type AsyncBelongsTo,
+    type AsyncHasMany,
+    type HasMany,
+} from "@ember-data/model";
 import { Type } from "@warp-drive/core-types/symbols";
 import type UserModel from "./user";
 import type CategoryModel from "./category";
@@ -28,15 +35,19 @@ export default class PodcastModel extends Model {
     @attr declare tagline?: string;
     @attr declare description?: string;
     @attr declare "description-html"?: string;
+    @attr declare "name-font-family": string;
+    @attr declare "name-font-size": "small" | "normal" | "large";
 
     @hasMany<PodcastContentModel>("podcast-content", { async: false, inverse: "podcast", polymorphic: true })
     declare contents: HasMany<PodcastContentModel>;
     @hasMany<UserModel>("user", { async: true, inverse: "podcasts" })
-    declare owners: AsyncHasMany<UserModel>;
+    declare authors: AsyncHasMany<UserModel>;
     @hasMany<CategoryModel>("category", { async: false, inverse: null })
     declare categories: HasMany<CategoryModel>;
     @hasMany<PodcastLinkModel>("podcast-link", { async: false, inverse: "podcast" })
     declare links: HasMany<PodcastLinkModel>;
+    @belongsTo<UserModel>("user", { async: true, inverse: "owned-podcasts" })
+    declare owner?: AsyncBelongsTo<UserModel>;
 
     get bannerData(): Image | undefined {
         if (this.banner && this["banner-height"] && this["banner-width"]) {
@@ -74,14 +85,11 @@ export default class PodcastModel extends Model {
     }
 
     get nameCssClass(): SafeString {
-        const upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ";
-        const uppercaseCount = Array.from(this.name).filter((c) => upper.includes(c)).length;
-        // One uppercase letter is wide as ~1.59 lowercase ones in our font
-        const weightedLength = this.name.length + 0.59 * uppercaseCount;
+        return htmlSafe(this["name-font-size"]);
+    }
 
-        // Weighted length >= 30: use smaller font
-        if (weightedLength >= 30) return htmlSafe("small");
-        return htmlSafe("");
+    get nameCssStyle(): SafeString {
+        return htmlSafe(`font-family: "${this["name-font-family"]}"`);
     }
 
     get route() {

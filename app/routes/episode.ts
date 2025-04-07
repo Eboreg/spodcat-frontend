@@ -23,7 +23,7 @@ export default class EpisodeRoute extends Route<EpisodeModel> {
         const { podcast_id } = this.paramsFor("podcast") as { podcast_id: string };
         const result = await this.store.query<EpisodeModel>("episode", {
             include: this.fastboot.isFastBoot
-                ? ["podcast.categories", "podcast.links", "podcast.owners", "podcast.contents", "songs.artists"]
+                ? ["podcast.categories", "podcast.links", "podcast.authors", "podcast.contents", "songs.artists"]
                 : ["songs.artists"],
             filter: {
                 podcast: podcast_id,

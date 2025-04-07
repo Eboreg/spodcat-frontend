@@ -1,26 +1,50 @@
-/*
+@font-face {
+    font-family: Anton;
+    src: url("/fonts/Anton-Regular.ttf") format("truetype");
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "Deutsche Uncialis";
+    src: url("/fonts/deutsche-uncialis.regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Fascinate Inline";
+    src: url("/fonts/FascinateInline-Regular.ttf") format("truetype");
+    font-weight: 400;
+}
+
 @font-face {
     font-family: "Futura Display BQ";
-    src: url("/futura-display-bq-regular-webfont.woff") format("woff");
+    src: url("/fonts/futura-display-bq-regular-webfont.woff") format("woff");
 }
 
 @font-face {
     font-family: Limelight;
-    src: url("/Limelight-Regular.ttf") format("truetype");
+    src: url("/fonts/Limelight-Regular.ttf") format("truetype");
+    font-weight: 400;
 }
 
 @font-face {
-    font-family: UnifrakturMaguntia;
-    src: url("/UnifrakturMaguntia-Regular.ttf") format("truetype");
-}
-*/
-
-@font-face {
-    font-family: "Deutsche Uncialis";
-    src: url("/deutsche-uncialis.regular.ttf") format("truetype");
+    font-family: Lobster;
+    src: url("/fonts/Lobster-Regular.ttf") format("truetype");
+    font-weight: 400;
 }
 
 @font-face {
-    font-family: UnifrakturCook;
-    src: url("/UnifrakturCook-Bold.ttf") format("truetype");
+    font-family: "Roboto Black";
+    src: url("/fonts/Roboto-Black.ttf") format("truetype");
+    font-weight: 900;
+}
+
+@font-face {
+    font-family: "Roboto Serif Bold";
+    src: url("/fonts/RobotoSerif-Bold.ttf") format("truetype");
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: "Unifraktur Cook";
+    src: url("/fonts/UnifrakturCook-Bold.ttf") format("truetype");
 }

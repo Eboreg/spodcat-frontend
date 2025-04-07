@@ -299,7 +299,7 @@ main.podcast-details {
     }
 }
 
-.podcast-details .podcast-banner {
+.podcast-details .podcast-banner.has-banner-image {
     aspect-ratio: 3/1;
 
     .podcast-banner-image {
@@ -312,6 +312,42 @@ main.podcast-details {
 
     .podcast-cover {
         width: 80px;
+    }
+
+    .podcast-name {
+        font-size: 30px;
+
+        &.small {
+            font-size: 20px;
+        }
+
+        &.large {
+            font-size: 40px;
+        }
+
+        @include mixins.min(md) {
+            font-size: 40px;
+
+            &.small {
+                font-size: 25px;
+            }
+
+            &.large {
+                font-size: 60px;
+            }
+        }
+
+        @include mixins.min(lg) {
+            font-size: 50px;
+
+            &.small {
+                font-size: 35px;
+            }
+
+            &.large {
+                font-size: 70px;
+            }
+        }
     }
 }
 
@@ -350,12 +386,16 @@ main.podcast-details {
     }
 
     .podcast-name {
-        font-family: UnifrakturCook;
+        font-family: "Unifraktur Cook";
         font-size: 40px;
         line-height: 1;
 
         &.small {
             font-size: 30px;
+        }
+
+        &.large {
+            font-size: 50px;
         }
 
         @include mixins.min(md) {
@@ -364,6 +404,10 @@ main.podcast-details {
             &.small {
                 font-size: 35px;
             }
+
+            &.large {
+                font-size: 70px;
+            }
         }
 
         @include mixins.min(lg) {
@@ -371,6 +415,10 @@ main.podcast-details {
 
             &.small {
                 font-size: 45px;
+            }
+
+            &.large {
+                font-size: 80px;
             }
         }
     }

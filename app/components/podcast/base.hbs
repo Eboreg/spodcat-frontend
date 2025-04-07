@@ -1,5 +1,5 @@
 <main class="content-width podcast-details" ...attributes>
-  <header class="podcast-banner dotted-border">
+  <header class="podcast-banner {{if @podcast.banner 'dotted-border has-banner-image'}}">
     {{#if @podcast.banner}}
       <img src="{{@podcast.banner}}" alt="" class="podcast-banner-image" />
     {{/if}}
@@ -8,7 +8,10 @@
         <img src="{{@podcast.cover-thumbnail}}" alt="" class="podcast-cover d-none d-sm-block" />
       {{/if}}
       <div>
-        <div class="podcast-name outlined-text {{@podcast.nameCssClass}}">{{@podcast.name}}</div>
+        <div
+          class="podcast-name outlined-text {{@podcast.nameCssClass}}"
+          style={{@podcast.nameCssStyle}}
+        >{{@podcast.name}}</div>
         {{#if @podcast.tagline}}
           <div class="podcast-tagline outlined-text d-none d-sm-block">{{@podcast.tagline}}</div>
         {{/if}}
