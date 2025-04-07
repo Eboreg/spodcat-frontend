@@ -12,6 +12,14 @@ export default class EpisodeModel extends PodcastContentModel {
     @attr declare "audio-content-type": string;
     @attr declare "audio-url": string;
     @attr declare "has-songs": boolean;
+    @attr declare image?: string;
+    @attr declare "image-height"?: number;
+    @attr declare "image-width"?: number;
+    @attr declare "image-mimetype"?: string;
+    @attr declare "image-thumbnail"?: string;
+    @attr declare "image-thumbnail-height"?: number;
+    @attr declare "image-thumbnail-width"?: number;
+    @attr declare "image-thumbnail-mimetype"?: string;
 
     @hasMany<EpisodeSongModel>("episode-song", { async: false, inverse: "episode" })
     declare songs: HasMany<EpisodeSongModel>;
@@ -26,6 +34,27 @@ export default class EpisodeModel extends PodcastContentModel {
 
     get isEpisode() {
         return true;
+    }
+
+    get mediaImages(): MediaImage[] {
+        const result: MediaImage[] = [];
+
+        if (this.image) {
+            result.push({
+                src: this.image,
+                sizes: `${this["image-height"]}x${this["image-width"]}`,
+                type: this["image-mimetype"],
+            });
+        }
+        if (this["image-thumbnail"]) {
+            result.push({
+                src: this["image-thumbnail"],
+                sizes: `${this["image-thumbnail-width"]}x${this["image-thumbnail-height"]}`,
+                type: this["image-thumbnail-mimetype"],
+            });
+        }
+
+        return result;
     }
 
     get route() {

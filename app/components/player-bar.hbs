@@ -9,7 +9,9 @@
       @models={{@episode.routeModels}}
       class="row gap-single align-center episode ellipsis oneliner"
     >
-      {{#if @episode.hasNumber}}
+      {{#if @episode.image-thumbnail}}
+        <img src={{@episode.image-thumbnail}} alt="" />
+      {{else if @episode.hasNumber}}
         <div class="podcast-content-leading-icon primary ml-half">{{@episode.number}}</div>
       {{else if @episode.podcast.cover-thumbnail}}
         <img src={{@episode.podcast.cover-thumbnail}} alt="" />
