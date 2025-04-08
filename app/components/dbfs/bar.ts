@@ -13,7 +13,6 @@ export interface Dbfs {
     dbfs: number;
     idx: number;
     isPlayed: boolean;
-    isBuffered: boolean;
 }
 
 export interface DbfsBarSignature {
@@ -31,11 +30,10 @@ export default class DbfsBar extends Component<DbfsBarSignature> {
 
     get columns(): NativeArray<Dbfs> {
         return A(
-            this.args.episode["dbfs-array"].map((dbfs, idx) => {
+            this.args.episode["dbfs-array"]?.map((dbfs, idx) => {
                 return {
                     dbfs: dbfs,
                     idx: idx,
-                    isBuffered: this.audio.bufferProgress >= idx + 1,
                     isPlayed: this.audio.currentProgress >= idx + 1,
                 };
             }),
@@ -43,7 +41,7 @@ export default class DbfsBar extends Component<DbfsBarSignature> {
     }
 
     get columnCount() {
-        return this.args.episode["dbfs-array"].length;
+        return this.args.episode["dbfs-array"]?.length || 0;
     }
 
     get tooltipContent() {

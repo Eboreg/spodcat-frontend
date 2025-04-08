@@ -2,8 +2,9 @@ import { action } from "@ember/object";
 import Route from "@ember/routing/route";
 import type RouterService from "@ember/routing/router-service";
 import { service } from "@ember/service";
+import type PodcastModel from "podcast-frontend/models/podcast";
 
-export default class PodcastRoute extends Route {
+export default class PodcastRoute extends Route<PodcastModel> {
     @service declare router: RouterService;
 
     @action error(error: any) {

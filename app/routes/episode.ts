@@ -7,8 +7,9 @@ import type Transition from "@ember/routing/transition";
 import { service } from "@ember/service";
 import type FastBoot from "ember-cli-fastboot/services/fastboot";
 import EpisodeModel from "podcast-frontend/models/episode";
-import type AudioService from "podcast-frontend/services/audio";
 import type HeadDataService from "podcast-frontend/services/head-data";
+import type AudioService from "podcast-frontend/services/audio";
+import { ping } from "podcast-frontend/utils";
 
 class EpisodeNotFoundError extends Error {}
 
@@ -36,9 +37,15 @@ export default class EpisodeRoute extends Route<EpisodeModel> {
         return result[0]!;
     }
 
-    afterModel(model: EpisodeModel) {
-        this.headData.updateFromEpisode(model);
-        if (model["dbfs-array"] && !this.audio.episode) this.audio.setEpisode(model);
+    afterModel(model?: EpisodeModel) {
+        if (model) {
+            this.headData.updateFromEpisode(model);
+            if (!this.audio.episode) this.audio.setEpisode(model);
+            if (!this.fastboot.isFastBoot && model.id) {
+                ping("episodes", model.id);
+            }
+            // if (model["dbfs-array"] && !this.audio.episode) this.audio.setEpisode(model);
+        }
     }
 
     @action error(error: any, transition: Transition) {

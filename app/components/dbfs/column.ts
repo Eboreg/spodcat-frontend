@@ -13,7 +13,6 @@ export interface DbfsColumnSignature {
 export default class DbfsColumn extends Component<DbfsColumnSignature> {
     get innerClass() {
         if (this.args.column.isPlayed) return "played";
-        if (this.args.column.isBuffered) return "buffered";
         return "unbuffered";
     }
 

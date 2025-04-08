@@ -5,8 +5,8 @@ import type PodcastBase from "./base";
 import { action } from "@ember/object";
 import type EpisodeSongModel from "podcast-frontend/models/episode-song";
 import { service } from "@ember/service";
-import type AudioService from "podcast-frontend/services/audio";
 import type FastBoot from "ember-cli-fastboot/services/fastboot";
+import type AudioService from "podcast-frontend/services/audio";
 
 export interface PodcastEpisodeSignature {
     Args: {
@@ -26,6 +26,6 @@ export default class PodcastEpisode extends Component<PodcastEpisodeSignature> {
     }
 
     @action onSongClick(song: EpisodeSongModel) {
-        void this.audio.playEpisode(this.args.episode, song.timestamp, true);
+        this.audio.playEpisode(this.args.episode, song.timestamp, true);
     }
 }

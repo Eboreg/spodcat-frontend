@@ -24,7 +24,7 @@
       </div>
     </LinkTo>
 
-    {{#if this.audio.isSeeking}}
+    {{#if this.playerIsBusy}}
       <ProgressCircle />
     {{else if this.audio.isPlaying}}
       <span

@@ -13,13 +13,23 @@
 {{/each}}
 
 <footer>
-  <Audio
+  <audio
     preload="auto"
-    @on-add={{this.audio.setAudioElement}}
-    @on-buffer-update={{this.audio.onBufferUpdate}}
-    @on-time-update={{this.audio.onTimeUpdate}}
-    @on-error={{this.onAudioError}}
-  />
+    {{on-audio-insert this.audio.setAudioElement}}
+    {{on "durationchange" this.audio.onDurationChange}}
+    {{on "ended" this.audio.onEnded}}
+    {{on "error" this.audio.onError}}
+    {{on "pause" this.audio.onPause}}
+    {{on "play" this.audio.onPlay}}
+    {{on "playing" this.audio.onPlaying}}
+    {{on "ratechange" this.audio.onRateChange}}
+    {{on "seeked" this.audio.onSeeked}}
+    {{on "seeking" this.audio.onSeeking}}
+    {{on "stalled" this.audio.onStalled}}
+    {{on "timeupdate" this.audio.onTimeUpdate}}
+    {{on "volumechange" this.audio.onVolumeChange}}
+    {{on "waiting" this.audio.onWaiting}}
+  ></audio>
   {{#if this.audio.episode}}
     <PlayerBar @episode={{this.audio.episode}} />
   {{/if}}

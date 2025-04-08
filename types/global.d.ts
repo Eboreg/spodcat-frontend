@@ -15,7 +15,6 @@ import type PodcastBase from "podcast-frontend/components/podcast/base";
 import type PodcastAside from "podcast-frontend/components/podcast/aside";
 import type ProgressCircle from "podcast-frontend/components/progress-circle";
 import type PlaybackRateControl from "podcast-frontend/components/playback-rate-control";
-import type Audio from "podcast-frontend/components/audio";
 import type setBodyClass from "ember-set-body-class/addon/helpers/set-body-class";
 import type Button from "podcast-frontend/components/button";
 import type HeadLayout from "ember-cli-head/addon/components/head-layout";
@@ -50,7 +49,6 @@ declare module "@glint/environment-ember-loose/registry" {
         "Podcast::Index": typeof PodcastIndex;
         "set-body-class": typeof setBodyClass;
         "static-url": typeof staticUrl;
-        Audio: typeof Audio;
         Button: typeof Button;
         EpisodeCard: typeof EpisodeCard;
         HeadLayout: typeof HeadLayout;

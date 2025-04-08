@@ -7,14 +7,14 @@ export default class PodcastContentModel extends Model {
     @attr declare name: string;
     @attr declare description?: string;
     @attr declare "description-html"?: string;
-    @attr("date") declare published?: Date;
-    @attr("date") declare created: Date;
+    @attr("date") declare published: Date;
+    @attr("date") declare created?: Date;
 
     @belongsTo<PodcastModel>("podcast", { async: false, inverse: "contents", as: "podcast-content" })
     declare podcast: PodcastModel;
 
     get descriptionIsLoading() {
-        return this.description == undefined;
+        return this["description-html"] == undefined;
     }
 
     get isEpisode(): boolean {
@@ -30,8 +30,8 @@ export default class PodcastContentModel extends Model {
     }
 
     get publishedString() {
-        if (this.podcast.language) return this.published?.toLocaleDateString(this.podcast.language);
-        return this.published?.toLocaleDateString();
+        if (this.podcast.language) return this.published.toLocaleDateString(this.podcast.language);
+        return this.published.toLocaleDateString();
     }
 
     [Type]: "podcast-content" | "episode" | "post" = "podcast-content" as const;

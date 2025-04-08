@@ -58,7 +58,7 @@ export default class HeadDataService extends Service {
         this.ogAudio = value["audio-url"];
         this.ogAudioType = value["audio-content-type"];
         this.musicDuration = value["duration-seconds"].toString();
-        this.musicReleaseDate = value.published?.toISOString();
+        this.musicReleaseDate = value.published.toISOString();
         this.ogType = "music.song";
 
         if (ENV.APP.IS_SINGLETON) this.ogUrl = makeAbsoluteUrl(this.router.urlFor("episode", value));

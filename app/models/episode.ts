@@ -8,8 +8,8 @@ import type EpisodeSongModel from "./episode-song";
 export default class EpisodeModel extends PodcastContentModel {
     @attr declare number?: number;
     @attr declare "duration-seconds": number;
-    @attr declare "dbfs-array": number[];
-    @attr declare "audio-content-type": string;
+    @attr declare "dbfs-array"?: number[];
+    @attr declare "audio-content-type"?: string;
     @attr declare "audio-url": string;
     @attr declare "has-songs": boolean;
     @attr declare image?: string;
@@ -42,7 +42,7 @@ export default class EpisodeModel extends PodcastContentModel {
         if (this.image) {
             result.push({
                 src: this.image,
-                sizes: `${this["image-height"]}x${this["image-width"]}`,
+                sizes: `${this["image-width"]}x${this["image-height"]}`,
                 type: this["image-mimetype"],
             });
         }
@@ -51,6 +51,20 @@ export default class EpisodeModel extends PodcastContentModel {
                 src: this["image-thumbnail"],
                 sizes: `${this["image-thumbnail-width"]}x${this["image-thumbnail-height"]}`,
                 type: this["image-thumbnail-mimetype"],
+            });
+        }
+        if (this.podcast.cover) {
+            result.push({
+                src: this.podcast.cover,
+                sizes: `${this.podcast["cover-width"]}x${this.podcast["cover-height"]}`,
+                type: this.podcast["cover-mimetype"],
+            });
+        }
+        if (this.podcast["cover-thumbnail"]) {
+            result.push({
+                src: this.podcast["cover-thumbnail"],
+                sizes: `${this.podcast["cover-thumbnail-width"]}x${this.podcast["cover-thumbnail-height"]}`,
+                type: this.podcast["cover-thumbnail-mimetype"],
             });
         }
 

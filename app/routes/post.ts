@@ -8,6 +8,7 @@ import { service } from "@ember/service";
 import type FastBoot from "ember-cli-fastboot/services/fastboot";
 import PostModel from "podcast-frontend/models/post";
 import type HeadDataService from "podcast-frontend/services/head-data";
+import { ping } from "podcast-frontend/utils";
 
 class PostNotFoundError extends Error {}
 
@@ -34,8 +35,13 @@ export default class PostRoute extends Route<PostModel> {
         return result[0]!;
     }
 
-    afterModel(model: PostModel) {
-        this.headData.updateFromPost(model);
+    afterModel(model?: PostModel) {
+        if (model) {
+            this.headData.updateFromPost(model);
+            if (model.id && !this.fastboot.isFastBoot) {
+                ping("posts", model.id);
+            }
+        }
     }
 
     @action error(error: any, transition: Transition) {

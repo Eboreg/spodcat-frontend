@@ -34,3 +34,21 @@ export function makeAbsoluteUrl(url: string): string {
 export function getRandomEntry<T>(arr: Array<T>): T {
     return arr[Math.floor(Math.random() * arr.length)] as T;
 }
+
+export function urljoin(...parts: string[]) {
+    let url = "";
+
+    for (let part of parts) {
+        while (part.startsWith("/")) part = part.substring(1);
+        if (part) {
+            url += part;
+            if (!url.endsWith("/")) url += "/";
+        }
+    }
+
+    return url;
+}
+
+export function ping(...urlParts: string[]) {
+    navigator.sendBeacon(urljoin(ENV.APP.BACKEND_HOST, ENV.APP.API_URL_NAMESPACE, ...urlParts, "ping"));
+}

@@ -56,27 +56,6 @@ export default class PodcastModel extends Model {
         return;
     }
 
-    get coverMediaImages(): MediaImage[] {
-        const result: MediaImage[] = [];
-
-        if (this.cover) {
-            result.push({
-                src: this.cover,
-                sizes: `${this["cover-height"]}x${this["cover-width"]}`,
-                type: this["cover-mimetype"],
-            });
-        }
-        if (this["cover-thumbnail"]) {
-            result.push({
-                src: this["cover-thumbnail"],
-                sizes: `${this["cover-thumbnail-width"]}x${this["cover-thumbnail-height"]}`,
-                type: this["cover-thumbnail-mimetype"],
-            });
-        }
-
-        return result;
-    }
-
     get faviconData(): Favicon | undefined {
         if (this.favicon && this["favicon-content-type"]) {
             return { url: this.favicon, contentType: this["favicon-content-type"] };
