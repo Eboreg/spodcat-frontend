@@ -1,8 +1,7 @@
-<aside ...attributes>
+<aside class="gap-half column" ...attributes>
   <Button @href={{@podcast.rss-url}} @new-tab={{true}} @theme="primary" @material-icon="rss_feed">
     <span class="label">RSS-feed</span>
   </Button>
-
   {{#each @podcast.links as |link|}}
     <Button @href={{link.url}} @new-tab={{true}} @theme={{link.theme}}>
       {{#if link.custom-icon}}
@@ -13,6 +12,12 @@
       <span class="label">{{link.label}}</span>
     </Button>
   {{/each}}
+
+  {{#if this.showIndexLink}}
+    <Button @route="home" @theme="secondary" @material-icon="home">
+      <span class="label">Alla poddar</span>
+    </Button>
+  {{/if}}
 
   {{yield}}
 </aside>

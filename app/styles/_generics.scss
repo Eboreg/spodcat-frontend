@@ -1,3 +1,4 @@
+@use "sass:map";
 @use "variables" as *;
 @use "mixins";
 
@@ -13,7 +14,7 @@
     display: flex !important;
 }
 
-@each $sname, $size in $min-sizes {
+@each $sname in map.keys($min-sizes) {
     @include mixins.min(#{$sname}) {
         .d-#{$sname}-none {
             display: none !important;
@@ -30,112 +31,54 @@
 /** gap/margin/padding *******************************************************/
 
 @each $lname, $length in $lengths {
-    @each $sname, $size in $min-sizes {
-        @include mixins.min(#{$sname}) {
-            .gap-#{$sname}-#{$lname} {
-                gap: #{$length};
-            }
+    .gap-#{$lname} {
+        gap: #{$length} !important;
+    }
+    .m-#{$lname} {
+        margin: #{$length} !important;
+    }
+    .p-#{$lname} {
+        padding: #{$length} !important;
+    }
 
-            .m-#{$sname}-#{$lname} {
-                margin: #{$length};
+    @each $abbr, $dlist in $dimens {
+        .m#{$abbr}-#{$lname} {
+            @each $dimen in $dlist {
+                margin-#{$dimen}: #{$length} !important;
             }
-            .mt-#{$sname}-#{$lname} {
-                margin-top: #{$length};
-            }
-            .mr-#{$sname}-#{$lname} {
-                margin-right: #{$length};
-            }
-            .mb-#{$sname}-#{$lname} {
-                margin-bottom: #{$length};
-            }
-            .ml-#{$sname}-#{$lname} {
-                margin-left: #{$length};
-            }
-            .mx-#{$sname}-#{$lname} {
-                margin-left: #{$length};
-                margin-right: #{$length};
-            }
-            .my-#{$sname}-#{$lname} {
-                margin-top: #{$length};
-                margin-bottom: #{$length};
-            }
-
-            .p-#{$sname}-#{$lname} {
-                padding: #{$length};
-            }
-            .pt-#{$sname}-#{$lname} {
-                padding-top: #{$length};
-            }
-            .pr-#{$sname}-#{$lname} {
-                padding-right: #{$length};
-            }
-            .pb-#{$sname}-#{$lname} {
-                padding-bottom: #{$length};
-            }
-            .pl-#{$sname}-#{$lname} {
-                padding-left: #{$length};
-            }
-            .px-#{$sname}-#{$lname} {
-                padding-left: #{$length};
-                padding-right: #{$length};
-            }
-            .py-#{$sname}-#{$lname} {
-                padding-top: #{$length};
-                padding-bottom: #{$length};
+        }
+        .p#{$abbr}-#{$lname} {
+            @each $dimen in $dlist {
+                padding-#{$dimen}: #{$length} !important;
             }
         }
     }
 
-    .gap-#{$lname} {
-        gap: #{$length};
-    }
+    @each $sname in map.keys($min-sizes) {
+        @include mixins.min(#{$sname}) {
+            .gap-#{$sname}-#{$lname} {
+                gap: #{$length} !important;
+            }
+            .m-#{$sname}-#{$lname} {
+                margin: #{$length} !important;
+            }
+            .p-#{$sname}-#{$lname} {
+                padding: #{$length} !important;
+            }
 
-    .m-#{$lname} {
-        margin: #{$length};
-    }
-    .mt-#{$lname} {
-        margin-top: #{$length};
-    }
-    .mr-#{$lname} {
-        margin-right: #{$length};
-    }
-    .mb-#{$lname} {
-        margin-bottom: #{$length};
-    }
-    .ml-#{$lname} {
-        margin-left: #{$length};
-    }
-    .mx-#{$lname} {
-        margin-left: #{$length};
-        margin-right: #{$length};
-    }
-    .my-#{$lname} {
-        margin-top: #{$length};
-        margin-bottom: #{$length};
-    }
-
-    .p-#{$lname} {
-        padding: #{$length};
-    }
-    .pt-#{$lname} {
-        padding-top: #{$length};
-    }
-    .pr-#{$lname} {
-        padding-right: #{$length};
-    }
-    .pb-#{$lname} {
-        padding-bottom: #{$length};
-    }
-    .pl-#{$lname} {
-        padding-left: #{$length};
-    }
-    .px-#{$lname} {
-        padding-left: #{$length};
-        padding-right: #{$length};
-    }
-    .py-#{$lname} {
-        padding-top: #{$length};
-        padding-bottom: #{$length};
+            @each $abbr, $dlist in $dimens {
+                .m#{$abbr}-#{$sname}-#{$lname} {
+                    @each $dimen in $dlist {
+                        margin-#{$dimen}: #{$length} !important;
+                    }
+                }
+                .p#{$abbr}-#{$sname}-#{$lname} {
+                    @each $dimen in $dlist {
+                        padding-#{$dimen}: #{$length} !important;
+                    }
+                }
+            }
+        }
     }
 }
 

@@ -23,6 +23,29 @@ $lengths: (
     "4x": 4rem,
 );
 
+$dimens: (
+    "t": (
+        "top",
+    ),
+    "r": (
+        "right",
+    ),
+    "l": (
+        "left",
+    ),
+    "b": (
+        "bottom",
+    ),
+    "x": (
+        "left",
+        "right",
+    ),
+    "y": (
+        "top",
+        "bottom",
+    ),
+);
+
 :root {
     --mm-background-color-opaque: #111;
     --mm-background-color: rgba(0, 0, 0, 0.8);
