@@ -1,6 +1,6 @@
 <aside class="gap-half column" ...attributes>
   <Button @href={{@podcast.rss-url}} @new-tab={{true}} @theme="primary" @material-icon="rss_feed">
-    <span class="label">RSS-feed</span>
+    <span class="label">RSS-flöde</span>
   </Button>
   {{#each @podcast.links as |link|}}
     <Button @href={{link.url}} @new-tab={{true}} @theme={{link.theme}}>
@@ -18,6 +18,8 @@
       <span class="label">Alla poddar</span>
     </Button>
   {{/if}}
+
+  <Attribution class="d-none d-md-block" />
 
   {{yield}}
 </aside>

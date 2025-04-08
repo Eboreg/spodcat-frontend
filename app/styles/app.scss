@@ -22,6 +22,11 @@ a {
 
 aside {
     grid-area: aside;
+
+    @include mixins.min(md) {
+        position: sticky;
+        top: 0.5rem;
+    }
 }
 
 body {
@@ -77,21 +82,21 @@ main.podcast-details {
     display: grid;
     grid-template-rows: auto auto auto 1fr;
 
+    grid-template-areas: "header" "before" "aside" "content" "attr";
+    grid-template-columns: 1fr;
+
     & > * {
         margin-bottom: 0.5rem;
     }
 
     @include mixins.max(sm) {
-        grid-template-areas: "header" "before" "aside" "podcast-content-container" "attr";
-        grid-template-columns: 1fr;
-
-        &.podcast-content-detail {
-            grid-template-areas: "header" "before" "podcast-content-container" "aside" "attr";
+        &.podcast-content-details {
+            grid-template-areas: "header" "before" "content" "aside" "attr";
         }
     }
 
     @include mixins.min(md) {
-        grid-template-areas: "header header" "before before" "podcast-content-container aside" "podcast-content-container attr";
+        grid-template-areas: "header header" "before before" "content aside" "content attr";
         grid-template-columns: 1fr 250px;
     }
 }
@@ -130,26 +135,6 @@ main.podcast-details {
     &.tertiary {
         background: var(--mm-tertiary);
         border-color: var(--mm-tertiary);
-    }
-}
-
-.content-grid {
-    display: grid;
-    grid-template-areas: "before before" "podcast-content-container aside" "podcast-content-container attr";
-    grid-template-columns: 1fr 250px;
-    grid-template-rows: auto auto 1fr;
-
-    .before {
-        grid-area: before;
-    }
-    .podcast-content-container {
-        grid-area: podcast-content-container;
-    }
-    aside {
-        grid-area: aside;
-    }
-    .attribution {
-        grid-area: attr;
     }
 }
 
@@ -501,7 +486,7 @@ main.podcast-details {
 }
 
 .podcast-content-container {
-    grid-area: podcast-content-container;
+    grid-area: content;
 }
 
 .podcast-content-leading-icon {
