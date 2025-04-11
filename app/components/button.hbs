@@ -3,7 +3,7 @@
     @route={{@route}}
     @models={{this.models}}
     {{on "click" this.onLinkClick}}
-    class="button {{@theme}} {{if this.isLoading 'loading'}}"
+    class="button {{@theme}} {{if this.isLoading 'loading'}} {{if @disabled 'disabled'}}"
     ...attributes
   >
     <Button::Content @material-icon={{@material-icon}} @loading={{this.isLoading}}>{{yield}}</Button::Content>
@@ -12,7 +12,7 @@
   <a
     href={{@href}}
     target={{this.target}}
-    class="button {{@theme}} {{if this.isLoading 'loading'}}"
+    class="button {{@theme}} {{if this.isLoading 'loading'}} {{if @disabled 'disabled'}}"
     rel={{this.rel}}
     {{on "click" this.onLinkClick}}
     ...attributes

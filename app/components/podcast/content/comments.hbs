@@ -1,0 +1,58 @@
+{{#if this.hasComments}}
+  <div>
+    <h3>Kommentarer</h3>
+    {{#each this.comments as |comment|}}
+      <div class="comment">
+        <p class="small">{{comment.name}} sade {{comment.createdString}}:</p>
+        <div class="comment-text">{{html-safe comment.text-html}}</div>
+      </div>
+    {{/each}}
+  </div>
+{{/if}}
+
+{{#if this.showCommentForm}}
+  <div>
+    <h3>Lämna en kommentar</h3>
+    <div class="comment-form gap-half">
+      {{#if @content.podcast.require-comment-approval}}
+        <div class="small">Obs: din kommentar kommer att behöva godkännas manuellt innan den blir synlig här.</div>
+      {{/if}}
+      <Textarea @value={{this.comment.text}} class="{{if this.comment.errors.text 'has-error'}}" />
+      {{#each this.comment.errors.text as |error|}}
+        <div class="error small">{{error.message}}</div>
+      {{/each}}
+      <div class="row gap-single align-start">
+        <div class="name-wrapper">
+          <label for="name" class="small">Ditt namn</label>
+          <Input
+            id="name"
+            @value={{this.comment.name}}
+            class="{{if this.comment.errors.name 'has-error'}}"
+            maxlength="100"
+          />
+          {{#each this.comment.errors.name as |error|}}
+            <div class="error small">{{error.message}}</div>
+          {{/each}}
+        </div>
+        <div>
+          <label for="challenge" class="small">Vad blir
+            {{this.challenge.challenge-string}}? Svara med siffror.</label>
+          <Input
+            id="challenge"
+            @type="number"
+            @value={{this.comment.challenge-answer}}
+            class="{{if this.comment.errors.challenge-answer 'has-error'}}"
+          />
+          {{#each this.comment.errors.challenge-answer as |error|}}
+            <div class="error small">{{error.message}}</div>
+          {{/each}}
+        </div>
+        <Button
+          @disabled={{this.isSubmitDisabled}}
+          @theme="secondary"
+          {{on "click" this.onSubmitComment}}
+        >Skicka</Button>
+      </div>
+    </div>
+  </div>
+{{/if}}

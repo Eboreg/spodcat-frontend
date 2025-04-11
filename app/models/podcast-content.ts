@@ -1,6 +1,7 @@
-import Model, { attr, belongsTo } from "@ember-data/model";
+import Model, { attr, belongsTo, hasMany, type HasMany } from "@ember-data/model";
 import type PodcastModel from "./podcast";
 import { Type } from "@warp-drive/core-types/symbols";
+import type CommentModel from "./comment";
 
 export default class PodcastContentModel extends Model {
     @attr declare slug: string;
@@ -12,6 +13,8 @@ export default class PodcastContentModel extends Model {
 
     @belongsTo<PodcastModel>("podcast", { async: false, inverse: "contents", as: "podcast-content" })
     declare podcast: PodcastModel;
+    @hasMany<CommentModel>("comment", { async: false, inverse: "podcast-content", as: "podcast-content" })
+    declare comments: HasMany<CommentModel>;
 
     get descriptionIsLoading() {
         return this["description-html"] == undefined;

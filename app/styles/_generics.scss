@@ -141,10 +141,6 @@
 
 .small {
     font-size: 12px;
-
-    @include mixins.min(sm) {
-        font-size: 14px;
-    }
 }
 
 .text-center {

@@ -4,17 +4,24 @@
     <span class="label">Till {{@podcast.name}}</span>
   </Button>
   <Podcast::Content::EpisodeCard @episode={{@episode}} @start={{@start}} @expand={{true}}>
-    <Podcast::Content::Description @model={{@episode}}>
-      {{#if (and this.showSongs @episode.songs)}}
+    <Podcast::Content::Description @content={{@episode}} />
+
+    {{#if this.hasSongs}}
+      <div>
         <h3>Låtar</h3>
         {{#each @episode.songs as |song|}}
-          <p class="cursor-pointer" {{on "click" (fn this.onSongClick song)}}>
-            {{#if song.artistString}}{{song.artistString}} –{{/if}}
-            {{song.name}}
-            {{#if song.comment}}({{song.comment}}){{/if}}
-          </p>
+          <div class="episode-song">
+            <span {{on "click" (fn this.onSongClick song)}}>
+              {{#if song.artistString}}{{song.artistString}} –{{/if}}
+              {{song.name}}
+              {{#if song.comment}}({{song.comment}}){{/if}}
+            </span>
+          </div>
         {{/each}}
-      {{/if}}
-    </Podcast::Content::Description>
+      </div>
+    {{/if}}
+
+    <Podcast::Content::Comments @content={{@episode}} />
+
   </Podcast::Content::EpisodeCard>
 </Podcast::Base>

@@ -21,8 +21,8 @@ export default class PodcastEpisode extends Component<PodcastEpisodeSignature> {
     @service declare audio: AudioService;
     @service declare fastboot: FastBoot;
 
-    get showSongs() {
-        return !this.fastboot.isFastBoot;
+    get hasSongs() {
+        return !this.fastboot.isFastBoot && this.args.episode.songs.length > 0;
     }
 
     @action onSongClick(song: EpisodeSongModel) {

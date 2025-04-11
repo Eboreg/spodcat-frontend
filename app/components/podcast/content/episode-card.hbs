@@ -1,11 +1,11 @@
 <article class="podcast-content-card episode" ...attributes>
-  <div class="podcast-content-card-contents">
-    <div class="row align-center">
+  <div class="podcast-content-card-contents p-single gap-single">
+    <div class="row align-center gap-half">
       <LinkTo
         @route={{@episode.route}}
         @models={{@episode.routeModels}}
         @disabled={{@expand}}
-        class="row align-center gap-single fill podcast-content-link-block"
+        class="row align-center gap-single fill"
       >
         {{#if @episode.hasNumber}}
           <div class="podcast-content-leading-icon primary">{{@episode.number}}</div>
@@ -21,30 +21,30 @@
         </div>
       </LinkTo>
 
-      <div class="row px-half align-center">
+      <div class="row align-center gap-half">
         {{#if (and @episode.has-songs (not @expand))}}
           <LinkTo
             @route={{@episode.route}}
             @models={{@episode.routeModels}}
-            class="material-symbols icon secondary d-none d-sm-block px-half py-single"
+            class="material-symbols icon secondary d-none d-sm-block"
             title="Har låtlista"
           >queue_music</LinkTo>
         {{/if}}
         <a href={{@episode.audio-url}} title="Ladda ned">
-          <span class="material-symbols icon primary px-half py-single">download</span>
+          <span class="material-symbols icon primary">download</span>
         </a>
         {{#if this.isLoadingAudio}}
-          <ProgressCircle class="tertiary px-half py-single" />
+          <ProgressCircle class="tertiary" />
         {{else if this.isPlaying}}
           <span
-            class="material-symbols icon tertiary px-half py-single"
+            class="material-symbols icon tertiary"
             role="button"
             title="Pausa"
             {{on "click" this.audio.pause}}
           >pause</span>
         {{else}}
           <span
-            class="material-symbols icon tertiary px-half py-single"
+            class="material-symbols icon tertiary"
             role="button"
             title="Spela"
             {{on "click" this.play}}

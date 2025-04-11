@@ -22,8 +22,8 @@ export default class PostRoute extends Route<PostModel> {
         const { podcast_id } = this.paramsFor("podcast") as { podcast_id: string };
         const result = await this.store.query<PostModel>("post", {
             include: this.fastboot.isFastBoot
-                ? ["podcast.categories", "podcast.links", "podcast.authors", "podcast.contents"]
-                : [],
+                ? ["podcast.categories", "podcast.links", "podcast.contents", "comments"]
+                : ["comments"],
             filter: {
                 podcast: podcast_id,
                 slug: params.post_id,

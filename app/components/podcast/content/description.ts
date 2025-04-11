@@ -3,7 +3,7 @@ import type PodcastContentModel from "podcast-frontend/models/podcast-content";
 
 export interface PodcastContentDescriptionSignature {
     Args: {
-        model: PodcastContentModel;
+        content: PodcastContentModel;
     };
     Element: HTMLDivElement;
     Blocks: {

@@ -1,14 +1,6 @@
 import ENV from "podcast-frontend/config/environment";
-import Model, {
-    attr,
-    belongsTo,
-    hasMany,
-    type AsyncBelongsTo,
-    type AsyncHasMany,
-    type HasMany,
-} from "@ember-data/model";
+import Model, { attr, hasMany, type HasMany } from "@ember-data/model";
 import { Type } from "@warp-drive/core-types/symbols";
-import type UserModel from "./user";
 import type CategoryModel from "./category";
 import type PodcastLinkModel from "./podcast-link";
 import type PodcastContentModel from "./podcast-content";
@@ -37,17 +29,15 @@ export default class PodcastModel extends Model {
     @attr declare "description-html"?: string;
     @attr declare "name-font-family": string;
     @attr declare "name-font-size": "small" | "normal" | "large";
+    @attr declare "enable-comments": boolean;
+    @attr declare "require-comment-approval": boolean;
 
     @hasMany<PodcastContentModel>("podcast-content", { async: false, inverse: "podcast", polymorphic: true })
     declare contents: HasMany<PodcastContentModel>;
-    @hasMany<UserModel>("user", { async: true, inverse: "podcasts" })
-    declare authors: AsyncHasMany<UserModel>;
     @hasMany<CategoryModel>("category", { async: false, inverse: null })
     declare categories: HasMany<CategoryModel>;
     @hasMany<PodcastLinkModel>("podcast-link", { async: false, inverse: "podcast" })
     declare links: HasMany<PodcastLinkModel>;
-    @belongsTo<UserModel>("user", { async: true, inverse: "owned-podcasts" })
-    declare owner?: AsyncBelongsTo<UserModel>;
 
     get bannerData(): Image | undefined {
         if (this.banner && this["banner-height"] && this["banner-width"]) {

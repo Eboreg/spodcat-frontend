@@ -4,8 +4,9 @@
     @include mixins.filled-outset-block;
 
     align-items: center;
+    cursor: pointer;
     gap: 10px;
-    padding: 10px;
+    padding: 0.5rem;
     text-decoration: none;
 
     &:active:not(.loading) {
@@ -17,6 +18,11 @@
     &.loading {
         color: lightgray !important;
         cursor: wait !important;
+    }
+
+    &.disabled {
+        cursor: not-allowed !important;
+        color: darkgray !important;
     }
 
     .icon {

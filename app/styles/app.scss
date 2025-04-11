@@ -8,6 +8,9 @@
 @use "loader";
 @use "dbfs";
 @use "button";
+@use "podcast-banner";
+@use "podcast-grid";
+@use "toast";
 
 /** ELEMENTS *****************************************************************/
 
@@ -21,8 +24,6 @@ a {
 }
 
 aside {
-    grid-area: aside;
-
     @include mixins.min(md) {
         position: sticky;
         top: 0.5rem;
@@ -77,28 +78,8 @@ main {
     padding: 10px 0;
 }
 
-main.podcast-details {
-    column-gap: 0.5rem;
-    display: grid;
-    grid-template-rows: auto auto auto 1fr;
-
-    grid-template-areas: "header" "before" "aside" "content" "attr";
-    grid-template-columns: 1fr;
-
-    & > * {
-        margin-bottom: 0.5rem;
-    }
-
-    @include mixins.max(sm) {
-        &.podcast-content-details {
-            grid-template-areas: "header" "before" "content" "aside" "attr";
-        }
-    }
-
-    @include mixins.min(md) {
-        grid-template-areas: "header header" "before before" "content aside" "content attr";
-        grid-template-columns: 1fr 250px;
-    }
+h3 {
+    margin-top: 0;
 }
 
 /** VARIOUS ATTRIBUTES *******************************************************/
@@ -110,7 +91,6 @@ main.podcast-details {
 /** CLASSES ******************************************************************/
 
 .attribution {
-    grid-area: attr;
     z-index: 20;
 }
 
@@ -142,6 +122,13 @@ main.podcast-details {
     border: 10px dotted var(--mm-primary);
     border-bottom-color: var(--mm-primary-dark);
     border-right-color: var(--mm-primary-dark);
+}
+
+.episode-song > * {
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    line-height: 2;
 }
 
 .err404 {
@@ -284,145 +271,12 @@ main.podcast-details {
     }
 }
 
-.podcast-details .podcast-banner.has-banner-image {
-    aspect-ratio: 3/1;
-
-    .podcast-banner-image {
-        aspect-ratio: 3/1;
-    }
-}
-
-.podcast-list .podcast-banner {
-    border-radius: 5px;
-
-    .podcast-cover {
-        width: 80px;
-    }
-
-    .podcast-name {
-        font-size: 30px;
-
-        &.small {
-            font-size: 20px;
-        }
-
-        &.large {
-            font-size: 40px;
-        }
-
-        @include mixins.min(md) {
-            font-size: 40px;
-
-            &.small {
-                font-size: 25px;
-            }
-
-            &.large {
-                font-size: 60px;
-            }
-        }
-
-        @include mixins.min(lg) {
-            font-size: 50px;
-
-            &.small {
-                font-size: 35px;
-            }
-
-            &.large {
-                font-size: 70px;
-            }
-        }
-    }
-}
-
 .outlined-text {
     text-shadow:
         -2px 0 0 black,
         0 -2px 0 black,
         0 2px 0 black,
         2px 0 0 black;
-}
-
-.podcast-banner {
-    display: flex;
-    flex-direction: column;
-    /* flex: 0 0 auto; */
-    grid-area: header;
-    justify-content: end;
-    overflow: hidden;
-    position: relative;
-
-    .podcast-banner-image {
-        object-fit: cover;
-        object-position: center;
-        position: absolute;
-        width: 100%;
-        z-index: -1;
-    }
-
-    .podcast-cover {
-        aspect-ratio: 1/1;
-        border: 5px outset var(--mm-primary);
-        border-radius: 100%;
-        object-fit: cover;
-        object-position: center;
-        width: 100px;
-    }
-
-    .podcast-name {
-        font-family: "Unifraktur Cook";
-        font-size: 40px;
-        line-height: 1;
-
-        &.small {
-            font-size: 30px;
-        }
-
-        &.large {
-            font-size: 50px;
-        }
-
-        @include mixins.min(md) {
-            font-size: 50px;
-
-            &.small {
-                font-size: 35px;
-            }
-
-            &.large {
-                font-size: 70px;
-            }
-        }
-
-        @include mixins.min(lg) {
-            font-size: 60px;
-
-            &.small {
-                font-size: 45px;
-            }
-
-            &.large {
-                font-size: 80px;
-            }
-        }
-    }
-
-    .podcast-name-alt {
-        font-family: "Deutsche Uncialis";
-        font-size: 80px;
-        line-height: 1;
-        text-shadow:
-            -2px 0 0 black,
-            0 -2px 0 black,
-            0 2px 0 black,
-            2px 0 0 black;
-    }
-
-    .podcast-tagline {
-        font-size: 14px;
-        margin-top: 5px;
-    }
 }
 
 .podcast-content-card {
@@ -434,10 +288,7 @@ main.podcast-details {
         background: var(--mm-background-color);
         display: flex;
         flex-direction: column;
-    }
-
-    .podcast-content-link-block {
-        padding: 1rem 0 1rem 1rem;
+        overflow-wrap: anywhere;
     }
 
     .podcast-content-name {
@@ -446,7 +297,6 @@ main.podcast-details {
 
     .podcast-content-description {
         line-height: 1.5;
-        margin: 0 1rem;
 
         & > :first-child {
             margin-top: 0;
@@ -483,10 +333,6 @@ main.podcast-details {
             height: 40px;
         }
     }
-}
-
-.podcast-content-container {
-    grid-area: content;
 }
 
 .podcast-content-leading-icon {
@@ -526,10 +372,6 @@ main.podcast-details {
     border-bottom-color: var(--mm-primary-dark);
     border-right-color: var(--mm-primary-dark);
 
-    &.before {
-        grid-area: before;
-    }
-
     .podcast-description-content {
         background: var(--mm-background-color);
         line-height: 1.5;
@@ -549,36 +391,63 @@ main.podcast-details {
     }
 }
 
-.toast {
-    @include mixins.filled-outset-block;
+.volume-control-popup {
+    padding-right: 1rem;
+}
 
-    align-items: start;
-    bottom: calc(100% + 10px);
-    opacity: 0;
-    position: fixed;
-    scale: 0;
-    transition-duration: 300ms;
-    transition-property: left, bottom, scale, opacity;
-    transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    width: var(--mm-toast-width);
-    z-index: 40;
+/* Kommentarer */
 
-    .toast-icon {
-        align-self: center;
-        padding: 10px;
+.comment-form {
+    display: flex;
+    flex-direction: column;
+
+    textarea {
+        display: block;
+        min-height: 70px;
     }
 
-    .toast-text {
-        padding: 10px;
+    label {
+        display: block;
+    }
+
+    input {
+        width: 100%;
+    }
+
+    .name-wrapper {
         flex-grow: 1;
     }
 
-    .toast-close-icon {
-        cursor: pointer;
-        padding: 10px;
+    .error {
+        color: var(--mm-primary);
+    }
+
+    .has-error {
+        border: 2px solid var(--mm-primary);
     }
 }
 
-.volume-control-popup {
-    padding-right: 1rem;
+.comment {
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    border-radius: 5px;
+
+    &:nth-child(odd) {
+        background-color: var(--mm-secondary-dark);
+    }
+
+    &:nth-child(even) {
+        background-color: var(--mm-tertiary-dark);
+    }
+
+    &,
+    .comment-text {
+        & > :first-child {
+            margin-top: 0;
+        }
+
+        & > :last-child {
+            margin-bottom: 0;
+        }
+    }
 }

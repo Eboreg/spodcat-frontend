@@ -1,0 +1,41 @@
+@use "mixins";
+
+main.podcast-grid {
+    column-gap: 0.5rem;
+    display: grid;
+    grid-template-rows: auto auto auto 1fr;
+
+    grid-template-areas: "header" "before" "aside" "content" "attribution";
+    grid-template-columns: 1fr;
+
+    & > * {
+        margin-bottom: 0.5rem;
+    }
+
+    @include mixins.max(sm) {
+        &.podcast-content-details {
+            grid-template-areas: "header" "before" "content" "aside" "attribution";
+        }
+    }
+
+    @include mixins.min(md) {
+        grid-template-areas: "header header" "before before" "content aside" "content attribution";
+        grid-template-columns: 1fr 250px;
+    }
+
+    & > .content {
+        grid-area: content;
+    }
+
+    & > .before {
+        grid-area: before;
+    }
+
+    & > aside {
+        grid-area: aside;
+    }
+
+    & > .attribution {
+        grid-area: attribution;
+    }
+}

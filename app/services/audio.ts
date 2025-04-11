@@ -94,6 +94,7 @@ export default class AudioService extends Service {
 
     @action onKeyDown(event: KeyboardEvent) {
         if (event.metaKey || event.altKey) return;
+        if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) return;
 
         if (event.key == " " && !event.ctrlKey) {
             this.playOrPause();

@@ -1,0 +1,123 @@
+@use "mixins";
+
+.podcast-details .podcast-banner.has-banner-image {
+    aspect-ratio: 3/1;
+
+    .podcast-banner-image {
+        aspect-ratio: 3/1;
+    }
+}
+
+.podcast-list .podcast-banner {
+    border-radius: 5px;
+
+    .podcast-cover {
+        width: 80px;
+    }
+
+    .podcast-name {
+        font-size: 30px;
+
+        &.small {
+            font-size: 20px;
+        }
+
+        &.large {
+            font-size: 40px;
+        }
+
+        @include mixins.min(md) {
+            font-size: 40px;
+
+            &.small {
+                font-size: 25px;
+            }
+
+            &.large {
+                font-size: 60px;
+            }
+        }
+
+        @include mixins.min(lg) {
+            font-size: 50px;
+
+            &.small {
+                font-size: 35px;
+            }
+
+            &.large {
+                font-size: 70px;
+            }
+        }
+    }
+}
+
+.podcast-banner {
+    display: flex;
+    flex-direction: column;
+    /* flex: 0 0 auto; */
+    grid-area: header;
+    justify-content: end;
+    overflow: hidden;
+    position: relative;
+
+    .podcast-banner-image {
+        object-fit: cover;
+        object-position: center;
+        position: absolute;
+        width: 100%;
+        z-index: -1;
+    }
+
+    .podcast-cover {
+        aspect-ratio: 1/1;
+        border: 5px outset var(--mm-primary);
+        border-radius: 100%;
+        object-fit: cover;
+        object-position: center;
+        width: 100px;
+    }
+
+    .podcast-name {
+        font-family: "Unifraktur Cook";
+        font-size: 40px;
+        line-height: 1;
+
+        &.small {
+            font-size: 30px;
+        }
+
+        &.large {
+            font-size: 50px;
+        }
+
+        @include mixins.min(md) {
+            font-size: 50px;
+
+            &.small {
+                font-size: 35px;
+            }
+
+            &.large {
+                font-size: 70px;
+            }
+        }
+
+        @include mixins.min(lg) {
+            font-size: 60px;
+
+            &.small {
+                font-size: 45px;
+            }
+
+            &.large {
+                font-size: 80px;
+            }
+        }
+    }
+
+    .podcast-tagline {
+        font-size: 14px;
+        margin-top: 5px;
+    }
+}
