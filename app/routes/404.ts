@@ -4,8 +4,8 @@ import { service } from "@ember/service";
 import type FastBoot from "ember-cli-fastboot/services/fastboot";
 
 export default class SwjsRoute extends Route {
-    @service declare router: RouterService;
     @service declare fastboot: FastBoot;
+    @service declare router: RouterService;
 
     beforeModel() {
         if (this.fastboot.isFastBoot) {

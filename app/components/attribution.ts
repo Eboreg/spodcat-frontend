@@ -20,6 +20,7 @@ export default class Attribution extends Component<AttributionSignature> {
     }
 
     @action setAudioElement(element: HTMLAudioElement) {
+        element.volume = 0.6;
         this.audioElement = element;
     }
 }

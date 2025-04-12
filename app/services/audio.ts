@@ -13,12 +13,10 @@ export default class AudioService extends Service {
 
     @tracked audioElement?: HTMLAudioElement;
     @tracked currentProgress: number = 0;
-    @tracked episode?: EpisodeModel;
-    @tracked isLoadingEpisode?: string;
-
-    // @tracked bufferEnd: number = 0;
     @tracked currentTime: number = 0;
     @tracked duration: number = 0;
+    @tracked episode?: EpisodeModel;
+    @tracked isLoadingEpisode?: string;
     @tracked isMuted: boolean = false;
     @tracked isPlaying: boolean = false;
     @tracked isSeeking: boolean = false;
@@ -81,13 +79,11 @@ export default class AudioService extends Service {
     }
 
     @action onEnded() {
-        console.log("onEnded");
         this.isPlaying = false;
         if (this.mediaSessionAvailable) navigator.mediaSession.playbackState = "none";
     }
 
-    @action onError(event: Event) {
-        console.error("onError", event);
+    @action onError() {
         this.isLoadingEpisode = undefined;
         this.isPlaying = false;
     }
@@ -115,14 +111,12 @@ export default class AudioService extends Service {
     }
 
     @action onPlay() {
-        console.log("onPlay");
         this.isPlaying = true;
         this.isLoadingEpisode = undefined;
         if (this.mediaSessionAvailable) navigator.mediaSession.playbackState = "playing";
     }
 
     @action onPlaying() {
-        console.log("onPlaying");
         this.onPlay();
     }
 
@@ -142,7 +136,6 @@ export default class AudioService extends Service {
     }
 
     @action onStalled() {
-        console.log("onStalled");
         this.isLoadingEpisode = this.episode?.slug;
     }
 
@@ -167,7 +160,6 @@ export default class AudioService extends Service {
     }
 
     @action onWaiting() {
-        console.log("onWaiting");
         this.isLoadingEpisode = this.episode?.slug;
     }
 
@@ -184,7 +176,6 @@ export default class AudioService extends Service {
 
     playEpisode(episode: EpisodeModel, start?: number, alwaysSeek?: boolean) {
         if (this.episode != episode) {
-            console.log(`setting isLoadingEpisode=${episode.slug}`);
             this.isLoadingEpisode = episode.slug;
             if (episode["dbfs-array"] == undefined) {
                 episode.reload().catch((reason) => {

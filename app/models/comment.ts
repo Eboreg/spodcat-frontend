@@ -3,13 +3,13 @@ import { Type } from "@warp-drive/core-types/symbols";
 import type PodcastContentModel from "./podcast-content";
 
 export default class CommentModel extends Model {
+    @attr declare challenge?: string;
+    @attr declare "challenge-answer"?: string;
+    @attr("date") declare created: Date;
+    @attr declare "is-approved": boolean;
     @attr declare name: string;
     @attr declare text: string;
     @attr declare "text-html": string;
-    @attr("date") declare created: Date;
-    @attr declare challenge?: string;
-    @attr declare "challenge-answer"?: string;
-    @attr declare "is-approved": boolean;
 
     @belongsTo<PodcastContentModel>("podcast-content", {
         async: false,

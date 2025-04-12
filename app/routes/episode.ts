@@ -1,7 +1,6 @@
 import ENV from "podcast-frontend/config/environment";
 import type Store from "@ember-data/store";
 import { action } from "@ember/object";
-import Route from "@ember/routing/route";
 import type RouterService from "@ember/routing/router-service";
 import type Transition from "@ember/routing/transition";
 import { service } from "@ember/service";
@@ -10,32 +9,16 @@ import EpisodeModel from "podcast-frontend/models/episode";
 import type HeadDataService from "podcast-frontend/services/head-data";
 import type AudioService from "podcast-frontend/services/audio";
 import { ping } from "podcast-frontend/utils";
+import PreserveScrollRoute from "podcast-frontend/preserve-scroll-route";
 
 class EpisodeNotFoundError extends Error {}
 
-export default class EpisodeRoute extends Route<EpisodeModel> {
-    @service declare store: Store;
-    @service declare headData: HeadDataService;
+export default class EpisodeRoute extends PreserveScrollRoute<EpisodeModel> {
     @service declare audio: AudioService;
-    @service declare router: RouterService;
     @service declare fastboot: FastBoot;
-
-    async model(params: { episode_id: string }) {
-        const { podcast_id } = this.paramsFor("podcast") as { podcast_id: string };
-        const result = await this.store.query<EpisodeModel>("episode", {
-            include: this.fastboot.isFastBoot
-                ? ["podcast.categories", "podcast.links", "podcast.contents", "songs.artists", "comments"]
-                : ["songs.artists", "comments"],
-            filter: {
-                podcast: podcast_id,
-                slug: params.episode_id,
-            },
-        });
-
-        if (result.length == 0) throw new EpisodeNotFoundError();
-
-        return result[0]!;
-    }
+    @service declare headData: HeadDataService;
+    @service declare router: RouterService;
+    @service declare store: Store;
 
     afterModel(model?: EpisodeModel) {
         if (model) {
@@ -63,5 +46,26 @@ export default class EpisodeRoute extends Route<EpisodeModel> {
             return false;
         }
         return true;
+    }
+
+    getScrollY(): number {
+        return 0;
+    }
+
+    async model(params: { episode_id: string }) {
+        const { podcast_id } = this.paramsFor("podcast") as { podcast_id: string };
+        const result = await this.store.query<EpisodeModel>("episode", {
+            include: this.fastboot.isFastBoot
+                ? ["podcast.categories", "podcast.links", "podcast.contents", "songs.artists", "comments"]
+                : ["songs.artists", "comments"],
+            filter: {
+                podcast: podcast_id,
+                slug: params.episode_id,
+            },
+        });
+
+        if (result.length == 0) throw new EpisodeNotFoundError();
+
+        return result[0]!;
     }
 }

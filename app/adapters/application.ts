@@ -41,30 +41,6 @@ export default class ApplicationAdapter extends JSONAPIAdapter {
         return result;
     }
 
-    saveToShoebox(payload: Record<string, unknown> | unknown[], key: string) {
-        this.fastboot.shoebox.put(key, JSON.stringify(payload));
-
-        /*
-        if (!Array.isArray(payload)) {
-            console.log("saveToShoebox, är ej array", key);
-            if (payload["included"] && Array.isArray(payload["included"])) {
-                for (const inc of payload["included"]) {
-                    if (
-                        typeof inc["type"] == "string" &&
-                        typeof inc["id"] == "string" &&
-                        !["post", "episode"].includes(inc["type"])
-                    ) {
-                        const incKey = this.cacheKeyFor(inc["type"], inc["id"]);
-                        this.saveToShoebox({ data: inc }, incKey);
-                    }
-                }
-            }
-        } else {
-            console.log("saveToShoebox, är array", key);
-        }
-        */
-    }
-
     queryRecord(
         store: Store,
         type: ModelSchema,
@@ -75,5 +51,9 @@ export default class ApplicationAdapter extends JSONAPIAdapter {
             query["include"] = query["include"].join();
         }
         return super.queryRecord(store, type, query, adapterOptions);
+    }
+
+    saveToShoebox(payload: Record<string, unknown> | unknown[], key: string) {
+        this.fastboot.shoebox.put(key, JSON.stringify(payload));
     }
 }

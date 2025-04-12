@@ -6,20 +6,20 @@ import PodcastContentModel from "./podcast-content";
 import type EpisodeSongModel from "./episode-song";
 
 export default class EpisodeModel extends PodcastContentModel {
-    @attr declare number?: number;
-    @attr declare "duration-seconds": number;
-    @attr declare "dbfs-array"?: number[];
     @attr declare "audio-content-type"?: string;
     @attr declare "audio-url": string;
+    @attr declare "dbfs-array"?: number[];
+    @attr declare "duration-seconds": number;
     @attr declare "has-songs": boolean;
     @attr declare image?: string;
     @attr declare "image-height"?: number;
-    @attr declare "image-width"?: number;
     @attr declare "image-mimetype"?: string;
-    @attr declare "image-thumbnail"?: string;
     @attr declare "image-thumbnail-height"?: number;
-    @attr declare "image-thumbnail-width"?: number;
     @attr declare "image-thumbnail-mimetype"?: string;
+    @attr declare "image-thumbnail-width"?: number;
+    @attr declare "image-thumbnail"?: string;
+    @attr declare "image-width"?: number;
+    @attr declare number?: number;
 
     @hasMany<EpisodeSongModel>("episode-song", { async: false, inverse: "episode" })
     declare songs: HasMany<EpisodeSongModel>;

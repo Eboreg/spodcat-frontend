@@ -23,10 +23,10 @@ const transitions = ["up", "right", "down", "left", "scale", "fade"] as const;
 
 export default class Toast extends Component<ToastSignature> {
     @service declare audio: AudioService;
-    @tracked isLoading: boolean = false;
-    @tracked size: Size = { width: 0, height: 0 };
-    @tracked show: boolean = false;
     @tracked isHovering: boolean = false;
+    @tracked isLoading: boolean = false;
+    @tracked show: boolean = false;
+    @tracked size: Size = { width: 0, height: 0 };
     transition: (typeof transitions)[number];
 
     constructor(...args: ConstructorParameters<typeof Component<ToastSignature>>) {

@@ -28,6 +28,10 @@ export default class DbfsBar extends Component<DbfsBarSignature> {
     @tracked tooltipIdx: number = 0;
     @tracked tooltipProgress: number = 0;
 
+    get columnCount() {
+        return this.args.episode["dbfs-array"]?.length || 0;
+    }
+
     get columns(): NativeArray<Dbfs> {
         return A(
             this.args.episode["dbfs-array"]?.map((dbfs, idx) => {
@@ -38,10 +42,6 @@ export default class DbfsBar extends Component<DbfsBarSignature> {
                 };
             }),
         );
-    }
-
-    get columnCount() {
-        return this.args.episode["dbfs-array"]?.length || 0;
     }
 
     get tooltipContent() {

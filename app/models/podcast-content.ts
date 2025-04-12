@@ -4,17 +4,17 @@ import { Type } from "@warp-drive/core-types/symbols";
 import type CommentModel from "./comment";
 
 export default class PodcastContentModel extends Model {
-    @attr declare slug: string;
-    @attr declare name: string;
+    @attr("date") declare created?: Date;
     @attr declare description?: string;
     @attr declare "description-html"?: string;
+    @attr declare name: string;
     @attr("date") declare published: Date;
-    @attr("date") declare created?: Date;
+    @attr declare slug: string;
 
-    @belongsTo<PodcastModel>("podcast", { async: false, inverse: "contents", as: "podcast-content" })
-    declare podcast: PodcastModel;
     @hasMany<CommentModel>("comment", { async: false, inverse: "podcast-content", as: "podcast-content" })
     declare comments: HasMany<CommentModel>;
+    @belongsTo<PodcastModel>("podcast", { async: false, inverse: "contents", as: "podcast-content" })
+    declare podcast: PodcastModel;
 
     get descriptionIsLoading() {
         return this["description-html"] == undefined;

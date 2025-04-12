@@ -13,11 +13,11 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 
 export default class PodcastLinkModel extends Model {
-    @attr declare icon?: "facebook" | "discord" | "patreon" | "apple" | "android" | "spotify" | "itunes";
     @attr declare "custom-icon"?: string;
-    @attr declare url: string;
+    @attr declare icon?: "facebook" | "discord" | "patreon" | "apple" | "android" | "spotify" | "itunes";
     @attr declare label: string;
     @attr declare theme: "primary" | "secondary" | "tertiary";
+    @attr declare url: string;
 
     @belongsTo<PodcastModel>("podcast", { async: false, inverse: "links" })
     declare podcast: PodcastModel;

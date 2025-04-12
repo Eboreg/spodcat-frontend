@@ -12,15 +12,15 @@ export interface ProgressCircleSignature {
 }
 
 export default class ProgressCircle extends Component<ProgressCircleSignature> {
-    get svgStyle(): SafeString {
-        return htmlSafe(`animation-duration: ${this.args["outer-duration"] || 2}s`);
-    }
-
     get circleStyle(): SafeString {
         const rows = [
             `animation-duration: ${this.args["inner-duration"] || 1.5}s`,
             `stroke-width: ${this.args["stroke-width"] || 8}px`,
         ];
         return htmlSafe(rows.join("; "));
+    }
+
+    get svgStyle(): SafeString {
+        return htmlSafe(`animation-duration: ${this.args["outer-duration"] || 2}s`);
     }
 }

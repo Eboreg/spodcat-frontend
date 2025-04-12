@@ -13,29 +13,29 @@ export default class PodcastModel extends Model {
     @attr declare "banner-width"?: number;
     @attr declare cover?: string;
     @attr declare "cover-height"?: number;
-    @attr declare "cover-width"?: number;
     @attr declare "cover-mimetype"?: string;
-    @attr declare "cover-thumbnail"?: string;
     @attr declare "cover-thumbnail-height"?: number;
-    @attr declare "cover-thumbnail-width"?: number;
     @attr declare "cover-thumbnail-mimetype"?: string;
+    @attr declare "cover-thumbnail-width"?: number;
+    @attr declare "cover-thumbnail"?: string;
+    @attr declare "cover-width"?: number;
+    @attr declare description?: string;
+    @attr declare "description-html"?: string;
+    @attr declare "enable-comments": boolean;
     @attr declare favicon?: string;
     @attr declare "favicon-content-type"?: string;
     @attr declare language?: string;
     @attr declare name: string;
-    @attr declare "rss-url": string;
-    @attr declare tagline?: string;
-    @attr declare description?: string;
-    @attr declare "description-html"?: string;
     @attr declare "name-font-family": string;
     @attr declare "name-font-size": "small" | "normal" | "large";
-    @attr declare "enable-comments": boolean;
     @attr declare "require-comment-approval": boolean;
+    @attr declare "rss-url": string;
+    @attr declare tagline?: string;
 
-    @hasMany<PodcastContentModel>("podcast-content", { async: false, inverse: "podcast", polymorphic: true })
-    declare contents: HasMany<PodcastContentModel>;
     @hasMany<CategoryModel>("category", { async: false, inverse: null })
     declare categories: HasMany<CategoryModel>;
+    @hasMany<PodcastContentModel>("podcast-content", { async: false, inverse: "podcast", polymorphic: true })
+    declare contents: HasMany<PodcastContentModel>;
     @hasMany<PodcastLinkModel>("podcast-link", { async: false, inverse: "podcast" })
     declare links: HasMany<PodcastLinkModel>;
 
