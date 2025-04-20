@@ -14,7 +14,12 @@ export default class ApplicationAdapter extends JSONAPIAdapter {
     namespace = ENV.APP.API_URL_NAMESPACE;
 
     buildURL(modelName: string, id: any, snapshot: any, requestType?: any, query?: any): string {
+        if (query && Array.isArray(query["include"])) {
+            query["include"] = query["include"].join();
+        }
+
         const url = super.buildURL(modelName, id, snapshot, requestType, query);
+
         return url.endsWith("/") ? url : `${url}/`;
     }
 
@@ -41,16 +46,26 @@ export default class ApplicationAdapter extends JSONAPIAdapter {
         return result;
     }
 
-    queryRecord(
-        store: Store,
-        type: ModelSchema,
-        query: Record<string, unknown>,
-        adapterOptions: Record<string, unknown>,
-    ): Promise<AdapterPayload> {
-        if (Array.isArray(query["include"])) {
-            query["include"] = query["include"].join();
+    async query(store: Store, type: ModelSchema, query: Record<string, any>): Promise<AdapterPayload> {
+        if (["post", "episode"].includes(type.modelName)) {
+            const key = this.cacheKeyFor(type.modelName, `${query["filter"].podcast}-${query["filter"].slug}`);
+
+            if (this.fastboot.isFastBoot) {
+                const result = await super.query(store, type, query);
+
+                this.saveToShoebox(result, key);
+                return result;
+            }
+
+            const json = this.fastboot.shoebox.retrieve(key) as string | undefined;
+
+            if (json) {
+                const result = JSON.parse(json) as AdapterPayload | undefined;
+                if (result) return result;
+            }
         }
-        return super.queryRecord(store, type, query, adapterOptions);
+
+        return super.query(store, type, query);
     }
 
     saveToShoebox(payload: Record<string, unknown> | unknown[], key: string) {
