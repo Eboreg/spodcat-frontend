@@ -4,8 +4,9 @@ import { Type } from "@warp-drive/core-types/symbols";
 import type CategoryModel from "./category";
 import type PodcastLinkModel from "./podcast-link";
 import type PodcastContentModel from "./podcast-content";
-import type { Favicon, Image, Rss } from "podcast-frontend/services/head-data";
+import type { Favicon, Rss } from "podcast-frontend/services/head-data";
 import { htmlSafe, type SafeString } from "@ember/template";
+import type { Size } from "global";
 
 export default class PodcastModel extends Model {
     @attr declare banner?: string;
@@ -39,9 +40,9 @@ export default class PodcastModel extends Model {
     @hasMany<PodcastLinkModel>("podcast-link", { async: false, inverse: "podcast" })
     declare links: HasMany<PodcastLinkModel>;
 
-    get bannerData(): Image | undefined {
-        if (this.banner && this["banner-height"] && this["banner-width"]) {
-            return { url: this.banner, height: this["banner-height"], width: this["banner-width"] };
+    get bannerSize(): Size | undefined {
+        if (this["banner-height"] && this["banner-width"]) {
+            return { width: this["banner-width"], height: this["banner-height"] };
         }
         return;
     }

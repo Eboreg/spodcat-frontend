@@ -39,6 +39,19 @@ export function timeString(time: number): string {
     return `${hours}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
 }
 
+export function trimString(s: string, maxLen: number) {
+    if (s.length <= maxLen) return s;
+
+    const words = s.match(/(\s+\S+)|(^\S+)/g) || [];
+    let result = "";
+
+    for (const word of words) {
+        if (result.length + word.length > maxLen - 2) break;
+        result += word;
+    }
+    return result + " …";
+}
+
 export function urljoin(...parts: string[]) {
     let url = "";
 

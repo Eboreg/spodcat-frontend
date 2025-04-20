@@ -3,6 +3,7 @@
   here. The 'model' available in this template can be populated by
   setting values on the 'head-data' service.
 }}
+<meta property="og:site_name" content="podd.huseli.us" />
 <meta property="og:type" content={{this.model.ogType}} />
 {{#if this.model.favicon}}
   <link rel="shortcut icon" href={{this.model.favicon.url}} type={{this.model.favicon.contentType}} />
@@ -10,17 +11,23 @@
 {{#if this.model.ogDescription}}
   <meta name="description" content={{html-safe this.model.ogDescription}} />
   <meta property="og:description" content={{html-safe this.model.ogDescription}} />
-  <meta name="twitter:description" content={{html-safe this.model.ogDescription}} />
+{{/if}}
+{{#if this.model.twitterDescription}}
+  <meta name="twitter:description" content={{html-safe this.model.twitterDescription}} />
 {{/if}}
 {{#if this.model.ogTitle}}
   <meta property="og:title" content={{html-safe this.model.ogTitle}} />
-  <meta name="twitter:title" content={{html-safe this.model.ogTitle}} />
+{{/if}}
+{{#if this.model.twitterTitle}}
+  <meta name="twitter:title" content={{html-safe this.model.twitterTitle}} />
 {{/if}}
 {{#if this.model.ogImage}}
-  <meta property="og:image" content={{this.model.ogImage.url}} />
-  <meta property="og:image:width" content={{this.model.ogImage.width}} />
-  <meta property="og:image:height" content={{this.model.ogImage.height}} />
-  <meta name="twitter:image" content={{this.model.ogImage.url}} />
+  <meta property="og:image" content={{this.model.ogImage}} />
+  <meta name="twitter:image" content={{this.model.ogImage}} />
+  {{#if this.model.ogImageSize}}
+    <meta property="og:image:width" content={{this.model.ogImageSize.width}} />
+    <meta property="og:image:height" content={{this.model.ogImageSize.height}} />
+  {{/if}}
 {{/if}}
 {{#if this.model.rss}}
   <link type="application/rss+xml" rel="alternate" title={{this.model.rss.title}} href={{this.model.rss.url}} />
