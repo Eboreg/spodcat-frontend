@@ -5,7 +5,11 @@
 
     align-items: start;
     bottom: calc(100% + 10px);
+    display: grid;
+    grid-template: "icon text close" "countdown countdown countdown" / auto 1fr auto;
+    /* grid-template-columns: auto 1fr auto; */
     opacity: 0;
+    overflow: hidden;
     position: fixed;
     scale: 0;
     transition-duration: 300ms;
@@ -16,16 +20,24 @@
 
     .toast-icon {
         align-self: center;
+        grid-area: icon;
         padding: 10px;
     }
 
     .toast-text {
+        grid-area: text;
         padding: 10px;
-        flex-grow: 1;
     }
 
     .toast-close-icon {
         cursor: pointer;
+        grid-area: close;
         padding: 10px;
+    }
+
+    .toast-countdown {
+        grid-area: countdown;
+        height: 5px;
+        width: 0%;
     }
 }

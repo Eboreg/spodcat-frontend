@@ -1,5 +1,6 @@
 import { action } from "@ember/object";
 import { service } from "@ember/service";
+import { htmlSafe, type SafeString } from "@ember/template";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import type AudioService from "podcast-frontend/services/audio";
@@ -26,6 +27,15 @@ export default class PlaybackRateControl extends Component<PlaybackRateControlSi
     ];
     @service declare audio: AudioService;
     @tracked popupVisible: boolean = false;
+
+    get buttonClass(): SafeString {
+        if (this.audio.playbackRate != 1.0) return htmlSafe("text-primary-light");
+        return htmlSafe("");
+    }
+
+    get currentLabel() {
+        return this.playbackRates.find((r) => r.rate == this.audio.playbackRate)?.label;
+    }
 
     @action closePopup() {
         this.popupVisible = false;

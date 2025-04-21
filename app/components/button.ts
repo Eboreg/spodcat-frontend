@@ -14,6 +14,7 @@ export interface ButtonSignature {
         "material-icon"?: string;
         href?: string;
         "new-tab"?: boolean;
+        "on-click"?: (event: Event) => any;
     };
     Blocks: {
         default: [];
@@ -24,7 +25,21 @@ export interface ButtonSignature {
 export default class Button extends Component<ButtonSignature> {
     @tracked isLoading: boolean = false;
 
-    get isLink(): boolean {
+    get classes(): SafeString {
+        const ret: string[] = [
+            "button",
+            "hover-light",
+            `bg-${this.args.theme}`,
+            `border-${this.args.theme}`,
+            "text-white",
+        ];
+
+        if (this.isLoading) ret.push("loading");
+        if (this.args.disabled) ret.push("disabled");
+        return htmlSafe(ret.join(" "));
+    }
+
+    get isExternalLink(): boolean {
         return this.useLinkTo || this.args.href != undefined;
     }
 
@@ -48,11 +63,16 @@ export default class Button extends Component<ButtonSignature> {
         return this.args.route != undefined || this.args.model != undefined || this.args.models != undefined;
     }
 
-    @action onLinkClick(event: Event) {
-        if (this.isLoading) {
+    @action onClick(event: Event) {
+        if (this.isLoading || this.args.disabled) {
             event.preventDefault();
-        } else if (this.isLink && this.args["new-tab"] != true) {
-            this.isLoading = true;
+        } else {
+            if (this.isExternalLink && this.args["new-tab"] != true) {
+                this.isLoading = true;
+            }
+            if (this.args["on-click"]) {
+                this.args["on-click"](event);
+            }
         }
     }
 }

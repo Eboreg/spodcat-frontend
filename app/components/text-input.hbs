@@ -1,0 +1,33 @@
+<div class="text-input {{@wrapper-class}}">
+  {{#if @label}}
+    <label for={{@id}} class="label">{{@label}}</label>
+  {{/if}}
+  {{#if @max-length}}
+    <div class="character-counter {{if this.overflow 'text-primary'}}">{{this.length}}/{{@max-length}}</div>
+  {{/if}}
+  {{#if @multiline}}
+    <Textarea
+      id={{@id}}
+      @value={{@value}}
+      class="input {{if @errors 'has-error'}}"
+      maxlength={{@max-length}}
+      ...attributes
+    />
+  {{else}}
+    <Input
+      id={{@id}}
+      @value={{@value}}
+      class="input {{if @errors 'has-error'}}"
+      maxlength={{@max-length}}
+      @type={{@type}}
+      ...attributes
+    />
+  {{/if}}
+  {{#if @errors}}
+    <div class="errors">
+      {{#each @errors as |error|}}
+        <div class="error">{{error.message}}</div>
+      {{/each}}
+    </div>
+  {{/if}}
+</div>

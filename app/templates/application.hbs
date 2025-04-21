@@ -15,7 +15,7 @@
 <footer>
   <audio
     preload="none"
-    {{on-audio-insert this.audio.setAudioElement}}
+    {{on-insert this.audio.setAudioElement}}
     {{on "durationchange" this.audio.onDurationChange}}
     {{on "ended" this.audio.onEnded}}
     {{on "error" this.audio.onError}}

@@ -1,0 +1,45 @@
+@use "variables" as *;
+
+$color-variants: ("", "-light", "-dark");
+
+.text-white {
+    color: white !important;
+}
+
+@each $color in $colors {
+    .bg-#{$color}.hover-light:hover {
+        background-color: var(--mm-#{$color}-light) !important;
+        border-color: var(--mm-#{$color}-light);
+    }
+    .border-#{$color}.hover-light:hover {
+        border-color: var(--mm-#{$color}-light) !important;
+    }
+    .text-#{$color}.hover-light:hover {
+        color: var(--mm-#{$color}-light) !important;
+    }
+
+    .bg-#{$color}-dark.hover-light:hover {
+        background-color: var(--mm-#{$color}) !important;
+        border-color: var(--mm-#{$color});
+    }
+    .border-#{$color}-dark.hover-light:hover {
+        border-color: var(--mm-#{$color}) !important;
+    }
+    .text-#{$color}-dark.hover-light:hover {
+        color: var(--mm-#{$color}) !important;
+    }
+
+    @each $variant in $color-variants {
+        .bg-#{$color}#{$variant} {
+            background-color: var(--mm-#{$color}#{$variant}) !important;
+            border-color: var(--mm-#{$color}#{$variant});
+        }
+        .border-#{$color}#{$variant} {
+            border-color: var(--mm-#{$color}#{$variant}) !important;
+            border-width: 2px;
+        }
+        .text-#{$color}#{$variant} {
+            color: var(--mm-#{$color}#{$variant}) !important;
+        }
+    }
+}

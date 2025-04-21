@@ -1,3 +1,5 @@
+$colors: ("primary", "secondary", "tertiary");
+
 $max-sizes: (
     "xs": "575px",
     "sm": "767px",
@@ -61,5 +63,6 @@ $dimens: (
     --mm-tertiary-light: rgb(90, 130, 90);
     --mm-tertiary: rgb(60, 100, 60);
     --mm-text-color: rgb(238, 238, 238);
+    --mm-text-color-dark: rgb(180, 180, 180);
     --mm-toast-width: min(800px, calc(100dvw - 20px));
 }

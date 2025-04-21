@@ -1,0 +1,50 @@
+.comment-form {
+    display: flex;
+    flex-direction: column;
+
+    textarea {
+        display: block;
+        min-height: 70px;
+    }
+
+    label {
+        display: block;
+    }
+
+    .name-wrapper {
+        flex-grow: 1;
+    }
+
+    .error {
+        color: var(--mm-primary);
+    }
+
+    .has-error {
+        border: 2px solid var(--mm-primary);
+    }
+}
+
+.comment {
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    border-radius: 5px;
+
+    &:nth-child(odd) {
+        background-color: var(--mm-secondary-dark);
+    }
+
+    &:nth-child(even) {
+        background-color: var(--mm-tertiary-dark);
+    }
+
+    &,
+    .comment-text {
+        & > :first-child {
+            margin-top: 0;
+        }
+
+        & > :last-child {
+            margin-bottom: 0;
+        }
+    }
+}

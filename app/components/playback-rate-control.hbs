@@ -1,9 +1,9 @@
 <div class="pos-relative" {{on-outside-click this.closePopup}}>
   <span
-    class="material-symbols button"
+    class="material-symbols button {{this.buttonClass}}"
     role="button"
     {{on "click" this.togglePopup}}
-    title="Ändra hastighet"
+    title="Ändra hastighet ({{this.currentLabel}})"
   >settings_timelapse</span>
 
   {{#if this.popupVisible}}

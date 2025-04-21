@@ -15,6 +15,7 @@
 
 @mixin filled-outset-block() {
     border-radius: 5px;
+    border-style: outset;
     border-width: 0;
     color: var(--mm-text-color);
     display: flex;
@@ -22,38 +23,5 @@
 
     &:hover {
         color: white;
-    }
-
-    &.primary {
-        background: var(--mm-primary);
-        border: 2px outset var(--mm-primary);
-        color: white;
-
-        &:hover {
-            background: var(--mm-primary-light);
-            border-color: var(--mm-primary-light);
-        }
-    }
-
-    &.secondary {
-        background: var(--mm-secondary);
-        border: 2px outset var(--mm-secondary);
-        color: white;
-
-        &:hover {
-            background: var(--mm-secondary-light);
-            border-color: var(--mm-secondary-light);
-        }
-    }
-
-    &.tertiary {
-        background: var(--mm-tertiary);
-        border: 2px outset var(--mm-tertiary);
-        color: white;
-
-        &:hover {
-            background: var(--mm-tertiary-light);
-            border-color: var(--mm-tertiary-light);
-        }
     }
 }

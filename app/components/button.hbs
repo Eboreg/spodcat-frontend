@@ -1,20 +1,14 @@
 {{#if this.useLinkTo}}
-  <LinkTo
-    @route={{@route}}
-    @models={{this.models}}
-    {{on "click" this.onLinkClick}}
-    class="button {{@theme}} {{if this.isLoading 'loading'}} {{if @disabled 'disabled'}}"
-    ...attributes
-  >
+  <LinkTo @route={{@route}} @models={{this.models}} {{on "click" this.onClick}} class={{this.classes}} ...attributes>
     <Button::Content @material-icon={{@material-icon}} @loading={{this.isLoading}}>{{yield}}</Button::Content>
   </LinkTo>
 {{else}}
   <a
     href={{@href}}
     target={{this.target}}
-    class="button {{@theme}} {{if this.isLoading 'loading'}} {{if @disabled 'disabled'}}"
+    class={{this.classes}}
     rel={{this.rel}}
-    {{on "click" this.onLinkClick}}
+    {{on "click" this.onClick}}
     ...attributes
   >
     <Button::Content @material-icon={{@material-icon}} @loading={{this.isLoading}}>{{yield}}</Button::Content>

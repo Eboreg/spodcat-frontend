@@ -50,11 +50,13 @@ export default class HeadDataService extends Service {
     #updateFromPodcastContent(value: PodcastContentModel) {
         const imageUrls = value.extractImageUrls();
 
-        if (imageUrls.length > 0) {
-            this.ogImage = imageUrls[0];
-        } else {
-            this.ogImage = value.podcast.banner;
-            this.ogImageSize = value.podcast.bannerSize;
+        if (!this.ogImage) {
+            if (imageUrls.length > 0) {
+                this.ogImage = imageUrls[0];
+            } else {
+                this.ogImage = value.podcast.banner;
+                this.ogImageSize = value.podcast.bannerSize;
+            }
         }
 
         this.ogTitle = `${value.name} | ${value.podcast.name}`;
@@ -68,6 +70,11 @@ export default class HeadDataService extends Service {
         this.musicDuration = value["duration-seconds"].toString();
         this.musicReleaseDate = value.published.toISOString();
         this.ogType = "music.song";
+
+        if (value.imageData && value.imageData.width >= 200 && value.imageData.height >= 200) {
+            this.ogImage = value.imageData.url;
+            this.ogImageSize = value.imageData;
+        }
 
         if (ENV.APP.IS_SINGLETON) this.ogUrl = makeAbsoluteUrl(this.router.urlFor("episode", value.slug));
         else this.ogUrl = makeAbsoluteUrl(this.router.urlFor("podcast.episode", value.podcast, value.slug));

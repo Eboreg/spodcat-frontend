@@ -8,15 +8,15 @@
         class="row align-center gap-single fill"
       >
         {{#if @episode.hasNumber}}
-          <div class="podcast-content-leading-icon primary">{{@episode.number}}</div>
+          <div class="podcast-content-leading-icon bg-primary border-primary">{{@episode.number}}</div>
         {{else}}
-          <span class="material-symbols podcast-content-leading-icon primary">podcasts</span>
+          <span class="material-symbols podcast-content-leading-icon bg-primary border-primary">podcasts</span>
         {{/if}}
         <div class="fill column gap-quarter">
           <div class="podcast-content-name">{{@episode.name}}</div>
           <div class="row gap-half">
-            <div class="badge secondary">{{@episode.publishedString}}</div>
-            <div class="badge tertiary d-none d-sm-block">{{@episode.durationString}}</div>
+            <div class="badge bg-secondary border-secondary">{{@episode.publishedString}}</div>
+            <div class="badge bg-tertiary border-tertiary d-none d-sm-block">{{@episode.durationString}}</div>
           </div>
         </div>
       </LinkTo>
@@ -26,25 +26,25 @@
           <LinkTo
             @route={{@episode.route}}
             @models={{@episode.routeModels}}
-            class="material-symbols icon secondary d-none d-sm-block"
+            class="material-symbols icon text-secondary hover-light d-none d-sm-block"
             title="Har låtlista"
           >queue_music</LinkTo>
         {{/if}}
         <a href={{@episode.audio-url}} title="Ladda ned">
-          <span class="material-symbols icon primary">download</span>
+          <span class="material-symbols icon text-primary hover-light">download</span>
         </a>
         {{#if this.isLoadingAudio}}
           <ProgressCircle class="tertiary" />
         {{else if this.isPlaying}}
           <span
-            class="material-symbols icon tertiary"
+            class="material-symbols icon text-tertiary hover-light"
             role="button"
             title="Pausa"
             {{on "click" this.audio.pause}}
           >pause</span>
         {{else}}
           <span
-            class="material-symbols icon tertiary"
+            class="material-symbols icon text-tertiary hover-light"
             role="button"
             title="Spela"
             {{on "click" this.play}}

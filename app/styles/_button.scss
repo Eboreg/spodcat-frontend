@@ -9,20 +9,24 @@
     padding: 0.5rem;
     text-decoration: none;
 
-    &:active:not(.loading) {
+    &:active:not(.loading):not(.disabled) {
         border-style: inset;
         left: 1px;
         top: 1px;
     }
 
+    &.disabled {
+        color: var(--mm-text-color-dark) !important;
+        cursor: not-allowed !important;
+    }
+
+    &.inactive {
+        color: var(--mm-text-color-dark) !important;
+    }
+
     &.loading {
         color: lightgray !important;
         cursor: wait !important;
-    }
-
-    &.disabled {
-        cursor: not-allowed !important;
-        color: darkgray !important;
     }
 
     .icon {

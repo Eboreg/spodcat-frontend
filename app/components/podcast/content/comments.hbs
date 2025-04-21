@@ -17,40 +17,27 @@
       {{#if @content.podcast.require-comment-approval}}
         <div class="small">Obs: din kommentar kommer att behöva godkännas manuellt innan den blir synlig här.</div>
       {{/if}}
-      <Textarea @value={{this.comment.text}} class="{{if this.comment.errors.text 'has-error'}}" />
-      {{#each this.comment.errors.text as |error|}}
-        <div class="error small">{{error.message}}</div>
-      {{/each}}
-      <div class="row gap-single align-start">
-        <div class="name-wrapper">
-          <label for="name" class="small">Ditt namn</label>
-          <Input
-            id="name"
-            @value={{this.comment.name}}
-            class="{{if this.comment.errors.name 'has-error'}}"
-            maxlength="100"
-          />
-          {{#each this.comment.errors.name as |error|}}
-            <div class="error small">{{error.message}}</div>
-          {{/each}}
-        </div>
-        <div>
-          <label for="challenge" class="small">Vad blir
-            {{this.challenge.challenge-string}}? Svara med siffror.</label>
-          <Input
-            id="challenge"
-            @type="number"
-            @value={{this.comment.challenge-answer}}
-            class="{{if this.comment.errors.challenge-answer 'has-error'}}"
-          />
-          {{#each this.comment.errors.challenge-answer as |error|}}
-            <div class="error small">{{error.message}}</div>
-          {{/each}}
-        </div>
+      <TextInput @value={{this.comment.text}} @errors={{this.comment.errors.text}} @multiline={{true}} />
+      <div class="row gap-half align-start">
+        <TextInput
+          @id="name"
+          @value={{this.comment.name}}
+          @errors={{this.comment.errors.name}}
+          @max-length={{50}}
+          @label="Ditt namn"
+          @wrapper-class="name-wrapper"
+        />
+        <TextInput
+          @id="challenge"
+          @type="number"
+          @value={{this.comment.challenge-answer}}
+          @errors={{this.comment.errors.challenge-answer}}
+          @label="Vad blir {{this.challenge.challenge-string}}? Svara med siffror."
+        />
         <Button
           @disabled={{this.isSubmitDisabled}}
           @theme="secondary"
-          {{on "click" this.onSubmitComment}}
+          @on-click={{this.onSubmitComment}}
         >Skicka</Button>
       </div>
     </div>

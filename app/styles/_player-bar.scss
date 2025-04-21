@@ -1,0 +1,53 @@
+@use "mixins";
+
+.player-bar {
+    background: var(--mm-background-color-opaque);
+    border-top: 5px solid var(--mm-primary);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    & > .row {
+        height: var(--mm-player-bar-height);
+    }
+
+    .episode {
+        flex-grow: 1;
+        height: 100%;
+        width: 350px;
+
+        @include mixins.min(xl) {
+            flex-grow: 0;
+        }
+    }
+
+    img {
+        aspect-ratio: 1/1;
+        height: 100%;
+    }
+
+    .button {
+        aspect-ratio: 1/1;
+        flex: 0 0 auto;
+        font-size: 30px;
+        height: 30px;
+        overflow: hidden;
+
+        &.larger {
+            @include mixins.min(sm) {
+                font-size: 40px;
+                height: 40px;
+            }
+        }
+    }
+
+    .loader {
+        font-size: 40px;
+        height: 40px;
+        padding: 10px;
+    }
+
+    .dbfs {
+        height: 50px;
+    }
+}

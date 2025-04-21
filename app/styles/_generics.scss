@@ -92,6 +92,15 @@
     align-items: start;
 }
 
+.badge {
+    border-radius: 5px;
+    border-style: outset;
+    border-width: 2px;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 0 2px;
+}
+
 .bold {
     font-weight: bold;
 }
@@ -124,6 +133,14 @@
 
 .oneliner {
     white-space: nowrap;
+}
+
+.outlined-text {
+    text-shadow:
+        -2px 0 0 black,
+        0 -2px 0 black,
+        0 2px 0 black,
+        2px 0 0 black;
 }
 
 .pos-absolute {

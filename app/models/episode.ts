@@ -4,6 +4,7 @@ import { Type } from "@warp-drive/core-types/symbols";
 import { timeString } from "podcast-frontend/utils";
 import PodcastContentModel from "./podcast-content";
 import type EpisodeSongModel from "./episode-song";
+import type { Image } from "global";
 
 export default class EpisodeModel extends PodcastContentModel {
     @attr declare "audio-content-type"?: string;
@@ -30,6 +31,13 @@ export default class EpisodeModel extends PodcastContentModel {
 
     get hasNumber() {
         return this.number != undefined;
+    }
+
+    get imageData(): Image | undefined {
+        if (this.image && this["image-height"] && this["image-width"]) {
+            return { url: this.image, height: this["image-height"], width: this["image-width"] };
+        }
+        return;
     }
 
     get isEpisode() {

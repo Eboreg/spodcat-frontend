@@ -1,12 +1,10 @@
 import "@glint/environment-ember-loose";
 import type EmberFontAwesomeRegistry from "@fortawesome/ember-fontawesome/template-registry";
 import type EmberTruthRegistry from "ember-truth-helpers/template-registry";
-import type EpisodeCard from "podcast-frontend/components/episode-card";
 import type DbfsBar from "podcast-frontend/components/dbfs/bar";
 import type DbfsColumn from "podcast-frontend/components/dbfs/column";
 import type PlayerBar from "podcast-frontend/components/player-bar";
 import type staticUrl from "podcast-frontend/helpers/static-url";
-import type onAudioInsert from "podcast-frontend/modifiers/on-audio-insert";
 import type PlayerBar from "podcast-frontend/components/player-bar";
 import type VolumeControl from "podcast-frontend/components/volume-control";
 import type htmlSafe from "podcast-frontend/helpers/html-safe";
@@ -23,6 +21,16 @@ import type onOutsideClick from "podcast-frontend/modifiers/on-outside-click";
 import type Attribution from "podcast-frontend/components/attribution";
 import type PodcastContentEpisodeCard from "podcast-frontend/components/podcast/content/episode-card";
 import type PodcastContentPostCard from "podcast-frontend/components/podcast/content/post-card";
+import type PodcastContentComments from "podcast-frontend/components/podcast/content/comments";
+import type PodcastContentDescription from "podcast-frontend/components/podcast/content/description";
+import type PodcastEpisode from "podcast-frontend/components/podcast/episode";
+import type PodcastPost from "podcast-frontend/components/podcast/post";
+import type PlayerBarExpanded from "podcast-frontend/components/player-bar/expanded";
+import type VolumeControlInner from "podcast-frontend/components/volume-control/inner";
+import type Popup from "podcast-frontend/components/popup";
+import type TextInput from "podcast-frontend/components/text-input";
+import type Toast from "podcast-frontend/components/toast";
+import type onInsert from "podcast-frontend/modifiers/on-insert";
 
 declare module "@glint/environment-ember-loose/registry" {
     import { HelperLike } from "@glint/template";
@@ -41,28 +49,40 @@ declare module "@glint/environment-ember-loose/registry" {
         "Dbfs::Bar": typeof DbfsBar;
         "Dbfs::Column": typeof DbfsColumn;
         "html-safe": typeof htmlSafe;
-        "on-audio-insert": typeof onAudioInsert;
+        "on-insert": typeof onInsert;
         "on-outside-click": typeof onOutsideClick;
         "page-title": PageTitle;
+        "PlayerBar::Expanded": typeof PlayerBarExpanded;
         "Podcast::Aside": typeof PodcastAside;
         "Podcast::Base": typeof PodcastBase;
+        "Podcast::Content::Comments": typeof PodcastContentComments;
+        "Podcast::Content::Description": typeof PodcastContentDescription;
+        "Podcast::Content::EpisodeCard": typeof PodcastContentEpisodeCard;
+        "Podcast::Content::PostCard": typeof PodcastContentPostCard;
+        "Podcast::Episode": typeof PodcastEpisode;
         "Podcast::Index": typeof PodcastIndex;
+        "Podcast::Post": typeof PodcastPost;
         "set-body-class": typeof setBodyClass;
         "static-url": typeof staticUrl;
+        "VolumeControl::Inner": typeof VolumeControlInner;
+        Attribution: typeof Attribution;
         Button: typeof Button;
-        EpisodeCard: typeof EpisodeCard;
         HeadLayout: typeof HeadLayout;
         PlaybackRateControl: typeof PlaybackRateControl;
         PlayerBar: typeof PlayerBar;
+        Popup: typeof Popup;
         ProgressCircle: typeof ProgressCircle;
+        TextInput: typeof TextInput;
+        Toast: typeof Toast;
         VolumeControl: typeof VolumeControl;
-        Attribution: typeof Attribution;
-        "Podcast::Content::EpisodeCard": PodcastContentEpisodeCard;
-        "Podcast::Content::PostCard": PodcastContentPostCard;
     }
 }
 
 export interface Size {
     width: number;
     height: number;
+}
+
+export interface Image extends Size {
+    url: string;
 }

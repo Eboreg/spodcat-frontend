@@ -1,5 +1,5 @@
 <div
-  class="toast {{this.color}}"
+  class={{this.classes}}
   style={{this.style}}
   {{on-size-change this.onSizeChange}}
   {{on "transitionend" this.onTransitionEnd}}
@@ -12,4 +12,5 @@
   {{/if}}
   <div class="toast-text">{{@message.text}}</div>
   <span class="material-symbols toast-close-icon" {{on "click" this.onCloseClick}}>close</span>
+  <div class="toast-countdown {{this.countdownClass}}" {{on-insert this.setCountdownElement}}></div>
 </div>

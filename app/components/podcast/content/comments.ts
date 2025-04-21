@@ -33,7 +33,12 @@ export default class PodcastContentComments extends Component<PodcastContentComm
     }
 
     get isSubmitDisabled() {
-        return !this.comment?.name || !this.comment.text || !this.comment["challenge-answer"];
+        return (
+            !this.comment?.name ||
+            !this.comment.text ||
+            !this.comment["challenge-answer"] ||
+            !!this.comment.errors.length
+        );
     }
 
     get showCommentForm() {
@@ -61,7 +66,6 @@ export default class PodcastContentComments extends Component<PodcastContentComm
             void this.resetChallenge();
         } catch {
             this.message.addToast({ level: "error", text: "Någonting gick snett." });
-            void this.resetChallenge();
         }
     }
 

@@ -23,8 +23,7 @@ const transitions = ["up", "right", "down", "left", "scale", "fade"] as const;
 
 export default class Toast extends Component<ToastSignature> {
     @service declare audio: AudioService;
-    @tracked isHovering: boolean = false;
-    @tracked isLoading: boolean = false;
+    @tracked declare countdownAnimation: Animation;
     @tracked show: boolean = false;
     @tracked size: Size = { width: 0, height: 0 };
     transition: (typeof transitions)[number];
@@ -35,23 +34,27 @@ export default class Toast extends Component<ToastSignature> {
         runTask(this, () => {
             this.show = true;
         });
-        runTask(
-            this,
-            () => {
-                this.show = false;
-            },
-            5000,
-        );
     }
 
-    get color(): SafeString {
+    get classes(): SafeString {
         switch (this.args.message.level) {
             case "error":
-                return htmlSafe("primary");
+                return htmlSafe("toast color-white bg-primary");
             case "info":
-                return htmlSafe("secondary");
+                return htmlSafe("toast color-white bg-secondary");
             case "success":
-                return htmlSafe("tertiary");
+                return htmlSafe("toast color-white bg-tertiary");
+        }
+    }
+
+    get countdownClass() {
+        switch (this.args.message.level) {
+            case "error":
+                return "bg-primary-dark";
+            case "info":
+                return "bg-secondary-dark";
+            case "success":
+                return "bg-tertiary-dark";
         }
     }
 
@@ -63,7 +66,7 @@ export default class Toast extends Component<ToastSignature> {
         let scale = 1;
         let opacity = 1;
 
-        if (!this.show && !this.isHovering) {
+        if (!this.show) {
             switch (this.transition) {
                 case "up":
                     bottom = "calc(100% + 10px)";
@@ -90,16 +93,15 @@ export default class Toast extends Component<ToastSignature> {
     }
 
     @action onCloseClick() {
-        this.show = false;
-        this.isHovering = false;
+        this.countdownAnimation?.finish();
     }
 
     @action onMouseEnter() {
-        this.isHovering = true;
+        this.countdownAnimation?.pause();
     }
 
     @action onMouseLeave() {
-        this.isHovering = false;
+        this.countdownAnimation?.play();
     }
 
     @action onSizeChange(size: Size) {
@@ -109,5 +111,12 @@ export default class Toast extends Component<ToastSignature> {
 
     @action onTransitionEnd() {
         if (!this.show) this.args["on-hidden"](this.args.id);
+    }
+
+    @action setCountdownElement(elem: HTMLElement) {
+        this.countdownAnimation = elem.animate({ width: ["100%", "0%"] }, 5000);
+        this.countdownAnimation.onfinish = () => {
+            this.show = false;
+        };
     }
 }
