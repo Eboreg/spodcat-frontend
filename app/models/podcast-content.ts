@@ -29,11 +29,11 @@ export default class PodcastContentModel extends Model {
     }
 
     get pageTitle() {
-        return `${this.name} | ${this.podcast.name}`;
+        return `${this.name} | ${this.podcast?.name}`;
     }
 
     get publishedString() {
-        if (this.podcast.language) return this.published.toLocaleDateString(this.podcast.language);
+        if (this.podcast?.language) return this.published.toLocaleDateString(this.podcast.language);
         return this.published.toLocaleDateString();
     }
 

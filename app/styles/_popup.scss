@@ -7,7 +7,7 @@
         background-color: var(--mm-background-color-opaque);
         border: 2px solid var(--mm-primary);
         border-bottom-color: var(--mm-primary-dark);
-        border-radius: 5px;
+        border-radius: var(--mm-border-radius);
         border-right-color: var(--mm-primary-dark);
         box-shadow: 0 2px 5px black;
         display: flex;

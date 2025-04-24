@@ -4,7 +4,9 @@
     <span class="label">Till {{@podcast.name}}</span>
   </Button>
   <Podcast::Content::PostCard @post={{@post}} @expand={{true}}>
-    <Podcast::Content::Description @content={{@post}} />
-    <Podcast::Content::Comments @content={{@post}} />
+    <div class="gap-single px-single column pb-single">
+      <Podcast::Content::Description @content={{@post}} />
+      <Podcast::Content::Comments @content={{@post}} />
+    </div>
   </Podcast::Content::PostCard>
 </Podcast::Base>

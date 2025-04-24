@@ -1,11 +1,11 @@
 <article class="podcast-content-card episode" ...attributes>
-  <div class="podcast-content-card-contents p-single gap-single">
+  <div class="podcast-content-card-contents">
     <div class="row align-center gap-half">
       <LinkTo
         @route={{@episode.route}}
         @models={{@episode.routeModels}}
         @disabled={{@expand}}
-        class="row align-center gap-single fill"
+        class="row align-center gap-single fill p-single"
       >
         {{#if @episode.hasNumber}}
           <div class="podcast-content-leading-icon bg-primary border-primary">{{@episode.number}}</div>
@@ -21,30 +21,30 @@
         </div>
       </LinkTo>
 
-      <div class="row align-center gap-half">
+      <div class="row align-center gap-half px-single">
         {{#if (and @episode.has-songs (not @expand))}}
           <LinkTo
             @route={{@episode.route}}
             @models={{@episode.routeModels}}
-            class="material-symbols icon text-secondary hover-light d-none d-sm-block"
+            class="material-symbols icon text-secondary hover-light d-none d-sm-block py-single"
             title="Har låtlista"
           >queue_music</LinkTo>
         {{/if}}
-        <a href={{@episode.audio-url}} title="Ladda ned">
+        <a href={{@episode.audio-url}} title="Ladda ned" class="py-single">
           <span class="material-symbols icon text-primary hover-light">download</span>
         </a>
         {{#if this.isLoadingAudio}}
-          <ProgressCircle class="tertiary" />
+          <ProgressCircle class="tertiary py-single" />
         {{else if this.isPlaying}}
           <span
-            class="material-symbols icon text-tertiary hover-light"
+            class="material-symbols icon text-tertiary hover-light py-single"
             role="button"
             title="Pausa"
             {{on "click" this.audio.pause}}
           >pause</span>
         {{else}}
           <span
-            class="material-symbols icon text-tertiary hover-light"
+            class="material-symbols icon text-tertiary hover-light py-single"
             role="button"
             title="Spela"
             {{on "click" this.play}}

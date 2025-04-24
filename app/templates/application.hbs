@@ -4,9 +4,7 @@
 
 {{#each this.message.toasts as |toast|}}
   <Toast
-    @message={{toast.message}}
-    @id={{toast.id}}
-    @bottom-offset={{toast.bottomOffset}}
+    @toast={{toast}}
     @on-size-change={{this.message.onToastSizeChange}}
     @on-hidden={{this.message.onToastHidden}}
   />

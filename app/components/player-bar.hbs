@@ -1,9 +1,9 @@
 <div class="player-bar" ...attributes>
   {{#if this.isExpanded}}
-    <PlayerBar::Expanded @episode={{@episode}} class="d-xl-none ml-half" />
+    <PlayerBar::Expanded @episode={{@episode}} class="d-xl-none mx-half" />
   {{/if}}
 
-  <div class="row align-center">
+  <div class="row align-center mr-half">
     <LinkTo
       @route={{@episode.route}}
       @models={{@episode.routeModels}}

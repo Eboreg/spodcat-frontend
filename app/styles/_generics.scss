@@ -93,7 +93,7 @@
 }
 
 .badge {
-    border-radius: 5px;
+    border-radius: var(--mm-border-radius);
     border-style: outset;
     border-width: 2px;
     font-size: 12px;

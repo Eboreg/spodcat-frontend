@@ -27,7 +27,7 @@
 .comment {
     padding: 0.5rem;
     margin-bottom: 0.5rem;
-    border-radius: 5px;
+    border-radius: var(--mm-border-radius);
 
     &:nth-child(odd) {
         background-color: var(--mm-secondary-dark);

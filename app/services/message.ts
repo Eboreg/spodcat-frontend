@@ -8,18 +8,21 @@ import type { Size } from "global";
 export interface Message {
     level: "error" | "info" | "success";
     text: string;
-    icon?: string;
+    timeout?: number;
+    icon?: string | null;
 }
 
 export class PlacedToast {
     id: number;
     message: Message;
+    timeout: number;
     @tracked bottomOffset: number = 0;
     @tracked size: Size = { width: 0, height: 0 };
 
     constructor(id: number, message: Message, bottomOffset?: number) {
         this.id = id;
         this.message = message;
+        this.timeout = message.timeout || 5000;
         if (bottomOffset != undefined) this.bottomOffset = bottomOffset;
     }
 }

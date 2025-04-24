@@ -126,19 +126,31 @@ h3 {
 }
 
 @keyframes flash {
-    from {
-        opacity: 50%;
+    0% {
+        opacity: 60%;
     }
-    to {
+    20% {
+        opacity: 0%;
+    }
+    40% {
+        opacity: 40%;
+    }
+    60% {
+        opacity: 0%;
+    }
+    80% {
+        opacity: 20%;
+    }
+    100% {
         opacity: 0%;
     }
 }
 
 .flash-overlay {
-    animation-duration: 0.2s;
-    animation-iteration-count: 6;
+    animation-duration: 0.6s;
+    animation-iteration-count: 1;
     animation-name: flash;
-    animation-timing-function: steps(2, jump-start);
+    animation-timing-function: steps(1);
     background-color: white;
     height: 100%;
     left: 0;
@@ -166,7 +178,7 @@ h3 {
     border-style: outset;
     border-color: #666;
     border-width: 2px 5px 5px 2px;
-    border-radius: 5px;
+    border-radius: var(--mm-border-radius);
     display: inline-block;
     height: 25px;
     display: flex;
@@ -208,6 +220,10 @@ h3 {
         p {
             font-size: 14px;
             margin: 0.75em 0;
+        }
+
+        img {
+            border-radius: var(--mm-border-radius);
         }
     }
 

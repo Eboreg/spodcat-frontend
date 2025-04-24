@@ -1,17 +1,15 @@
-import ENV from "podcast-frontend/config/environment";
 import type Store from "@ember-data/store";
 import { action } from "@ember/object";
 import type RouterService from "@ember/routing/router-service";
-import type Transition from "@ember/routing/transition";
 import { service } from "@ember/service";
 import type FastBoot from "ember-cli-fastboot/services/fastboot";
 import EpisodeModel from "podcast-frontend/models/episode";
 import type HeadDataService from "podcast-frontend/services/head-data";
 import type AudioService from "podcast-frontend/services/audio";
-import { ping } from "podcast-frontend/utils";
+import { NotFoundError, ping } from "podcast-frontend/utils";
 import PreserveScrollRoute from "podcast-frontend/preserve-scroll-route";
-
-class EpisodeNotFoundError extends Error {}
+import type MessageService from "podcast-frontend/services/message";
+import ENV from "podcast-frontend/config/environment";
 
 export default class EpisodeRoute extends PreserveScrollRoute<EpisodeModel> {
     @service declare audio: AudioService;
@@ -19,6 +17,7 @@ export default class EpisodeRoute extends PreserveScrollRoute<EpisodeModel> {
     @service declare headData: HeadDataService;
     @service declare router: RouterService;
     @service declare store: Store;
+    @service declare message: MessageService;
 
     afterModel(model?: EpisodeModel) {
         if (model) {
@@ -30,22 +29,21 @@ export default class EpisodeRoute extends PreserveScrollRoute<EpisodeModel> {
         }
     }
 
-    @action error(error: any, transition: Transition) {
-        if (
-            (error.isAdapterError && error.errors && error.errors[0].status == "404") ||
-            error instanceof EpisodeNotFoundError
-        ) {
-            // TODO: For some fucking reason, this refuses to work, at least
-            // when running ember serve with fastboot. Says store is
-            // destroyed. Works in production though:
-            if (ENV.APP.IS_SINGLETON && transition.to?.parent?.params?.["podcast_id"]) {
-                this.router.replaceWith("podcast", transition.to.parent.params["podcast_id"]);
-            } else {
-                this.router.replaceWith("home");
-            }
+    @action error(error: any) {
+        if (error instanceof NotFoundError) {
+            const podcastId = this.getPodcastId();
+
+            this.message.addToast({ level: "error", text: error.message, timeout: 10000 });
+            if (podcastId) this.router.transitionTo("podcast", podcastId);
+            else this.router.transitionTo("home");
+
             return false;
         }
         return true;
+    }
+
+    getPodcastId(): string | undefined {
+        return;
     }
 
     getScrollY(): number {
@@ -53,19 +51,20 @@ export default class EpisodeRoute extends PreserveScrollRoute<EpisodeModel> {
     }
 
     async model(params: { episode_id: string }) {
-        const { podcast_id } = this.paramsFor("podcast") as { podcast_id: string };
+        const podcastId = this.getPodcastId();
         const result = await this.store.query<EpisodeModel>("episode", {
-            include: this.fastboot.isFastBoot
-                ? ["podcast.categories", "podcast.links", "podcast.contents", "songs.artists", "comments"]
-                : ["songs.artists", "comments"],
-            filter: {
-                podcast: podcast_id,
-                slug: params.episode_id,
-            },
+            include: ["songs.artists", "comments"],
+            filter: podcastId ? { episode: params.episode_id, podcast: podcastId } : { episode: params.episode_id },
         });
 
-        if (result.length == 0) throw new EpisodeNotFoundError();
+        if (result.length == 0) throw new NotFoundError("Kunde inte hitta avsnittet.");
 
         return result[0]!;
+    }
+
+    redirect(model: EpisodeModel) {
+        if (!ENV.APP.IS_SINGLETON && !this.getPodcastId()) {
+            this.router.replaceWith("podcast.episode", model.podcast, model.slug);
+        }
     }
 }

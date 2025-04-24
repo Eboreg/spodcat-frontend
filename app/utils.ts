@@ -1,5 +1,7 @@
 import ENV from "podcast-frontend/config/environment";
 
+export class NotFoundError extends Error {}
+
 export function coerceBetween(value: number, min: number, max: number) {
     if (value < min) return min;
     if (value > max) return max;

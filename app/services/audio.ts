@@ -170,7 +170,7 @@ export default class AudioService extends Service {
     @action play() {
         this.audioElement?.play().catch((reason) => {
             this.pause();
-            this.message.addToast({ level: "error", text: String(reason), icon: "sentiment_dissatisfied" });
+            this.message.addToast({ level: "error", text: String(reason) });
         });
     }
 
@@ -179,7 +179,7 @@ export default class AudioService extends Service {
             this.isLoadingEpisode = episode.slug;
             if (episode["dbfs-array"] == undefined) {
                 episode.reload().catch((reason) => {
-                    this.message.addToast({ level: "error", text: String(reason), icon: "sentiment_dissatisfied" });
+                    this.message.addToast({ level: "error", text: String(reason) });
                 });
             }
             this.setEpisode(episode);

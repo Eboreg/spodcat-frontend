@@ -1,6 +1,7 @@
 import JSONAPIAdapter from "@ember-data/adapter/json-api";
 import type { AdapterPayload } from "@ember-data/legacy-compat/legacy-network-handler/minimum-adapter-interface";
 import type { Snapshot } from "@ember-data/legacy-compat/legacy-network-handler/snapshot";
+import type { SnapshotRecordArray } from "@ember-data/legacy-compat/legacy-network-handler/snapshot-record-array";
 import type { Store } from "@ember-data/store/-private/store-service";
 import type { ModelSchema } from "@ember-data/store/-types/q/ds-model";
 import type FastBoot from "ember-cli-fastboot/services/fastboot";
@@ -24,45 +25,58 @@ export default class ApplicationAdapter extends JSONAPIAdapter {
     }
 
     cacheKeyFor(modelName: string, id?: string) {
-        return modelName && id ? `${modelName}-${id}` : `${modelName}-default-store`;
+        return modelName && id ? `${modelName}-${id}` : `${modelName}-all`;
+    }
+
+    findAll(
+        store: Store,
+        type: ModelSchema,
+        sinceToken: null,
+        snapshotRecordArray: SnapshotRecordArray,
+    ): Promise<AdapterPayload> {
+        const key = this.cacheKeyFor(type.modelName);
+
+        return this.getPayload(key, () => {
+            return super.findAll(store, type, sinceToken, snapshotRecordArray);
+        });
     }
 
     async findRecord(store: Store, type: ModelSchema, id: string, snapshot: Snapshot): Promise<AdapterPayload> {
         const key = this.cacheKeyFor(type.modelName, id);
 
+        return this.getPayload(key, () => {
+            return super.findRecord(store, type, id, snapshot);
+        });
+    }
+
+    async getPayload(key: string, getter: () => Promise<AdapterPayload>): Promise<AdapterPayload> {
         if (this.fastboot.isFastBoot) {
-            const result = await super.findRecord(store, type, id, snapshot);
+            const result = await getter();
 
             this.saveToShoebox(result, key);
             return result;
         }
 
         const json = this.fastboot.shoebox.retrieve(key) as string | undefined;
-        let result: AdapterPayload | undefined;
 
-        if (json) result = JSON.parse(json) as AdapterPayload | undefined;
-        if (!result) result = await super.findRecord(store, type, id, snapshot);
+        if (json) {
+            const result = JSON.parse(json) as AdapterPayload | undefined;
+            if (result) return result;
+        }
 
-        return result;
+        return getter();
     }
 
     async query(store: Store, type: ModelSchema, query: Record<string, any>): Promise<AdapterPayload> {
         if (["post", "episode"].includes(type.modelName)) {
-            const key = this.cacheKeyFor(type.modelName, `${query["filter"].podcast}-${query["filter"].slug}`);
+            const key = this.cacheKeyFor(
+                type.modelName,
+                `${query["filter"].podcast}-${query["filter"][type.modelName]}`,
+            );
 
-            if (this.fastboot.isFastBoot) {
-                const result = await super.query(store, type, query);
-
-                this.saveToShoebox(result, key);
-                return result;
-            }
-
-            const json = this.fastboot.shoebox.retrieve(key) as string | undefined;
-
-            if (json) {
-                const result = JSON.parse(json) as AdapterPayload | undefined;
-                if (result) return result;
-            }
+            return this.getPayload(key, () => {
+                return super.query(store, type, query);
+            });
         }
 
         return super.query(store, type, query);

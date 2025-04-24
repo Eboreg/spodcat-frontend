@@ -7,15 +7,14 @@ export default class Router extends EmberRouter {
 }
 
 Router.map(function () {
-    this.route("home", { path: "" });
-    this.route("404", { path: "sw.js" });
-    this.route("404", { path: "workbox-4723e66c.js" });
-    this.route("episode", { path: "episode/:episode_id" });
-    this.route("post", { path: "post/:post_id" });
-    this.route("podcast", { path: ":podcast_id" }, function () {
-        this.route("index", { path: "" });
-        this.route("episode", { path: "episode/:episode_id" });
-        this.route("post", { path: "post/:post_id" });
+    this.route("home", { path: "/" });
+    this.route("episode", { path: "/episode/:episode_id" });
+    this.route("post", { path: "/post/:post_id" });
+    this.route("podcast", { path: "/:podcast_id" }, function () {
+        this.route("episode", { path: "/episode/:episode_id" });
+        this.route("post", { path: "/post/:post_id" });
+        this.route("index", { path: "/" });
     });
     this.route("404", { path: "/*path" });
+    this.route("404");
 });

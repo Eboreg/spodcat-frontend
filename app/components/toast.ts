@@ -4,15 +4,13 @@ import { htmlSafe, type SafeString } from "@ember/template";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import type { Size } from "global";
-import type { Message } from "podcast-frontend/services/message";
+import type { PlacedToast } from "podcast-frontend/services/message";
 import { service } from "@ember/service";
 import type AudioService from "podcast-frontend/services/audio";
 
 export interface ToastSignature {
     Args: {
-        message: Message;
-        id: number;
-        "bottom-offset": number;
+        toast: PlacedToast;
         "on-size-change": (id: number, size: Size) => void;
         "on-hidden": (id: number) => void;
     };
@@ -37,7 +35,7 @@ export default class Toast extends Component<ToastSignature> {
     }
 
     get classes(): SafeString {
-        switch (this.args.message.level) {
+        switch (this.args.toast.message.level) {
             case "error":
                 return htmlSafe("toast color-white bg-primary");
             case "info":
@@ -48,7 +46,7 @@ export default class Toast extends Component<ToastSignature> {
     }
 
     get countdownClass() {
-        switch (this.args.message.level) {
+        switch (this.args.toast.message.level) {
             case "error":
                 return "bg-primary-dark";
             case "info":
@@ -58,8 +56,15 @@ export default class Toast extends Component<ToastSignature> {
         }
     }
 
+    get icon() {
+        if (this.args.toast.message.icon == undefined) {
+            if (this.args.toast.message.level == "error") return "sentiment_dissatisfied";
+        }
+        return this.args.toast.message.icon;
+    }
+
     get style(): SafeString {
-        const dy = this.args["bottom-offset"] + (this.audio.episode ? 75 : 10);
+        const dy = this.args.toast.bottomOffset + (this.audio.episode ? 75 : 10);
 
         let bottom = `${dy}px`;
         let left = "calc(50% - calc(var(--mm-toast-width) / 2))";
@@ -106,15 +111,15 @@ export default class Toast extends Component<ToastSignature> {
 
     @action onSizeChange(size: Size) {
         this.size = size;
-        this.args["on-size-change"](this.args.id, size);
+        this.args["on-size-change"](this.args.toast.id, size);
     }
 
     @action onTransitionEnd() {
-        if (!this.show) this.args["on-hidden"](this.args.id);
+        if (!this.show) this.args["on-hidden"](this.args.toast.id);
     }
 
     @action setCountdownElement(elem: HTMLElement) {
-        this.countdownAnimation = elem.animate({ width: ["100%", "0%"] }, 5000);
+        this.countdownAnimation = elem.animate({ width: ["100%", "0%"] }, this.args.toast.timeout);
         this.countdownAnimation.onfinish = () => {
             this.show = false;
         };
