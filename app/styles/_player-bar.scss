@@ -1,4 +1,4 @@
-@use "mixins";
+@use "responsive";
 
 .player-bar {
     background: var(--mm-background-color-opaque);
@@ -16,7 +16,7 @@
         height: 100%;
         width: 350px;
 
-        @include mixins.min(xl) {
+        @include responsive.min(xl) {
             flex-grow: 0;
         }
     }
@@ -34,7 +34,7 @@
         overflow: hidden;
 
         &.larger {
-            @include mixins.min(sm) {
+            @include responsive.min(sm) {
                 font-size: 40px;
                 height: 40px;
             }
@@ -44,7 +44,7 @@
     .loader {
         font-size: 40px;
         height: 40px;
-        padding: 10px;
+        padding: var(--mm-length-half);
     }
 
     .dbfs {

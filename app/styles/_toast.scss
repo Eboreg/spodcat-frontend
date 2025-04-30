@@ -1,15 +1,15 @@
-@use "mixins";
-
 .toast {
-    @include mixins.filled-outset-block;
-
     align-items: start;
-    bottom: calc(100% + 10px);
+    border-left-width: 0 !important;
+    border-radius: var(--mm-border-radius);
+    border-style: outset;
+    border-top-width: 0 !important;
+    bottom: calc(100% + var(--mm-length-half));
     display: grid;
     grid-template: "icon text close" "countdown countdown countdown" / auto 1fr auto;
     opacity: 0;
     overflow: hidden;
-    padding-top: 5px;
+    padding-top: var(--mm-length-quarter);
     position: fixed;
     scale: 0;
     transition-duration: 300ms;
@@ -21,18 +21,18 @@
     .toast-icon {
         align-self: center;
         grid-area: icon;
-        padding: 10px;
+        padding: var(--mm-length-half);
     }
 
     .toast-text {
         grid-area: text;
-        padding: 13px 10px;
+        padding: 11px var(--mm-length-half);
     }
 
     .toast-close-icon {
         cursor: pointer;
         grid-area: close;
-        padding: 10px;
+        padding: var(--mm-length-half);
     }
 
     .toast-countdown {

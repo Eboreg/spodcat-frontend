@@ -1,7 +1,7 @@
-@use "mixins";
+@use "responsive";
 
 main.podcast-grid {
-    column-gap: 0.5rem;
+    column-gap: var(--mm-length-half);
     display: grid;
     grid-template-rows: auto auto auto 1fr;
 
@@ -9,16 +9,16 @@ main.podcast-grid {
     grid-template-columns: 1fr;
 
     & > * {
-        margin-bottom: 0.5rem;
+        margin-bottom: var(--mm-length-half);
     }
 
-    @include mixins.max(sm) {
+    @include responsive.max(sm) {
         &.podcast-content-details {
             grid-template-areas: "header" "before" "content" "aside" "attribution";
         }
     }
 
-    @include mixins.min(md) {
+    @include responsive.min(md) {
         grid-template-areas: "header header" "before before" "content aside" "content attribution";
         grid-template-columns: 1fr 250px;
     }

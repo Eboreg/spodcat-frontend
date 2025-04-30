@@ -1,4 +1,25 @@
-$colors: ("primary", "secondary", "tertiary");
+$color-themes: (
+    "primary": (
+        "normal": rgb(220, 20, 60),
+        "dark": rgb(147, 13, 40),
+        "light": rgb(250, 50, 90),
+    ),
+    "secondary": (
+        "normal": rgb(80, 20, 160),
+        "dark": rgb(53, 13, 107),
+        "light": rgb(110, 50, 190),
+    ),
+    "tertiary": (
+        "normal": rgb(60, 100, 60),
+        "dark": rgb(40, 67, 40),
+        "light": rgb(90, 130, 90),
+    ),
+    "boring": (
+        "normal": #444,
+        "dark": #222,
+        "light": #666,
+    ),
+);
 
 $max-sizes: (
     "xs": "575px",
@@ -48,22 +69,16 @@ $dimens: (
     ),
 );
 
-:root {
-    --mm-background-color-opaque: #111;
-    --mm-background-color: rgba(0, 0, 0, 0.8);
-    --mm-border-radius: 4px;
-    --mm-content-width: min(980px, calc(100dvw - 20px));
-    --mm-player-bar-height: 60px;
-    --mm-primary-dark: rgb(147, 13, 40);
-    --mm-primary-light: rgb(250, 50, 90);
-    --mm-primary: rgb(220, 20, 60);
-    --mm-secondary-dark: rgb(53, 13, 107);
-    --mm-secondary-light: rgb(110, 50, 190);
-    --mm-secondary: rgb(80, 20, 160);
-    --mm-tertiary-dark: rgb(40, 67, 40);
-    --mm-tertiary-light: rgb(90, 130, 90);
-    --mm-tertiary: rgb(60, 100, 60);
-    --mm-text-color: rgb(238, 238, 238);
-    --mm-text-color-dark: rgb(180, 180, 180);
-    --mm-toast-width: min(800px, calc(100dvw - 20px));
-}
+$font-size-body-mobile: 14px;
+$font-size-body-desktop: 16px;
+$font-size-article: 14px;
+$font-size-small: 12px;
+
+$background-color-opaque: #111;
+$background-color: rgba(0, 0, 0, 0.8);
+$border-radius: 4px;
+$content-width: min(980px, calc(100dvw - 20px));
+$player-bar-height: 60px;
+$text-color-dark: rgb(180, 180, 180);
+$text-color: rgb(238, 238, 238);
+$toast-width: min(800px, calc(100dvw - 20px));

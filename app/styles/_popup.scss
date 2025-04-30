@@ -1,5 +1,5 @@
 .popup-container {
-    bottom: calc(100% + 10px);
+    bottom: calc(100% + var(--mm-length-half));
     position: absolute;
     right: 0;
 
@@ -15,15 +15,15 @@
 
         .popup-header {
             border-bottom: 1px solid var(--mm-primary);
-            padding: 10px 15px;
+            padding: var(--mm-length-half) var(--mm-length-single);
         }
 
         .popup-row {
             align-items: center;
             cursor: pointer;
             display: flex;
-            gap: 10px;
-            padding: 5px 15px 5px 10px;
+            gap: var(--mm-length-half);
+            padding: var(--mm-length-quarter) var(--mm-length-single) var(--mm-length-quarter) var(--mm-length-half);
 
             .popup-row-check {
                 height: 24px;

@@ -1,45 +1,56 @@
+@use "sass:map";
 @use "variables" as *;
 
-$color-variants: ("", "-light", "-dark");
+$variant-suffixes: (
+    "normal": "",
+    "dark": "-dark",
+    "light": "-light",
+);
 
-.text-white {
-    color: white !important;
+:root {
+    --mm-background-color-opaque: #{$background-color-opaque};
+    --mm-background-color: #{$background-color};
+    --mm-text-color: #{$text-color};
+    --mm-text-color-dark: #{$text-color-dark};
+
+    @each $theme, $variants in $color-themes {
+        --mm-#{$theme}: #{map.get($variants, "normal")};
+        --mm-#{$theme}-dark: #{map.get($variants, "dark")};
+        --mm-#{$theme}-light: #{map.get($variants, "light")};
+    }
 }
 
-@each $color in $colors {
-    .bg-#{$color}.hover-light:hover {
-        background-color: var(--mm-#{$color}-light) !important;
-        border-color: var(--mm-#{$color}-light);
-    }
-    .border-#{$color}.hover-light:hover {
-        border-color: var(--mm-#{$color}-light) !important;
-    }
-    .text-#{$color}.hover-light:hover {
-        color: var(--mm-#{$color}-light) !important;
-    }
+@mixin themed($property, $variants, $variant) {
+    #{$property}: #{map.get($variants, $variant)} !important;
 
-    .bg-#{$color}-dark.hover-light:hover {
-        background-color: var(--mm-#{$color}) !important;
-        border-color: var(--mm-#{$color});
-    }
-    .border-#{$color}-dark.hover-light:hover {
-        border-color: var(--mm-#{$color}) !important;
-    }
-    .text-#{$color}-dark.hover-light:hover {
-        color: var(--mm-#{$color}) !important;
-    }
-
-    @each $variant in $color-variants {
-        .bg-#{$color}#{$variant} {
-            background-color: var(--mm-#{$color}#{$variant}) !important;
-            border-color: var(--mm-#{$color}#{$variant});
+    @if $variant == "normal" {
+        &.hover-light:hover {
+            #{$property}: #{map.get($variants, "light")} !important;
         }
-        .border-#{$color}#{$variant} {
-            border-color: var(--mm-#{$color}#{$variant}) !important;
+    } @else if $variant == "dark" {
+        &.hover-light:hover {
+            #{$property}: #{map.get($variants, "normal")} !important;
+        }
+    }
+}
+
+@each $theme, $variants in $color-themes {
+    @each $variant in map.keys($variants) {
+        .bg-#{$theme}#{map.get($variant-suffixes, $variant)} {
+            @include themed("background-color", $variants, $variant);
+        }
+        .border-#{$theme}#{map.get($variant-suffixes, $variant)} {
             border-width: 2px;
+            @include themed("border-color", $variants, $variant);
         }
-        .text-#{$color}#{$variant} {
-            color: var(--mm-#{$color}#{$variant}) !important;
+        .text-#{$theme}#{map.get($variant-suffixes, $variant)} {
+            @include themed("color", $variants, $variant);
+        }
+        .theme-#{$theme}#{map.get($variant-suffixes, $variant)} {
+            border-width: 2px;
+            color: white;
+            @include themed("background-color", $variants, $variant);
+            @include themed("border-color", $variants, $variant);
         }
     }
 }

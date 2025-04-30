@@ -10,7 +10,7 @@ export interface ButtonSignature {
         model?: Model | string;
         models?: (Model | string)[];
         disabled?: boolean;
-        theme: "primary" | "secondary" | "tertiary";
+        theme: "primary" | "secondary" | "tertiary" | "boring";
         "material-icon"?: string;
         href?: string;
         "new-tab"?: boolean;
@@ -26,13 +26,7 @@ export default class Button extends Component<ButtonSignature> {
     @tracked isLoading: boolean = false;
 
     get classes(): SafeString {
-        const ret: string[] = [
-            "button",
-            "hover-light",
-            `bg-${this.args.theme}`,
-            `border-${this.args.theme}`,
-            "text-white",
-        ];
+        const ret: string[] = ["button", "hover-light", `theme-${this.args.theme}`];
 
         if (this.isLoading) ret.push("loading");
         if (this.args.disabled) ret.push("disabled");

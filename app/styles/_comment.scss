@@ -12,7 +12,11 @@
     }
 
     .name-wrapper {
-        flex-grow: 1;
+        flex: 1 1 300px;
+    }
+
+    .challenge-wrapper {
+        flex: 1 0 222px;
     }
 
     .error {
@@ -22,12 +26,16 @@
     .has-error {
         border: 2px solid var(--mm-primary);
     }
+
+    .button {
+        margin-top: 1px;
+    }
 }
 
 .comment {
-    padding: 0.5rem;
-    margin-bottom: 0.5rem;
     border-radius: var(--mm-border-radius);
+    margin-bottom: var(--mm-length-half);
+    padding: var(--mm-length-half);
 
     &:nth-child(odd) {
         background-color: var(--mm-secondary-dark);

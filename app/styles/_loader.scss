@@ -27,7 +27,7 @@
         animation-timing-function: linear;
         animation-iteration-count: infinite;
         animation-name: rotate;
-        padding: 5px;
+        padding: var(--mm-length-quarter);
 
         .circle {
             stroke-dasharray: 10, 10;

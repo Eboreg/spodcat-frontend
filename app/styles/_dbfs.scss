@@ -33,7 +33,7 @@
         .tooltip-box {
             background: var(--mm-background-color);
             border: 2px solid var(--mm-primary);
-            padding: 5px;
+            padding: var(--mm-length-quarter);
             position: absolute;
             top: -36px;
         }

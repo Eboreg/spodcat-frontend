@@ -1,0 +1,77 @@
+@use "sass:map";
+@use "sass:list";
+@use "variables" as *;
+
+@function add-empty($list) {
+    @return list.join((""), $list);
+}
+
+@function format-prefix($v) {
+    @if $v == "" {
+        @return "";
+    }
+    @return "#{$v}-";
+}
+
+@mixin max($size) {
+    @if $size == "" {
+        @content;
+    } @else {
+        @media screen and (max-width: map.get($max-sizes, $size)) {
+            @content;
+        }
+    }
+}
+
+@mixin min($size) {
+    @if $size == "" {
+        @content;
+    } @else {
+        @media screen and (min-width: map.get($min-sizes, $size)) {
+            @content;
+        }
+    }
+}
+
+@each $size in add-empty(map.keys($min-sizes)) {
+    @include min(#{$size}) {
+        @each $variant in (none, block, flex) {
+            .d-#{format-prefix($size)}#{$variant} {
+                display: $variant !important;
+            }
+        }
+    }
+}
+
+@mixin sized-property($prop-key, $property) {
+    // "", "xs", "sm", etc:
+    @each $size in add-empty(map.keys($min-sizes)) {
+        @include min(#{$size}) {
+            // (quarter, 0.25rem), (half, 0.5rem), etc:
+            @each $lname, $length in $lengths {
+                .#{$prop-key}-#{format-prefix($size)}#{$lname} {
+                    #{$property}: #{$length} !important;
+                }
+                @content ($size, $lname, $length);
+            }
+        }
+    }
+}
+
+@mixin sized-property-extended($prop-key, $property) {
+    @include sized-property($prop-key, $property) using ($size, $lname, $length) {
+        // (t, (top)), (x, (left, right)), etc:
+        @each $abbr, $dlist in $dimens {
+            // e.g. .mt-xs-quarter:
+            .#{$prop-key}#{$abbr}-#{format-prefix($size)}#{$lname} {
+                @each $dimen in $dlist {
+                    #{$property}-#{$dimen}: #{$length} !important;
+                }
+            }
+        }
+    }
+}
+
+@include sized-property("gap", "gap");
+@include sized-property-extended("p", "padding");
+@include sized-property-extended("m", "margin");

@@ -1,14 +1,17 @@
 <audio src="/yeah.opus" preload="none" {{on-insert this.setAudioElement}}></audio>
 
-<div class="text-center small attribution" ...attributes>
-  Webbsidan tillverkades av
-  <a
-    href="https://robert.huseli.us/"
-    class="bold"
-    target="_blank"
-    rel="noopener noreferrer"
-    {{on "mouseenter" this.onMouseEnter}}
-  >Robert</a>
+<div class="attribution column gap-half align-center" ...attributes>
+  <div class="text-small">
+    Webbsidan tillverkades av
+    <a
+      href="https://robert.huseli.us/"
+      class="bold"
+      target="_blank"
+      rel="noopener noreferrer"
+      {{on "mouseenter" this.onMouseEnter}}
+    >Robert</a>
+  </div>
+  <div class="text-small bold cursor-pointer" {{on "click" this.onCookiesClick}}>Cookies?</div>
 </div>
 {{#if this.showFlash}}
   <div class="flash-overlay" {{on "animationend" this.onFlashAnimationEnd}}></div>

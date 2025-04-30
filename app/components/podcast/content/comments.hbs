@@ -3,7 +3,7 @@
     <h3>Kommentarer</h3>
     {{#each this.comments as |comment|}}
       <div class="comment">
-        <p class="small">{{comment.name}} sade {{comment.createdString}}:</p>
+        <p class="text-small">{{comment.name}} sade {{comment.createdString}}:</p>
         <div class="comment-text">{{html-safe comment.text-html}}</div>
       </div>
     {{/each}}
@@ -15,10 +15,10 @@
     <h3>Lämna en kommentar</h3>
     <div class="comment-form gap-half">
       {{#if @content.podcast.require-comment-approval}}
-        <div class="small">Obs: din kommentar kommer att behöva godkännas manuellt innan den blir synlig här.</div>
+        <div class="text-small">Obs: din kommentar kommer att behöva godkännas manuellt innan den blir synlig här.</div>
       {{/if}}
       <TextInput @value={{this.comment.text}} @errors={{this.comment.errors.text}} @multiline={{true}} />
-      <div class="row gap-half align-start">
+      <div class="row gap-half align-start wrap">
         <TextInput
           @id="name"
           @value={{this.comment.name}}
@@ -33,6 +33,7 @@
           @value={{this.comment.challenge-answer}}
           @errors={{this.comment.errors.challenge-answer}}
           @label="Vad blir {{this.challenge.challenge-string}}? Svara med siffror."
+          @wrapper-class="challenge-wrapper"
         />
         <Button
           @disabled={{this.isSubmitDisabled}}

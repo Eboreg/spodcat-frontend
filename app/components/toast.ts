@@ -37,11 +37,11 @@ export default class Toast extends Component<ToastSignature> {
     get classes(): SafeString {
         switch (this.args.toast.message.level) {
             case "error":
-                return htmlSafe("toast color-white bg-primary");
+                return htmlSafe("toast theme-primary");
             case "info":
-                return htmlSafe("toast color-white bg-secondary");
+                return htmlSafe("toast theme-secondary");
             case "success":
-                return htmlSafe("toast color-white bg-tertiary");
+                return htmlSafe("toast theme-tertiary");
         }
     }
 
@@ -74,10 +74,10 @@ export default class Toast extends Component<ToastSignature> {
         if (!this.show) {
             switch (this.transition) {
                 case "up":
-                    bottom = "calc(100% + 10px)";
+                    bottom = "calc(100% + var(--mm-length-half))";
                     break;
                 case "right":
-                    left = "calc(100% + 10px)";
+                    left = "calc(100% + var(--mm-length-half))";
                     break;
                 case "down":
                     bottom = `-${this.size.height + 10}px`;

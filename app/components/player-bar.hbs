@@ -12,15 +12,15 @@
       {{#if @episode.image-thumbnail}}
         <img src={{@episode.image-thumbnail}} alt="" />
       {{else if @episode.hasNumber}}
-        <div class="podcast-content-leading-icon bg-primary border-primary ml-half">{{@episode.number}}</div>
+        <div class="podcast-content-leading-icon theme-primary ml-half">{{@episode.number}}</div>
       {{else if @episode.podcast.cover-thumbnail}}
         <img src={{@episode.podcast.cover-thumbnail}} alt="" />
       {{else}}
-        <span class="material-symbols podcast-content-leading-icon bg-primary border-primary ml-half">podcasts</span>
+        <span class="material-symbols podcast-content-leading-icon theme-primary ml-half">podcasts</span>
       {{/if}}
       <div class="ellipsis">
         <div class="bold ellipsis">{{@episode.name}}</div>
-        <div class="small ellipsis">{{@episode.podcast.name}}</div>
+        <div class="text-small ellipsis">{{@episode.podcast.name}}</div>
       </div>
     </LinkTo>
 

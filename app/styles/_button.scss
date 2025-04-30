@@ -1,12 +1,12 @@
-@use "mixins";
-
 .button {
-    @include mixins.filled-outset-block;
-
     align-items: center;
+    border-radius: var(--mm-border-radius);
+    border-style: outset;
+    border-width: 0;
     cursor: pointer;
-    gap: 10px;
-    padding: 0.5rem;
+    display: flex;
+    gap: var(--mm-length-half);
+    padding: var(--mm-length-half);
     text-decoration: none;
 
     &:active:not(.loading):not(.disabled) {
@@ -30,8 +30,19 @@
     }
 
     .icon {
-        font-size: 20px !important;
-        height: 20px !important;
-        width: 20px !important;
+        font-size: 20px;
+        height: 20px;
+        width: 20px;
+    }
+
+    &.small {
+        font-size: var(--mm-font-size-small);
+        padding: var(--mm-length-quarter) var(--mm-length-half);
+
+        .icon {
+            font-size: 16px;
+            height: 16px;
+            width: 16px;
+        }
     }
 }

@@ -16,7 +16,7 @@ export default class PodcastLinkModel extends Model {
     @attr declare "custom-icon"?: string;
     @attr declare icon?: "facebook" | "discord" | "patreon" | "apple" | "android" | "spotify" | "itunes";
     @attr declare label: string;
-    @attr declare theme: "primary" | "secondary" | "tertiary";
+    @attr declare theme: "primary" | "secondary" | "tertiary" | "boring";
     @attr declare url: string;
 
     @belongsTo<PodcastModel>("podcast", { async: false, inverse: "links" })

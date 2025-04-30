@@ -1,4 +1,4 @@
-@use "mixins";
+@use "responsive";
 
 .podcast-details .podcast-banner.has-banner-image {
     aspect-ratio: 3/1;
@@ -26,7 +26,7 @@
             font-size: 40px;
         }
 
-        @include mixins.min(md) {
+        @include responsive.min(md) {
             font-size: 40px;
 
             &.small {
@@ -38,7 +38,7 @@
             }
         }
 
-        @include mixins.min(lg) {
+        @include responsive.min(lg) {
             font-size: 50px;
 
             &.small {
@@ -91,7 +91,7 @@
             font-size: 50px;
         }
 
-        @include mixins.min(md) {
+        @include responsive.min(md) {
             font-size: 50px;
 
             &.small {
@@ -103,7 +103,7 @@
             }
         }
 
-        @include mixins.min(lg) {
+        @include responsive.min(lg) {
             font-size: 60px;
 
             &.small {
@@ -117,7 +117,7 @@
     }
 
     .podcast-tagline {
-        font-size: 14px;
-        margin-top: 5px;
+        font-size: var(--mm-font-size-article);
+        margin-top: var(--mm-length-quarter);
     }
 }
