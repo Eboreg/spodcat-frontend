@@ -18,14 +18,16 @@ module.exports = function (deployTarget) {
 
     if (deployTarget === "production") {
         ENV.build.environment = "production";
+
         ENV["scp"] = {
             nodes: [
                 {
-                    username: process.env.SCP_USERNAME,
-                    host: process.env.SCP_HOST,
-                    path: process.env.SCP_PATH,
+                    username: process.env.SSH_USERNAME,
+                    host: process.env.SSH_HOST,
+                    path: process.env.SSH_PATH,
                 },
             ],
+            options: ["--del"],
         };
     }
 
