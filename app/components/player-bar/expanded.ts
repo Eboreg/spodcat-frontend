@@ -16,11 +16,11 @@ export default class PlayerBarExpanded extends Component<PlayerBarExpandedSignat
     @service declare audio: AudioService;
     @tracked isKeyboardHelpOpen: boolean = false;
 
-    @action closeKeyboardHelp() {
+    @action onKeyboardHelpOutsideClick() {
         this.isKeyboardHelpOpen = false;
     }
 
-    @action toggleKeyboardHelp() {
+    @action onKeyboardHelpButtonClick() {
         this.isKeyboardHelpOpen = !this.isKeyboardHelpOpen;
     }
 }

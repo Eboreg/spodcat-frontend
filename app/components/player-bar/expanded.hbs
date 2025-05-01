@@ -8,11 +8,11 @@
   <VolumeControl />
   <PlaybackRateControl />
 
-  <div class="pos-relative" {{on-outside-click this.closeKeyboardHelp}}>
+  <div class="pos-relative" {{on-outside-click this.onKeyboardHelpOutsideClick}}>
     <span
       class="material-symbols button"
       role="button"
-      {{on "click" this.toggleKeyboardHelp}}
+      {{on "click" this.onKeyboardHelpButtonClick}}
       title="Tangentbordskommandon"
     >keyboard</span>
     {{#if this.isKeyboardHelpOpen}}

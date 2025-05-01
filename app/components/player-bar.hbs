@@ -46,9 +46,13 @@
 
     <div class="d-xl-none">
       {{#if this.isExpanded}}
-        <span class="material-symbols button" role="button" {{on "click" this.collapse}}>keyboard_arrow_down</span>
+        <span
+          class="material-symbols button"
+          role="button"
+          {{on "click" this.onCollapseClick}}
+        >keyboard_arrow_down</span>
       {{else}}
-        <span class="material-symbols button" role="button" {{on "click" this.expand}}>keyboard_arrow_up</span>
+        <span class="material-symbols button" role="button" {{on "click" this.onExpandClick}}>keyboard_arrow_up</span>
       {{/if}}
     </div>
   </div>

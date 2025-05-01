@@ -1,6 +1,5 @@
 import type { NativeArray } from "@ember/array";
 import { A } from "@ember/array";
-import { action } from "@ember/object";
 import Service from "@ember/service";
 import { tracked } from "@glimmer/tracking";
 import type { Size } from "global";
@@ -31,7 +30,7 @@ export default class MessageService extends Service {
     currentToastId: number = -1;
     @tracked toasts: NativeArray<PlacedToast> = A();
 
-    @action addToast(message: Message) {
+    addToast(message: Message) {
         this.toasts.pushObject(
             new PlacedToast(
                 ++this.currentToastId,
@@ -41,7 +40,7 @@ export default class MessageService extends Service {
         );
     }
 
-    @action onToastHidden(id: number) {
+    onToastHidden(id: number) {
         const idx = this.toasts.findIndex((t) => t.id == id);
 
         if (idx > -1) {
@@ -50,7 +49,7 @@ export default class MessageService extends Service {
         }
     }
 
-    @action onToastSizeChange(id: number, size: Size) {
+    onToastSizeChange(id: number, size: Size) {
         const toast = this.toasts.findBy("id", id);
 
         if (toast) {
@@ -63,8 +62,8 @@ export default class MessageService extends Service {
         let acc = 0;
 
         for (const toast of this.toasts) {
-            toast.bottomOffset = acc;
-            acc += toast.size.height + 10;
+            if (toast.bottomOffset != acc) toast.bottomOffset = acc;
+            acc += toast.size.height + 8;
         }
     }
 }

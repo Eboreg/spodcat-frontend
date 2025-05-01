@@ -37,7 +37,7 @@ export default class PlaybackRateControl extends Component<PlaybackRateControlSi
         return this.playbackRates.find((r) => r.rate == this.audio.playbackRate)?.label;
     }
 
-    @action closePopup() {
+    @action onOutsideClick() {
         this.popupVisible = false;
     }
 
@@ -46,7 +46,7 @@ export default class PlaybackRateControl extends Component<PlaybackRateControlSi
         this.popupVisible = false;
     }
 
-    @action togglePopup() {
+    @action onTriggerButtonClick() {
         this.popupVisible = !this.popupVisible;
     }
 }

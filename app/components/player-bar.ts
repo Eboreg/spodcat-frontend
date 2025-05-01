@@ -20,11 +20,11 @@ export default class PlayerBar extends Component<PlayerBarSignature> {
         return this.audio.isSeeking || this.audio.isLoadingEpisode != undefined;
     }
 
-    @action collapse() {
+    @action onCollapseClick() {
         this.isExpanded = false;
     }
 
-    @action expand() {
+    @action onExpandClick() {
         this.isExpanded = true;
     }
 }

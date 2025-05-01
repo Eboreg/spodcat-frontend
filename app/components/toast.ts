@@ -7,31 +7,48 @@ import type { Size } from "global";
 import type { PlacedToast } from "podcast-frontend/services/message";
 import { service } from "@ember/service";
 import type AudioService from "podcast-frontend/services/audio";
+import type MessageService from "podcast-frontend/services/message";
+import type FastBoot from "ember-cli-fastboot/services/fastboot";
 
 export interface ToastSignature {
     Args: {
         toast: PlacedToast;
-        "on-size-change": (id: number, size: Size) => void;
-        "on-hidden": (id: number) => void;
     };
     Element: HTMLDivElement;
 }
 
-const transitions = ["up", "right", "down", "left", "scale", "fade"] as const;
+interface TransitionStyle {
+    bottom: string;
+    left: string;
+    scale: number;
+    opacity: number;
+}
+
+type TransitionFunction = (style: TransitionStyle) => void;
 
 export default class Toast extends Component<ToastSignature> {
     @service declare audio: AudioService;
+    @service declare message: MessageService;
+    @service declare fastboot: FastBoot;
+
     @tracked declare countdownAnimation: Animation;
     @tracked show: boolean = false;
-    @tracked size: Size = { width: 0, height: 0 };
-    transition: (typeof transitions)[number];
+    @tracked size: Size = { width: 802, height: 71 };
 
     constructor(...args: ConstructorParameters<typeof Component<ToastSignature>>) {
         super(...args);
-        this.transition = transitions[Math.floor(Math.random() * transitions.length)]!;
-        runTask(this, () => {
-            this.show = true;
-        });
+        if (!this.fastboot.isFastBoot) {
+            this.size = { width: Math.min(802, document.body.clientWidth - 20), height: 71 };
+        }
+        // Tiny delay, because this.style() needs to be able to run once before
+        // this.show is set to true, to make sure we start from "hidden" state:
+        runTask(
+            this,
+            () => {
+                this.show = true;
+            },
+            10,
+        );
     }
 
     get classes(): SafeString {
@@ -65,36 +82,50 @@ export default class Toast extends Component<ToastSignature> {
 
     get style(): SafeString {
         const dy = this.args.toast.bottomOffset + (this.audio.episode ? 75 : 10);
+        const style: TransitionStyle = {
+            bottom: `${dy}px`,
+            left: "calc(50% - calc(var(--mm-toast-width) / 2))",
+            scale: 1,
+            opacity: this.size.height > 0 ? 1 : 0,
+        };
 
-        let bottom = `${dy}px`;
-        let left = "calc(50% - calc(var(--mm-toast-width) / 2))";
-        let scale = 1;
-        let opacity = 1;
+        if (!this.show) this.getRandomTransitionFunction()(style);
 
-        if (!this.show) {
-            switch (this.transition) {
-                case "up":
-                    bottom = "calc(100% + var(--mm-length-half))";
-                    break;
-                case "right":
-                    left = "calc(100% + var(--mm-length-half))";
-                    break;
-                case "down":
-                    bottom = `-${this.size.height + 10}px`;
-                    break;
-                case "left":
-                    left = `-${this.size.width + 10}px`;
-                    break;
-                case "scale":
-                    scale = 0;
-                    break;
-                case "fade":
-                    opacity = 0;
-                    break;
-            }
-        }
+        return htmlSafe(
+            `bottom: ${style.bottom}; left: ${style.left}; scale: ${style.scale}; opacity: ${style.opacity}`,
+        );
+    }
 
-        return htmlSafe(`bottom: ${bottom}; left: ${left}; scale: ${scale}; opacity: ${opacity}`);
+    getRandomTransitionFunction(): TransitionFunction {
+        const functions: TransitionFunction[] = [
+            (style) => {
+                // from top
+                style.bottom = "calc(100% + var(--mm-length-half))";
+            },
+            (style) => {
+                // from right
+                style.left = "calc(100% + var(--mm-length-half))";
+            },
+            (style) => {
+                // from bottom
+                style.bottom = `-${this.size.height + 10}px`;
+            },
+            (style) => {
+                // from left
+                style.left = `-${this.size.width + 10}px`;
+            },
+            (style) => {
+                // from 0x size
+                style.scale = 0;
+            },
+            (style) => {
+                // from 100x size
+                style.scale = 100;
+                style.opacity = 0;
+            },
+        ];
+
+        return functions[Math.floor(Math.random() * functions.length)]!;
     }
 
     @action onCloseClick() {
@@ -110,12 +141,16 @@ export default class Toast extends Component<ToastSignature> {
     }
 
     @action onSizeChange(size: Size) {
-        this.size = size;
-        this.args["on-size-change"](this.args.toast.id, size);
+        if (size.height != this.size.height || size.width != this.size.width) {
+            this.size = size;
+        }
+        this.message.onToastSizeChange(this.args.toast.id, size);
     }
 
     @action onTransitionEnd() {
-        if (!this.show) this.args["on-hidden"](this.args.toast.id);
+        if (!this.show) {
+            this.message.onToastHidden(this.args.toast.id);
+        }
     }
 
     @action setCountdownElement(elem: HTMLElement) {

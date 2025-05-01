@@ -31,11 +31,13 @@ export default class EpisodeRoute extends PreserveScrollRoute<EpisodeModel> {
 
     @action error(error: any) {
         if (error instanceof NotFoundError) {
-            const podcastId = this.getPodcastId();
+            if (!this.fastboot.isFastBoot) {
+                const podcastId = this.getPodcastId();
 
-            this.message.addToast({ level: "error", text: error.message, timeout: 10000 });
-            if (podcastId) this.router.transitionTo("podcast", podcastId);
-            else this.router.transitionTo("home");
+                this.message.addToast({ level: "error", text: error.message, timeout: 10000 });
+                if (podcastId) this.router.transitionTo("podcast", podcastId);
+                else this.router.transitionTo("home");
+            }
 
             return false;
         }

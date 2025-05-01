@@ -3,11 +3,7 @@
 {{outlet}}
 
 {{#each this.message.toasts as |toast|}}
-  <Toast
-    @toast={{toast}}
-    @on-size-change={{this.message.onToastSizeChange}}
-    @on-hidden={{this.message.onToastHidden}}
-  />
+  <Toast @toast={{toast}} />
 {{/each}}
 
 <footer>

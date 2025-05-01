@@ -35,7 +35,7 @@ export default class PodcastContentEpisodeCard extends Component<PodcastContentE
         return;
     }
 
-    @action play() {
+    @action onPlayClick() {
         this.audio.playEpisode(this.args.episode, this.start);
     }
 }

@@ -118,11 +118,15 @@ h3 {
     border-right-color: var(--mm-primary-dark);
 }
 
-.episode-song > * {
-    cursor: pointer;
-    display: inline-block;
+.episode-song {
     font-size: var(--mm-font-size-article);
-    line-height: 2;
+    line-height: 1.5;
+    margin: var(--mm-length-half) 0;
+
+    & > * {
+        cursor: pointer;
+        display: inline-block;
+    }
 }
 
 .err404 {

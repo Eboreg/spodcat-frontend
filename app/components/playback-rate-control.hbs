@@ -1,8 +1,8 @@
-<div class="pos-relative" {{on-outside-click this.closePopup}}>
+<div class="pos-relative" {{on-outside-click this.onOutsideClick}}>
   <span
     class="material-symbols button {{this.buttonClass}}"
     role="button"
-    {{on "click" this.togglePopup}}
+    {{on "click" this.onTriggerButtonClick}}
     title="Ändra hastighet ({{this.currentLabel}})"
   >settings_timelapse</span>
 
