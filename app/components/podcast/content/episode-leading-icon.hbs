@@ -1,12 +1,9 @@
 {{#if @episode.image-thumbnail}}
-  <img src={{@episode.image-thumbnail}} alt="" />
+  <img src={{@episode.image-thumbnail}} class={{this.classes}} alt="" ...attributes />
 {{else if @episode.numberString}}
-  <div
-    class="podcast-content-leading-icon theme-{{@episode.seasonTheme}} {{this.numberClass}}"
-    ...attributes
-  >{{@episode.numberString}}</div>
+  <div class="{{this.classes}} {{this.numberClass}}" ...attributes>{{@episode.numberString}}</div>
 {{else if @episode.podcast.cover-thumbnail}}
-  <img src={{@episode.podcast.cover-thumbnail}} alt="" />
+  <img src={{@episode.podcast.cover-thumbnail}} class={{this.classes}} alt="" ...attributes />
 {{else}}
-  <span class="material-symbols podcast-content-leading-icon theme-{{this.theme}}" ...attributes>podcasts</span>
+  <span class="material-symbols {{this.classes}}" ...attributes>podcasts</span>
 {{/if}}
