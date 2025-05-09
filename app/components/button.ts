@@ -3,6 +3,7 @@ import { action } from "@ember/object";
 import { htmlSafe, type SafeString } from "@ember/template";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
+import type { Theme } from "global";
 
 export interface ButtonSignature {
     Args: {
@@ -10,7 +11,7 @@ export interface ButtonSignature {
         model?: Model | string;
         models?: (Model | string)[];
         disabled?: boolean;
-        theme: "primary" | "secondary" | "tertiary" | "boring";
+        theme: Theme;
         "material-icon"?: string;
         href?: string;
         "new-tab"?: boolean;

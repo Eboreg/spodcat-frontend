@@ -7,8 +7,8 @@ import { timeString } from "podcast-frontend/utils";
 
 export default class EpisodeSongModel extends Model {
     @attr declare comment?: string;
-    @attr declare name: string;
-    @attr declare timestamp: number;
+    @attr declare title: string;
+    @attr declare "start-time": number;
 
     @hasMany<ArtistModel>("artist", { async: false, inverse: "songs" })
     declare artists: HasMany<ArtistModel>;
@@ -20,7 +20,7 @@ export default class EpisodeSongModel extends Model {
     }
 
     get timestampString() {
-        return timeString(this.timestamp);
+        return timeString(this["start-time"]);
     }
 
     [Type] = "episode-song" as const;

@@ -26,6 +26,6 @@ export default class PodcastEpisode extends Component<PodcastEpisodeSignature> {
     }
 
     @action onSongClick(song: EpisodeSongModel) {
-        this.audio.playEpisode(this.args.episode, song.timestamp, true);
+        this.audio.playEpisode(this.args.episode, song["start-time"], true);
     }
 }

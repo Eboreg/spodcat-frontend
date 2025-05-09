@@ -13,7 +13,7 @@
             <div class="episode-song">
               <span {{on "click" (fn this.onSongClick song)}}>
                 {{#if song.artistString}}{{song.artistString}} –{{/if}}
-                {{song.name}}
+                {{song.title}}
                 {{#if song.comment}}({{song.comment}}){{/if}}
               </span>
             </div>

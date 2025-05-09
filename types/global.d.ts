@@ -31,6 +31,7 @@ import type Popup from "podcast-frontend/components/popup";
 import type TextInput from "podcast-frontend/components/text-input";
 import type Toast from "podcast-frontend/components/toast";
 import type onInsert from "podcast-frontend/modifiers/on-insert";
+import type PodcastContentEpisodeLeadingIcon from "podcast-frontend/components/podcast/content/episode-leading-icon";
 
 declare module "@glint/environment-ember-loose/registry" {
     import { HelperLike } from "@glint/template";
@@ -58,6 +59,7 @@ declare module "@glint/environment-ember-loose/registry" {
         "Podcast::Content::Comments": typeof PodcastContentComments;
         "Podcast::Content::Description": typeof PodcastContentDescription;
         "Podcast::Content::EpisodeCard": typeof PodcastContentEpisodeCard;
+        "Podcast::Content::EpisodeLeadingIcon": typeof PodcastContentEpisodeLeadingIcon;
         "Podcast::Content::PostCard": typeof PodcastContentPostCard;
         "Podcast::Episode": typeof PodcastEpisode;
         "Podcast::Index": typeof PodcastIndex;
@@ -86,3 +88,5 @@ export interface Size {
 export interface Image extends Size {
     url: string;
 }
+
+export type Theme = "primary" | "secondary" | "tertiary" | "boring";

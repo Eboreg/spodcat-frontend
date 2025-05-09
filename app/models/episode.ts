@@ -4,7 +4,7 @@ import { Type } from "@warp-drive/core-types/symbols";
 import { timeString } from "podcast-frontend/utils";
 import PodcastContentModel from "./podcast-content";
 import type EpisodeSongModel from "./episode-song";
-import type { Image } from "global";
+import type { Image, Theme } from "global";
 
 export default class EpisodeModel extends PodcastContentModel {
     @attr declare "audio-content-type"?: string;
@@ -21,16 +21,13 @@ export default class EpisodeModel extends PodcastContentModel {
     @attr declare "image-thumbnail"?: string;
     @attr declare "image-width"?: number;
     @attr declare number?: number;
+    @attr declare season?: number;
 
     @hasMany<EpisodeSongModel>("episode-song", { async: false, inverse: "episode" })
     declare songs: HasMany<EpisodeSongModel>;
 
     get durationString() {
         return timeString(this["duration-seconds"]);
-    }
-
-    get hasNumber() {
-        return this.number != undefined;
     }
 
     get imageData(): Image | undefined {
@@ -79,6 +76,10 @@ export default class EpisodeModel extends PodcastContentModel {
         return result;
     }
 
+    get numberString() {
+        return this.number?.toLocaleString("sv");
+    }
+
     get route() {
         if (ENV.APP.IS_SINGLETON) return "episode";
         return "podcast.episode";
@@ -87,6 +88,12 @@ export default class EpisodeModel extends PodcastContentModel {
     get routeModels() {
         if (ENV.APP.IS_SINGLETON) return [this.slug];
         return [this.podcast, this.slug];
+    }
+
+    get seasonTheme(): Theme {
+        const alternatives: Theme[] = ["primary", "secondary", "tertiary", "boring"];
+
+        return alternatives[(this.season || 0) % 3]!;
     }
 
     [Type] = "episode" as const;

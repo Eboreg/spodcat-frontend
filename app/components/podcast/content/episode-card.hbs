@@ -7,14 +7,13 @@
         @disabled={{@expand}}
         class="row align-center gap-single fill p-single"
       >
-        {{#if @episode.hasNumber}}
-          <div class="podcast-content-leading-icon theme-primary">{{@episode.number}}</div>
-        {{else}}
-          <span class="material-symbols podcast-content-leading-icon theme-primary">podcasts</span>
-        {{/if}}
+        <Podcast::Content::EpisodeLeadingIcon @episode={{@episode}} />
         <div class="fill column gap-quarter">
           <div class="podcast-content-name">{{@episode.name}}</div>
           <div class="row gap-half">
+            {{#if @episode.season}}
+              <div class="badge theme-{{@episode.seasonTheme}}">Säsong {{@episode.season}}</div>
+            {{/if}}
             <div class="badge theme-secondary">{{@episode.publishedString}}</div>
             <div class="badge theme-tertiary d-none d-sm-block">{{@episode.durationString}}</div>
           </div>

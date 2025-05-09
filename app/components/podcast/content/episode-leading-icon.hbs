@@ -1,0 +1,12 @@
+{{#if @episode.image-thumbnail}}
+  <img src={{@episode.image-thumbnail}} alt="" />
+{{else if @episode.numberString}}
+  <div
+    class="podcast-content-leading-icon theme-{{@episode.seasonTheme}} {{this.numberClass}}"
+    ...attributes
+  >{{@episode.numberString}}</div>
+{{else if @episode.podcast.cover-thumbnail}}
+  <img src={{@episode.podcast.cover-thumbnail}} alt="" />
+{{else}}
+  <span class="material-symbols podcast-content-leading-icon theme-{{this.theme}}" ...attributes>podcasts</span>
+{{/if}}
