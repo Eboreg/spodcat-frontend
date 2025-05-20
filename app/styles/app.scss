@@ -23,6 +23,7 @@
     --mm-font-size-body: #{$font-size-body-mobile};
     --mm-font-size-article: #{$font-size-article};
     --mm-font-size-small: #{$font-size-small};
+    --mm-font-size-xs: #{$font-size-xs};
 
     @each $lname, $length in $lengths {
         --mm-length-#{$lname}: #{$length};
@@ -95,6 +96,7 @@ main {
     padding: var(--mm-length-half) 0;
 }
 
+h2,
 h3 {
     margin-bottom: var(--mm-length-half);
     margin-top: 0;
@@ -127,7 +129,6 @@ h3 {
 }
 
 .episode-song {
-    font-size: var(--mm-font-size-article);
     line-height: 1.5;
     margin: var(--mm-length-half) 0;
 
@@ -215,7 +216,7 @@ h3 {
     align-items: center;
 
     .text {
-        font-size: var(--mm-font-size-small);
+        font-size: var(--mm-font-size-xs);
         font-family: monospace;
     }
 }
@@ -334,7 +335,7 @@ h3 {
 .text-input {
     column-gap: var(--mm-length-single);
     display: grid;
-    font-size: var(--mm-font-size-small);
+    font-size: var(--mm-font-size-xs);
     grid-template-columns: 1fr auto;
 
     .input {

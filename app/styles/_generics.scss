@@ -10,7 +10,7 @@
     border-radius: var(--mm-border-radius);
     border-style: outset;
     border-width: 2px;
-    font-size: var(--mm-font-size-small);
+    font-size: var(--mm-font-size-xs);
     font-weight: bold;
     padding: 0 2px;
 }
@@ -70,12 +70,20 @@
     flex-direction: row;
 }
 
-.text-small {
-    font-size: var(--mm-font-size-small);
+.text-article {
+    font-size: var(--mm-font-size-article);
 }
 
 .text-center {
     text-align: center;
+}
+
+.text-small {
+    font-size: var(--mm-font-size-small);
+}
+
+.text-xs {
+    font-size: var(--mm-font-size-xs);
 }
 
 .w-100 {

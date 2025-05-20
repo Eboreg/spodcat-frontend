@@ -1,7 +1,7 @@
 <audio src="/yeah.opus" preload="none" {{on-insert this.setAudioElement}}></audio>
 
 <div class="attribution column gap-half align-center" ...attributes>
-  <div class="text-small">
+  <div class="text-xs">
     Webbsidan tillverkades av
     <a
       href="https://robert.huseli.us/"
@@ -11,7 +11,7 @@
       {{on "mouseenter" this.onMouseEnter}}
     >Robert</a>
   </div>
-  <div class="text-small bold cursor-pointer" {{on "click" this.onCookiesClick}}>Cookies?</div>
+  <div class="text-xs bold cursor-pointer" {{on "click" this.onCookiesClick}}>Cookies?</div>
 </div>
 {{#if this.showFlash}}
   <div class="flash-overlay" {{on "animationend" this.onFlashAnimationEnd}}></div>

@@ -7,11 +7,12 @@
   <div class="gap-single px-single column pb-single">
     <Podcast::Content::Description @content={{@episode}} />
     {{#if this.hasSongs}}
-      <div>
-        <h3>Låtar</h3>
+      <div class="text-article">
+        <h2>Låtar</h2>
         {{#each @episode.songs as |song|}}
           <div class="episode-song">
             <span {{on "click" (fn this.onSongClick song)}}>
+              <span class="text-boring-light">{{song.timestampString}}</span>
               {{#if song.artistString}}{{song.artistString}} –{{/if}}
               {{song.title}}
               {{#if song.comment}}({{song.comment}}){{/if}}
