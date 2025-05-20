@@ -13,9 +13,7 @@
           <div class="episode-song">
             <span {{on "click" (fn this.onSongClick song)}}>
               <span class="text-boring-light">{{song.timestampString}}</span>
-              {{#if song.artistString}}{{song.artistString}} –{{/if}}
-              {{song.title}}
-              {{#if song.comment}}({{song.comment}}){{/if}}
+              <span>{{song.displayString}}</span>
             </span>
           </div>
         {{/each}}
