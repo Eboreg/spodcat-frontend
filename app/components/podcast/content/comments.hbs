@@ -14,10 +14,12 @@
   <div>
     <h3>Lämna en kommentar</h3>
     <div class="comment-form gap-half">
-      {{#if @content.podcast.require-comment-approval}}
-        <div class="text-xs">Obs: din kommentar kommer att behöva godkännas manuellt innan den blir synlig här.</div>
-      {{/if}}
-      <TextInput @value={{this.comment.text}} @errors={{this.comment.errors.text}} @multiline={{true}} />
+      <div class="column">
+        {{#if @content.podcast.require-comment-approval}}
+          <div class="text-xs">Obs: din kommentar kommer att behöva godkännas manuellt innan den blir synlig här.</div>
+        {{/if}}
+        <TextInput @value={{this.comment.text}} @errors={{this.comment.errors.text}} @multiline={{true}} />
+      </div>
       <div class="row gap-half align-start wrap">
         <TextInput
           @id="name"
