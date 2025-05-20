@@ -13,7 +13,7 @@ export default class HomeRoute extends PreserveScrollRoute<PodcastModel[]> {
         if (model.length == 1 && ENV.APP.IS_SINGLETON) this.headData.updateFromPodcast(model[0]!);
     }
 
-    async model() {
+    model() {
         return this.store.findAll<PodcastModel>("podcast", {
             include: ["contents", "categories", "links"],
         });

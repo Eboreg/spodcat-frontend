@@ -25,6 +25,7 @@ main.podcast-grid {
 
     & > .content {
         grid-area: content;
+        overflow-x: hidden;
     }
 
     & > .before {

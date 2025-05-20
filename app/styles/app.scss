@@ -118,6 +118,14 @@ h3 {
     border-right-color: var(--mm-primary-dark);
 }
 
+.draft {
+    background-color: darkred;
+    color: yellow;
+    font-weight: bold;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
 .episode-song {
     font-size: var(--mm-font-size-article);
     line-height: 1.5;

@@ -9,7 +9,6 @@ import type PlayerBar from "podcast-frontend/components/player-bar";
 import type VolumeControl from "podcast-frontend/components/volume-control";
 import type htmlSafe from "podcast-frontend/helpers/html-safe";
 import type PodcastIndex from "podcast-frontend/components/podcast/index";
-import type PodcastBase from "podcast-frontend/components/podcast/base";
 import type PodcastAside from "podcast-frontend/components/podcast/aside";
 import type ProgressCircle from "podcast-frontend/components/progress-circle";
 import type PlaybackRateControl from "podcast-frontend/components/playback-rate-control";
@@ -55,7 +54,6 @@ declare module "@glint/environment-ember-loose/registry" {
         "page-title": PageTitle;
         "PlayerBar::Expanded": typeof PlayerBarExpanded;
         "Podcast::Aside": typeof PodcastAside;
-        "Podcast::Base": typeof PodcastBase;
         "Podcast::Content::Comments": typeof PodcastContentComments;
         "Podcast::Content::Description": typeof PodcastContentDescription;
         "Podcast::Content::EpisodeCard": typeof PodcastContentEpisodeCard;

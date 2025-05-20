@@ -1,7 +1,6 @@
 import Component from "@glimmer/component";
 import type EpisodeModel from "podcast-frontend/models/episode";
 import type PodcastModel from "podcast-frontend/models/podcast";
-import type PodcastBase from "./base";
 import { action } from "@ember/object";
 import type EpisodeSongModel from "podcast-frontend/models/episode-song";
 import { service } from "@ember/service";
@@ -14,7 +13,9 @@ export interface PodcastEpisodeSignature {
         episode: EpisodeModel;
         start?: number;
     };
-    Element: typeof PodcastBase;
+    Blocks: {
+        default: [];
+    };
 }
 
 export default class PodcastEpisode extends Component<PodcastEpisodeSignature> {

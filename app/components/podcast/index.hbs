@@ -1,18 +1,14 @@
-<Podcast::Base @podcast={{@podcast}} class="podcast-content-list" ...attributes>
-  <:before>
-    {{#if @podcast.description-html}}
-      <div class="podcast-description before">
-        <div class="podcast-description-content">{{html-safe @podcast.description-html}}</div>
-      </div>
+{{#if @podcast.description-html}}
+  <div class="podcast-description before">
+    <div class="podcast-description-content">{{html-safe @podcast.description-html}}</div>
+  </div>
+{{/if}}
+<div class="column gap-half content">
+  {{#each @podcast.contents as |content|}}
+    {{#if content.isEpisode}}
+      <Podcast::Content::EpisodeCard @episode={{content}} @expand={{false}} />
+    {{else if content.isPost}}
+      <Podcast::Content::PostCard @post={{content}} @expand={{false}} />
     {{/if}}
-  </:before>
-  <:default>
-    {{#each @podcast.contents as |content|}}
-      {{#if content.isEpisode}}
-        <Podcast::Content::EpisodeCard @episode={{content}} @expand={{false}} />
-      {{else if content.isPost}}
-        <Podcast::Content::PostCard @post={{content}} @expand={{false}} />
-      {{/if}}
-    {{/each}}
-  </:default>
-</Podcast::Base>
+  {{/each}}
+</div>

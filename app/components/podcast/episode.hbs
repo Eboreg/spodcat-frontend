@@ -1,26 +1,25 @@
 {{page-title @episode.pageTitle}}
-<Podcast::Base @podcast={{@podcast}} class="podcast-content-details" ...attributes>
-  <Button @route={{@podcast.route}} @models={{@podcast.routeModels}} @theme="secondary" @material-icon="arrow_back">
-    <span class="label">Till {{@podcast.name}}</span>
-  </Button>
-  <Podcast::Content::EpisodeCard @episode={{@episode}} @start={{@start}} @expand={{true}}>
-    <div class="gap-single px-single column pb-single">
-      <Podcast::Content::Description @content={{@episode}} />
-      {{#if this.hasSongs}}
-        <div>
-          <h3>Låtar</h3>
-          {{#each @episode.songs as |song|}}
-            <div class="episode-song">
-              <span {{on "click" (fn this.onSongClick song)}}>
-                {{#if song.artistString}}{{song.artistString}} –{{/if}}
-                {{song.title}}
-                {{#if song.comment}}({{song.comment}}){{/if}}
-              </span>
-            </div>
-          {{/each}}
-        </div>
-      {{/if}}
-      <Podcast::Content::Comments @content={{@episode}} />
-    </div>
-  </Podcast::Content::EpisodeCard>
-</Podcast::Base>
+<Button @route={{@podcast.route}} @models={{@podcast.routeModels}} @theme="secondary" @material-icon="arrow_back">
+  <span class="label">Till {{@podcast.name}}</span>
+</Button>
+{{yield}}
+<Podcast::Content::EpisodeCard @episode={{@episode}} @start={{@start}} @expand={{true}}>
+  <div class="gap-single px-single column pb-single">
+    <Podcast::Content::Description @content={{@episode}} />
+    {{#if this.hasSongs}}
+      <div>
+        <h3>Låtar</h3>
+        {{#each @episode.songs as |song|}}
+          <div class="episode-song">
+            <span {{on "click" (fn this.onSongClick song)}}>
+              {{#if song.artistString}}{{song.artistString}} –{{/if}}
+              {{song.title}}
+              {{#if song.comment}}({{song.comment}}){{/if}}
+            </span>
+          </div>
+        {{/each}}
+      </div>
+    {{/if}}
+    <Podcast::Content::Comments @content={{@episode}} />
+  </div>
+</Podcast::Content::EpisodeCard>
