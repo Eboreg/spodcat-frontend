@@ -71,6 +71,17 @@ export default class AudioService extends Service {
         return this.volume;
     }
 
+    /** <audio> event listeners **********************************************/
+
+    @action onAudioElementInsert(element: HTMLAudioElement) {
+        this.audioElement = element;
+        this.playbackRate = element.playbackRate;
+        if (!isNaN(element.duration)) this.duration = element.duration;
+        this.currentTime = element.currentTime;
+        this.onVolumeChange();
+        if (this.episode) this.setSrc(this.episode["audio-url"]);
+    }
+
     @action onDurationChange() {
         if (this.audioElement && !isNaN(this.audioElement.duration)) {
             this.duration = this.audioElement.duration;
@@ -86,23 +97,6 @@ export default class AudioService extends Service {
     @action onError() {
         this.isLoadingEpisode = undefined;
         this.isPlaying = false;
-    }
-
-    @action onKeyDown(event: KeyboardEvent) {
-        if (event.metaKey || event.altKey) return;
-        if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) return;
-
-        if (event.key == " " && !event.ctrlKey) {
-            this.playOrPause();
-        } else if (event.key == "ArrowRight") {
-            if (!event.ctrlKey) this.seek(30);
-            else this.seek(180);
-        } else if (event.key == "ArrowLeft") {
-            if (!event.ctrlKey) this.seek(-10);
-            else this.seek(-60);
-        } else return;
-
-        event.preventDefault();
     }
 
     @action onPause() {
@@ -148,8 +142,8 @@ export default class AudioService extends Service {
                 );
                 if (progress != this.currentProgress) this.currentProgress = progress;
             }
-            this.setMediaSessionPositionState();
         }
+        this.setMediaSessionPositionState();
     }
 
     @action onVolumeChange() {
@@ -163,16 +157,49 @@ export default class AudioService extends Service {
         this.isLoadingEpisode = this.episode?.slug;
     }
 
+    /** Other actions ********************************************************/
+
+    @action onKeyDown(event: KeyboardEvent) {
+        if (event.metaKey || event.altKey) return;
+        if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) return;
+
+        if (event.key == " " && !event.ctrlKey) {
+            this.playOrPause();
+        } else if (event.key == "ArrowRight") {
+            if (!event.ctrlKey) this.seek(30);
+            else this.seek(180);
+        } else if (event.key == "ArrowLeft") {
+            if (!event.ctrlKey) this.seek(-10);
+            else this.seek(-60);
+        } else return;
+
+        event.preventDefault();
+    }
+
     @action pause() {
+        // Triggered from <PlayerBar> and <Podcast::Content::EpisodeCard>
         this.audioElement?.pause();
     }
 
     @action play() {
+        // Triggered from <PlayerBar>
         this.audioElement?.play().catch((reason) => {
             this.pause();
             this.message.addToast({ level: "error", text: String(reason) });
         });
     }
+
+    @action toggleMute() {
+        // Triggered from <VolumeControl::Inner>
+        if (this.audioElement) {
+            const isMuted = !this.isMuted;
+
+            this.isMuted = isMuted;
+            this.audioElement.muted = isMuted;
+        }
+    }
+
+    /** Other methods ********************************************************/
 
     playEpisode(episode: EpisodeModel, start?: number, alwaysSeek?: boolean) {
         if (this.episode != episode) {
@@ -215,15 +242,6 @@ export default class AudioService extends Service {
         }
     }
 
-    @action setAudioElement(element: HTMLAudioElement) {
-        this.audioElement = element;
-        this.playbackRate = element.playbackRate;
-        if (!isNaN(element.duration)) this.duration = element.duration;
-        this.currentTime = element.currentTime;
-        this.onVolumeChange();
-        if (this.episode) this.setSrc(this.episode["audio-url"]);
-    }
-
     setEpisode(value: EpisodeModel) {
         this.episode = value;
         this.setSrc(value["audio-url"]);
@@ -264,15 +282,6 @@ export default class AudioService extends Service {
         if (this.audioElement) {
             this.volume = value;
             this.audioElement.volume = Math.pow(value, 2);
-        }
-    }
-
-    @action toggleMute() {
-        if (this.audioElement) {
-            const isMuted = !this.isMuted;
-
-            this.isMuted = isMuted;
-            this.audioElement.muted = isMuted;
         }
     }
 }
