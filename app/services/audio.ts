@@ -245,6 +245,7 @@ export default class AudioService extends Service {
     setEpisode(value: EpisodeModel) {
         this.episode = value;
         this.setSrc(value["audio-url"]);
+        this.duration = value["duration-seconds"];
 
         if (!this.fastboot.isFastBoot && "mediaSession" in navigator) {
             navigator.mediaSession.metadata = new MediaMetadata({
