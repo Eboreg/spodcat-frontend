@@ -91,7 +91,7 @@ export default class AudioService extends Service {
 
     @action onEnded() {
         this.isPlaying = false;
-        if (this.mediaSessionAvailable) navigator.mediaSession.playbackState = "none";
+        this.setMediaSessionPlaybackState();
     }
 
     @action onError() {
@@ -101,13 +101,13 @@ export default class AudioService extends Service {
 
     @action onPause() {
         this.isPlaying = false;
-        if (this.mediaSessionAvailable) navigator.mediaSession.playbackState = "paused";
+        this.setMediaSessionPlaybackState();
     }
 
     @action onPlay() {
         this.isPlaying = true;
         this.isLoadingEpisode = undefined;
-        if (this.mediaSessionAvailable) navigator.mediaSession.playbackState = "playing";
+        this.setMediaSessionPlaybackState();
     }
 
     @action onPlaying() {
@@ -123,10 +123,12 @@ export default class AudioService extends Service {
 
     @action onSeeked() {
         this.isSeeking = false;
+        this.setMediaSessionPlaybackState();
     }
 
     @action onSeeking() {
         this.isSeeking = true;
+        this.setMediaSessionPlaybackState();
     }
 
     @action onStalled() {
@@ -253,6 +255,14 @@ export default class AudioService extends Service {
                 artist: value.podcast.name,
                 artwork: value.mediaImages,
             });
+        }
+    }
+
+    setMediaSessionPlaybackState() {
+        if (this.mediaSessionAvailable && this.audioElement) {
+            if (this.audioElement.ended || this.audioElement.seeking) navigator.mediaSession.playbackState = "none";
+            else if (this.audioElement.paused) navigator.mediaSession.playbackState = "paused";
+            else navigator.mediaSession.playbackState = "playing";
         }
     }
 
