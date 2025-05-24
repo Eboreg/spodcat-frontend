@@ -23,6 +23,7 @@ export default class PodcastModel extends Model {
     @attr declare description?: string;
     @attr declare "description-html"?: string;
     @attr declare "enable-comments": boolean;
+    @attr declare "episodes-fm-url": string;
     @attr declare favicon?: string;
     @attr declare "favicon-content-type"?: string;
     @attr declare language?: string;
