@@ -36,7 +36,6 @@ export default class PodcastRoute extends Route<PodcastModel> {
     model(params: { podcast_id: string }) {
         return this.store.findRecord<PodcastModel>("podcast", params.podcast_id, {
             include: ["contents", "categories", "links"],
-            backgroundReload: false,
         });
     }
 }

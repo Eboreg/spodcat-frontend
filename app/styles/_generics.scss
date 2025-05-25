@@ -15,10 +15,6 @@
     padding: 0 2px;
 }
 
-.bold {
-    font-weight: bold;
-}
-
 .column {
     display: flex;
     flex-direction: column;
@@ -45,16 +41,33 @@
     flex-grow: 1;
 }
 
+.font-weight-bold {
+    font-weight: bold;
+}
+
+.font-weight-normal {
+    font-weight: normal;
+}
+
 .oneliner {
     white-space: nowrap;
 }
 
 .outlined-text {
     text-shadow:
-        -2px 0 0 black,
-        0 -2px 0 black,
-        0 2px 0 black,
-        2px 0 0 black;
+        min(-1px, -0.02em) min(-1px, -0.02em) 0.02em black,
+        min(-1px, -0.02em) max(1px, 0.02em) 0.02em black,
+        max(1px, 0.02em) min(-1px, -0.02em) 0.02em black,
+        max(1px, 0.02em) max(1px, 0.02em) 0.02em black;
+}
+
+.shadowed-text {
+    text-shadow:
+        min(-1px, -0.02em) min(-1px, -0.02em) 0.01em black,
+        min(-1px, -0.02em) max(1px, 0.02em) 0.01em black,
+        max(1px, 0.02em) min(-1px, -0.02em) 0.01em black,
+        max(1px, 0.02em) max(1px, 0.02em) 0.01em black,
+        0.04em 0.1em black;
 }
 
 .pos-absolute {

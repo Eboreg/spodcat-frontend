@@ -5,13 +5,13 @@
     Webbsidan tillverkades av
     <a
       href="https://robert.huseli.us/"
-      class="bold"
+      class="font-weight-bold"
       target="_blank"
       rel="noopener noreferrer"
       {{on "mouseenter" this.onMouseEnter}}
     >Robert</a>
   </div>
-  <div class="text-xs bold cursor-pointer" {{on "click" this.onCookiesClick}}>Cookies?</div>
+  <div class="text-xs font-weight-bold cursor-pointer" {{on "click" this.onCookiesClick}}>Cookies?</div>
 </div>
 {{#if this.showFlash}}
   <div class="flash-overlay" {{on "animationend" this.onFlashAnimationEnd}}></div>

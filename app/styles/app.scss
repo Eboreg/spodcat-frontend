@@ -115,9 +115,15 @@ h3 {
 }
 
 .dotted-border {
-    border: var(--mm-length-half) dotted var(--mm-primary);
+    border-color: var(--mm-primary);
     border-bottom-color: var(--mm-primary-dark);
     border-right-color: var(--mm-primary-dark);
+    border-style: dotted;
+    border-width: var(--mm-length-quarter);
+
+    @include responsive.min(sm) {
+        border-width: var(--mm-length-half);
+    }
 }
 
 .draft {

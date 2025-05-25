@@ -1,5 +1,11 @@
 <aside class="gap-half column" ...attributes>
-  <Button @href={{@podcast.episodes-fm-url}} @new-tab={{true}} @theme="tertiary" @material-icon="podcasts">
+  <Button
+    @href={{@podcast.episodes-fm-url}}
+    @new-tab={{true}}
+    @theme="tertiary"
+    @material-icon="podcasts"
+    title="Lägg till {{@podcast.name}} i din podd-app"
+  >
     <span class="label">Prenumerera</span>
   </Button>
   <Button @href={{@podcast.rss-url}} @new-tab={{true}} @theme="primary" @material-icon="rss_feed">

@@ -9,7 +9,7 @@
       {{/if}}
       <div>
         <div
-          class="podcast-name outlined-text {{@model.nameCssClass}}"
+          class="podcast-name {{if @model.banner 'outlined-text' 'shadowed-text'}} {{@model.nameCssClass}}"
           style={{@model.nameCssStyle}}
         >{{@model.name}}</div>
         {{#if @model.tagline}}
