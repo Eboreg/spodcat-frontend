@@ -14,8 +14,6 @@ export default class HomeRoute extends PreserveScrollRoute<PodcastModel[]> {
     }
 
     model() {
-        return this.store.findAll<PodcastModel>("podcast", {
-            include: ["contents", "categories", "links"],
-        });
+        return this.store.findAll<PodcastModel>("podcast");
     }
 }

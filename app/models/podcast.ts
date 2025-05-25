@@ -1,7 +1,6 @@
 import ENV from "podcast-frontend/config/environment";
-import Model, { attr, hasMany, type HasMany } from "@ember-data/model";
+import Model, { attr, hasMany, type AsyncHasMany } from "@ember-data/model";
 import { Type } from "@warp-drive/core-types/symbols";
-import type CategoryModel from "./category";
 import type PodcastLinkModel from "./podcast-link";
 import type PodcastContentModel from "./podcast-content";
 import type { Favicon, Rss } from "podcast-frontend/services/head-data";
@@ -34,12 +33,10 @@ export default class PodcastModel extends Model {
     @attr declare "rss-url": string;
     @attr declare tagline?: string;
 
-    @hasMany<CategoryModel>("category", { async: false, inverse: null })
-    declare categories: HasMany<CategoryModel>;
-    @hasMany<PodcastContentModel>("podcast-content", { async: false, inverse: "podcast", polymorphic: true })
-    declare contents: HasMany<PodcastContentModel>;
-    @hasMany<PodcastLinkModel>("podcast-link", { async: false, inverse: "podcast" })
-    declare links: HasMany<PodcastLinkModel>;
+    @hasMany<PodcastContentModel>("podcast-content", { async: true, inverse: "podcast", polymorphic: true })
+    declare contents: AsyncHasMany<PodcastContentModel>;
+    @hasMany<PodcastLinkModel>("podcast-link", { async: true, inverse: "podcast" })
+    declare links: AsyncHasMany<PodcastLinkModel>;
 
     get bannerSize(): Size | undefined {
         if (this["banner-height"] && this["banner-width"]) {

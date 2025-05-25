@@ -4,6 +4,7 @@ import type { Snapshot } from "@ember-data/legacy-compat/legacy-network-handler/
 import type { SnapshotRecordArray } from "@ember-data/legacy-compat/legacy-network-handler/snapshot-record-array";
 import type { Store } from "@ember-data/store/-private/store-service";
 import type { ModelSchema } from "@ember-data/store/-types/q/ds-model";
+import type { HTTPMethod } from "@warp-drive/core-types/request";
 import type FastBoot from "ember-cli-fastboot/services/fastboot";
 import ENV from "podcast-frontend/config/environment";
 
@@ -13,15 +14,22 @@ export default class ApplicationAdapter extends JSONAPIAdapter {
 
     host = ENV.APP.BACKEND_HOST;
     namespace = ENV.APP.API_URL_NAMESPACE;
+    // @ts-ignore
+    coalesceFindRequests = true;
+
+    ajax(url: string, type: HTTPMethod, options?: any): Promise<AdapterPayload> {
+        // Appending trailing slash here instead of in buildURL(). Reason?
+        // Because groupRecordsForFindMany() will not work properly otherwise.
+        if (!url.endsWith("/")) url += "/";
+        return super.ajax(url, type, options);
+    }
 
     buildURL(modelName: string, id: any, snapshot: any, requestType?: any, query?: any): string {
         if (query && Array.isArray(query["include"])) {
             query["include"] = query["include"].join();
         }
 
-        const url = super.buildURL(modelName, id, snapshot, requestType, query);
-
-        return url.endsWith("/") ? url : `${url}/`;
+        return super.buildURL(modelName, id, snapshot, requestType, query);
     }
 
     cacheKeyFor(modelName: string, id?: string) {
