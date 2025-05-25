@@ -16,6 +16,7 @@ export default class ApplicationAdapter extends JSONAPIAdapter {
     namespace = ENV.APP.API_URL_NAMESPACE;
     // @ts-ignore
     coalesceFindRequests = true;
+    maxURLLength = 1024;
 
     ajax(url: string, type: HTTPMethod, options?: any): Promise<AdapterPayload> {
         // Appending trailing slash here instead of in buildURL(). Reason?
