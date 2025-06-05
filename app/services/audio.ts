@@ -12,9 +12,8 @@ export default class AudioService extends Service {
     @service declare message: MessageService;
 
     @tracked audioElement?: HTMLAudioElement;
-    @tracked currentProgress: number = 0;
-    @tracked currentTime: number = 0;
-    @tracked duration: number = 0;
+    @tracked currentTime: number = 0; // seconds
+    @tracked duration: number = 0; // seconds
     @tracked episode?: EpisodeModel;
     @tracked isLoadingEpisode?: string;
     @tracked isMuted: boolean = false;
@@ -49,9 +48,16 @@ export default class AudioService extends Service {
                 this.seek(details.seekOffset || 30);
             });
             navigator.mediaSession.setActionHandler("seekto", (details) => {
-                if (details.seekTime) this.seekToTime(details.seekTime, details.fastSeek);
+                if (details.seekTime) this.seekToTime(details.seekTime);
             });
         }
+    }
+
+    get currentProgress() {
+        if (this.duration > 0) {
+            return coerceBetween((this.currentTime / this.duration) * 100, 0, 100);
+        }
+        return 0;
     }
 
     get currentTimeString() {
@@ -136,13 +142,11 @@ export default class AudioService extends Service {
     }
 
     @action onTimeUpdate() {
-        if (this.audioElement && this.audioElement.currentTime != this.currentTime) {
-            this.currentTime = this.audioElement.currentTime;
-            if (this.episode && this.duration > 0) {
-                const progress = Math.floor(
-                    (this.currentTime / this.duration) * (this.episode["dbfs-array"]?.length || 0),
-                );
-                if (progress != this.currentProgress) this.currentProgress = progress;
+        if (this.audioElement) {
+            const currentTime = Math.floor(this.audioElement.currentTime);
+
+            if (currentTime != this.currentTime) {
+                this.currentTime = currentTime;
             }
         }
         this.setMediaSessionPositionState();
@@ -203,7 +207,8 @@ export default class AudioService extends Service {
 
     /** Other methods ********************************************************/
 
-    playEpisode(episode: EpisodeModel, start?: number, alwaysSeek?: boolean) {
+    playEpisode(episode: EpisodeModel, start?: number) {
+        // start = seconds
         if (this.episode != episode) {
             this.isLoadingEpisode = episode.slug;
             if (episode["dbfs-array"] == undefined) {
@@ -212,9 +217,9 @@ export default class AudioService extends Service {
                 });
             }
             this.setEpisode(episode);
-            if (start && !alwaysSeek) this.seekToTime(start);
+            if (!start) this.seekToTime(0);
         }
-        if (start && alwaysSeek) this.seekToTime(start);
+        if (start) this.seekToTime(start);
         this.play();
     }
 
@@ -236,11 +241,11 @@ export default class AudioService extends Service {
         this.seekToTime(this.duration * progress);
     }
 
-    seekToTime(time: number, fastSeek?: boolean) {
+    seekToTime(seconds: number) {
         if (this.audioElement) {
-            this.currentTime = time;
-            if (fastSeek) this.audioElement.fastSeek(time);
-            else this.audioElement.currentTime = time;
+            seconds = coerceBetween(seconds, 0, this.duration);
+            this.currentTime = seconds;
+            this.audioElement.currentTime = seconds;
         }
     }
 
@@ -269,7 +274,7 @@ export default class AudioService extends Service {
     setMediaSessionPositionState() {
         if (this.mediaSessionAvailable && this.audioElement) {
             navigator.mediaSession.setPositionState({
-                duration: this.audioElement.duration,
+                duration: this.duration,
                 playbackRate: this.audioElement.playbackRate,
                 position: this.audioElement.currentTime,
             });

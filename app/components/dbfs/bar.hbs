@@ -3,16 +3,16 @@
   {{on "click" this.onClick}}
   {{on "mousemove" this.onMouseMove}}
   {{on "mouseleave" this.onMouseLeave}}
-  role="fitta"
   ...attributes
 >
+  <div class="dbfs-overlay" style={{this.overlayStyle}}></div>
   {{#if this.showTooltip}}
     <div class="tooltip" style={{this.tooltipStyle}}>
       <div class="tooltip-box text-xs">{{this.tooltipContent}}</div>
       <div class="tooltip-line"></div>
     </div>
   {{/if}}
-  {{#each this.columns as |column|}}
-    <Dbfs::Column @column={{column}} @column-count={{this.columnCount}} />
+  {{#each @episode.dbfs-array as |dbfs|}}
+    <Dbfs::Column @height={{dbfs}} @column-count={{this.columnCount}} />
   {{/each}}
 </div>

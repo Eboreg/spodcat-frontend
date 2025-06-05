@@ -1,4 +1,3 @@
-import { A, type NativeArray } from "@ember/array";
 import { action } from "@ember/object";
 import { service } from "@ember/service";
 import type { SafeString } from "@ember/template";
@@ -8,12 +7,6 @@ import { tracked } from "@glimmer/tracking";
 import type EpisodeModel from "podcast-frontend/models/episode";
 import type AudioService from "podcast-frontend/services/audio";
 import { timeString } from "podcast-frontend/utils";
-
-export interface Dbfs {
-    dbfs: number;
-    idx: number;
-    isPlayed: boolean;
-}
 
 export interface DbfsBarSignature {
     Args: {
@@ -25,23 +18,14 @@ export interface DbfsBarSignature {
 export default class DbfsBar extends Component<DbfsBarSignature> {
     @service declare audio: AudioService;
     @tracked showTooltip: boolean = false;
-    @tracked tooltipIdx: number = 0;
     @tracked tooltipProgress: number = 0;
 
     get columnCount() {
         return this.args.episode["dbfs-array"]?.length || 0;
     }
 
-    get columns(): NativeArray<Dbfs> {
-        return A(
-            this.args.episode["dbfs-array"]?.map((dbfs, idx) => {
-                return {
-                    dbfs: dbfs,
-                    idx: idx,
-                    isPlayed: this.audio.currentProgress >= idx + 1,
-                };
-            }),
-        );
+    get overlayStyle(): SafeString {
+        return htmlSafe(`width: ${100 - this.audio.currentProgress}%`);
     }
 
     get tooltipContent() {

@@ -11,7 +11,6 @@ export interface PodcastEpisodeSignature {
     Args: {
         podcast: PodcastModel;
         episode: EpisodeModel;
-        start?: number;
     };
     Blocks: {
         default: [];
@@ -27,6 +26,6 @@ export default class PodcastEpisode extends Component<PodcastEpisodeSignature> {
     }
 
     @action onSongClick(song: EpisodeSongModel) {
-        this.audio.playEpisode(this.args.episode, song["start-time"], true);
+        this.audio.playEpisode(this.args.episode, song["start-time"]);
     }
 }

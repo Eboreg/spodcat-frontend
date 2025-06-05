@@ -5,5 +5,13 @@ import type EpisodeModel from "podcast-frontend/models/episode";
 export default class PodcastEpisodeIndexController extends Controller<EpisodeModel> {
     queryParams = ["start"];
     @tracked declare model: EpisodeModel;
-    @tracked start: string | null = null;
+    @tracked start: string | null = null; // seconds
+
+    get startAsFloat(): number | undefined {
+        if (this.start) {
+            const start = parseFloat(this.start);
+            if (!isNaN(start)) return start;
+        }
+        return;
+    }
 }

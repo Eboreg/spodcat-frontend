@@ -4,25 +4,23 @@
     flex-grow: 1;
     position: relative;
 
+    .dbfs-overlay {
+        position: absolute;
+        right: 0;
+        height: 100%;
+        opacity: 0.7;
+        background-color: var(--mm-background-color-opaque);
+        width: 100%;
+    }
+
     .dbfs-column {
         flex-grow: 1;
         flex-shrink: 1;
 
         div {
+            background-color: var(--mm-text-color);
             height: 100%;
             width: max(50%, 3px);
-
-            &.buffered {
-                background-color: rgb(100, 100, 100);
-            }
-
-            &.played {
-                background-color: var(--mm-text-color);
-            }
-
-            &.unbuffered {
-                background-color: rgb(70, 70, 70);
-            }
         }
     }
 

@@ -8,7 +8,6 @@ export interface PodcastContentEpisodeCardSignature {
     Args: {
         episode: EpisodeModel;
         expand?: boolean;
-        start?: string | null;
     };
     Element: HTMLDivElement;
     Blocks: {
@@ -27,15 +26,7 @@ export default class PodcastContentEpisodeCard extends Component<PodcastContentE
         return this.audio.episode == this.args.episode && this.audio.isPlaying;
     }
 
-    get start(): number | undefined {
-        if (this.args.start) {
-            const start = parseFloat(this.args.start);
-            if (!isNaN(start)) return start;
-        }
-        return;
-    }
-
     @action onPlayClick() {
-        this.audio.playEpisode(this.args.episode, this.start);
+        this.audio.playEpisode(this.args.episode);
     }
 }

@@ -3,7 +3,7 @@
   <span class="label">Till {{@podcast.name}}</span>
 </Button>
 {{yield}}
-<Podcast::Content::EpisodeCard @episode={{@episode}} @start={{@start}} @expand={{true}}>
+<Podcast::Content::EpisodeCard @episode={{@episode}} @expand={{true}}>
   <div class="gap-single px-single column pb-single">
     <Podcast::Content::Description @content={{@episode}} />
     {{#if this.hasSongs}}
