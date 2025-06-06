@@ -30,13 +30,15 @@
     {{#if this.hasCurrentTime}}
       <div class="row gap-half align-center">
         <Input @type="checkbox" @checked={{this.attachTimeCode}} id="attach-time-code" class="m-0" />
-        <label for="attach-time-code" class="text-small">Starta vid</label>
-        <Input
-          @value={{this.currentTimeString}}
-          {{on "change" this.onCurrentTimeStringChange}}
-          class="current-time-string"
-          disabled={{not this.attachTimeCode}}
-        />
+        <div class="row gap-quarter align-baseline">
+          <label for="attach-time-code" class="text-small">Starta vid</label>
+          <Input
+            @value={{this.currentTimeString}}
+            {{on "change" this.onCurrentTimeStringChange}}
+            class="current-time-string"
+            disabled={{not this.attachTimeCode}}
+          />
+        </div>
       </div>
     {{/if}}
   </div>
