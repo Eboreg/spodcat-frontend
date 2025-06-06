@@ -38,6 +38,7 @@ $min-sizes: (
 );
 
 $lengths: (
+    "0": 0,
     "quarter": 0.25rem,
     "half": 0.5rem,
     "single": 1rem,
@@ -69,6 +70,15 @@ $dimens: (
     ),
 );
 
+$z-index: (
+    "flash-overlay": 10,
+    "attribution": 20,
+    "footer": 30,
+    "modal-backdrop": 40,
+    "modal-container": 50,
+    "toast": 60,
+);
+
 $font-size-body-mobile: 14px;
 $font-size-body-desktop: 16px;
 $font-size-article: 14px;
@@ -83,3 +93,4 @@ $player-bar-height: 60px;
 $text-color-dark: rgb(180, 180, 180);
 $text-color: rgb(238, 238, 238);
 $toast-width: min(800px, calc(100dvw - 20px));
+$modal-width: min(800px, calc(100dvw - 20px));

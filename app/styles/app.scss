@@ -1,4 +1,5 @@
 @use "sass:map";
+
 @use "variables" as *;
 @use "material-symbols";
 @use "generics";
@@ -14,10 +15,12 @@
 @use "color";
 @use "comment";
 @use "player-bar";
+@use "modal";
 
 :root {
     --mm-border-radius: #{$border-radius};
     --mm-content-width: #{$content-width};
+    --mm-modal-width: #{$modal-width};
     --mm-player-bar-height: #{$player-bar-height};
     --mm-toast-width: #{$toast-width};
     --mm-font-size-body: #{$font-size-body-mobile};
@@ -80,7 +83,7 @@ footer {
     flex-shrink: 0;
     position: sticky;
     width: 100%;
-    z-index: 30;
+    z-index: map.get($z-index, "footer");
 }
 
 img {
@@ -111,7 +114,7 @@ h3 {
 /** CLASSES ******************************************************************/
 
 .attribution {
-    z-index: 20;
+    z-index: map.get($z-index, "attribution");
 }
 
 .dotted-border {
@@ -191,7 +194,7 @@ h3 {
     position: fixed;
     top: 0;
     width: 100%;
-    z-index: 10;
+    z-index: map.get($z-index, "flash-overlay");
 
     @media (prefers-reduced-motion) {
         display: none;
@@ -269,9 +272,31 @@ h3 {
         font-size: 30px;
         height: 30px;
 
+        &.share-icon {
+            font-size: 24px;
+            height: 24px;
+            padding-left: 3px;
+            padding-right: 3px;
+        }
+
         @include responsive.min(sm) {
             font-size: 40px;
             height: 40px;
+
+            &.share-icon {
+                font-size: 30px;
+                height: 30px;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+
+            &.download-icon,
+            &.songlist-icon {
+                font-size: 35px;
+                height: 35px;
+                padding-left: 2.5px;
+                padding-right: 2.5px;
+            }
         }
     }
 

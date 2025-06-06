@@ -1,0 +1,9 @@
+<div class="modal-backdrop" {{on "click" this.onContainerClick}}></div>
+<div class="modal-container" {{on "click" this.onContainerClick}}>
+  <div class="modal dotted-border" ...attributes>
+    <div class="material-symbols close-icon" {{on "click" this.onCloseClick}}>close</div>
+    <div class="modal-content">
+      {{yield}}
+    </div>
+  </div>
+</div>
