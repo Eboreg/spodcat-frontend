@@ -7,9 +7,9 @@
     <LinkTo
       @route={{@episode.route}}
       @models={{@episode.routeModels}}
-      class="row gap-single align-center episode ellipsis oneliner"
+      class="row gap-single align-center episode ellipsis nowrap"
     >
-      <Podcast::Content::EpisodeLeadingIcon @episode={{@episode}} class="ml-half" />
+      <Podcast::Content::EpisodeLeadingIcon @episode={{@episode}} class="ml-half" @fallback-to-cover={{true}} />
       <div class="ellipsis">
         <div class="font-weight-bold ellipsis">{{@episode.name}}</div>
         <div class="text-xs ellipsis">{{@episode.podcast.name}}</div>

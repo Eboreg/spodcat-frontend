@@ -1,4 +1,6 @@
-import templateOnly from "@ember/component/template-only";
+import { action } from "@ember/object";
+import Component from "@glimmer/component";
+import { tracked } from "@glimmer/tracking";
 import type PostModel from "podcast-frontend/models/post";
 
 export interface PodcastContentPostCardSignature {
@@ -11,4 +13,14 @@ export interface PodcastContentPostCardSignature {
     Element: HTMLElement;
 }
 
-export default templateOnly<PodcastContentPostCardSignature>();
+export default class PodcastContentPostCard extends Component<PodcastContentPostCardSignature> {
+    @tracked showShareModal: boolean = false;
+
+    @action closeShareModal() {
+        this.showShareModal = false;
+    }
+
+    @action openShareModal() {
+        this.showShareModal = true;
+    }
+}

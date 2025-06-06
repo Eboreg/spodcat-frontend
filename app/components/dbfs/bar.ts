@@ -6,7 +6,7 @@ import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import type EpisodeModel from "podcast-frontend/models/episode";
 import type AudioService from "podcast-frontend/services/audio";
-import { timeString } from "podcast-frontend/utils";
+import { timeToString } from "podcast-frontend/utils";
 
 export interface DbfsBarSignature {
     Args: {
@@ -29,7 +29,7 @@ export default class DbfsBar extends Component<DbfsBarSignature> {
     }
 
     get tooltipContent() {
-        return timeString(this.args.episode["duration-seconds"] * this.tooltipProgress);
+        return timeToString(this.args.episode["duration-seconds"] * this.tooltipProgress);
     }
 
     get tooltipStyle(): SafeString {

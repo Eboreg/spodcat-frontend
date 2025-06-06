@@ -4,7 +4,7 @@ import { service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
 import type FastBoot from "ember-cli-fastboot/services/fastboot";
 import type EpisodeModel from "podcast-frontend/models/episode";
-import { coerceBetween, timeString } from "podcast-frontend/utils";
+import { coerceBetween, timeToString } from "podcast-frontend/utils";
 import type MessageService from "./message";
 
 export default class AudioService extends Service {
@@ -61,11 +61,11 @@ export default class AudioService extends Service {
     }
 
     get currentTimeString() {
-        return timeString(this.currentTime);
+        return timeToString(this.currentTime);
     }
 
     get durationString() {
-        return timeString(this.duration);
+        return timeToString(this.duration);
     }
 
     get mediaSessionAvailable() {

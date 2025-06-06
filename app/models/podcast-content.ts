@@ -20,6 +20,10 @@ export default class PodcastContentModel extends Model {
         return this["description-html"] == undefined;
     }
 
+    get frontendUrl() {
+        return "";
+    }
+
     get isEpisode(): boolean {
         return false;
     }

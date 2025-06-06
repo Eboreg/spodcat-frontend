@@ -1,0 +1,43 @@
+<Modal @on-backdrop-click={{@on-close}} @on-close-click={{@on-close}} class="content-share-modal">
+  <div class="column gap-single">
+    <h3 class="m-0">Dela</h3>
+    <div class="row gap-half">
+      <Input @value={{this.contentUrl}} readonly class="fill" {{on "click" this.onContentUrlClick}} />
+      <span
+        class="material-symbols icon cursor-pointer"
+        {{on "click" this.onCopyClick}}
+        title="Kopiera länk"
+      >content_copy</span>
+    </div>
+    <div class="row gap-half wrap">
+      <Button @href={{this.facebookUrl}} @new-tab={{true}} class="small border-boring">
+        <FaIcon @icon="facebook" @prefix="fab" class="icon share-icon" />
+        <span class="label nowrap">The Facebook</span>
+      </Button>
+      <Button @href={{this.eggsUrl}} @new-tab={{true}} class="small border-boring">
+        <FaIcon @icon="square-x-twitter" @prefix="fab" class="icon share-icon" />
+        <span class="label nowrap">Eggs</span>
+      </Button>
+      <Button @href={{this.telegramUrl}} @new-tab={{true}} class="small border-boring">
+        <FaIcon @icon="telegram" @prefix="fab" class="icon share-icon" />
+        <span class="label nowrap">Telegram</span>
+      </Button>
+      <Button @href={{this.whatsappUrl}} @new-tab={{true}} class="small border-boring">
+        <FaIcon @icon="whatsapp" @prefix="fab" class="icon share-icon" />
+        <span class="label nowrap">Whatsapp</span>
+      </Button>
+    </div>
+    {{#if this.hasCurrentTime}}
+      <div class="row gap-half align-center">
+        <Input @type="checkbox" @checked={{this.attachTimeCode}} id="attach-time-code" class="m-0" />
+        <label for="attach-time-code" class="text-small">Starta vid</label>
+        <Input
+          @value={{this.currentTimeString}}
+          {{on "change" this.onCurrentTimeStringChange}}
+          class="current-time-string"
+          disabled={{not this.attachTimeCode}}
+        />
+      </div>
+    {{/if}}
+  </div>
+</Modal>

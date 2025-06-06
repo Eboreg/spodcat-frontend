@@ -1,8 +1,13 @@
 import ENV from "podcast-frontend/config/environment";
 import { Type } from "@warp-drive/core-types/symbols";
 import PodcastContentModel from "./podcast-content";
+import { makeAbsoluteUrl } from "podcast-frontend/utils";
 
 export default class PostModel extends PodcastContentModel {
+    get frontendUrl() {
+        return makeAbsoluteUrl(`${this.podcast.id}/post/${this.slug}`);
+    }
+
     get isPost() {
         return true;
     }

@@ -4,12 +4,18 @@ import type EpisodeModel from "podcast-frontend/models/episode";
 export interface PodcastContentEpisodeLeadingIconSignature {
     Args: {
         episode: EpisodeModel;
+        "fallback-to-cover"?: boolean;
     };
 }
 
 export default class PodcastContentEpisodeLeadingIcon extends Component<PodcastContentEpisodeLeadingIconSignature> {
     get classes() {
         return `podcast-content-leading-icon theme-${this.args.episode.seasonTheme}`;
+    }
+
+    get coverThumbnail() {
+        if (this.args["fallback-to-cover"]) return this.args.episode.podcast["cover-thumbnail"];
+        return;
     }
 
     get numberClass() {

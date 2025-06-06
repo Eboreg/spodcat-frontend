@@ -1,49 +1,52 @@
 <article class="podcast-content-card episode" ...attributes>
   <div class="podcast-content-card-contents">
     <div class="row align-center gap-half">
-      <LinkTo
-        @route={{@episode.route}}
-        @models={{@episode.routeModels}}
-        @disabled={{@expand}}
-        class="row align-center gap-single fill p-single"
-      >
-        <Podcast::Content::EpisodeLeadingIcon @episode={{@episode}} />
-        <div class="fill column gap-quarter">
-          <div class="podcast-content-name">{{@episode.name}}</div>
-          <div class="row gap-half">
-            {{#if @episode.season}}
-              <div class="badge theme-{{@episode.seasonTheme}}">Säsong {{@episode.season}}</div>
-            {{/if}}
-            <div class="badge theme-secondary">{{@episode.publishedString}}</div>
-            <div class="badge theme-tertiary d-none d-sm-block">{{@episode.durationString}}</div>
-          </div>
+      {{#if @expand}}
+        <div class="row align-center gap-single fill p-single">
+          <Podcast::Content::EpisodeCard::Head @episode={{@episode}} />
         </div>
-      </LinkTo>
+      {{else}}
+        <LinkTo
+          @route={{@episode.route}}
+          @models={{@episode.routeModels}}
+          class="row align-center gap-single fill p-single"
+        >
+          <Podcast::Content::EpisodeCard::Head @episode={{@episode}} />
+        </LinkTo>
+      {{/if}}
 
       <div class="row align-center gap-half px-single">
+        {{#if @expand}}
+          <span
+            class="material-symbols icon text-secondary hover-light py-single share-icon"
+            role="button"
+            title="Dela"
+            {{on "click" this.openShareModal}}
+          >share</span>
+        {{/if}}
         {{#if (and @episode.has-songs (not @expand))}}
           <LinkTo
             @route={{@episode.route}}
             @models={{@episode.routeModels}}
-            class="material-symbols icon text-secondary hover-light d-none d-sm-block py-single"
+            class="material-symbols icon text-secondary hover-light d-none d-sm-block py-single songlist-icon"
             title="Har låtlista"
           >queue_music</LinkTo>
         {{/if}}
         <a href={{@episode.audio-url}} title="Ladda ned" class="py-single">
-          <span class="material-symbols icon text-primary hover-light">download</span>
+          <span class="material-symbols icon text-primary hover-light download-icon">download</span>
         </a>
         {{#if this.isLoadingAudio}}
           <ProgressCircle class="tertiary py-single" />
         {{else if this.isPlaying}}
           <span
-            class="material-symbols icon text-tertiary hover-light py-single"
+            class="material-symbols icon text-tertiary hover-light py-single pause-icon"
             role="button"
             title="Pausa"
             {{on "click" this.audio.pause}}
           >pause</span>
         {{else}}
           <span
-            class="material-symbols icon text-tertiary hover-light py-single"
+            class="material-symbols icon text-tertiary hover-light py-single play-icon"
             role="button"
             title="Spela"
             {{on "click" this.onPlayClick}}
@@ -55,3 +58,11 @@
     {{yield}}
   </div>
 </article>
+
+{{#if this.showShareModal}}
+  <Podcast::Content::ShareModal
+    @on-close={{this.closeShareModal}}
+    @current-time={{this.currentTimeSnapshot}}
+    @url={{@episode.frontendUrl}}
+  />
+{{/if}}

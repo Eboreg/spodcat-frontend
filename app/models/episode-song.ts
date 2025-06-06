@@ -3,7 +3,7 @@ import { Type } from "@warp-drive/core-types/symbols";
 import Model from "@ember-data/model";
 import type EpisodeModel from "./episode";
 import type ArtistModel from "./artist";
-import { timeString } from "podcast-frontend/utils";
+import { timeToString } from "podcast-frontend/utils";
 
 export default class EpisodeSongModel extends Model {
     @attr declare comment?: string;
@@ -31,7 +31,7 @@ export default class EpisodeSongModel extends Model {
     }
 
     get timestampString() {
-        return timeString(this["start-time"]);
+        return timeToString(this["start-time"]);
     }
 
     [Type] = "episode-song" as const;

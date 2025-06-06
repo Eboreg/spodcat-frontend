@@ -1,7 +1,7 @@
 import ENV from "podcast-frontend/config/environment";
 import { attr, hasMany, type HasMany } from "@ember-data/model";
 import { Type } from "@warp-drive/core-types/symbols";
-import { timeString } from "podcast-frontend/utils";
+import { makeAbsoluteUrl, timeToString } from "podcast-frontend/utils";
 import PodcastContentModel from "./podcast-content";
 import type EpisodeSongModel from "./episode-song";
 import type { Image, Theme } from "global";
@@ -27,7 +27,11 @@ export default class EpisodeModel extends PodcastContentModel {
     declare songs: HasMany<EpisodeSongModel>;
 
     get durationString() {
-        return timeString(this["duration-seconds"]);
+        return timeToString(this["duration-seconds"]);
+    }
+
+    get frontendUrl() {
+        return makeAbsoluteUrl(`${this.podcast.id}/episode/${this.slug}`);
     }
 
     get imageData(): Image | undefined {
