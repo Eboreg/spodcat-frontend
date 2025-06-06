@@ -33,7 +33,26 @@ export function ping(...urlParts: string[]) {
     navigator.sendBeacon(urljoin(ENV.APP.BACKEND_HOST, ENV.APP.API_URL_NAMESPACE, ...urlParts, "ping"));
 }
 
-export function timeString(time: number): string {
+export function timeFromString(time: string): number | null {
+    if (!time.match(/^(?:\d{1,2}:)?(?:\d{1,2}:)?\d{1,2}$/)) return null;
+
+    const parts = time.split(":");
+    let seconds = 0;
+
+    parts.forEach((part, idx) => {
+        const partInt = parseInt(part);
+
+        if (!isNaN(partInt)) {
+            if (parts.length - idx == 3) seconds += partInt * 60 * 60;
+            else if (parts.length - idx == 2) seconds += partInt * 60;
+            else if (parts.length - idx == 1) seconds += partInt;
+        }
+    });
+
+    return seconds;
+}
+
+export function timeToString(time: number): string {
     const seconds = Math.floor(time % 60);
     const minutes = Math.floor((time / 60) % 60);
     const hours = Math.floor(time / 60 / 60);
