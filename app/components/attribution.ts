@@ -1,4 +1,5 @@
 import { action } from "@ember/object";
+import type { Registry } from "@ember/service";
 import { service } from "@ember/service";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
@@ -10,6 +11,8 @@ export interface AttributionSignature {
 
 export default class Attribution extends Component<AttributionSignature> {
     @service declare message: MessageService;
+    @service declare intl: Registry["intl"];
+
     @tracked declare audioElement: HTMLAudioElement;
     @tracked showFlash: boolean = false;
 
@@ -20,9 +23,7 @@ export default class Attribution extends Component<AttributionSignature> {
     @action onCookiesClick() {
         this.message.addToast({
             level: "info",
-            text:
-                "Vi ställer inga irriterande frågor om cookies eftersom vi helt enkelt inte lagrar några. " +
-                "Det går nämligen ofta utmärkt att låta bli.",
+            text: this.intl.t("cookies.answer"),
             timeout: 10000,
             icon: "cookie",
         });

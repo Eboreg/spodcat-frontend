@@ -1,9 +1,9 @@
 {{#if this.hasComments}}
   <div>
-    <h3>Kommentarer</h3>
+    <h3>{{t "comment.comments"}}</h3>
     {{#each this.comments as |comment|}}
       <div class="comment">
-        <p class="text-xs">{{comment.name}} sade {{comment.createdString}}:</p>
+        <p class="text-xs">{{t "comment.x-said-on-date" x=comment.name date=comment.createdString}}:</p>
         <div class="comment-text">{{html-safe comment.text-html}}</div>
       </div>
     {{/each}}
@@ -12,11 +12,11 @@
 
 {{#if this.showCommentForm}}
   <div>
-    <h3>Lämna en kommentar</h3>
+    <h3>{{t "comment.leave-a-comment"}}</h3>
     <div class="comment-form gap-half">
       <div class="column">
         {{#if @content.podcast.require-comment-approval}}
-          <div class="text-xs">Obs: din kommentar kommer att behöva godkännas manuellt innan den blir synlig här.</div>
+          <div class="text-xs">{{t "comment.approval-required"}}</div>
         {{/if}}
         <TextInput @value={{this.comment.text}} @errors={{this.comment.errors.text}} @multiline={{true}} />
       </div>
@@ -26,7 +26,7 @@
           @value={{this.comment.name}}
           @errors={{this.comment.errors.name}}
           @max-length={{50}}
-          @label="Ditt namn"
+          @label="{{t 'comment.your-name'}}"
           @wrapper-class="name-wrapper"
         />
         <TextInput
@@ -34,14 +34,12 @@
           @type="number"
           @value={{this.comment.challenge-answer}}
           @errors={{this.comment.errors.challenge-answer}}
-          @label="Vad blir {{this.challenge.challenge-string}}? Svara med siffror."
+          @label="{{t 'comment.challenge' q=this.challenge.challenge-string}}"
           @wrapper-class="challenge-wrapper"
         />
-        <Button
-          @disabled={{this.isSubmitDisabled}}
-          @theme="secondary"
-          @on-click={{this.onSubmitComment}}
-        >Skicka</Button>
+        <Button @disabled={{this.isSubmitDisabled}} @theme="secondary" @on-click={{this.onSubmitComment}}>
+          {{t "comment.send"}}
+        </Button>
       </div>
     </div>
   </div>

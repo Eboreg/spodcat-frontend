@@ -13,6 +13,7 @@ declare const config: {
         BACKEND_HOST: string;
         FRONTEND_HOST: string;
         IS_SINGLETON: boolean; // site hosts just one podcast
+        LOCALE: string;
     };
 };
 

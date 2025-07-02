@@ -1,4 +1,5 @@
 import { action } from "@ember/object";
+import type { Registry } from "@ember/service";
 import { service } from "@ember/service";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
@@ -19,6 +20,7 @@ export interface PodcastContentShareModalSignature {
 
 export default class PodcastContentShareModal extends Component<PodcastContentShareModalSignature> {
     @service declare message: MessageService;
+    @service declare intl: Registry["intl"];
 
     @tracked attachTimeCode = false;
     @tracked currentTime = this.args["current-time"] || 0;
@@ -52,7 +54,7 @@ export default class PodcastContentShareModal extends Component<PodcastContentSh
     @action async onCopyClick() {
         try {
             await navigator.clipboard.writeText(this.contentUrl);
-            this.message.addToast({ level: "info", text: "Adressen kopierades." });
+            this.message.addToast({ level: "info", text: this.intl.t("share.link-copied") });
         } catch (error: any) {
             console.error(error);
             this.message.addToast({ level: "error", text: String(error) });

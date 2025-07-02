@@ -1,6 +1,6 @@
 {{page-title @post.pageTitle}}
 <Button @route={{@podcast.route}} @models={{@podcast.routeModels}} @theme="secondary" @material-icon="arrow_back">
-  <span class="label">Till {{@podcast.name}}</span>
+  <span class="label">{{t "go-to-x" x=@podcast.name}}</span>
 </Button>
 {{yield}}
 <Podcast::Content::PostCard @post={{@post}} @expand={{true}}>

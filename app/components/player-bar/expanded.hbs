@@ -13,33 +13,33 @@
       class="material-symbols button"
       role="button"
       {{on "click" this.onKeyboardHelpButtonClick}}
-      title="Tangentbordskommandon"
+      title="{{t 'keyboard.shortcuts'}}"
     >keyboard</span>
     {{#if this.isKeyboardHelpOpen}}
       <Popup class="gap-half p-single">
         <div class="nowrap row align-center gap-half">
-          <div class="keyboard-key"><span class="text">Mellanslag</span></div>
-          <span>Spela/pausa</span>
+          <div class="keyboard-key"><span class="text">{{t "keyboard.space"}}</span></div>
+          <span>{{t "play-pause"}}</span>
         </div>
         <div class="nowrap row align-center gap-half">
           <div class="keyboard-key"><span class="material-symbols">arrow_left</span></div>
-          <span>Bakåt 10 sekunder</span>
+          <span>{{t "rewind-10s"}}</span>
         </div>
         <div class="nowrap row align-center gap-half">
           <div class="keyboard-key"><span class="material-symbols">arrow_right</span></div>
-          <span>Framåt 30 sekunder</span>
+          <span>{{t "forward-30s"}}</span>
         </div>
         <div class="nowrap row align-center gap-half">
-          <div class="keyboard-key"><span class="text">Ctrl</span></div>
+          <div class="keyboard-key"><span class="text">{{t "keyboard.ctrl"}}</span></div>
           +
           <div class="keyboard-key"><span class="material-symbols">arrow_left</span></div>
-          <span>Bakåt 60 sekunder</span>
+          <span>{{t "rewind-60s"}}</span>
         </div>
         <div class="nowrap row align-center gap-half">
-          <div class="keyboard-key"><span class="text">Ctrl</span></div>
+          <div class="keyboard-key"><span class="text">{{t "keyboard.ctrl"}}</span></div>
           +
           <div class="keyboard-key"><span class="material-symbols">arrow_right</span></div>
-          <span>Framåt 180 sekunder</span>
+          <span>{{t "forward-180s"}}</span>
         </div>
       </Popup>
     {{/if}}

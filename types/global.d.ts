@@ -1,4 +1,5 @@
 import "@glint/environment-ember-loose";
+import type EmberIntlRegistry from "ember-intl/template-registry";
 import type EmberFontAwesomeRegistry from "@fortawesome/ember-fontawesome/template-registry";
 import type EmberTruthRegistry from "ember-truth-helpers/template-registry";
 import type DbfsBar from "podcast-frontend/components/dbfs/bar";
@@ -44,7 +45,7 @@ declare module "@glint/environment-ember-loose/registry" {
         }>
     >;
 
-    export default interface Registry extends EmberFontAwesomeRegistry, EmberTruthRegistry {
+    export default interface Registry extends EmberFontAwesomeRegistry, EmberTruthRegistry, EmberIntlRegistry {
         "Button::Content": typeof ButtonContent;
         "Dbfs::Bar": typeof DbfsBar;
         "Dbfs::Column": typeof DbfsColumn;

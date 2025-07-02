@@ -4,12 +4,12 @@
     @new-tab={{true}}
     @theme="tertiary"
     @material-icon="podcasts"
-    title="Lägg till {{@podcast.name}} i din podd-app"
+    title="{{t 'add-x-in-app' x=@podcast.name}}"
   >
-    <span class="label">Prenumerera</span>
+    <span class="label">{{t "subscribe"}}</span>
   </Button>
   <Button @href={{@podcast.rss-url}} @new-tab={{true}} @theme="primary" @material-icon="rss_feed">
-    <span class="label">RSS-flöde</span>
+    <span class="label">{{t "rss-feed"}}</span>
   </Button>
   {{#each @podcast.links as |link|}}
     <Button @href={{link.url}} @new-tab={{true}} @theme={{link.theme}}>
@@ -24,7 +24,7 @@
 
   {{#if this.showIndexLink}}
     <Button @route="home" @theme="secondary" @material-icon="home">
-      <span class="label">Alla poddar</span>
+      <span class="label">{{t "all-podcasts"}}</span>
     </Button>
   {{/if}}
 

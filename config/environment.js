@@ -20,6 +20,7 @@ module.exports = function (environment) {
             BACKEND_HOST: "http://localhost:8000",
             FRONTEND_HOST: "http://localhost:4200",
             IS_SINGLETON: false,
+            LOCALE: "en",
         },
         fastboot: {
             hostWhitelist: [/^localhost:\d+$/, "musikensmakt.huseli.us", "podd.huseli.us"],

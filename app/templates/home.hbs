@@ -3,7 +3,7 @@
   <Podcast::Index @podcast={{this.singleton}} />
 {{else}}
   <main class="content-width column gap-half podcast-list">
-    <h3 class="my-half font-weight-normal outlined-text">Välj en podd:</h3>
+    <h3 class="my-half font-weight-normal outlined-text">{{t "choose-a-podcast"}}:</h3>
     {{#each @model as |podcast|}}
       <div class="podcast-banner">
         {{#if podcast.banner}}

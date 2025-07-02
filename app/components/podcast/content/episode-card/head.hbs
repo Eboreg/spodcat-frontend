@@ -3,7 +3,7 @@
   <div class="podcast-content-name">{{@episode.name}}</div>
   <div class="row gap-half">
     {{#if @episode.season}}
-      <div class="badge theme-{{@episode.seasonTheme}}">Säsong {{@episode.season}}</div>
+      <div class="badge theme-{{@episode.seasonTheme}}">{{t "season-x" x=@episode.season}}</div>
     {{/if}}
     <div class="badge theme-secondary">{{@episode.publishedString}}</div>
     <div class="badge theme-tertiary d-none d-sm-block">{{@episode.durationString}}</div>

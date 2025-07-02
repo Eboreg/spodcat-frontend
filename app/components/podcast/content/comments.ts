@@ -1,5 +1,6 @@
 import type Store from "@ember-data/store";
 import { action } from "@ember/object";
+import type { Registry } from "@ember/service";
 import { service } from "@ember/service";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
@@ -20,6 +21,7 @@ export default class PodcastContentComments extends Component<PodcastContentComm
     @service declare fastboot: FastBoot;
     @service declare message: MessageService;
     @service declare store: Store;
+    @service declare intl: Registry["intl"];
 
     @tracked challenge?: ChallengeModel;
     @tracked comment?: CommentModel;
@@ -57,15 +59,15 @@ export default class PodcastContentComments extends Component<PodcastContentComm
     @action async onSubmitComment() {
         try {
             const toast = this.args.content.podcast["require-comment-approval"]
-                ? "Tackar! Din kommentar kommer att visas när den godkänts."
-                : "Tackar för din kommentar.";
+                ? this.intl.t("comment.thanks.approval-required")
+                : this.intl.t("comment.thanks.no-approval-required");
 
             await this.comment?.save();
             this.message.addToast({ level: "success", text: toast });
             this.resetComment();
             void this.resetChallenge();
         } catch {
-            this.message.addToast({ level: "error", text: "Någonting gick snett." });
+            this.message.addToast({ level: "error", text: this.intl.t("comment.something-wrong") });
         }
     }
 

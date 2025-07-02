@@ -1,6 +1,6 @@
 {{page-title @episode.pageTitle}}
 <Button @route={{@podcast.route}} @models={{@podcast.routeModels}} @theme="secondary" @material-icon="arrow_back">
-  <span class="label">Till {{@podcast.name}}</span>
+  <span class="label">{{t "go-to-x" x=@podcast.name}}</span>
 </Button>
 {{yield}}
 <Podcast::Content::EpisodeCard @episode={{@episode}} @expand={{true}}>
@@ -8,7 +8,7 @@
     <Podcast::Content::Description @content={{@episode}} />
     {{#if this.hasSongs}}
       <div class="text-article">
-        <h2>Låtar</h2>
+        <h2>{{t "songs"}}</h2>
         {{#each @episode.songs as |song|}}
           <div class="episode-song">
             <span {{on "click" (fn this.onSongClick song)}}>

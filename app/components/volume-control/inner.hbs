@@ -3,7 +3,7 @@
     class="material-symbols button"
     role="button"
     {{on "click" this.audio.toggleMute}}
-    title="{{if this.audio.isMuted 'Sätt på ljud' 'Stäng av ljud'}}"
+    title="{{if this.audio.isMuted (t 'volume.unmute') (t 'volume.mute')}}"
   >
     {{#if this.audio.isMuted}}
       volume_off

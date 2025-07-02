@@ -23,14 +23,14 @@
         class="material-symbols button larger"
         role="button"
         {{on "click" this.audio.pause}}
-        title="Pausa"
+        title="{{t 'pause'}}"
       >pause</span>
     {{else}}
       <span
         class="material-symbols button larger"
         role="button"
         {{on "click" this.audio.play}}
-        title="Spela"
+        title="{{t 'play'}}"
       >play_arrow</span>
     {{/if}}
 

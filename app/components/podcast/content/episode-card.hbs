@@ -20,7 +20,7 @@
           <span
             class="material-symbols icon text-secondary hover-light py-single share-icon"
             role="button"
-            title="Dela"
+            title="{{t 'share.share'}}"
             {{on "click" this.openShareModal}}
           >share</span>
         {{/if}}
@@ -29,10 +29,10 @@
             @route={{@episode.route}}
             @models={{@episode.routeModels}}
             class="material-symbols icon text-secondary hover-light d-none d-sm-block py-single songlist-icon"
-            title="Har låtlista"
+            title="{{t 'has-tracklist'}}"
           >queue_music</LinkTo>
         {{/if}}
-        <a href={{@episode.audio-url}} title="Ladda ned" class="py-single">
+        <a href={{@episode.audio-url}} title="{{t 'download'}}" class="py-single">
           <span class="material-symbols icon text-primary hover-light download-icon">download</span>
         </a>
         {{#if this.isLoadingAudio}}
@@ -41,14 +41,14 @@
           <span
             class="material-symbols icon text-tertiary hover-light py-single pause-icon"
             role="button"
-            title="Pausa"
+            title="{{t 'pause'}}"
             {{on "click" this.audio.pause}}
           >pause</span>
         {{else}}
           <span
             class="material-symbols icon text-tertiary hover-light py-single play-icon"
             role="button"
-            title="Spela"
+            title="{{t 'play'}}"
             {{on "click" this.onPlayClick}}
           >play_arrow</span>
         {{/if}}

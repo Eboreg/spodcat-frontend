@@ -1,4 +1,5 @@
 import { action } from "@ember/object";
+import type { Registry } from "@ember/service";
 import { service } from "@ember/service";
 import { htmlSafe, type SafeString } from "@ember/template";
 import Component from "@glimmer/component";
@@ -15,17 +16,9 @@ interface PlaybackRate {
 }
 
 export default class PlaybackRateControl extends Component<PlaybackRateControlSignature> {
-    playbackRates: PlaybackRate[] = [
-        { rate: 0.25, label: "0,25" },
-        { rate: 0.5, label: "0,5" },
-        { rate: 0.75, label: "0,75" },
-        { rate: 1, label: "Normal" },
-        { rate: 1.25, label: "1,25" },
-        { rate: 1.5, label: "1,5" },
-        { rate: 1.75, label: "1,75" },
-        { rate: 2, label: "2" },
-    ];
     @service declare audio: AudioService;
+    @service declare intl: Registry["intl"];
+
     @tracked popupVisible: boolean = false;
 
     get buttonClass(): SafeString {
@@ -35,6 +28,19 @@ export default class PlaybackRateControl extends Component<PlaybackRateControlSi
 
     get currentLabel() {
         return this.playbackRates.find((r) => r.rate == this.audio.playbackRate)?.label;
+    }
+
+    get playbackRates(): PlaybackRate[] {
+        return [
+            { rate: 0.25, label: "0,25" },
+            { rate: 0.5, label: "0,5" },
+            { rate: 0.75, label: "0,75" },
+            { rate: 1, label: this.intl.t("normal") },
+            { rate: 1.25, label: "1,25" },
+            { rate: 1.5, label: "1,5" },
+            { rate: 1.75, label: "1,75" },
+            { rate: 2, label: "2" },
+        ];
     }
 
     @action onOutsideClick() {
