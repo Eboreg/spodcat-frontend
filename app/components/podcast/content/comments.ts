@@ -70,7 +70,7 @@ export default class PodcastContentComments extends Component<PodcastContentComm
     }
 
     async resetChallenge() {
-        this.challenge = this.store.createRecord<ChallengeModel>("challenge", {});
+        this.challenge = this.store.createRecord<ChallengeModel>("challenge", { podcast: this.args.content.podcast });
         await this.challenge.save();
         if (this.comment) {
             this.comment["challenge-answer"] = undefined;
