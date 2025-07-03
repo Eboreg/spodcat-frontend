@@ -57,7 +57,7 @@ export default class PodcastModel extends Model {
     }
 
     get nameCssStyle(): SafeString {
-        return htmlSafe(`font-family: "${this["name-font-family"]}"`);
+        return htmlSafe(this["name-font-family"] ? `font-family: "${this["name-font-family"]}"` : "");
     }
 
     get route() {

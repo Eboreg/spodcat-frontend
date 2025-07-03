@@ -7,7 +7,7 @@ import type EpisodeModel from "podcast-frontend/models/episode";
 import type PodcastModel from "podcast-frontend/models/podcast";
 import type PodcastContentModel from "podcast-frontend/models/podcast-content";
 import type PostModel from "podcast-frontend/models/post";
-import { makeAbsoluteUrl, trimString } from "podcast-frontend/utils";
+import { makeAbsoluteUrl, trimString, urljoin } from "podcast-frontend/utils";
 import type { Size } from "global";
 
 export interface Favicon {
@@ -38,6 +38,8 @@ export default class HeadDataService extends Service {
     @tracked declare rss?: Rss;
     @tracked declare twitterDescription?: string;
     @tracked declare twitterTitle?: string;
+
+    fontFaceUrl = urljoin(ENV.APP.BACKEND_HOST, "font-faces");
 
     #updateFromPodcastBase(value: PodcastModel) {
         this.favicon = value.faviconData;
