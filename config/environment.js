@@ -23,7 +23,7 @@ module.exports = function (environment) {
             LOCALE: "en",
         },
         fastboot: {
-            hostWhitelist: [/^localhost:\d+$/, "musikensmakt.huseli.us", "podd.huseli.us"],
+            hostWhitelist: [/^localhost:\d+$/, "podd.huseli.us", "testpodd.huseli.us"],
         },
     };
 

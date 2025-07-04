@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2029,SC1091
 
 set -e
 
 SCRIPT_PATH="$(dirname "${BASH_SOURCE[0]}")"
-# shellcheck disable=SC1091
 . "${SCRIPT_PATH}/../.env"
+ssh "${SSH_USERNAME}@${SSH_HOST}" "mkdir -p \"${SSH_DIST_PATH}\""
+scp "${SCRIPT_PATH}/../deployment"/* "${SSH_USERNAME}@${SSH_HOST}:${SSH_PATH}/"
+ssh "${SSH_USERNAME}@${SSH_HOST}" "cd \"${SSH_PATH}\" && npm i fastboot-app-server"
 ember deploy production
-# shellcheck disable=SC2029
-ssh "${SSH_USERNAME}"@"${SSH_HOST}" "cd \"${SSH_PATH}\" && npm i && sudo systemctl restart podcast-frontend.service"
+ssh "${SSH_USERNAME}"@"${SSH_HOST}" "cd \"${SSH_DIST_PATH}\" && npm i && sudo systemctl restart spodcat-frontend.service"

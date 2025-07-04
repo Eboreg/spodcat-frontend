@@ -1,0 +1,9 @@
+[Unit]
+Description=Podcast frontend
+
+[Service]
+WorkingDirectory=/home/pi/spodcat-frontend
+ExecStart=/usr/bin/node fastboot-server.js
+
+[Install]
+WantedBy=multi-user.target

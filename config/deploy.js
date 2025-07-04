@@ -24,7 +24,7 @@ module.exports = function (deployTarget) {
                 {
                     username: process.env.SSH_USERNAME,
                     host: process.env.SSH_HOST,
-                    path: process.env.SSH_PATH,
+                    path: process.env.SSH_DIST_PATH,
                 },
             ],
             options: ["--del"],
