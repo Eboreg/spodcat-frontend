@@ -25,6 +25,7 @@ export default class PodcastContentComments extends Component<PodcastContentComm
 
     @tracked challenge?: ChallengeModel;
     @tracked comment?: CommentModel;
+    @tracked isSubmitting: boolean = false;
 
     get comments() {
         return this.args.content.comments.filter((c) => !c.isNew && c["is-approved"]);
@@ -36,6 +37,7 @@ export default class PodcastContentComments extends Component<PodcastContentComm
 
     get isSubmitDisabled() {
         return (
+            this.isSubmitting ||
             !this.comment?.name ||
             !this.comment.text ||
             !this.comment["challenge-answer"] ||
@@ -57,6 +59,7 @@ export default class PodcastContentComments extends Component<PodcastContentComm
     }
 
     @action async onSubmitComment() {
+        this.isSubmitting = true;
         try {
             const toast = this.args.content.podcast["require-comment-approval"]
                 ? this.intl.t("comment.thanks.approval-required")
@@ -68,6 +71,8 @@ export default class PodcastContentComments extends Component<PodcastContentComm
             void this.resetChallenge();
         } catch {
             this.message.addToast({ level: "error", text: this.intl.t("comment.something-wrong") });
+        } finally {
+            this.isSubmitting = false;
         }
     }
 
