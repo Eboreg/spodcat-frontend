@@ -5,8 +5,8 @@ import type RouterService from "@ember/routing/router-service";
 import type { Registry } from "@ember/service";
 import { service } from "@ember/service";
 import type FastBoot from "ember-cli-fastboot/services/fastboot";
-import PodcastModel from "podcast-frontend/models/podcast";
-import type MessageService from "podcast-frontend/services/message";
+import PodcastModel from "spodcat/models/podcast";
+import type MessageService from "spodcat/services/message";
 
 export default class PodcastRoute extends Route<PodcastModel> {
     @service declare router: RouterService;

@@ -1,4 +1,4 @@
-import type PostModel from "podcast-frontend/models/post";
+import type PostModel from "spodcat/models/post";
 import BasePodcastPostRoute from "./base";
 
 export default class PodcastPostDraftRoute extends BasePodcastPostRoute {

@@ -4,9 +4,9 @@ import type { SafeString } from "@ember/template";
 import { htmlSafe } from "@ember/template";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
-import type EpisodeModel from "podcast-frontend/models/episode";
-import type AudioService from "podcast-frontend/services/audio";
-import { timeToString } from "podcast-frontend/utils";
+import type EpisodeModel from "spodcat/models/episode";
+import type AudioService from "spodcat/services/audio";
+import { timeToString } from "spodcat/utils";
 
 export interface DbfsBarSignature {
     Args: {

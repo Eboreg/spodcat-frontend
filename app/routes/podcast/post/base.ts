@@ -3,11 +3,11 @@ import { action } from "@ember/object";
 import type RouterService from "@ember/routing/router-service";
 import { service } from "@ember/service";
 import type FastBoot from "ember-cli-fastboot/services/fastboot";
-import PostModel from "podcast-frontend/models/post";
-import type HeadDataService from "podcast-frontend/services/head-data";
-import { NotFoundError, ping } from "podcast-frontend/utils";
-import PreserveScrollRoute from "podcast-frontend/preserve-scroll-route";
-import type MessageService from "podcast-frontend/services/message";
+import PostModel from "spodcat/models/post";
+import type HeadDataService from "spodcat/services/head-data";
+import { NotFoundError, ping } from "spodcat/utils";
+import PreserveScrollRoute from "spodcat/preserve-scroll-route";
+import type MessageService from "spodcat/services/message";
 
 export default class BasePodcastPostRoute extends PreserveScrollRoute<PostModel> {
     @service declare fastboot: FastBoot;

@@ -1,6 +1,6 @@
 import Controller from "@ember/controller";
 import { tracked } from "@glimmer/tracking";
-import type EpisodeModel from "podcast-frontend/models/episode";
+import type EpisodeModel from "spodcat/models/episode";
 
 export default class PodcastEpisodeIndexController extends Controller<EpisodeModel> {
     queryParams = ["start"];

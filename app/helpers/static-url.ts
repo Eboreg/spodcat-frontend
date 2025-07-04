@@ -1,5 +1,5 @@
 import { helper } from "@ember/component/helper";
-import config from "podcast-frontend/config/environment";
+import config from "spodcat/config/environment";
 
 export function staticUrl(path: string): string {
     return config.rootURL.replace(/\/*$/, "") + "/" + path.replace(/^\/*/, "");

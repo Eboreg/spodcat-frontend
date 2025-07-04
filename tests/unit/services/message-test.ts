@@ -1,5 +1,5 @@
 import { module, test } from "qunit";
-import { setupTest } from "podcast-frontend/tests/helpers";
+import { setupTest } from "spodcat/tests/helpers";
 
 module("Unit | Service | message", function (hooks) {
     setupTest(hooks);

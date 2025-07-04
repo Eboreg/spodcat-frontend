@@ -1,9 +1,9 @@
-import ENV from "podcast-frontend/config/environment";
+import ENV from "spodcat/config/environment";
 import Model, { attr, hasMany, type AsyncHasMany } from "@ember-data/model";
 import { Type } from "@warp-drive/core-types/symbols";
 import type PodcastLinkModel from "./podcast-link";
 import type PodcastContentModel from "./podcast-content";
-import type { Favicon, Rss } from "podcast-frontend/services/head-data";
+import type { Favicon, Rss } from "spodcat/services/head-data";
 import { htmlSafe, type SafeString } from "@ember/template";
 import type { Size } from "global";
 

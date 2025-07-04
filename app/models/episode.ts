@@ -1,7 +1,7 @@
-import ENV from "podcast-frontend/config/environment";
+import ENV from "spodcat/config/environment";
 import { attr, hasMany, type HasMany } from "@ember-data/model";
 import { Type } from "@warp-drive/core-types/symbols";
-import { makeAbsoluteUrl, timeToString } from "podcast-frontend/utils";
+import { makeAbsoluteUrl, timeToString } from "spodcat/utils";
 import PodcastContentModel from "./podcast-content";
 import type EpisodeSongModel from "./episode-song";
 import type { Image, Theme } from "global";

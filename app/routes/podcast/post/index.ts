@@ -1,5 +1,5 @@
-import PostModel from "podcast-frontend/models/post";
-import { NotFoundError } from "podcast-frontend/utils";
+import PostModel from "spodcat/models/post";
+import { NotFoundError } from "spodcat/utils";
 import BasePodcastPostRoute from "./base";
 import { service } from "@ember/service";
 import type { Registry } from "@ember/service";

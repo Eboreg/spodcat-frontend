@@ -1,5 +1,5 @@
 import Component from "@glimmer/component";
-import type EpisodeModel from "podcast-frontend/models/episode";
+import type EpisodeModel from "spodcat/models/episode";
 
 export interface PodcastContentEpisodeLeadingIconSignature {
     Args: {

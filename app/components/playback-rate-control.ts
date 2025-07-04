@@ -4,7 +4,7 @@ import { service } from "@ember/service";
 import { htmlSafe, type SafeString } from "@ember/template";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
-import type AudioService from "podcast-frontend/services/audio";
+import type AudioService from "spodcat/services/audio";
 
 export interface PlaybackRateControlSignature {
     Element: null;

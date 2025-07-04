@@ -1,5 +1,5 @@
-import Application from "podcast-frontend/app";
-import config from "podcast-frontend/config/environment";
+import Application from "spodcat/app";
+import config from "spodcat/config/environment";
 import * as QUnit from "qunit";
 import { setApplication } from "@ember/test-helpers";
 import { setup } from "qunit-dom";

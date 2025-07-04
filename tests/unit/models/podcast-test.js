@@ -1,4 +1,4 @@
-import { setupTest } from "podcast-frontend/tests/helpers";
+import { setupTest } from "spodcat/tests/helpers";
 import { module, test } from "qunit";
 
 module("Unit | Model | podcast", function (hooks) {

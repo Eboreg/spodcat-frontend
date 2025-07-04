@@ -1,7 +1,7 @@
-import ENV from "podcast-frontend/config/environment";
+import ENV from "spodcat/config/environment";
 import Controller from "@ember/controller";
 import { tracked } from "@glimmer/tracking";
-import type PodcastModel from "podcast-frontend/models/podcast";
+import type PodcastModel from "spodcat/models/podcast";
 
 export default class HomeController extends Controller<PodcastModel[]> {
     @tracked declare model: PodcastModel[];

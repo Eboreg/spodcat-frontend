@@ -1,7 +1,7 @@
-import ENV from "podcast-frontend/config/environment";
+import ENV from "spodcat/config/environment";
 import { Type } from "@warp-drive/core-types/symbols";
 import PodcastContentModel from "./podcast-content";
-import { makeAbsoluteUrl } from "podcast-frontend/utils";
+import { makeAbsoluteUrl } from "spodcat/utils";
 
 export default class PostModel extends PodcastContentModel {
     get frontendUrl() {

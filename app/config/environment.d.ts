@@ -1,6 +1,6 @@
 /**
  * Type declarations for
- *    import config from 'podcast-frontend/config/environment'
+ *    import config from 'spodcat/config/environment'
  */
 declare const config: {
     environment: string;

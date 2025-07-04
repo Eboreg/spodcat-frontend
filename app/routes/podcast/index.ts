@@ -1,9 +1,9 @@
 import { service } from "@ember/service";
-import PodcastModel from "podcast-frontend/models/podcast";
-import type HeadDataService from "podcast-frontend/services/head-data";
-import { ping } from "podcast-frontend/utils";
+import PodcastModel from "spodcat/models/podcast";
+import type HeadDataService from "spodcat/services/head-data";
+import { ping } from "spodcat/utils";
 import type FastBoot from "ember-cli-fastboot/services/fastboot";
-import PreserveScrollRoute from "podcast-frontend/preserve-scroll-route";
+import PreserveScrollRoute from "spodcat/preserve-scroll-route";
 
 export default class PodcastIndexRoute extends PreserveScrollRoute<PodcastModel> {
     @service declare fastboot: FastBoot;

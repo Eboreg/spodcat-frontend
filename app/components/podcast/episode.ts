@@ -1,11 +1,11 @@
 import Component from "@glimmer/component";
-import type EpisodeModel from "podcast-frontend/models/episode";
-import type PodcastModel from "podcast-frontend/models/podcast";
+import type EpisodeModel from "spodcat/models/episode";
+import type PodcastModel from "spodcat/models/podcast";
 import { action } from "@ember/object";
-import type EpisodeSongModel from "podcast-frontend/models/episode-song";
+import type EpisodeSongModel from "spodcat/models/episode-song";
 import { service } from "@ember/service";
 import type FastBoot from "ember-cli-fastboot/services/fastboot";
-import type AudioService from "podcast-frontend/services/audio";
+import type AudioService from "spodcat/services/audio";
 
 export interface PodcastEpisodeSignature {
     Args: {

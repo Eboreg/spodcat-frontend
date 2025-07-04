@@ -1,7 +1,7 @@
 import { action } from "@ember/object";
 import { service } from "@ember/service";
 import Component from "@glimmer/component";
-import type AudioService from "podcast-frontend/services/audio";
+import type AudioService from "spodcat/services/audio";
 
 export interface VolumeControlInnerSignature {
     Element: HTMLDivElement;

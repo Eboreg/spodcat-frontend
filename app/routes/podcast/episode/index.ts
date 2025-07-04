@@ -1,7 +1,7 @@
-import EpisodeModel from "podcast-frontend/models/episode";
-import { NotFoundError } from "podcast-frontend/utils";
+import EpisodeModel from "spodcat/models/episode";
+import { NotFoundError } from "spodcat/utils";
 import BasePodcastEpisodeRoute from "./base";
-import type PodcastEpisodeIndexController from "podcast-frontend/controllers/podcast/episode/index";
+import type PodcastEpisodeIndexController from "spodcat/controllers/podcast/episode/index";
 import type { Registry } from "@ember/service";
 import { service } from "@ember/service";
 

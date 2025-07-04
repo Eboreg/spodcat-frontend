@@ -3,7 +3,7 @@ import type { Registry } from "@ember/service";
 import { service } from "@ember/service";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
-import type MessageService from "podcast-frontend/services/message";
+import type MessageService from "spodcat/services/message";
 
 export interface AttributionSignature {
     Element: HTMLDivElement;

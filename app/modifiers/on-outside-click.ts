@@ -1,5 +1,5 @@
 import { modifier } from "ember-modifier";
-import { elementIsChildOf } from "podcast-frontend/utils";
+import { elementIsChildOf } from "spodcat/utils";
 
 interface OnOutsideClickSignature {
     Element: HTMLElement;

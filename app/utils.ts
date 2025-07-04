@@ -1,4 +1,4 @@
-import ENV from "podcast-frontend/config/environment";
+import ENV from "spodcat/config/environment";
 
 export class NotFoundError extends Error {}
 

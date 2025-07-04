@@ -6,7 +6,7 @@ import type { Store } from "@ember-data/store/-private/store-service";
 import type { ModelSchema } from "@ember-data/store/-types/q/ds-model";
 import type { HTTPMethod } from "@warp-drive/core-types/request";
 import type FastBoot from "ember-cli-fastboot/services/fastboot";
-import ENV from "podcast-frontend/config/environment";
+import ENV from "spodcat/config/environment";
 
 export default class ApplicationAdapter extends JSONAPIAdapter {
     // @ts-ignore

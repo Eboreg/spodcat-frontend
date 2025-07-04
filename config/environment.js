@@ -2,7 +2,7 @@
 
 module.exports = function (environment) {
     const ENV = {
-        modulePrefix: "podcast-frontend",
+        modulePrefix: "spodcat",
         environment,
         rootURL: "/",
         locationType: "history",

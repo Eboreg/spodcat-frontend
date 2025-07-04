@@ -2,8 +2,8 @@ import { action } from "@ember/object";
 import { service } from "@ember/service";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
-import type EpisodeModel from "podcast-frontend/models/episode";
-import type AudioService from "podcast-frontend/services/audio";
+import type EpisodeModel from "spodcat/models/episode";
+import type AudioService from "spodcat/services/audio";
 
 export interface PlayerBarSignature {
     Args: {

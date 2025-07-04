@@ -1,7 +1,7 @@
 import { action } from "@ember/object";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
-import type PostModel from "podcast-frontend/models/post";
+import type PostModel from "spodcat/models/post";
 
 export interface PodcastContentPostCardSignature {
     Args: {

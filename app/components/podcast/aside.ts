@@ -1,8 +1,8 @@
-import ENV from "podcast-frontend/config/environment";
+import ENV from "spodcat/config/environment";
 import type Store from "@ember-data/store";
 import { service } from "@ember/service";
 import Component from "@glimmer/component";
-import type PodcastModel from "podcast-frontend/models/podcast";
+import type PodcastModel from "spodcat/models/podcast";
 
 export interface PodcastAsideSignature {
     Args: {

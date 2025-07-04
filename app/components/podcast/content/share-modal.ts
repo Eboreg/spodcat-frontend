@@ -3,8 +3,8 @@ import type { Registry } from "@ember/service";
 import { service } from "@ember/service";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
-import type MessageService from "podcast-frontend/services/message";
-import { timeFromString, timeToString } from "podcast-frontend/utils";
+import type MessageService from "spodcat/services/message";
+import { timeFromString, timeToString } from "spodcat/utils";
 
 export interface PodcastContentShareModalSignature {
     Args: {

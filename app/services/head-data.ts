@@ -1,13 +1,13 @@
-import ENV from "podcast-frontend/config/environment";
+import ENV from "spodcat/config/environment";
 import type RouterService from "@ember/routing/router-service";
 import Service from "@ember/service";
 import { service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
-import type EpisodeModel from "podcast-frontend/models/episode";
-import type PodcastModel from "podcast-frontend/models/podcast";
-import type PodcastContentModel from "podcast-frontend/models/podcast-content";
-import type PostModel from "podcast-frontend/models/post";
-import { makeAbsoluteUrl, trimString, urljoin } from "podcast-frontend/utils";
+import type EpisodeModel from "spodcat/models/episode";
+import type PodcastModel from "spodcat/models/podcast";
+import type PodcastContentModel from "spodcat/models/podcast-content";
+import type PostModel from "spodcat/models/post";
+import { makeAbsoluteUrl, trimString, urljoin } from "spodcat/utils";
 import type { Size } from "global";
 
 export interface Favicon {

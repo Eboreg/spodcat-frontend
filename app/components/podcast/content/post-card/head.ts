@@ -1,5 +1,5 @@
 import templateOnly from "@ember/component/template-only";
-import type PostModel from "podcast-frontend/models/post";
+import type PostModel from "spodcat/models/post";
 
 export interface PodcastContentPostCardHeadSignature {
     Args: {

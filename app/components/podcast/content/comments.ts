@@ -6,10 +6,10 @@ import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import type FastBoot from "ember-cli-fastboot/services/fastboot";
 import { runTask } from "ember-lifeline";
-import type ChallengeModel from "podcast-frontend/models/challenge";
-import type CommentModel from "podcast-frontend/models/comment";
-import type PodcastContentModel from "podcast-frontend/models/podcast-content";
-import type MessageService from "podcast-frontend/services/message";
+import type ChallengeModel from "spodcat/models/challenge";
+import type CommentModel from "spodcat/models/comment";
+import type PodcastContentModel from "spodcat/models/podcast-content";
+import type MessageService from "spodcat/services/message";
 
 export interface PodcastContentCommentsSignature {
     Args: {

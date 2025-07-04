@@ -1,9 +1,9 @@
 import type Store from "@ember-data/store";
 import { service } from "@ember/service";
-import PodcastModel from "podcast-frontend/models/podcast";
-import PreserveScrollRoute from "podcast-frontend/preserve-scroll-route";
-import type HeadDataService from "podcast-frontend/services/head-data";
-import ENV from "podcast-frontend/config/environment";
+import PodcastModel from "spodcat/models/podcast";
+import PreserveScrollRoute from "spodcat/preserve-scroll-route";
+import type HeadDataService from "spodcat/services/head-data";
+import ENV from "spodcat/config/environment";
 
 export default class HomeRoute extends PreserveScrollRoute<PodcastModel[]> {
     @service declare headData: HeadDataService;

@@ -1,4 +1,4 @@
-import EpisodeModel from "podcast-frontend/models/episode";
+import EpisodeModel from "spodcat/models/episode";
 import BasePodcastEpisodeRoute from "./base";
 
 export default class PodcastEpisodeDraftRoute extends BasePodcastEpisodeRoute {

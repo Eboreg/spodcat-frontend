@@ -4,10 +4,10 @@ import { htmlSafe, type SafeString } from "@ember/template";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import type { Size } from "global";
-import type { PlacedToast } from "podcast-frontend/services/message";
+import type { PlacedToast } from "spodcat/services/message";
 import { service } from "@ember/service";
-import type AudioService from "podcast-frontend/services/audio";
-import type MessageService from "podcast-frontend/services/message";
+import type AudioService from "spodcat/services/audio";
+import type MessageService from "spodcat/services/message";
 import type FastBoot from "ember-cli-fastboot/services/fastboot";
 
 export interface ToastSignature {

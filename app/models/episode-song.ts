@@ -3,7 +3,7 @@ import { Type } from "@warp-drive/core-types/symbols";
 import Model from "@ember-data/model";
 import type EpisodeModel from "./episode";
 import type ArtistModel from "./artist";
-import { timeToString } from "podcast-frontend/utils";
+import { timeToString } from "spodcat/utils";
 
 export default class EpisodeSongModel extends Model {
     @attr declare comment?: string;

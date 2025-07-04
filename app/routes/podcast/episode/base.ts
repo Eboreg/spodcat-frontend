@@ -1,11 +1,11 @@
-import PreserveScrollRoute from "podcast-frontend/preserve-scroll-route";
-import EpisodeModel from "podcast-frontend/models/episode";
+import PreserveScrollRoute from "spodcat/preserve-scroll-route";
+import EpisodeModel from "spodcat/models/episode";
 import { service } from "@ember/service";
-import type HeadDataService from "podcast-frontend/services/head-data";
-import type AudioService from "podcast-frontend/services/audio";
-import { NotFoundError, ping } from "podcast-frontend/utils";
+import type HeadDataService from "spodcat/services/head-data";
+import type AudioService from "spodcat/services/audio";
+import { NotFoundError, ping } from "spodcat/utils";
 import { action } from "@ember/object";
-import type MessageService from "podcast-frontend/services/message";
+import type MessageService from "spodcat/services/message";
 import type RouterService from "@ember/routing/router-service";
 import type Store from "@ember-data/store";
 
