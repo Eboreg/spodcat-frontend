@@ -1,4 +1,4 @@
-<main class="content-width podcast-details podcast-grid" ...attributes>
+<main class="content-width podcast-details podcast-grid {{@model.id}}">
   <header class="podcast-banner {{if @model.banner 'dotted-border has-banner-image'}}">
     {{#if @model.banner}}
       <img src="{{@model.banner}}" alt="" class="podcast-banner-image" />
@@ -18,7 +18,6 @@
       </div>
     </LinkTo>
   </header>
-  {{yield to="before"}}
   <div class="column gap-half content">
     {{outlet}}
   </div>

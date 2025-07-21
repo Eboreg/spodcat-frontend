@@ -4,7 +4,7 @@
   setting values on the 'head-data' service.
 }}
 <link rel="stylesheet" href="{{this.model.fontFaceUrl}}" />
-<meta property="og:site_name" content="podd.huseli.us" />
+<meta property="og:site_name" content={{this.model.siteName}} />
 <meta property="og:type" content={{this.model.ogType}} />
 {{#if this.model.favicon}}
   <link rel="shortcut icon" href={{this.model.favicon.url}} type={{this.model.favicon.contentType}} />

@@ -41,6 +41,14 @@ export default class PodcastContentModel extends Model {
         return this.published.toLocaleDateString();
     }
 
+    get route(): string {
+        return "";
+    }
+
+    get routeModels(): (string | PodcastModel)[] {
+        return [];
+    }
+
     get strippedDescription(): string | undefined {
         return this.description
             ?.replaceAll(/!\[.*?\]\(.*?\)\s*/g, "") // remove image tags completely

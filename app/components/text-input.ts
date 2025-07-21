@@ -1,5 +1,3 @@
-import type { Textarea } from "@ember/component";
-import type { Input } from "@ember/component";
 import Component from "@glimmer/component";
 
 export interface ValidationError {
@@ -19,7 +17,7 @@ export interface TextInputSignature {
         type?: string;
         "wrapper-class"?: string;
     };
-    Element: Input | Textarea;
+    Element: HTMLElement;
 }
 
 export default class TextInput extends Component<TextInputSignature> {

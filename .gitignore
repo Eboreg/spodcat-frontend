@@ -14,6 +14,7 @@
 /testem.log
 /yarn-error.log
 /tmp
+/notes.txt
 
 # ember-try
 /.node_modules.ember-try/

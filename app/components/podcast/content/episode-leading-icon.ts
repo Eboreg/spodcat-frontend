@@ -6,6 +6,7 @@ export interface PodcastContentEpisodeLeadingIconSignature {
         episode: EpisodeModel;
         "fallback-to-cover"?: boolean;
     };
+    Element: HTMLElement;
 }
 
 export default class PodcastContentEpisodeLeadingIcon extends Component<PodcastContentEpisodeLeadingIconSignature> {

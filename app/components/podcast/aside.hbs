@@ -11,7 +11,7 @@
   <Button @href={{@podcast.rss-url}} @new-tab={{true}} @theme="primary" @material-icon="rss_feed">
     <span class="label">{{t "rss-feed"}}</span>
   </Button>
-  {{#each @podcast.links as |link|}}
+  {{#each @podcast.links.content as |link|}}
     <Button @href={{link.url}} @new-tab={{true}} @theme={{link.theme}}>
       {{#if link.custom-icon}}
         <img src={{link.custom-icon}} alt="" class="icon" />

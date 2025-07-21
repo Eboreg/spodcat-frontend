@@ -6,6 +6,7 @@ import type PostModel from "spodcat/models/post";
 export interface PodcastContentPostCardSignature {
     Args: {
         post: PostModel;
+        expand: boolean;
     };
     Blocks: {
         default: [];

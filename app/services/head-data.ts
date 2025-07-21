@@ -40,6 +40,7 @@ export default class HeadDataService extends Service {
     @tracked declare twitterTitle?: string;
 
     fontFaceUrl = urljoin(ENV.APP.BACKEND_HOST, "font-faces");
+    siteName = ENV.APP.SITE_NAME;
 
     #updateFromPodcastBase(value: PodcastModel) {
         this.favicon = value.faviconData;

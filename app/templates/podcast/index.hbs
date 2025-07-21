@@ -1,2 +1,4 @@
 {{page-title @model.name replace=true}}
-<Podcast::Index @podcast={{@model}} />
+{{#if @model}}
+  <Podcast::Index @podcast={{@model}} />
+{{/if}}

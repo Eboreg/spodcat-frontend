@@ -17,13 +17,16 @@ module.exports = function (environment) {
             // Here you can pass flags/options to your application instance
             // when it is created
             API_URL_NAMESPACE: "",
-            BACKEND_HOST: "http://localhost:8000",
-            FRONTEND_HOST: "http://localhost:4200",
+            BACKEND_HOST: process.env.BACKEND_HOST_DEV,
+            FRONTEND_HOST: process.env.FRONTEND_HOST_DEV,
             IS_SINGLETON: false,
             LOCALE: "en",
+            SITE_NAME: process.env.SITE_NAME,
         },
         fastboot: {
-            hostWhitelist: [/^localhost:\d+$/, "podd.huseli.us", "testpodd.huseli.us"],
+            hostWhitelist: [/^localhost:\d+$/, ...(process.env.FASTBOOT_HOST_WHITELIST || "").split(",")].filter(
+                (v) => v != "",
+            ),
         },
     };
 
@@ -48,8 +51,8 @@ module.exports = function (environment) {
     }
 
     if (environment === "production") {
-        ENV.APP.BACKEND_HOST = "https://backend.podd.huseli.us";
-        ENV.APP.FRONTEND_HOST = "https://podd.huseli.us";
+        ENV.APP.BACKEND_HOST = process.env.BACKEND_HOST_PROD;
+        ENV.APP.FRONTEND_HOST = process.env.FRONTEND_HOST_PROD;
     }
 
     return ENV;

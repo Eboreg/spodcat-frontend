@@ -79,13 +79,15 @@ export default class AudioService extends Service {
 
     /** <audio> event listeners **********************************************/
 
-    @action onAudioElementInsert(element: HTMLAudioElement) {
-        this.audioElement = element;
-        this.playbackRate = element.playbackRate;
-        if (!isNaN(element.duration)) this.duration = element.duration;
-        this.currentTime = element.currentTime;
-        this.onVolumeChange();
-        if (this.episode) this.setSrc(this.episode["audio-url"]);
+    @action onAudioElementInsert(element: HTMLElement) {
+        if (element instanceof HTMLAudioElement) {
+            this.audioElement = element;
+            this.playbackRate = element.playbackRate;
+            if (!isNaN(element.duration)) this.duration = element.duration;
+            this.currentTime = element.currentTime;
+            this.onVolumeChange();
+            if (this.episode) this.setSrc(this.episode["audio-url"]);
+        }
     }
 
     @action onDurationChange() {

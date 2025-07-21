@@ -14,6 +14,7 @@ declare const config: {
         FRONTEND_HOST: string;
         IS_SINGLETON: boolean; // site hosts just one podcast
         LOCALE: string;
+        SITE_NAME: string;
     };
 };
 

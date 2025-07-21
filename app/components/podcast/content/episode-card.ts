@@ -10,7 +10,7 @@ export interface PodcastContentEpisodeCardSignature {
         episode: EpisodeModel;
         expand?: boolean;
     };
-    Element: HTMLDivElement;
+    Element: HTMLElement;
     Blocks: {
         default: [];
     };

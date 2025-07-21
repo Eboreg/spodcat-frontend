@@ -24,8 +24,6 @@ interface TransitionStyle {
     opacity: number;
 }
 
-type TransitionFunction = (style: TransitionStyle) => void;
-
 export default class Toast extends Component<ToastSignature> {
     @service declare audio: AudioService;
     @service declare message: MessageService;
@@ -47,30 +45,16 @@ export default class Toast extends Component<ToastSignature> {
             () => {
                 this.show = true;
             },
-            10,
+            50,
         );
     }
 
     get classes(): SafeString {
-        switch (this.args.toast.message.level) {
-            case "error":
-                return htmlSafe("toast theme-primary");
-            case "info":
-                return htmlSafe("toast theme-secondary");
-            case "success":
-                return htmlSafe("toast theme-tertiary");
-        }
+        return htmlSafe(`toast theme-${this.args.toast.message.level}`);
     }
 
     get countdownClass() {
-        switch (this.args.toast.message.level) {
-            case "error":
-                return "bg-primary-dark";
-            case "info":
-                return "bg-secondary-dark";
-            case "success":
-                return "bg-tertiary-dark";
-        }
+        return `bg-${this.args.toast.message.level}-dark`;
     }
 
     get icon() {
@@ -82,50 +66,37 @@ export default class Toast extends Component<ToastSignature> {
 
     get style(): SafeString {
         const dy = this.args.toast.bottomOffset + (this.audio.episode ? 75 : 10);
-        const style: TransitionStyle = {
+        const styleBase: TransitionStyle = {
             bottom: `${dy}px`,
             left: "calc(50% - calc(var(--mm-toast-width) / 2))",
             scale: 1,
             opacity: this.size.height > 0 ? 1 : 0,
         };
-
-        if (!this.show) this.getRandomTransitionFunction()(style);
+        const styleModifier = this.show ? {} : this.getRandomTransition();
+        const style = { ...styleBase, ...styleModifier };
 
         return htmlSafe(
             `bottom: ${style.bottom}; left: ${style.left}; scale: ${style.scale}; opacity: ${style.opacity}`,
         );
     }
 
-    getRandomTransitionFunction(): TransitionFunction {
-        const functions: TransitionFunction[] = [
-            (style) => {
-                // from top
-                style.bottom = "calc(100% + var(--mm-length-half))";
-            },
-            (style) => {
-                // from right
-                style.left = "calc(100% + var(--mm-length-half))";
-            },
-            (style) => {
-                // from bottom
-                style.bottom = `-${this.size.height + 10}px`;
-            },
-            (style) => {
-                // from left
-                style.left = `-${this.size.width + 10}px`;
-            },
-            (style) => {
-                // from 0x size
-                style.scale = 0;
-            },
-            (style) => {
-                // from 100x size
-                style.scale = 100;
-                style.opacity = 0;
-            },
+    getRandomTransition(): Partial<TransitionStyle> {
+        const styles: Partial<TransitionStyle>[] = [
+            // from top
+            { bottom: "calc(100% + var(--mm-length-half))" },
+            // from right
+            { left: "calc(100% + var(--mm-length-half))" },
+            // from bottom
+            { bottom: `-${this.size.height + 10}px` },
+            // from left
+            { left: `-${this.size.width + 10}px` },
+            // from 0x size
+            { scale: 0 },
+            // from 100x size
+            { scale: 100, opacity: 0 },
         ];
 
-        return functions[Math.floor(Math.random() * functions.length)]!;
+        return styles[Math.floor(Math.random() * styles.length)]!;
     }
 
     @action onCloseClick() {
