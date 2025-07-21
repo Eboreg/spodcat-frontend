@@ -1,3 +1,7 @@
+@use "sass:map";
+@use "color";
+@use "variables" as *;
+
 .dbfs {
     align-items: center;
     display: flex;
@@ -9,7 +13,7 @@
         right: 0;
         height: 100%;
         opacity: 0.7;
-        background-color: var(--mm-background-color-opaque);
+        background-color: $background-color-opaque;
         width: 100%;
     }
 
@@ -18,7 +22,7 @@
         flex-shrink: 1;
 
         div {
-            background-color: var(--mm-text-color);
+            background-color: $text-color;
             height: 100%;
             width: max(50%, 3px);
         }
@@ -29,15 +33,15 @@
         position: absolute;
 
         .tooltip-box {
-            background: var(--mm-background-color);
-            border: 2px solid var(--mm-primary);
-            padding: var(--mm-length-quarter);
+            background: $background-color;
+            border: 2px solid color.get-color("primary");
+            padding: map.get($lengths, "quarter");
             position: absolute;
             top: -36px;
         }
 
         .tooltip-line {
-            border-left: 2px dashed var(--mm-primary);
+            border-left: 2px dashed color.get-color("primary");
             height: 100%;
         }
     }

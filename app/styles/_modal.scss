@@ -3,7 +3,7 @@
 @use "variables" as *;
 
 .modal-backdrop {
-    background-color: var(--mm-background-color-opaque);
+    background-color: $background-color-opaque;
     height: 100%;
     left: 0;
     opacity: 0.4;
@@ -27,13 +27,13 @@
 }
 
 .modal {
-    background-color: var(--mm-background-color-opaque);
+    background-color: $background-color-opaque;
     box-shadow: 0 0 10px black;
-    max-width: var(--mm-modal-width);
+    max-width: $modal-width;
     position: relative;
 
     .close-icon {
-        color: var(--mm-text-color-dark);
+        color: $text-color-dark;
         cursor: pointer;
         padding: 10px;
         position: absolute;
@@ -58,12 +58,12 @@
     min-width: min(90%, 400px);
 
     .share-icon {
-        color: var(--mm-text-color-dark);
+        color: $text-color-dark;
     }
 
     .current-time-string {
         background-color: inherit;
-        border-color: var(--mm-text-color-dark);
+        border-color: $text-color-dark;
         border-width: 0 0 1px 0;
         color: inherit;
         width: 70px;

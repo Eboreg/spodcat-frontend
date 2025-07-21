@@ -1,3 +1,5 @@
+@use "variables" as *;
+
 .align-baseline {
     align-items: baseline;
 }
@@ -11,7 +13,7 @@
 }
 
 .badge {
-    border-radius: var(--mm-border-radius);
+    border-radius: $border-radius;
     border-style: outset;
     border-width: 2px;
     font-size: var(--mm-font-size-xs);
@@ -25,7 +27,7 @@
 }
 
 .content-width {
-    width: var(--mm-content-width);
+    width: $content-width;
 }
 
 .cursor-default {

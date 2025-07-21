@@ -17,22 +17,21 @@
 @use "modal";
 
 :root {
-    --mm-border-radius: #{$border-radius};
-    --mm-content-width: #{$content-width};
-    --mm-modal-width: #{$modal-width};
-    --mm-player-bar-height: #{$player-bar-height};
     --mm-toast-width: #{$toast-width};
+    --mm-font-size-article: #{$font-size-article-mobile};
     --mm-font-size-body: #{$font-size-body-mobile};
-    --mm-font-size-article: #{$font-size-article};
-    --mm-font-size-small: #{$font-size-small};
-    --mm-font-size-xs: #{$font-size-xs};
+    --mm-font-size-small: #{$font-size-small-mobile};
+    --mm-font-size-xs: #{$font-size-xs-mobile};
 
     @each $lname, $length in $lengths {
         --mm-length-#{$lname}: #{$length};
     }
 
     @include responsive.min(sm) {
+        --mm-font-size-article: #{$font-size-article-desktop};
         --mm-font-size-body: #{$font-size-body-desktop};
+        --mm-font-size-small: #{$font-size-small-desktop};
+        --mm-font-size-xs: #{$font-size-xs-desktop};
     }
 }
 
@@ -50,15 +49,15 @@ a {
 aside {
     @include responsive.min(md) {
         position: sticky;
-        top: var(--mm-length-half);
+        top: map.get($lengths, "half");
     }
 }
 
 body {
     align-items: center;
     background-attachment: fixed !important;
-    background: radial-gradient(circle at 100%, #33d, #333 60%, #f33 80%, #000 90%);
-    color: var(--mm-text-color);
+    background: $body-background;
+    color: $text-color;
     display: flex;
     flex-direction: column;
     font-family: Arial, FreeSans, "Liberation Sans", sans-serif;
@@ -90,17 +89,17 @@ img {
 }
 
 input[type="range"] {
-    accent-color: var(--mm-primary);
+    accent-color: color.get-color("primary");
 }
 
 main {
     flex: 1 1 auto;
-    padding: var(--mm-length-half) 0;
+    padding: map.get($lengths, "half") 0;
 }
 
 h2,
 h3 {
-    margin-bottom: var(--mm-length-half);
+    margin-bottom: map.get($lengths, "half");
     margin-top: 0;
 }
 
@@ -117,14 +116,14 @@ h3 {
 }
 
 .dotted-border {
-    border-color: var(--mm-primary);
-    border-bottom-color: var(--mm-primary-dark);
-    border-right-color: var(--mm-primary-dark);
+    border-color: color.get-color("primary");
+    border-bottom-color: color.get-color("primary", "dark");
+    border-right-color: color.get-color("primary", "dark");
     border-style: dotted;
-    border-width: var(--mm-length-quarter);
+    border-width: map.get($lengths, "quarter");
 
     @include responsive.min(sm) {
-        border-width: var(--mm-length-half);
+        border-width: map.get($lengths, "half");
     }
 }
 
@@ -138,7 +137,7 @@ h3 {
 
 .episode-song {
     line-height: 1.5;
-    margin: var(--mm-length-half) 0;
+    margin: map.get($lengths, "half") 0;
 
     & > * {
         cursor: pointer;
@@ -212,12 +211,12 @@ h3 {
 }
 
 .keyboard-key {
-    padding: 0 var(--mm-length-half);
+    padding: 0 map.get($lengths, "half");
     background: linear-gradient(to right top, #444, #666);
     border-style: outset;
     border-color: #666;
     border-width: 2px 5px 5px 2px;
-    border-radius: var(--mm-border-radius);
+    border-radius: $border-radius;
     display: inline-block;
     height: 25px;
     display: flex;
@@ -230,12 +229,12 @@ h3 {
 }
 
 .podcast-content-card {
-    border: 3px dashed var(--mm-primary);
-    border-bottom-color: var(--mm-primary-dark);
-    border-right-color: var(--mm-primary-dark);
+    border: 3px dashed color.get-color("primary");
+    border-bottom-color: color.get-color("primary", "dark");
+    border-right-color: color.get-color("primary", "dark");
 
     .podcast-content-card-contents {
-        background: var(--mm-background-color);
+        background: $background-color;
         display: flex;
         flex-direction: column;
         overflow-wrap: anywhere;
@@ -262,7 +261,7 @@ h3 {
         }
 
         img {
-            border-radius: var(--mm-border-radius);
+            border-radius: $border-radius;
         }
     }
 
@@ -339,14 +338,14 @@ h3 {
 }
 
 .podcast-description {
-    border: var(--mm-length-quarter) dashed var(--mm-primary);
-    border-bottom-color: var(--mm-primary-dark);
-    border-right-color: var(--mm-primary-dark);
+    border: map.get($lengths, "quarter") dashed color.get-color("primary");
+    border-bottom-color: color.get-color("primary", "dark");
+    border-right-color: color.get-color("primary", "dark");
 
     .podcast-description-content {
-        background: var(--mm-background-color);
+        background: $background-color;
         line-height: 1.5;
-        padding: var(--mm-length-single);
+        padding: map.get($lengths, "single");
 
         & > :first-child {
             margin-top: 0;
@@ -363,7 +362,7 @@ h3 {
 }
 
 .text-input {
-    column-gap: var(--mm-length-single);
+    column-gap: map.get($lengths, "single");
     display: grid;
     font-size: var(--mm-font-size-xs);
     grid-template-columns: 1fr auto;
@@ -378,5 +377,5 @@ h3 {
 }
 
 .volume-control-popup {
-    padding-right: var(--mm-length-single);
+    padding-right: map.get($lengths, "single");
 }

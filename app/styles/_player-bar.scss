@@ -1,14 +1,18 @@
+@use "sass:map";
+
+@use "variables" as *;
+@use "color";
 @use "responsive";
 
 .player-bar {
-    background: var(--mm-background-color-opaque);
-    border-top: 5px solid var(--mm-primary);
+    background: $background-color-opaque;
+    border-top: 5px solid color.get-color("primary");
     display: flex;
     flex-direction: column;
     position: relative;
 
     & > .row {
-        height: var(--mm-player-bar-height);
+        height: $player-bar-height;
     }
 
     .episode {
@@ -43,7 +47,7 @@
     .loader {
         font-size: 40px;
         height: 40px;
-        padding: var(--mm-length-half);
+        padding: map.get($lengths, "half");
     }
 
     .dbfs {

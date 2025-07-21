@@ -7,50 +7,41 @@ $variant-suffixes: (
     "light": "-light",
 );
 
-:root {
-    --mm-background-color-opaque: #{$background-color-opaque};
-    --mm-background-color: #{$background-color};
-    --mm-text-color: #{$text-color};
-    --mm-text-color-dark: #{$text-color-dark};
-
-    @each $theme, $variants in $color-themes {
-        --mm-#{$theme}: #{map.get($variants, "normal")};
-        --mm-#{$theme}-dark: #{map.get($variants, "dark")};
-        --mm-#{$theme}-light: #{map.get($variants, "light")};
-    }
+@function get-color($theme, $variant-name: "normal") {
+    @return map.get(map.get($color-themes, $theme), $variant-name);
 }
 
-@mixin themed($property, $variants, $variant) {
-    #{$property}: #{map.get($variants, $variant)} !important;
+@mixin themed($property, $theme-variants, $variant-name) {
+    #{$property}: #{map.get($theme-variants, $variant-name)} !important;
 
-    @if $variant == "normal" {
+    @if $variant-name == "normal" {
         &.hover-light:hover {
-            #{$property}: #{map.get($variants, "light")} !important;
+            #{$property}: #{map.get($theme-variants, "light")} !important;
         }
-    } @else if $variant == "dark" {
+    } @else if $variant-name == "dark" {
         &.hover-light:hover {
-            #{$property}: #{map.get($variants, "normal")} !important;
+            #{$property}: #{map.get($theme-variants, "normal")} !important;
         }
     }
 }
 
-@each $theme, $variants in $color-themes {
-    @each $variant in map.keys($variants) {
-        .bg-#{$theme}#{map.get($variant-suffixes, $variant)} {
-            @include themed("background-color", $variants, $variant);
+@each $theme, $theme-variants in $color-themes {
+    @each $variant-name, $variant-suffix in $variant-suffixes {
+        .bg-#{$theme}#{$variant-suffix} {
+            @include themed("background-color", $theme-variants, $variant-name);
         }
-        .border-#{$theme}#{map.get($variant-suffixes, $variant)} {
+        .border-#{$theme}#{$variant-suffix} {
             border-width: 2px;
-            @include themed("border-color", $variants, $variant);
+            @include themed("border-color", $theme-variants, $variant-name);
         }
-        .text-#{$theme}#{map.get($variant-suffixes, $variant)} {
-            @include themed("color", $variants, $variant);
+        .text-#{$theme}#{$variant-suffix} {
+            @include themed("color", $theme-variants, $variant-name);
         }
-        .theme-#{$theme}#{map.get($variant-suffixes, $variant)} {
+        .theme-#{$theme}#{$variant-suffix} {
             border-width: 2px;
-            color: white;
-            @include themed("background-color", $variants, $variant);
-            @include themed("border-color", $variants, $variant);
+            color: #{map.get($theme-variants, "on")};
+            @include themed("background-color", $theme-variants, $variant-name);
+            @include themed("border-color", $theme-variants, $variant-name);
         }
     }
 }

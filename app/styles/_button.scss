@@ -1,12 +1,15 @@
+@use "sass:map";
+@use "variables" as *;
+
 .button {
     align-items: center;
-    border-radius: var(--mm-border-radius);
+    border-radius: $border-radius;
     border-style: outset;
     border-width: 0;
     cursor: pointer;
     display: flex;
-    gap: var(--mm-length-half);
-    padding: var(--mm-length-half);
+    gap: map.get($lengths, "half");
+    padding: map.get($lengths, "half");
     text-decoration: none;
 
     &:active:not(.loading):not(.disabled) {
@@ -16,12 +19,12 @@
     }
 
     &.disabled {
-        color: var(--mm-text-color-dark) !important;
+        color: $text-color-dark !important;
         cursor: not-allowed !important;
     }
 
     &.inactive {
-        color: var(--mm-text-color-dark) !important;
+        color: $text-color-dark !important;
     }
 
     &.loading {
@@ -37,7 +40,7 @@
 
     &.small {
         font-size: var(--mm-font-size-xs);
-        padding: var(--mm-length-quarter) var(--mm-length-half);
+        padding: map.get($lengths, "quarter") map.get($lengths, "half");
 
         .icon {
             font-size: 16px;

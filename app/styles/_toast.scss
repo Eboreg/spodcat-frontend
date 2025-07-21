@@ -5,35 +5,35 @@
 .toast {
     align-items: start;
     border-left-width: 0 !important;
-    border-radius: var(--mm-border-radius);
+    border-radius: $border-radius;
     border-style: outset;
     border-top-width: 0 !important;
     display: grid;
     grid-template: "icon text close" "countdown countdown countdown" / auto 1fr auto;
     overflow: hidden;
-    padding-top: var(--mm-length-quarter);
+    padding-top: map.get($lengths, "quarter");
     position: fixed;
     transition-duration: 300ms;
     transition-property: left, bottom, scale, opacity;
     transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    width: var(--mm-toast-width);
+    width: $toast-width;
     z-index: map.get($z-index, "toast");
 
     .toast-icon {
         align-self: center;
         grid-area: icon;
-        padding: var(--mm-length-half);
+        padding: map.get($lengths, "half");
     }
 
     .toast-text {
         grid-area: text;
-        padding: 11px var(--mm-length-half);
+        padding: 11px map.get($lengths, "half");
     }
 
     .toast-close-icon {
         cursor: pointer;
         grid-area: close;
-        padding: var(--mm-length-half);
+        padding: map.get($lengths, "half");
     }
 
     .toast-countdown {

@@ -1,3 +1,7 @@
+@use "sass:map";
+
+@use "variables" as *;
+@use "color";
 @use "responsive";
 
 .podcast-details .podcast-banner.has-banner-image {
@@ -9,7 +13,7 @@
 }
 
 .podcast-list .podcast-banner {
-    border-radius: var(--mm-border-radius);
+    border-radius: $border-radius;
 
     .podcast-cover {
         width: 80px;
@@ -71,7 +75,7 @@
 
     .podcast-cover {
         aspect-ratio: 1/1;
-        border: 5px outset var(--mm-primary);
+        border: 5px outset color.get-color("primary");
         border-radius: 100%;
         object-fit: cover;
         object-position: center;
@@ -117,6 +121,6 @@
 
     .podcast-tagline {
         font-size: var(--mm-font-size-article);
-        margin-top: var(--mm-length-quarter);
+        margin-top: map.get($lengths, "quarter");
     }
 }

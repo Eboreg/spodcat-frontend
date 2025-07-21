@@ -2,6 +2,29 @@
 @use "sass:list";
 @use "variables" as *;
 
+$dimens: (
+    "t": (
+        "top",
+    ),
+    "r": (
+        "right",
+    ),
+    "l": (
+        "left",
+    ),
+    "b": (
+        "bottom",
+    ),
+    "x": (
+        "left",
+        "right",
+    ),
+    "y": (
+        "top",
+        "bottom",
+    ),
+);
+
 @function add-empty($list) {
     @return list.join((""), $list);
 }

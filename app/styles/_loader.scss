@@ -1,3 +1,7 @@
+@use "sass:map";
+@use "color";
+@use "variables" as *;
+
 @keyframes rotate {
     100% {
         transform: rotate(360deg);
@@ -27,7 +31,7 @@
         animation-timing-function: linear;
         animation-iteration-count: infinite;
         animation-name: rotate;
-        padding: var(--mm-length-quarter);
+        padding: map.get($lengths, "quarter");
 
         .circle {
             stroke-dasharray: 10, 10;
@@ -35,18 +39,18 @@
             animation-timing-function: ease-in-out;
             animation-iteration-count: infinite;
             fill: none;
-            stroke: var(--mm-text-color);
+            stroke: $text-color;
             stroke-linecap: round;
         }
     }
 
     &.primary .circle {
-        stroke: var(--mm-primary) !important;
+        stroke: color.get-color("primary") !important;
     }
     &.secondary .circle {
-        stroke: var(--mm-secondary) !important;
+        stroke: color.get-color("secondary") !important;
     }
     &.tertiary .circle {
-        stroke: var(--mm-tertiary) !important;
+        stroke: color.get-color("tertiary") !important;
     }
 }

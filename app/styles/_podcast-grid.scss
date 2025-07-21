@@ -1,7 +1,10 @@
+@use "sass:map";
+
+@use "variables" as *;
 @use "responsive";
 
 main.podcast-grid {
-    column-gap: var(--mm-length-half);
+    column-gap: map.get($lengths, "half");
     display: grid;
     grid-template-rows: auto auto auto 1fr;
 
@@ -9,7 +12,7 @@ main.podcast-grid {
     grid-template-columns: 1fr;
 
     & > * {
-        margin-bottom: var(--mm-length-half);
+        margin-bottom: map.get($lengths, "half");
     }
 
     @include responsive.max(sm) {

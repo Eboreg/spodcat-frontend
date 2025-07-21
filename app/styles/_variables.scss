@@ -1,41 +1,44 @@
+$colors-primary: (
+    "normal": rgb(220, 20, 60),
+    "dark": rgb(147, 13, 40),
+    "light": rgb(250, 50, 90),
+    "on": white,
+) !default;
+
+$colors-secondary: (
+    "normal": rgb(80, 20, 160),
+    "dark": rgb(53, 13, 107),
+    "light": rgb(110, 50, 190),
+    "on": white,
+) !default;
+
+$colors-tertiary: (
+    "normal": rgb(60, 100, 60),
+    "dark": rgb(40, 67, 40),
+    "light": rgb(90, 130, 90),
+    "on": white,
+) !default;
+
+$colors-boring: (
+    "normal": #444,
+    "dark": #222,
+    "light": #666,
+    "on": white,
+) !default;
+
+$colors-error: $colors-primary !default;
+$colors-info: $colors-secondary !default;
+$colors-success: $colors-tertiary !default;
+
 $color-themes: (
-    "primary": (
-        "normal": rgb(220, 20, 60),
-        "dark": rgb(147, 13, 40),
-        "light": rgb(250, 50, 90),
-    ),
-    "secondary": (
-        "normal": rgb(80, 20, 160),
-        "dark": rgb(53, 13, 107),
-        "light": rgb(110, 50, 190),
-    ),
-    "tertiary": (
-        "normal": rgb(60, 100, 60),
-        "dark": rgb(40, 67, 40),
-        "light": rgb(90, 130, 90),
-    ),
-    "boring": (
-        "normal": #444,
-        "dark": #222,
-        "light": #666,
-    ),
-);
-
-$max-sizes: (
-    "xs": "575px",
-    "sm": "767px",
-    "md": "991px",
-    "lg": "1199px",
-    "xl": "1399px",
-);
-
-$min-sizes: (
-    "sm": "576px",
-    "md": "768px",
-    "lg": "992px",
-    "xl": "1200px",
-    "xxl": "1400px",
-);
+    "primary": $colors-primary,
+    "secondary": $colors-secondary,
+    "tertiary": $colors-tertiary,
+    "boring": $colors-boring,
+    "error": $colors-error,
+    "info": $colors-info,
+    "success": $colors-success,
+) !default;
 
 $lengths: (
     "0": 0,
@@ -45,30 +48,23 @@ $lengths: (
     "double": 2rem,
     "3x": 3rem,
     "4x": 4rem,
-);
+) !default;
 
-$dimens: (
-    "t": (
-        "top",
-    ),
-    "r": (
-        "right",
-    ),
-    "l": (
-        "left",
-    ),
-    "b": (
-        "bottom",
-    ),
-    "x": (
-        "left",
-        "right",
-    ),
-    "y": (
-        "top",
-        "bottom",
-    ),
-);
+$max-sizes: (
+    "xs": "575px",
+    "sm": "767px",
+    "md": "991px",
+    "lg": "1199px",
+    "xl": "1399px",
+) !default;
+
+$min-sizes: (
+    "sm": "576px",
+    "md": "768px",
+    "lg": "992px",
+    "xl": "1200px",
+    "xxl": "1400px",
+) !default;
 
 $z-index: (
     "flash-overlay": 10,
@@ -77,20 +73,24 @@ $z-index: (
     "modal-backdrop": 40,
     "modal-container": 50,
     "toast": 60,
-);
+) !default;
 
-$font-size-body-mobile: 14px;
-$font-size-body-desktop: 16px;
-$font-size-article: 14px;
-$font-size-small: 14px;
-$font-size-xs: 12px;
+$font-size-article-desktop: 14px !default;
+$font-size-article-mobile: 14px !default;
+$font-size-body-desktop: 16px !default;
+$font-size-body-mobile: 14px !default;
+$font-size-small-desktop: 14px !default;
+$font-size-small-mobile: 14px !default;
+$font-size-xs-desktop: 12px !default;
+$font-size-xs-mobile: 12px !default;
 
-$background-color-opaque: #111;
-$background-color: rgba(0, 0, 0, 0.8);
-$border-radius: 4px;
-$content-width: min(980px, calc(100dvw - 20px));
-$player-bar-height: 60px;
-$text-color-dark: rgb(180, 180, 180);
-$text-color: rgb(238, 238, 238);
-$toast-width: min(800px, calc(100dvw - 20px));
-$modal-width: min(800px, calc(100dvw - 20px));
+$background-color-opaque: #111 !default;
+$background-color: rgba(0, 0, 0, 0.8) !default;
+$body-background: radial-gradient(circle at 100%, #33d, #333 60%, #f33 80%, #000 90%) !default;
+$border-radius: 4px !default;
+$content-width: min(980px, calc(100dvw - 20px)) !default;
+$modal-width: min(800px, calc(100dvw - 20px)) !default;
+$player-bar-height: 60px !default;
+$text-color-dark: rgb(180, 180, 180) !default;
+$text-color: rgb(238, 238, 238) !default;
+$toast-width: min(800px, calc(100dvw - 20px)) !default;
