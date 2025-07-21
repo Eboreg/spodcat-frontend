@@ -1,56 +1,23 @@
 # spodcat
 
-This README outlines the details of collaborating on this Ember application.
-A short introduction of this app could easily go here.
+This is the frontend part of my podcast platform, designed to go along with [the backend part](https://github.com/Eboreg/spodcat-backend). It's built on Ember, because I was stupid and chose to learn that instead of an actually useful and non-dying frontend framework.
 
-## Prerequisites
+As it stands, it's pretty tailor-made for my needs and tastes. The deployment script will not work for you, and you will probably not like the design. But everything can be tweaked with a bit of patience!
 
-You will need the following things properly installed on your computer.
+A live instance can be viewed [here](https://podd.huseli.us).
 
-- [Git](https://git-scm.com/)
-- [Node.js](https://nodejs.org/) (with npm)
-- [Ember CLI](https://cli.emberjs.com/release/)
-- [Google Chrome](https://google.com/chrome/)
+## Configuration
 
-## Installation
+### Build environment
 
-- `git clone <repository-url>` this repository
-- `cd spodcat`
-- `npm install`
+Some values need to be put in a `.env` file in the project root. Here are mine, as an example:
 
-## Running / Development
-
-- `npm run start`
-- Visit your app at [http://localhost:4200](http://localhost:4200).
-- Visit your tests at [http://localhost:4200/tests](http://localhost:4200/tests).
-
-### Code Generators
-
-Make use of the many generators for code, try `ember help generate` for more details
-
-### Running Tests
-
-- `npm run test`
-- `npm run test:ember -- --server`
-
-### Linting
-
-- `npm run lint`
-- `npm run lint:fix`
-
-### Building
-
-- `npm exec ember build` (development)
-- `npm run build` (production)
-
-### Deploying
-
-Specify what it takes to deploy your app.
-
-## Further Reading / Useful Links
-
-- [ember.js](https://emberjs.com/)
-- [ember-cli](https://cli.emberjs.com/release/)
-- Development Browser Extensions
-  - [ember inspector for chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)
-  - [ember inspector for firefox](https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/)
+```
+BACKEND_HOST_DEV=http://localhost:8000
+BACKEND_HOST_PROD=https://backend.podd.huseli.us
+FASTBOOT_HOST_WHITELIST=podd.huseli.us,testpodd.huseli.us
+FRONTEND_HOST_DEV=http://localhost:4200
+FRONTEND_HOST_PROD=https://podd.huseli.us
+SITE_NAME=podd.huseli.us
+```
+`SITE_NAME` is only used for setting `<meta property="og:site_name">` in the HTML head. The rest should be self-explanatory.
