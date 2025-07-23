@@ -5,11 +5,7 @@
   {{#if @video.title}}<div><em>{{@video.title}}</em></div>{{/if}}
 {{else}}
   <div class="video-consent-prompt p-single mt-single">
-    {{#if @video.title}}
-      <h3>{{t "video.embed-video-x-question" x=@video.title}}</h3>
-    {{else}}
-      <h3>{{t "video.embed-video-question"}}</h3>
-    {{/if}}
+    <h3>{{t "video.video"}}{{#if @video.title}}: {{@video.title}}{{/if}}</h3>
     <p>{{t "video.embed-explanation"}}</p>
     <div class="row gap-half wrap">
       <Button @on-click={{@on-consent-click}} @theme="primary">{{t "video.show-embedded"}}</Button>

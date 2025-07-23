@@ -59,7 +59,6 @@ volume:
   unmute: "Unmute"
 video:
   open-new-tab: "Open Youtube in new tab"
-  embed-video-question: "Show embedded video?"
-  embed-video-x-question: "Show embedded video: {x}?"
-  show-embedded: "Show embedded videos"
+  video: Video
+  show-embedded: "Show embedded video"
   embed-explanation: "If you want to show this video, Youtube will probably store all kinds of crap on your computer. You can also open Youtube in a new tab; that has the same privacy implications, but at least then it's not our problem. :-)"

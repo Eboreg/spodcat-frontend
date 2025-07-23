@@ -58,9 +58,7 @@ volume:
   mute: "Stäng av ljud"
   unmute: "Sätt på ljud"
 video:
-  show: "Visa video"
   open-new-tab: "Öppna Youtube i ny flik"
-  embed-video-question: "Visa inbäddad video?"
-  embed-video-x-question: "Visa inbäddad video: {x}?"
-  show-embedded: "Visa inbäddade videor"
+  video: Video
+  show-embedded: "Visa inbäddad video"
   embed-explanation: "Om du vill visa denna video, kommer Youtube antagligen att lagra all möjlig dynga på din dator. Du kan också öppna Youtube i en ny flik; det medför samma integritetsproblem, men då är det åtminstone inte vårt bekymmer. :-)"
