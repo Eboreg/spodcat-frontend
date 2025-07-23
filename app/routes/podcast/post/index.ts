@@ -9,7 +9,7 @@ export default class PodcastPostIndexRoute extends BasePodcastPostRoute {
 
     async model(params: { post_slug: string }) {
         const result = await this.store.query<PostModel>("post", {
-            include: ["comments"],
+            include: ["comments", "videos"],
             filter: { post: params.post_slug, podcast: this.getPodcastId() },
         });
 

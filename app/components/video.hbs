@@ -1,0 +1,19 @@
+{{#if @consent}}
+  <div {{on-insert this.onInsert}} {{on-size-change this.onSizeChange}} class="mt-single">
+    {{html-safe @video.iframe}}
+  </div>
+  {{#if @video.title}}<div><em>{{@video.title}}</em></div>{{/if}}
+{{else}}
+  <div class="video-consent-prompt p-single mt-single">
+    {{#if @video.title}}
+      <h3>{{t "video.embed-video-x-question" x=@video.title}}</h3>
+    {{else}}
+      <h3>{{t "video.embed-video-question"}}</h3>
+    {{/if}}
+    <p>{{t "video.embed-explanation"}}</p>
+    <div class="row gap-half wrap">
+      <Button @on-click={{@on-consent-click}} @theme="primary">{{t "video.show-embedded"}}</Button>
+      <Button @href={{@video.externalLink}} @new-tab={{true}} @theme="secondary">{{t "video.open-new-tab"}}</Button>
+    </div>
+  </div>
+{{/if}}

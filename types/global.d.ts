@@ -99,3 +99,8 @@ export interface Image extends Size {
 }
 
 export type Theme = "primary" | "secondary" | "tertiary" | "boring";
+
+export interface YoutubeLink {
+    videoId: string;
+    start?: number;
+}

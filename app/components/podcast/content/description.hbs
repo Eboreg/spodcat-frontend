@@ -3,6 +3,10 @@
     {{html-safe @content.description-html}}
   {{/if}}
 
+  {{#each @content.videos as |video|}}
+    <Video @video={{video}} @on-consent-click={{this.onVideoConsentClick}} @consent={{this.videoConsent}} />
+  {{/each}}
+
   {{yield}}
 
   {{#if @content.descriptionIsLoading}}

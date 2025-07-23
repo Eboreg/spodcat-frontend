@@ -2,6 +2,7 @@ import Model, { attr, belongsTo, hasMany, type HasMany } from "@ember-data/model
 import type PodcastModel from "./podcast";
 import { Type } from "@warp-drive/core-types/symbols";
 import type CommentModel from "./comment";
+import type VideoModel from "./video";
 
 export default class PodcastContentModel extends Model {
     @attr("date") declare created?: Date;
@@ -13,6 +14,8 @@ export default class PodcastContentModel extends Model {
 
     @hasMany<CommentModel>("comment", { async: false, inverse: "podcast-content", as: "podcast-content" })
     declare comments: HasMany<CommentModel>;
+    @hasMany<VideoModel>("video", { async: false, inverse: "podcast-content", as: "podcast-content" })
+    declare videos: HasMany<VideoModel>;
     @belongsTo<PodcastModel>("podcast", { async: false, inverse: "contents", as: "podcast-content" })
     declare podcast: PodcastModel;
 

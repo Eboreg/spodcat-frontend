@@ -14,7 +14,7 @@ pause: "Pausa"
 play: "Spela"
 play-pause: "Spela/pausa"
 playback-rate: "Hastighet"
-podcast-x-not-found: "Kunde inte hitta podden \"{x}\"."
+podcast-x-not-found: 'Kunde inte hitta podden "{x}".'
 post-not-found: "Kunde inte hitta inlägget."
 rewind-10s: "Bakåt 10 sekunder"
 rewind-60s: "Bakåt 60 sekunder"
@@ -38,7 +38,7 @@ comment:
     approval-required: "Tackar! Din kommentar kommer att visas när den godkänts."
     no-approval-required: "Tackar för din kommentar."
 cookies:
-  answer: "Vi ställer inga irriterande frågor om cookies eftersom vi helt enkelt inte lagrar några. Det går nämligen 
+  answer: "Vi ställer inga irriterande frågor om cookies eftersom vi helt enkelt inte lagrar några. Det går nämligen
     ofta utmärkt att låta bli."
   question: "Cookies?"
 keyboard:
@@ -57,3 +57,10 @@ share:
 volume:
   mute: "Stäng av ljud"
   unmute: "Sätt på ljud"
+video:
+  show: "Visa video"
+  open-new-tab: "Öppna Youtube i ny flik"
+  embed-video-question: "Visa inbäddad video?"
+  embed-video-x-question: "Visa inbäddad video: {x}?"
+  show-embedded: "Visa inbäddade videor"
+  embed-explanation: "Om du vill visa denna video, kommer Youtube antagligen att lagra all möjlig dynga på din dator. Du kan också öppna Youtube i en ny flik; det medför samma integritetsproblem, men då är det åtminstone inte vårt bekymmer. :-)"

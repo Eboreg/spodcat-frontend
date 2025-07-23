@@ -251,7 +251,7 @@ h3 {
             margin-top: 0;
         }
 
-        a {
+        a:not(.button) {
             font-weight: bold;
         }
 
@@ -374,6 +374,11 @@ h3 {
     .errors {
         grid-column-end: span 2;
     }
+}
+
+.video-consent-prompt {
+    border: 2px outset color.get-color("primary");
+    border-radius: $border-radius;
 }
 
 .volume-control-popup {
