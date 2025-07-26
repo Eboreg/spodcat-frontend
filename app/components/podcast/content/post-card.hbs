@@ -1,4 +1,4 @@
-<article class="podcast-content-card post" ...attributes>
+<div class="podcast-content-card post" ...attributes>
   <div class="podcast-content-card-contents">
     <div class="row align-center gap-half">
       {{#if @expand}}
@@ -25,7 +25,7 @@
 
     {{yield}}
   </div>
-</article>
+</div>
 
 {{#if this.showShareModal}}
   <Podcast::Content::ShareModal @on-close={{this.closeShareModal}} @url={{@post.frontendUrl}} />
