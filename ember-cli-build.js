@@ -8,6 +8,7 @@ module.exports = async function (defaults) {
         "ember-cli-babel": { enableTypeScriptTransform: true },
         babel: { sourceMaps: "inline" },
         "ember-cli-terser": { enabled: false },
+        storeConfigInMeta: false,
     });
 
     setConfig(app, __dirname, {

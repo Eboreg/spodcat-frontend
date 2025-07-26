@@ -1,5 +1,6 @@
 import type Store from "@ember-data/store";
 import { action } from "@ember/object";
+import { getOwner } from "@ember/owner";
 import Route from "@ember/routing/route";
 import type RouterService from "@ember/routing/router-service";
 import type { Registry } from "@ember/service";
@@ -36,7 +37,12 @@ export default class PodcastRoute extends Route<PodcastModel> {
     }
 
     afterModel(model?: PodcastModel) {
-        if (model?.language) this.intl.setLocale(model.language);
+        if (model?.language) {
+            const docService = getOwner(this)?.lookup("service:-document") as Document | undefined;
+
+            this.intl.setLocale(model.language);
+            docService?.documentElement?.setAttribute("lang", model.language);
+        }
     }
 
     model(params: { podcast_id: string }): Promise<PodcastModel> {
