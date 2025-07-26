@@ -104,3 +104,13 @@ export interface YoutubeLink {
     videoId: string;
     start?: number;
 }
+
+interface FastbootHeaders {
+    has: (header: string) => boolean;
+    set: (header: string, value: string) => void;
+}
+
+export interface FastbootResponse {
+    statusCode: number;
+    headers: FastbootHeaders;
+}

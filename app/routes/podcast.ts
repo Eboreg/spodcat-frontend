@@ -6,6 +6,7 @@ import type RouterService from "@ember/routing/router-service";
 import type { Registry } from "@ember/service";
 import { service } from "@ember/service";
 import type FastBoot from "ember-cli-fastboot/services/fastboot";
+import type { FastbootResponse } from "global";
 import PodcastModel from "spodcat/models/podcast";
 import type MessageService from "spodcat/services/message";
 
@@ -42,6 +43,11 @@ export default class PodcastRoute extends Route<PodcastModel> {
 
             this.intl.setLocale(model.language);
             docService?.documentElement?.setAttribute("lang", model.language);
+
+            if (this.fastboot.isFastBoot) {
+                const response = this.fastboot.get("response") as FastbootResponse;
+                response.headers.set("Content-Language", model.language);
+            }
         }
     }
 
