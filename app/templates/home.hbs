@@ -4,7 +4,15 @@
 {{else}}
   {{page-title this.siteName replace=true}}
   <main class="content-width column gap-half podcast-list">
-    <h3 class="my-half font-weight-normal outlined-text">{{t "choose-a-podcast"}}:</h3>
+    <div class="spodcat-banner">
+      <div class="row space-between align-center w-100">
+        <div>
+          <div class="title">Spodcat</div>
+          <div class="subtitle">{{t "spodcat-subtitle"}}</div>
+        </div>
+        <img src="/spodcat-logo.png" alt="" class="logo d-none d-sm-block" />
+      </div>
+    </div>
     {{#each @model as |podcast|}}
       <Podcast::Banner @podcast={{podcast}} />
     {{/each}}

@@ -89,6 +89,10 @@
     flex-direction: row;
 }
 
+.space-between {
+    justify-content: space-between;
+}
+
 .text-article {
     font-size: var(--mm-font-size-article);
 }

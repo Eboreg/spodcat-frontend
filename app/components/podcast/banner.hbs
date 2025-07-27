@@ -3,14 +3,14 @@
     <div class="podcast-banner-image" style={{@podcast.bannerCssStyle}}></div>
   {{/if}}
 
-  <LinkTo class="row gap-single align-center m-single" @route={{@podcast.route}} @models={{@podcast.routeModels}}>
+  <LinkTo class="row gap-single align-center p-single" @route={{@podcast.route}} @models={{@podcast.routeModels}}>
     {{#if @podcast.cover-thumbnail}}
       <img src="{{@podcast.cover-thumbnail}}" alt="" class="podcast-cover d-none d-sm-block" />
     {{/if}}
     <div>
       <div class={{@podcast.nameCssClass}} style={{@podcast.nameCssStyle}}>{{@podcast.name}}</div>
       {{#if @podcast.tagline}}
-        <div class="podcast-tagline outlined-text d-none d-sm-block">{{@podcast.tagline}}</div>
+        <div class="podcast-tagline outlined-text">{{@podcast.tagline}}</div>
       {{/if}}
     </div>
   </LinkTo>

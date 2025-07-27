@@ -6,52 +6,10 @@
 
 .podcast-details .podcast-banner.has-banner-image {
     aspect-ratio: 3/1;
-
-    .podcast-banner-image {
-        aspect-ratio: 3/1;
-    }
 }
 
-.podcast-list .podcast-banner {
-    .podcast-cover {
-        width: 80px;
-    }
-
-    .podcast-name {
-        font-size: 30px;
-
-        &.small {
-            font-size: 20px;
-        }
-
-        &.large {
-            font-size: 40px;
-        }
-
-        @include responsive.min(md) {
-            font-size: 40px;
-
-            &.small {
-                font-size: 25px;
-            }
-
-            &.large {
-                font-size: 60px;
-            }
-        }
-
-        @include responsive.min(lg) {
-            font-size: 50px;
-
-            &.small {
-                font-size: 35px;
-            }
-
-            &.large {
-                font-size: 70px;
-            }
-        }
-    }
+.podcast-list .podcast-banner .podcast-cover {
+    width: 80px;
 }
 
 .podcast-banner {
@@ -60,6 +18,7 @@
     flex-direction: column;
     grid-area: header;
     justify-content: end;
+    min-height: 120px;
     overflow: hidden;
     position: relative;
 

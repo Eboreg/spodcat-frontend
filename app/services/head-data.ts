@@ -27,7 +27,7 @@ export default class HeadDataService extends Service {
     }
 
     get favicon(): Favicon {
-        return this._podcast?.faviconData || { url: "/favicon.png", contentType: "image/png" };
+        return this._podcast?.faviconData || { url: "/spodcat-favicon.png", contentType: "image/png" };
     }
 
     get musicDuration(): string | undefined {

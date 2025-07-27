@@ -50,6 +50,12 @@
     }
 }
 
+@font-face {
+    font-family: "Limelight-Regular";
+    font-weight: 500;
+    src: url(/Limelight-Regular.ttf) format(truetype);
+}
+
 /** ELEMENTS *****************************************************************/
 
 a {
@@ -373,6 +379,28 @@ h3 {
         a {
             font-weight: bold;
         }
+    }
+}
+
+.spodcat-banner {
+    background-color: $spodcat-yellow;
+    border-radius: $border-radius;
+    padding: 10px;
+
+    .subtitle {
+        color: black;
+        font-weight: bold;
+    }
+
+    .title {
+        color: $spodcat-blue;
+        font-family: "Limelight-Regular";
+        font-size: 72px;
+        line-height: 1;
+    }
+
+    .logo {
+        height: 90px;
     }
 }
 
