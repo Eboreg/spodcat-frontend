@@ -136,6 +136,10 @@ h3 {
     z-index: map.get($z-index, "attribution");
 }
 
+.box-shadow {
+    box-shadow: 1px 1px 3px $background-color;
+}
+
 .dotted-border {
     border-color: color.get-color("primary");
     border-bottom-color: color.get-color("primary", "dark");

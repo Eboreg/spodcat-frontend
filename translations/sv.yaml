@@ -1,7 +1,6 @@
 add-x-in-app: "Lägg till {x} i din podd-app"
 all-podcasts: "Alla poddar"
 change-playback-rate-x: "Ändra hastighet ({x})"
-choose-a-podcast: "Välj en podd"
 download: "Ladda ned"
 episode-not-found: "Kunde inte hitta avsnittet."
 forward-180s: "Framåt 180 sekunder"

@@ -1,7 +1,6 @@
 add-x-in-app: "Add {x} to your podcast app"
 all-podcasts: "All podcasts"
 change-playback-rate-x: "Change rate ({x})"
-choose-a-podcast: "Choose a podcast"
 download: "Download"
 episode-not-found: "Could not find the episode."
 forward-180s: "Forward 180 seconds"
