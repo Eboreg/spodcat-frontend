@@ -13,8 +13,6 @@
 }
 
 .podcast-list .podcast-banner {
-    border-radius: $border-radius;
-
     .podcast-cover {
         width: 80px;
     }
@@ -57,6 +55,7 @@
 }
 
 .podcast-banner {
+    border-radius: $border-radius;
     display: flex;
     flex-direction: column;
     grid-area: header;
@@ -65,9 +64,9 @@
     position: relative;
 
     .podcast-banner-image {
+        background-position: center;
+        background-size: cover;
         height: 100%;
-        object-fit: cover;
-        object-position: center;
         position: absolute;
         width: 100%;
         z-index: -1;

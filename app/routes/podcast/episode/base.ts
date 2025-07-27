@@ -18,7 +18,7 @@ export default class BasePodcastEpisodeRoute extends PreserveScrollRoute<Episode
 
     afterModel(model?: EpisodeModel) {
         if (model) {
-            this.headData.updateFromEpisode(model);
+            this.headData.setEpisode(model);
             if (!this.audio.episode) this.audio.setEpisode(model);
             if (!this.fastboot.isFastBoot && model.id) ping("episodes", model.id);
         }

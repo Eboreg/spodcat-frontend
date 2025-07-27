@@ -3,9 +3,8 @@ import Model, { attr, hasMany, type AsyncHasMany } from "@ember-data/model";
 import { Type } from "@warp-drive/core-types/symbols";
 import type PodcastLinkModel from "./podcast-link";
 import type PodcastContentModel from "./podcast-content";
-import type { Favicon, Rss } from "spodcat/services/head-data";
 import { htmlSafe, type SafeString } from "@ember/template";
-import type { Size } from "global";
+import type { Favicon, Image, Rss } from "global";
 
 export default class PodcastModel extends Model {
     @attr declare banner?: string;
@@ -38,11 +37,17 @@ export default class PodcastModel extends Model {
     @hasMany<PodcastLinkModel>("podcast-link", { async: true, inverse: "podcast" })
     declare links: AsyncHasMany<PodcastLinkModel>;
 
-    get bannerSize(): Size | undefined {
-        if (this["banner-height"] && this["banner-width"]) {
-            return { width: this["banner-width"], height: this["banner-height"] };
-        }
-        return;
+    get bannerCssStyle(): SafeString {
+        return htmlSafe(this.banner ? `background-image: url("${this.banner}")` : "");
+    }
+
+    get bannerData(): Image | undefined {
+        const size =
+            this["banner-height"] && this["banner-width"]
+                ? { height: this["banner-height"], width: this["banner-width"] }
+                : undefined;
+
+        return this.banner ? { url: this.banner, size: size } : undefined;
     }
 
     get faviconData(): Favicon | undefined {
@@ -53,7 +58,8 @@ export default class PodcastModel extends Model {
     }
 
     get nameCssClass(): SafeString {
-        return htmlSafe(this["name-font-size"]);
+        const classes = [this["name-font-size"], this.banner ? "outlined-text" : "shadowed-text", "podcast-name"];
+        return htmlSafe(classes.join(" "));
     }
 
     get nameCssStyle(): SafeString {

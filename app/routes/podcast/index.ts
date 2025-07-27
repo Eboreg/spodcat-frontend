@@ -11,7 +11,7 @@ export default class PodcastIndexRoute extends PreserveScrollRoute<PodcastModel>
 
     afterModel(model?: PodcastModel) {
         if (model) {
-            this.headData.updateFromPodcast(model);
+            this.headData.setPodcast(model);
             if (model.id && !this.fastboot.isFastBoot) {
                 ping("podcasts", model.id);
             }

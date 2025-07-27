@@ -18,7 +18,7 @@ export default class BasePodcastPostRoute extends PreserveScrollRoute<PostModel>
 
     afterModel(model?: PostModel) {
         if (model) {
-            this.headData.updateFromPost(model);
+            this.headData.setPost(model);
             if (model.id && !this.fastboot.isFastBoot) ping("posts", model.id);
         }
     }

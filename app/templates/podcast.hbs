@@ -1,23 +1,6 @@
 <main class="content-width podcast-details podcast-grid {{@model.id}}">
-  <header class="podcast-banner {{if @model.banner 'dotted-border has-banner-image'}}">
-    {{#if @model.banner}}
-      <img src="{{@model.banner}}" alt="" class="podcast-banner-image" />
-    {{/if}}
-    <LinkTo class="row gap-single align-center m-single" @route={{@model.route}} @models={{@model.routeModels}}>
-      {{#if @model.cover-thumbnail}}
-        <img src="{{@model.cover-thumbnail}}" alt="" class="podcast-cover d-none d-sm-block" />
-      {{/if}}
-      <div>
-        <div
-          class="podcast-name {{if @model.banner 'outlined-text' 'shadowed-text'}} {{@model.nameCssClass}}"
-          style={{@model.nameCssStyle}}
-        >{{@model.name}}</div>
-        {{#if @model.tagline}}
-          <div class="podcast-tagline outlined-text d-none d-sm-block">{{@model.tagline}}</div>
-        {{/if}}
-      </div>
-    </LinkTo>
-  </header>
+  <Podcast::Banner @podcast={{@model}} />
+
   <div class="column gap-half content">
     {{outlet}}
   </div>

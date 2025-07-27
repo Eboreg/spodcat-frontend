@@ -35,10 +35,12 @@ export default class EpisodeModel extends PodcastContentModel {
     }
 
     get imageData(): Image | undefined {
-        if (this.image && this["image-height"] && this["image-width"]) {
-            return { url: this.image, height: this["image-height"], width: this["image-width"] };
-        }
-        return;
+        const size =
+            this["image-height"] && this["image-width"]
+                ? { height: this["image-height"], width: this["image-width"] }
+                : undefined;
+
+        return this.image ? { url: this.image, size: size } : undefined;
     }
 
     get isEpisode() {

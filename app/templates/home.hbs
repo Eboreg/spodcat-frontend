@@ -2,32 +2,11 @@
   {{page-title this.singleton.name replace=true}}
   <Podcast::Index @podcast={{this.singleton}} />
 {{else}}
+  {{page-title this.siteName replace=true}}
   <main class="content-width column gap-half podcast-list">
     <h3 class="my-half font-weight-normal outlined-text">{{t "choose-a-podcast"}}:</h3>
     {{#each @model as |podcast|}}
-      <div class="podcast-banner">
-        {{#if podcast.banner}}
-          <img src="{{podcast.banner}}" alt="" class="podcast-banner-image" />
-        {{/if}}
-        <LinkTo
-          class="row gap-single align-center mx-half my-single my-sm-half"
-          @route={{podcast.route}}
-          @models={{podcast.routeModels}}
-        >
-          {{#if podcast.cover-thumbnail}}
-            <img src="{{podcast.cover-thumbnail}}" alt="" class="podcast-cover d-none d-sm-block" />
-          {{/if}}
-          <div>
-            <div
-              class="podcast-name {{if podcast.banner 'outlined-text' 'shadowed-text'}} {{podcast.nameCssClass}}"
-              style={{podcast.nameCssStyle}}
-            >{{podcast.name}}</div>
-            {{#if podcast.tagline}}
-              <div class="podcast-tagline outlined-text d-none d-sm-block">{{podcast.tagline}}</div>
-            {{/if}}
-          </div>
-        </LinkTo>
-      </div>
+      <Podcast::Banner @podcast={{podcast}} />
     {{/each}}
   </main>
 {{/if}}

@@ -5,105 +5,126 @@ import { service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
 import type EpisodeModel from "spodcat/models/episode";
 import type PodcastModel from "spodcat/models/podcast";
-import type PodcastContentModel from "spodcat/models/podcast-content";
 import type PostModel from "spodcat/models/post";
 import { makeAbsoluteUrl, trimString, urljoin } from "spodcat/utils";
-import type { Size } from "global";
-
-export interface Favicon {
-    url: string;
-    contentType: string;
-}
-
-export interface Rss {
-    title: string;
-    url: string;
-}
+import type { Favicon, Rss, Image } from "global";
 
 export default class HeadDataService extends Service {
     @service declare router: RouterService;
 
-    @tracked declare favicon?: Favicon;
-    @tracked declare musicDuration?: string;
-    @tracked declare musicReleaseDate?: string;
-    @tracked declare ogAudio?: string;
-    @tracked declare ogAudioType?: string;
-    @tracked declare ogDescription?: string;
-    @tracked declare ogImage?: string;
-    @tracked declare ogImageSize?: Size;
-    @tracked declare ogLocale?: string;
-    @tracked declare ogTitle?: string;
-    @tracked ogType: string = "website";
-    @tracked declare ogUrl?: string;
-    @tracked declare rss?: Rss;
-    @tracked declare twitterDescription?: string;
-    @tracked declare twitterTitle?: string;
+    @tracked _podcast?: PodcastModel;
+    @tracked _episode?: EpisodeModel;
+    @tracked _post?: PostModel;
+    @tracked _extractedImageUrls?: string[];
 
     fontFaceUrl = urljoin(ENV.APP.BACKEND_HOST, "font-faces");
     siteName = ENV.APP.SITE_NAME;
 
-    #updateFromPodcastBase(value: PodcastModel) {
-        this.favicon = value.faviconData;
-        this.rss = value.rssData;
-        this.ogLocale = value.language;
-        if (this.ogTitle) this.twitterTitle = trimString(this.ogTitle, 70);
-        if (this.ogDescription) this.twitterDescription = trimString(this.ogDescription, 200);
+    get extractedImage(): Image | undefined {
+        return this._extractedImageUrls && this._extractedImageUrls[0]
+            ? { url: this._extractedImageUrls[0] }
+            : undefined;
     }
 
-    #updateFromPodcastContent(value: PodcastContentModel) {
-        const imageUrls = value.extractImageUrls();
+    get favicon(): Favicon {
+        return this._podcast?.faviconData || { url: "/favicon.png", contentType: "image/png" };
+    }
 
-        if (!this.ogImage) {
-            if (imageUrls.length > 0) {
-                this.ogImage = imageUrls[0];
-            } else {
-                this.ogImage = value.podcast.banner;
-                this.ogImageSize = value.podcast.bannerSize;
-            }
+    get musicDuration(): string | undefined {
+        return this._episode?.["duration-seconds"]?.toString();
+    }
+
+    get musicReleaseDate(): string | undefined {
+        return this._episode?.published?.toISOString();
+    }
+
+    get ogAudio(): string | undefined {
+        return this._episode?.["audio-url"];
+    }
+
+    get ogAudioType(): string | undefined {
+        return this._episode?.["audio-content-type"];
+    }
+
+    get ogDescription(): string | undefined {
+        return this._episode?.strippedDescription || this._post?.strippedDescription || this._podcast?.tagline;
+    }
+
+    get ogImage(): Image | undefined {
+        return this._episode?.imageData || this.extractedImage || this._podcast?.bannerData;
+    }
+
+    get ogLocale(): string {
+        return this._podcast?.language || ENV.APP.LOCALE;
+    }
+
+    get ogTitle(): string {
+        const podcastContent = this._episode || this._post;
+
+        return podcastContent
+            ? `${podcastContent.name} | ${podcastContent.podcast.name}`
+            : this._podcast?.name || ENV.APP.SITE_NAME;
+    }
+
+    get ogType(): string {
+        if (this._post) return "article";
+        if (this._episode) return "music.song";
+        return "website";
+    }
+
+    get ogUrl(): string {
+        if (ENV.APP.IS_SINGLETON) {
+            if (this._post) return makeAbsoluteUrl(this.router.urlFor("post", this._post.slug));
+            if (this._episode) return makeAbsoluteUrl(this.router.urlFor("episode", this._episode.slug));
+        } else {
+            if (this._post)
+                return makeAbsoluteUrl(this.router.urlFor("podcast.post", this._post.podcast, this._post.slug));
+            if (this._episode)
+                return makeAbsoluteUrl(
+                    this.router.urlFor("podcast.episode", this._episode.podcast, this._episode.slug),
+                );
+            if (this._podcast) return makeAbsoluteUrl(this.router.urlFor("podcast", this._podcast));
         }
 
-        this.ogTitle = `${value.name} | ${value.podcast.name}`;
-        this.ogDescription = value.strippedDescription || value.podcast.tagline;
-        this.#updateFromPodcastBase(value.podcast);
+        return makeAbsoluteUrl(this.router.urlFor("home"));
     }
 
-    updateFromEpisode(value: EpisodeModel) {
-        this.ogAudio = value["audio-url"];
-        this.ogAudioType = value["audio-content-type"];
-        this.musicDuration = value["duration-seconds"].toString();
-        this.musicReleaseDate = value.published.toISOString();
-        this.ogType = "music.song";
-
-        if (value.imageData && value.imageData.width >= 200 && value.imageData.height >= 200) {
-            this.ogImage = value.imageData.url;
-            this.ogImageSize = value.imageData;
-        }
-
-        if (ENV.APP.IS_SINGLETON) this.ogUrl = makeAbsoluteUrl(this.router.urlFor("episode", value.slug));
-        else this.ogUrl = makeAbsoluteUrl(this.router.urlFor("podcast.episode", value.podcast, value.slug));
-
-        this.#updateFromPodcastContent(value as PodcastContentModel);
+    get rss(): Rss | undefined {
+        return this._podcast?.rssData;
     }
 
-    updateFromPodcast(value: PodcastModel) {
-        this.ogTitle = value.name;
-        this.ogDescription = value.tagline;
-        this.ogImage = value.banner;
-        this.ogImageSize = value.bannerSize;
-
-        if (ENV.APP.IS_SINGLETON) this.ogUrl = makeAbsoluteUrl(this.router.urlFor("home"));
-        else this.ogUrl = makeAbsoluteUrl(this.router.urlFor("podcast", value));
-
-        this.#updateFromPodcastBase(value);
+    get twitterDescription(): string | undefined {
+        return this.ogDescription ? trimString(this.ogDescription, 200) : undefined;
     }
 
-    updateFromPost(value: PostModel) {
-        this.ogType = "article";
+    get twitterTitle(): string {
+        return trimString(this.ogTitle, 70);
+    }
 
-        if (ENV.APP.IS_SINGLETON) this.ogUrl = makeAbsoluteUrl(this.router.urlFor("post", value.slug));
-        else this.ogUrl = makeAbsoluteUrl(this.router.urlFor("podcast.post", value.podcast, value.slug));
+    reset() {
+        this._podcast = undefined;
+        this._episode = undefined;
+        this._post = undefined;
+        this._extractedImageUrls = undefined;
+    }
 
-        this.#updateFromPodcastContent(value as PodcastContentModel);
+    setEpisode(value: EpisodeModel) {
+        this.reset();
+        this._podcast = value.podcast;
+        this._episode = value;
+        this._extractedImageUrls = value.extractImageUrls();
+    }
+
+    setPodcast(value: PodcastModel) {
+        this.reset();
+        this._podcast = value;
+    }
+
+    setPost(value: PostModel) {
+        this.reset();
+        this._podcast = value.podcast;
+        this._post = value;
+        this._extractedImageUrls = value.extractImageUrls();
     }
 }
 

@@ -17,6 +17,15 @@
 @use "modal";
 
 :root {
+    --mm-background-color-opaque: #{$background-color-opaque};
+    --mm-background-color: #{$background-color};
+    --mm-body-background: #{$body-background};
+    --mm-border-radius: #{$border-radius};
+    --mm-content-width: #{$content-width};
+    --mm-modal-width: #{$modal-width};
+    --mm-player-bar-height: #{$player-bar-height};
+    --mm-text-color-dark: #{$text-color-dark};
+    --mm-text-color: #{$text-color};
     --mm-toast-width: #{$toast-width};
     --mm-font-size-article: #{$font-size-article-mobile};
     --mm-font-size-body: #{$font-size-body-mobile};
@@ -25,6 +34,12 @@
 
     @each $lname, $length in $lengths {
         --mm-length-#{$lname}: #{$length};
+    }
+
+    @each $tname, $theme in $color-themes {
+        @each $cname, $color in $theme {
+            --mm-theme-#{$tname}-#{$cname}: #{$color};
+        }
     }
 
     @include responsive.min(sm) {

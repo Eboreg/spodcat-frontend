@@ -18,11 +18,11 @@
   <meta name="twitter:title" content={{html-safe this.model.twitterTitle}} />
 {{/if}}
 {{#if this.model.ogImage}}
-  <meta property="og:image" content={{this.model.ogImage}} />
-  <meta name="twitter:image" content={{this.model.ogImage}} />
-  {{#if this.model.ogImageSize}}
-    <meta property="og:image:width" content={{this.model.ogImageSize.width}} />
-    <meta property="og:image:height" content={{this.model.ogImageSize.height}} />
+  <meta property="og:image" content={{this.model.ogImage.url}} />
+  <meta name="twitter:image" content={{this.model.ogImage.url}} />
+  {{#if this.model.ogImage.size}}
+    <meta property="og:image:width" content={{this.model.ogImage.size.width}} />
+    <meta property="og:image:height" content={{this.model.ogImage.size.height}} />
   {{/if}}
 {{/if}}
 {{#if this.model.rss}}

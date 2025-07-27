@@ -1,12 +1,12 @@
+import ENV from "spodcat/config/environment";
 import type Store from "@ember-data/store";
 import { action } from "@ember/object";
-import { getOwner } from "@ember/owner";
 import Route from "@ember/routing/route";
 import type RouterService from "@ember/routing/router-service";
 import type { Registry } from "@ember/service";
 import { service } from "@ember/service";
 import type FastBoot from "ember-cli-fastboot/services/fastboot";
-import type { FastbootResponse } from "global";
+import type ApplicationController from "spodcat/controllers/application";
 import PodcastModel from "spodcat/models/podcast";
 import type MessageService from "spodcat/services/message";
 
@@ -38,17 +38,7 @@ export default class PodcastRoute extends Route<PodcastModel> {
     }
 
     afterModel(model?: PodcastModel) {
-        if (model?.language) {
-            const docService = getOwner(this)?.lookup("service:-document") as Document | undefined;
-
-            this.intl.setLocale(model.language);
-            docService?.documentElement?.setAttribute("lang", model.language);
-
-            if (this.fastboot.isFastBoot) {
-                const response = this.fastboot.get("response") as FastbootResponse;
-                response.headers.set("Content-Language", model.language);
-            }
-        }
+        (this.controllerFor("application") as ApplicationController)?.setLocale(model?.language || ENV.APP.LOCALE);
     }
 
     model(params: { podcast_id: string }): Promise<PodcastModel> {

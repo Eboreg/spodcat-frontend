@@ -5,6 +5,7 @@ import type PodcastModel from "spodcat/models/podcast";
 
 export default class HomeController extends Controller<PodcastModel[]> {
     @tracked declare model: PodcastModel[];
+    siteName: string = ENV.APP.SITE_NAME;
 
     get isSingleton(): boolean {
         return ENV.APP.IS_SINGLETON;

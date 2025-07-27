@@ -94,8 +94,9 @@ export interface Size {
     height: number;
 }
 
-export interface Image extends Size {
+export interface Image {
     url: string;
+    size?: Size;
 }
 
 export type Theme = "primary" | "secondary" | "tertiary" | "boring";
@@ -113,4 +114,14 @@ interface FastbootHeaders {
 export interface FastbootResponse {
     statusCode: number;
     headers: FastbootHeaders;
+}
+
+export interface Favicon {
+    url: string;
+    contentType: string;
+}
+
+export interface Rss {
+    title: string;
+    url: string;
 }
