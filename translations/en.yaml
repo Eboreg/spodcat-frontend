@@ -38,7 +38,7 @@ comment:
     approval-required: "Thanks! Your comment will be shown when it has been approved."
     no-approval-required: "Thanks for your comment."
 cookies:
-  answer: "We don't make any annoying questions about cookies since we simply don't store any. Turns out it often works
+  answer: "We don't ask any annoying questions about cookies since we simply don't store any. Turns out it often works
     perfectly fine without them."
   question: "Cookies?"
 keyboard:
