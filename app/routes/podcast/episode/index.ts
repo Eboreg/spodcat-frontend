@@ -10,7 +10,7 @@ export default class PodcastEpisodeIndexRoute extends BasePodcastEpisodeRoute {
 
     async model(params: { episode_slug: string }) {
         const result = await this.store.query<EpisodeModel>("episode", {
-            include: ["songs.artists", "comments", "videos", "season2"],
+            include: ["songs.artists", "comments", "videos", "season"],
             filter: { episode: params.episode_slug, podcast: this.getPodcastId() },
         });
 

@@ -11,7 +11,7 @@ export interface PodcastContentEpisodeLeadingIconSignature {
 
 export default class PodcastContentEpisodeLeadingIcon extends Component<PodcastContentEpisodeLeadingIconSignature> {
     get classes() {
-        const theme = this.args.episode.season2 ? this.args.episode.season2.theme : "primary";
+        const theme = this.args.episode.season ? this.args.episode.season.theme : "primary";
         return `podcast-content-leading-icon theme-${theme}`;
     }
 

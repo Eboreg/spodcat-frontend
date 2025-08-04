@@ -1,7 +1,7 @@
 {{#if @episode.image-thumbnail}}
   <img src={{@episode.image-thumbnail}} class={{this.classes}} alt="" ...attributes />
-{{else if @episode.season2.image-thumbnail}}
-  <img src={{@episode.season2.image-thumbnail}} class={{this.classes}} alt="" ...attributes />
+{{else if @episode.season.image-thumbnail}}
+  <img src={{@episode.season.image-thumbnail}} class={{this.classes}} alt="" ...attributes />
 {{else if @episode.numberString}}
   <div class="{{this.classes}} {{this.numberClass}}" ...attributes>{{@episode.numberString}}</div>
 {{else if this.coverThumbnail}}

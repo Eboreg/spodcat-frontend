@@ -18,7 +18,7 @@ export default class SeasonModel extends Model {
 
     @belongsTo<PodcastModel>("podcast", { async: false, inverse: "seasons" })
     declare podcast: PodcastModel;
-    @hasMany<EpisodeModel>("episode", { async: true, inverse: "season2" })
+    @hasMany<EpisodeModel>("episode", { async: true, inverse: "season" })
     declare episodes: AsyncHasMany<EpisodeModel>;
 
     get theme(): Theme {

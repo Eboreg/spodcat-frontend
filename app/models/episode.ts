@@ -24,7 +24,7 @@ export default class EpisodeModel extends PodcastContentModel {
     @attr declare number?: number;
 
     @belongsTo<SeasonModel>("season", { async: false, inverse: "episodes" })
-    declare season2?: SeasonModel;
+    declare season?: SeasonModel;
     @hasMany<EpisodeSongModel>("episode-song", { async: false, inverse: "episode" })
     declare songs: HasMany<EpisodeSongModel>;
 
