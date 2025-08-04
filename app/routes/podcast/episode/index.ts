@@ -1,4 +1,4 @@
-import EpisodeModel from "spodcat/models/episode";
+import type EpisodeModel from "spodcat/models/episode";
 import { NotFoundError } from "spodcat/utils";
 import BasePodcastEpisodeRoute from "./base";
 import type PodcastEpisodeIndexController from "spodcat/controllers/podcast/episode/index";
@@ -10,7 +10,7 @@ export default class PodcastEpisodeIndexRoute extends BasePodcastEpisodeRoute {
 
     async model(params: { episode_slug: string }) {
         const result = await this.store.query<EpisodeModel>("episode", {
-            include: ["songs.artists", "comments", "videos"],
+            include: ["songs.artists", "comments", "videos", "season2"],
             filter: { episode: params.episode_slug, podcast: this.getPodcastId() },
         });
 

@@ -13,12 +13,13 @@ pause: "Pausa"
 play: "Spela"
 play-pause: "Spela/pausa"
 playback-rate: "Hastighet"
-podcast-x-not-found: 'Kunde inte hitta podden "{x}".'
+podcast-x-not-found: "Kunde inte hitta podden \"{x}\"."
 post-not-found: "Kunde inte hitta inlägget."
 rewind-10s: "Bakåt 10 sekunder"
 rewind-60s: "Bakåt 60 sekunder"
 rss-feed: "RSS-flöde"
-season-x: "Säsong {x}"
+season-number: "Säsong {number}"
+season-number-name: "Säsong {number}: {name}"
 site-made-by: "Webbsidan tillverkades av"
 songs: "Låtar"
 spodcat-subtitle: "Hej, detta är en podcastplattform. Välj en podd:"
@@ -38,7 +39,7 @@ comment:
     approval-required: "Tackar! Din kommentar kommer att visas när den godkänts."
     no-approval-required: "Tackar för din kommentar."
 cookies:
-  answer: "Vi ställer inga irriterande frågor om cookies eftersom vi helt enkelt inte lagrar några. Det går nämligen
+  answer: "Vi ställer inga irriterande frågor om cookies eftersom vi helt enkelt inte lagrar några. Det går nämligen 
     ofta utmärkt att låta bli."
   question: "Cookies?"
 keyboard:
@@ -54,11 +55,13 @@ share:
   telegram: "Telegram"
   the-facebook: "The Facebook"
   whatsapp: "Whatsapp"
+video:
+  embed-explanation: "Om du vill visa denna video, kommer Youtube antagligen att lagra all möjlig dynga på din dator. 
+    Du kan också öppna Youtube i en ny flik; det medför samma integritetsproblem, men då är det åtminstone inte vårt 
+    bekymmer. :-)"
+  open-new-tab: "Öppna Youtube i ny flik"
+  show-embedded: "Visa inbäddad video"
+  video: "Video"
 volume:
   mute: "Stäng av ljud"
   unmute: "Sätt på ljud"
-video:
-  open-new-tab: "Öppna Youtube i ny flik"
-  video: Video
-  show-embedded: "Visa inbäddad video"
-  embed-explanation: "Om du vill visa denna video, kommer Youtube antagligen att lagra all möjlig dynga på din dator. Du kan också öppna Youtube i en ny flik; det medför samma integritetsproblem, men då är det åtminstone inte vårt bekymmer. :-)"

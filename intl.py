@@ -132,13 +132,14 @@ def orphans_cmd(locale: str, **kwargs):
         if out.returncode == 1:
             not_found.append(key)
 
-    print("Found orphans:")
-    print()
-    print("\n".join(not_found))
-    print()
-    print(
-        "*** NOTE! Don't trust this blindly! It will miss translation keys that were dynamically produced. ***"
-    )
+    if not_found:
+        print("Found orphans:", end="\n\n")
+        print("\n".join(not_found), end="\n\n")
+        print(
+            "*** NOTE! Don't trust this blindly! It will miss translation keys that were dynamically produced. ***"
+        )
+    else:
+        print("No orphans found.")
 
 
 def trans_cmd(from_locale: str, to_locale: str, stdout: bool, **kwargs):

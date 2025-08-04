@@ -23,8 +23,7 @@
             title="{{t 'share.share'}}"
             {{on "click" this.openShareModal}}
           >share</span>
-        {{/if}}
-        {{#if (and @episode.has-songs (not @expand))}}
+        {{else if @episode.has-songs}}
           <LinkTo
             @route={{@episode.route}}
             @models={{@episode.routeModels}}

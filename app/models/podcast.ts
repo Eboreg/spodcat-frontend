@@ -5,6 +5,7 @@ import type PodcastLinkModel from "./podcast-link";
 import type PodcastContentModel from "./podcast-content";
 import { htmlSafe, type SafeString } from "@ember/template";
 import type { Favicon, Image, Rss } from "global";
+import type SeasonModel from "./season";
 
 export default class PodcastModel extends Model {
     @attr declare banner?: string;
@@ -36,6 +37,8 @@ export default class PodcastModel extends Model {
     declare contents: AsyncHasMany<PodcastContentModel>;
     @hasMany<PodcastLinkModel>("podcast-link", { async: true, inverse: "podcast" })
     declare links: AsyncHasMany<PodcastLinkModel>;
+    @hasMany<SeasonModel>("season", { async: true, inverse: "podcast" })
+    declare seasons: AsyncHasMany<SeasonModel>;
 
     get bannerCssStyle(): SafeString {
         return htmlSafe(this.banner ? `background-image: url("${this.banner}")` : "");

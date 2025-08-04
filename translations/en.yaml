@@ -13,12 +13,13 @@ pause: "Pause"
 play: "Play"
 play-pause: "Play/pause"
 playback-rate: "Playback rate"
-podcast-x-not-found: 'Could not find the podcast "{x}".'
+podcast-x-not-found: "Could not find the podcast \"{x}\"."
 post-not-found: "Could not find the post."
 rewind-10s: "Rewind 10 seconds"
 rewind-60s: "Rewind 60 seconds"
 rss-feed: "RSS feed"
-season-x: "Season {x}"
+season-number: "Season {number}"
+season-number-name: "Season {number}: {name}"
 site-made-by: "The site was made by"
 songs: "Songs"
 spodcat-subtitle: "Hi, this is a podcast platform. Please choose a podcast:"
@@ -38,7 +39,7 @@ comment:
     approval-required: "Thanks! Your comment will be shown when it has been approved."
     no-approval-required: "Thanks for your comment."
 cookies:
-  answer: "We don't ask any annoying questions about cookies since we simply don't store any. Turns out it often works
+  answer: "We don't ask any annoying questions about cookies since we simply don't store any. Turns out it often works 
     perfectly fine without them."
   question: "Cookies?"
 keyboard:
@@ -54,11 +55,13 @@ share:
   telegram: "Telegram"
   the-facebook: "The Facebook"
   whatsapp: "Whatsapp"
+video:
+  embed-explanation: "If you want to show this video, Youtube will probably store all kinds of crap on your computer. 
+    You can also open Youtube in a new tab; that has the same privacy implications, but at least then it's not our 
+    problem. :-)"
+  open-new-tab: "Open Youtube in new tab"
+  show-embedded: "Show embedded video"
+  video: "Video"
 volume:
   mute: "Mute"
   unmute: "Unmute"
-video:
-  open-new-tab: "Open Youtube in new tab"
-  video: Video
-  show-embedded: "Show embedded video"
-  embed-explanation: "If you want to show this video, Youtube will probably store all kinds of crap on your computer. You can also open Youtube in a new tab; that has the same privacy implications, but at least then it's not our problem. :-)"

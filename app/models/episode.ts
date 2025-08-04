@@ -1,10 +1,11 @@
 import ENV from "spodcat/config/environment";
-import { attr, hasMany, type HasMany } from "@ember-data/model";
+import { attr, belongsTo, hasMany, type HasMany } from "@ember-data/model";
 import { Type } from "@warp-drive/core-types/symbols";
 import { makeAbsoluteUrl, timeToString } from "spodcat/utils";
 import PodcastContentModel from "./podcast-content";
 import type EpisodeSongModel from "./episode-song";
-import type { Image, Theme } from "global";
+import type { Image } from "global";
+import type SeasonModel from "./season";
 
 export default class EpisodeModel extends PodcastContentModel {
     @attr declare "audio-content-type"?: string;
@@ -21,8 +22,9 @@ export default class EpisodeModel extends PodcastContentModel {
     @attr declare "image-thumbnail"?: string;
     @attr declare "image-width"?: number;
     @attr declare number?: number;
-    @attr declare season?: number;
 
+    @belongsTo<SeasonModel>("season", { async: false, inverse: "episodes" })
+    declare season2?: SeasonModel;
     @hasMany<EpisodeSongModel>("episode-song", { async: false, inverse: "episode" })
     declare songs: HasMany<EpisodeSongModel>;
 
@@ -94,12 +96,6 @@ export default class EpisodeModel extends PodcastContentModel {
     get routeModels() {
         if (ENV.APP.IS_SINGLETON) return [this.slug];
         return [this.podcast, this.slug];
-    }
-
-    get seasonTheme(): Theme {
-        const alternatives: Theme[] = ["primary", "secondary", "tertiary", "boring"];
-
-        return alternatives[(this.season || 0) % 3]!;
     }
 
     [Type] = "episode" as const;

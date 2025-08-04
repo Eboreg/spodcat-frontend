@@ -43,7 +43,7 @@ export default class PodcastRoute extends Route<PodcastModel> {
 
     model(params: { podcast_id: string }): Promise<PodcastModel> {
         return this.store.findRecord<PodcastModel>("podcast", params.podcast_id, {
-            include: ["contents", "links"],
+            include: ["contents", "links", "seasons"],
         });
     }
 }

@@ -2,8 +2,14 @@
 <div class="fill column gap-quarter">
   <div class="podcast-content-name">{{@episode.name}}</div>
   <div class="row gap-half">
-    {{#if @episode.season}}
-      <div class="badge theme-{{@episode.seasonTheme}}">{{t "season-x" x=@episode.season}}</div>
+    {{#if @episode.season2}}
+      <div class="badge theme-{{@episode.season2.theme}}">
+        {{#if @episode.season2.name}}
+          {{t "season-number-name" number=@episode.season2.number name=@episode.season2.name}}
+        {{else}}
+          {{t "season-number" number=@episode.season2.number}}
+        {{/if}}
+      </div>
     {{/if}}
     <div class="badge theme-secondary">{{@episode.publishedString}}</div>
     <div class="badge theme-tertiary d-none d-sm-block">{{@episode.durationString}}</div>
