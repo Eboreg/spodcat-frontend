@@ -9,6 +9,7 @@ export default class PodcastContentModel extends Model {
     @attr declare description?: string;
     @attr declare "description-html"?: string;
     @attr declare name: string;
+    @attr declare "podcast-name": string;
     @attr("date") declare published: Date;
     @attr declare slug: string;
 

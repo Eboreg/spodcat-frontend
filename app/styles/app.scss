@@ -15,6 +15,7 @@
 @use "comment";
 @use "player-bar";
 @use "modal";
+@use "search";
 
 :root {
     --mm-background-color-opaque: #{$background-color-opaque};
@@ -24,6 +25,8 @@
     --mm-content-width: #{$content-width};
     --mm-modal-width: #{$modal-width};
     --mm-player-bar-height: #{$player-bar-height};
+    --mm-podcast-banner-background-1: #{$podcast-banner-background-1};
+    --mm-podcast-banner-background-2: #{$podcast-banner-background-2};
     --mm-text-color-dark: #{$text-color-dark};
     --mm-text-color: #{$text-color};
     --mm-toast-width: #{$toast-width};

@@ -31,6 +31,14 @@
         z-index: -1;
     }
 
+    &:nth-child(odd) .podcast-banner-image {
+        background-image: $podcast-banner-background-1;
+    }
+
+    &:nth-child(even) .podcast-banner-image {
+        background-image: $podcast-banner-background-2;
+    }
+
     .podcast-cover {
         aspect-ratio: 1/1;
         border: 5px outset color.get-color("primary");

@@ -1,7 +1,5 @@
 <header class="podcast-banner box-shadow {{if @podcast.banner 'has-banner-image'}}" ...attributes>
-  {{#if @podcast.banner}}
-    <div class="podcast-banner-image" style={{@podcast.bannerCssStyle}}></div>
-  {{/if}}
+  <div class="podcast-banner-image" style={{@podcast.bannerCssStyle}}></div>
 
   <LinkTo class="row gap-single align-center p-single" @route={{@podcast.route}} @models={{@podcast.routeModels}}>
     {{#if @podcast.cover-thumbnail}}

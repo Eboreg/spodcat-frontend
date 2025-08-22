@@ -28,6 +28,14 @@
     </Button>
   {{/if}}
 
+  <Button @on-click={{this.openSearchModal}} @theme="secondary" @material-icon="search">
+    <span class="label">{{t "search"}}</span>
+  </Button>
+
+  {{#if this.isSearchModalOpen}}
+    <SearchModal @on-dismiss-request={{this.closeSearchModal}} />
+  {{/if}}
+
   <Attribution class="d-none d-md-flex" />
 
   {{yield}}

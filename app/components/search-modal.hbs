@@ -1,0 +1,36 @@
+<Modal
+  @on-backdrop-click={{@on-dismiss-request}}
+  @on-close-click={{@on-dismiss-request}}
+  {{on "keydown" this.onKeyDown}}
+  class="search-modal"
+>
+  <div class="pr-3x search-input-container">
+    <span class="material-symbols icon">search</span>
+    <input
+      type="search"
+      value={{this.term}}
+      {{on "input" this.onInput}}
+      autofocus
+      tabindex="0"
+      class="search-input"
+      {{on-insert this.onInputInsert}}
+    />
+  </div>
+  {{#if this.showMinCharsText}}
+    <div class="px-single pb-half text-small text-boring-light">{{t "enter-min-3-chars"}}</div>
+  {{/if}}
+  <div class="search-results">
+    {{#each this.results as |result index|}}
+      <div class="search-result{{if (eq index this.activeIdx) ' active'}}">
+        <LinkTo @route={{result.route}} @models={{result.routeModels}}>
+          <div class="breadcrumbs">
+            {{result.publishedString}}
+            /
+            {{result.podcast-name}}
+          </div>
+          <div class="title">{{result.name}}</div>
+        </LinkTo>
+      </div>
+    {{/each}}
+  </div>
+</Modal>

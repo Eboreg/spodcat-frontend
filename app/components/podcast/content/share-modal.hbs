@@ -1,5 +1,5 @@
 <Modal @on-backdrop-click={{@on-close}} @on-close-click={{@on-close}} class="content-share-modal">
-  <div class="column gap-single">
+  <div class="column gap-single p-single">
     <h3 class="m-0">{{t "share.share"}}</h3>
     <div class="row gap-half">
       <Input @value={{this.contentUrl}} readonly class="fill" {{on "click" this.onContentUrlClick}} />

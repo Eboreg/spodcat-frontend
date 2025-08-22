@@ -18,8 +18,6 @@ Router.map(function () {
             this.route("draft", { path: "/draft/:post_id" });
             this.route("index", { path: "/:post_slug" });
         });
-
-        this.route("index", { path: "/" });
     });
     this.route("404", { path: "/*path" });
     this.route("404");
