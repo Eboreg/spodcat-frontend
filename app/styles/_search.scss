@@ -38,6 +38,10 @@
         margin-bottom: 0.5rem;
     }
 
+    &:hover:not(.active) {
+        background-color: var(--mm-theme-boring-dark);
+    }
+
     .breadcrumbs {
         font-size: 13px;
         color: var(--mm-text-color-dark);

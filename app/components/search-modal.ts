@@ -108,10 +108,6 @@ export default class SearchModal extends Component<SearchModalSignature> {
         }
     }
 
-    @action onMouseEnterResult(index: number) {
-        this.__activeIdx = index;
-    }
-
     @action onOpenChange(elem: HTMLInputElement, open: boolean) {
         if (open) elem.select();
     }

@@ -6,8 +6,8 @@
     background-color: var(--mm-background-color-opaque);
     box-shadow: 0 0 10px black;
     color: var(--mm-text-color);
-    margin: 8rem auto 1rem;
-    max-height: calc(100% - 9rem);
+    margin: var(--mm-modal-top-margin) auto 1rem;
+    max-height: calc(100% - var(--mm-modal-top-margin) - 1rem);
     max-width: $modal-width;
 
     &[open] {
@@ -17,7 +17,7 @@
     }
 
     &.dotted-border {
-        max-height: calc(100% - 9rem - (var(--mm-dotted-border-width) * 2));
+        max-height: calc(100% - var(--mm-modal-top-margin) - 1rem - (var(--mm-dotted-border-width) * 2));
     }
 
     &::backdrop {

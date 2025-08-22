@@ -20,10 +20,7 @@
     {{/if}}
     <div class="search-results">
       {{#each this.results as |result index|}}
-        <div
-          class="search-result{{if (eq index this.activeIdx) ' active'}}"
-          {{on "mouseenter" (fn this.onMouseEnterResult index)}}
-        >
+        <div class="search-result{{if (eq index this.activeIdx) ' active'}}">
           <LinkTo @route={{result.route}} @models={{result.routeModels}} {{on "click" this.onResultClick}}>
             <div class="breadcrumbs">
               {{result.publishedString}}

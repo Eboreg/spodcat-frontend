@@ -35,6 +35,7 @@
     --mm-font-size-small: #{$font-size-small-mobile};
     --mm-font-size-xs: #{$font-size-xs-mobile};
     --mm-dotted-border-width: #{map.get($lengths, "quarter")};
+    --mm-modal-top-margin: 4rem;
 
     @each $lname, $length in $lengths {
         --mm-length-#{$lname}: #{$length};
@@ -52,6 +53,7 @@
         --mm-font-size-small: #{$font-size-small-desktop};
         --mm-font-size-xs: #{$font-size-xs-desktop};
         --mm-dotted-border-width: #{map.get($lengths, "half")};
+        --mm-modal-top-margin: 8rem;
     }
 }
 
