@@ -20,16 +20,19 @@
     {{/if}}
     <div class="search-results">
       {{#each this.results as |result index|}}
-        <div class="search-result{{if (eq index this.activeIdx) ' active'}}">
-          <LinkTo @route={{result.route}} @models={{result.routeModels}} {{on "click" this.onResultClick}}>
-            <div class="breadcrumbs">
-              {{result.publishedString}}
-              /
-              {{result.podcast-name}}
-            </div>
-            <div class="title">{{result.name}}</div>
-          </LinkTo>
-        </div>
+        <LinkTo
+          @route={{result.route}}
+          @models={{result.routeModels}}
+          {{on "click" this.onResultClick}}
+          class="search-result{{if (eq index this.activeIdx) ' active'}}"
+        >
+          <div class="breadcrumbs">
+            {{result.publishedString}}
+            /
+            {{result.podcast-name}}
+          </div>
+          <div class="title">{{result.name}}</div>
+        </LinkTo>
       {{/each}}
     </div>
   </:default>
