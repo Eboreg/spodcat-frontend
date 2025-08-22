@@ -17,10 +17,6 @@ export interface PodcastContentPostCardSignature {
 export default class PodcastContentPostCard extends Component<PodcastContentPostCardSignature> {
     @tracked showShareModal: boolean = false;
 
-    @action closeShareModal() {
-        this.showShareModal = false;
-    }
-
     @action openShareModal() {
         this.showShareModal = true;
     }

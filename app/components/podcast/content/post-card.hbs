@@ -27,6 +27,4 @@
   </div>
 </div>
 
-{{#if this.showShareModal}}
-  <Podcast::Content::ShareModal @on-close={{this.closeShareModal}} @url={{@post.frontendUrl}} />
-{{/if}}
+<Podcast::Content::ShareModal @open={{this.showShareModal}} @url={{@post.frontendUrl}} />

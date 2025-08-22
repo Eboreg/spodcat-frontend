@@ -3,27 +3,34 @@ import Component from "@glimmer/component";
 
 export interface ModalSignature {
     Args: {
-        "on-backdrop-click"?: () => void;
-        "on-close-click": () => void;
+        open: boolean;
     };
-    Element: HTMLDivElement;
+    Element: HTMLDialogElement;
     Blocks: {
         default: [];
+        header: [];
     };
 }
 
-export default class Modal extends Component<ModalSignature> {
-    @action onCloseClick() {
-        this.args["on-close-click"]();
+export default class Modal<T extends ModalSignature> extends Component<T> {
+    dialogElement?: HTMLDialogElement;
+
+    @action hide() {
+        this.dialogElement?.close();
     }
 
-    @action onContainerClick(event: MouseEvent) {
-        if (
-            event.target instanceof HTMLElement &&
-            event.target.classList.contains("modal-container") &&
-            this.args["on-backdrop-click"]
-        ) {
-            this.args["on-backdrop-click"]();
-        }
+    @action onInsert(dialog: HTMLDialogElement) {
+        this.dialogElement = dialog;
+        if (this.args.open) this.show();
+        else this.hide();
+    }
+
+    @action onOpenChange(dialog: HTMLDialogElement, open: boolean) {
+        if (open) this.show();
+        else this.hide();
+    }
+
+    @action show() {
+        this.dialogElement?.showModal();
     }
 }

@@ -32,9 +32,7 @@
     <span class="label">{{t "search"}}</span>
   </Button>
 
-  {{#if this.isSearchModalOpen}}
-    <SearchModal @on-dismiss-request={{this.closeSearchModal}} />
-  {{/if}}
+  <SearchModal @on-dismiss-request={{this.closeSearchModal}} @open={{this.isSearchModalOpen}} />
 
   <Attribution class="d-none d-md-flex" />
 

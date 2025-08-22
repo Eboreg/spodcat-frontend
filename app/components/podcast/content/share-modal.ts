@@ -10,7 +10,7 @@ export interface PodcastContentShareModalSignature {
     Args: {
         url: string;
         "current-time"?: number;
-        "on-close": () => void;
+        open: boolean;
     };
     Element: HTMLDivElement;
     Blocks: {

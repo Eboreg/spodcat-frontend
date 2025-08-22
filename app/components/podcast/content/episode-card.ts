@@ -30,10 +30,6 @@ export default class PodcastContentEpisodeCard extends Component<PodcastContentE
         return this.audio.episode == this.args.episode && this.audio.isPlaying;
     }
 
-    @action closeShareModal() {
-        this.showShareModal = false;
-    }
-
     @action getCurrentTime() {
         return this.audio.currentTime;
     }

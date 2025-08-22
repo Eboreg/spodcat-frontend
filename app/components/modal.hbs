@@ -1,9 +1,15 @@
-<div class="modal-backdrop" {{on "click" this.onContainerClick}}></div>
-<div class="modal-container" {{on "click" this.onContainerClick}}>
-  <div class="modal dotted-border" ...attributes>
-    <div class="material-symbols close-icon" {{on "click" this.onCloseClick}}>close</div>
-    <div class="modal-content">
-      {{yield}}
-    </div>
+<dialog
+  class="modal dotted-border p-0"
+  closedby="any"
+  {{on-insert this.onInsert}}
+  {{on-update this.onOpenChange @open}}
+  ...attributes
+>
+  <div class="modal-header">
+    <div class="fill">{{yield to="header"}}</div>
+    <div class="material-symbols close-icon" {{on "click" this.hide}}>close</div>
   </div>
-</div>
+  <div class="modal-content">
+    {{yield}}
+  </div>
+</dialog>

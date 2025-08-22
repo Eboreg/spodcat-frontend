@@ -14,6 +14,7 @@ import type RouterService from "@ember/routing/router-service";
 export interface SearchModalSignature {
     Args: {
         "on-dismiss-request": () => void;
+        open: boolean;
     };
     Blocks: {
         default: [];
@@ -48,7 +49,6 @@ export default class SearchModal extends Component<SearchModalSignature> {
 
     @action onInput(event: InputEvent) {
         if (event.target instanceof HTMLInputElement) {
-            const previousTerm = this.term;
             this.term = event.target.value;
 
             if (this.term.length >= 3) {
@@ -64,15 +64,15 @@ export default class SearchModal extends Component<SearchModalSignature> {
                         await this.store.query<PostModel>("post", { filter: { freetext: this.term } }),
                     );
                 });
-            } else if (this.term.length >= previousTerm.length) {
+            } else {
                 this.__episodeResults.clear();
                 this.__postResults.clear();
             }
         }
     }
 
-    @action onInputInsert(elem: HTMLElement) {
-        elem.focus();
+    @action onOpenChange(elem: HTMLInputElement, open: boolean) {
+        if (open) elem.select();
     }
 
     @action onKeyDown(event: KeyboardEvent) {

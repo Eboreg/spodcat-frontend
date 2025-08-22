@@ -1,45 +1,49 @@
-<Modal @on-backdrop-click={{@on-close}} @on-close-click={{@on-close}} class="content-share-modal">
-  <div class="column gap-single p-single">
-    <h3 class="m-0">{{t "share.share"}}</h3>
-    <div class="row gap-half">
-      <Input @value={{this.contentUrl}} readonly class="fill" {{on "click" this.onContentUrlClick}} />
-      <span
-        class="material-symbols icon cursor-pointer"
-        {{on "click" this.onCopyClick}}
-        title="{{t 'share.copy-link'}}"
-      >content_copy</span>
-    </div>
-    <div class="row gap-half wrap">
-      <Button @href={{this.facebookUrl}} @new-tab={{true}} class="small border-boring">
-        <FaIcon @icon="facebook" @prefix="fab" class="icon share-icon" />
-        <span class="label nowrap">{{t "share.the-facebook"}}</span>
-      </Button>
-      <Button @href={{this.eggsUrl}} @new-tab={{true}} class="small border-boring">
-        <FaIcon @icon="square-x-twitter" @prefix="fab" class="icon share-icon" />
-        <span class="label nowrap">{{t "share.eggs"}}</span>
-      </Button>
-      <Button @href={{this.telegramUrl}} @new-tab={{true}} class="small border-boring">
-        <FaIcon @icon="telegram" @prefix="fab" class="icon share-icon" />
-        <span class="label nowrap">{{t "share.telegram"}}</span>
-      </Button>
-      <Button @href={{this.whatsappUrl}} @new-tab={{true}} class="small border-boring">
-        <FaIcon @icon="whatsapp" @prefix="fab" class="icon share-icon" />
-        <span class="label nowrap">{{t "share.whatsapp"}}</span>
-      </Button>
-    </div>
-    {{#if this.hasCurrentTime}}
-      <div class="row gap-half align-center">
-        <Input @type="checkbox" @checked={{this.attachTimeCode}} id="attach-time-code" class="m-0" />
-        <div class="row gap-quarter align-baseline">
-          <label for="attach-time-code" class="text-small">{{t "share.start-at"}}</label>
-          <Input
-            @value={{this.currentTimeString}}
-            {{on "change" this.onCurrentTimeStringChange}}
-            class="current-time-string"
-            disabled={{not this.attachTimeCode}}
-          />
-        </div>
+<Modal @open={{@open}} class="content-share-modal">
+  <:header>
+    <h3 class="m-0 pl-single">{{t "share.share"}}</h3>
+  </:header>
+  <:default>
+    <div class="column gap-single p-single">
+      <div class="row gap-half">
+        <Input @value={{this.contentUrl}} readonly class="fill" {{on "click" this.onContentUrlClick}} />
+        <span
+          class="material-symbols icon cursor-pointer"
+          {{on "click" this.onCopyClick}}
+          title="{{t 'share.copy-link'}}"
+        >content_copy</span>
       </div>
-    {{/if}}
-  </div>
+      <div class="row gap-half wrap">
+        <Button @href={{this.facebookUrl}} @new-tab={{true}} class="small border-boring">
+          <FaIcon @icon="facebook" @prefix="fab" class="icon share-icon" />
+          <span class="label nowrap">{{t "share.the-facebook"}}</span>
+        </Button>
+        <Button @href={{this.eggsUrl}} @new-tab={{true}} class="small border-boring">
+          <FaIcon @icon="square-x-twitter" @prefix="fab" class="icon share-icon" />
+          <span class="label nowrap">{{t "share.eggs"}}</span>
+        </Button>
+        <Button @href={{this.telegramUrl}} @new-tab={{true}} class="small border-boring">
+          <FaIcon @icon="telegram" @prefix="fab" class="icon share-icon" />
+          <span class="label nowrap">{{t "share.telegram"}}</span>
+        </Button>
+        <Button @href={{this.whatsappUrl}} @new-tab={{true}} class="small border-boring">
+          <FaIcon @icon="whatsapp" @prefix="fab" class="icon share-icon" />
+          <span class="label nowrap">{{t "share.whatsapp"}}</span>
+        </Button>
+      </div>
+      {{#if this.hasCurrentTime}}
+        <div class="row gap-half align-center">
+          <Input @type="checkbox" @checked={{this.attachTimeCode}} id="attach-time-code" class="m-0" />
+          <div class="row gap-quarter align-baseline">
+            <label for="attach-time-code" class="text-small">{{t "share.start-at"}}</label>
+            <Input
+              @value={{this.currentTimeString}}
+              {{on "change" this.onCurrentTimeStringChange}}
+              class="current-time-string"
+              disabled={{not this.attachTimeCode}}
+            />
+          </div>
+        </div>
+      {{/if}}
+    </div>
+  </:default>
 </Modal>

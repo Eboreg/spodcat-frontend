@@ -58,10 +58,8 @@
   </div>
 </div>
 
-{{#if this.showShareModal}}
-  <Podcast::Content::ShareModal
-    @on-close={{this.closeShareModal}}
-    @current-time={{this.currentTimeSnapshot}}
-    @url={{@episode.frontendUrl}}
-  />
-{{/if}}
+<Podcast::Content::ShareModal
+  @open={{this.showShareModal}}
+  @current-time={{this.currentTimeSnapshot}}
+  @url={{@episode.frontendUrl}}
+/>

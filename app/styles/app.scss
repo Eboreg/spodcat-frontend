@@ -34,6 +34,7 @@
     --mm-font-size-body: #{$font-size-body-mobile};
     --mm-font-size-small: #{$font-size-small-mobile};
     --mm-font-size-xs: #{$font-size-xs-mobile};
+    --mm-dotted-border-width: #{map.get($lengths, "quarter")};
 
     @each $lname, $length in $lengths {
         --mm-length-#{$lname}: #{$length};
@@ -50,6 +51,7 @@
         --mm-font-size-body: #{$font-size-body-desktop};
         --mm-font-size-small: #{$font-size-small-desktop};
         --mm-font-size-xs: #{$font-size-xs-desktop};
+        --mm-dotted-border-width: #{map.get($lengths, "half")};
     }
 }
 
@@ -148,11 +150,7 @@ h3 {
     border-bottom-color: color.get-color("primary", "dark");
     border-right-color: color.get-color("primary", "dark");
     border-style: dotted;
-    border-width: map.get($lengths, "quarter");
-
-    @include responsive.min(sm) {
-        border-width: map.get($lengths, "half");
-    }
+    border-width: var(--mm-dotted-border-width);
 }
 
 .draft {

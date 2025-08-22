@@ -2,51 +2,46 @@
 
 @use "variables" as *;
 
-.modal-backdrop {
-    background-color: $background-color-opaque;
-    height: 100%;
-    left: 0;
-    opacity: 0.4;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: map.get($z-index, "modal-backdrop");
-}
-
-.modal-container {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    height: 80%;
-    justify-content: flex-start;
-    left: 0;
-    position: fixed;
-    top: 10%;
-    width: 100%;
-    z-index: map.get($z-index, "modal-container");
-}
-
 .modal {
-    background-color: $background-color-opaque;
+    background-color: var(--mm-background-color-opaque);
     box-shadow: 0 0 10px black;
-    max-height: 100%;
+    color: var(--mm-text-color);
+    margin: 8rem auto 1rem;
+    max-height: calc(100% - 9rem);
     max-width: $modal-width;
-    position: relative;
+
+    &[open] {
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+    }
+
+    &.dotted-border {
+        max-height: calc(100% - 9rem - (var(--mm-dotted-border-width) * 2));
+    }
+
+    &::backdrop {
+        backdrop-filter: blur(3px);
+        background-color: rgba(0, 0, 0, 0.5);
+    }
 
     .close-icon {
         color: $text-color-dark;
         cursor: pointer;
         padding: 10px;
-        position: absolute;
-        right: 0;
-        top: 0;
     }
+}
+
+.modal-header {
+    align-items: center;
+    display: flex;
 }
 
 .modal-content {
     display: flex;
     flex-direction: column;
     height: 100%;
+    overflow-y: auto;
 
     & > :first-child {
         margin-top: 0;
