@@ -43,8 +43,12 @@ export default class SearchModal extends Component<SearchModalSignature> {
         ) as PodcastContentModel[];
     }
 
+    get showEmptyResultText(): boolean {
+        return this.term.length >= 3 && this.results.length == 0;
+    }
+
     get showMinCharsText(): boolean {
-        return this.term.length > 0 && this.term.length < 3 && this.results.length == 0;
+        return this.term.length > 0 && this.term.length < 3;
     }
 
     @action onInput(event: InputEvent) {

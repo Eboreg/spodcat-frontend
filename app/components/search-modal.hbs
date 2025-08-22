@@ -15,6 +15,8 @@
   <:default>
     {{#if this.showMinCharsText}}
       <div class="px-single pb-half text-small text-boring-light">{{t "enter-min-3-chars"}}</div>
+    {{else if this.showEmptyResultText}}
+      <div class="px-single pb-half text-small text-boring-light">{{t "no-search-results"}}</div>
     {{/if}}
     <div class="search-results">
       {{#each this.results as |result index|}}

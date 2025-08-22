@@ -20,9 +20,11 @@ export default class Modal<T extends ModalSignature> extends Component<T> {
     }
 
     @action onInsert(dialog: HTMLDialogElement) {
-        this.dialogElement = dialog;
-        if (this.args.open) this.show();
-        else this.hide();
+        if (dialog != this.dialogElement) {
+            this.dialogElement = dialog;
+            if (this.args.open) this.show();
+            else this.hide();
+        }
     }
 
     @action onOpenChange(dialog: HTMLDialogElement, open: boolean) {

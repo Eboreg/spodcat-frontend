@@ -18,6 +18,5 @@ export default class PodcastContentDescription extends Component<PodcastContentD
 
     @action onVideoConsentClick() {
         this.videoConsent = true;
-        console.log("onVideoConsentClick", this.videoConsent);
     }
 }
