@@ -23,6 +23,7 @@
         <LinkTo
           @route={{result.route}}
           @models={{result.routeModels}}
+          @activeClass=""
           {{on "click" this.onResultClick}}
           class="search-result{{if (eq index this.activeIdx) ' active'}}"
         >
