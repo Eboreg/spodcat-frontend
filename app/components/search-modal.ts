@@ -75,10 +75,6 @@ export default class SearchModal extends Component<SearchModalSignature> {
         }
     }
 
-    @action onOpenChange(elem: HTMLInputElement, open: boolean) {
-        if (open) elem.select();
-    }
-
     @action onKeyDown(event: KeyboardEvent) {
         let shouldScroll = false;
 
@@ -110,5 +106,17 @@ export default class SearchModal extends Component<SearchModalSignature> {
                 .querySelector(`.search-results .search-result:nth-child(${this.activeIdx + 1})`)
                 ?.scrollIntoView({ block: "nearest" });
         }
+    }
+
+    @action onMouseEnterResult(index: number) {
+        this.__activeIdx = index;
+    }
+
+    @action onOpenChange(elem: HTMLInputElement, open: boolean) {
+        if (open) elem.select();
+    }
+
+    @action onResultClick() {
+        this.args["on-dismiss-request"]();
     }
 }
