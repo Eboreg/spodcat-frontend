@@ -23,7 +23,7 @@ export default class PodcastContentEpisodeCard extends Component<PodcastContentE
     @tracked showShareModal: boolean = false;
 
     get isLoadingAudio() {
-        return this.audio.isLoadingEpisode == this.args.episode.slug;
+        return this.audio.episode == this.args.episode && this.audio.isLoading;
     }
 
     get isPlaying() {

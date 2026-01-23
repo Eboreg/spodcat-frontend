@@ -25,12 +25,7 @@
         }
     }
 
-    img {
-        aspect-ratio: 1/1;
-    }
-
     .button {
-        aspect-ratio: 1/1;
         flex: 0 0 auto;
         font-size: 30px;
         height: 30px;
@@ -55,7 +50,7 @@
     }
 
     .time-string {
-        width: 45px;
         text-align: center;
+        width: 45px;
     }
 }

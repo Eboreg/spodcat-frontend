@@ -16,7 +16,7 @@
       </div>
     </LinkTo>
 
-    {{#if this.playerIsBusy}}
+    {{#if this.audio.isLoading}}
       <ProgressCircle />
     {{else if this.audio.isPlaying}}
       <span

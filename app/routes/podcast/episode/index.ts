@@ -9,6 +9,9 @@ export default class PodcastEpisodeIndexRoute extends BasePodcastEpisodeRoute {
     @service declare intl: Registry["intl"];
 
     async model(params: { episode_slug: string }) {
+        // Q: Why query() instead of findRecord()?
+        // A: Because the key we use for lookup isn't really the episode's
+        //    ID, but its slug.
         const result = await this.store.query<EpisodeModel>("episode", {
             include: ["songs.artists", "comments", "videos", "season"],
             filter: { episode: params.episode_slug, podcast: this.getPodcastId() },

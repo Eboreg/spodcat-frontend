@@ -15,10 +15,9 @@ export default class AudioService extends Service {
     @tracked currentTime: number = 0; // seconds
     @tracked duration: number = 0; // seconds
     @tracked episode?: EpisodeModel;
-    @tracked isLoadingEpisode?: string;
+    @tracked isLoading: boolean = false;
     @tracked isMuted: boolean = false;
     @tracked isPlaying: boolean = false;
-    @tracked isSeeking: boolean = false;
     @tracked playbackRate: number = 1;
     @tracked volume: number = 0;
 
@@ -90,6 +89,10 @@ export default class AudioService extends Service {
         }
     }
 
+    @action onCanPlay() {
+        this.isLoading = false;
+    }
+
     @action onDurationChange() {
         if (this.audioElement && !isNaN(this.audioElement.duration)) {
             this.duration = this.audioElement.duration;
@@ -103,23 +106,20 @@ export default class AudioService extends Service {
     }
 
     @action onError() {
-        this.isLoadingEpisode = undefined;
         this.isPlaying = false;
+        this.isLoading = false;
     }
 
     @action onPause() {
         this.isPlaying = false;
-        this.setMediaSessionPlaybackState();
-    }
-
-    @action onPlay() {
-        this.isPlaying = true;
-        this.isLoadingEpisode = undefined;
+        this.isLoading = false;
         this.setMediaSessionPlaybackState();
     }
 
     @action onPlaying() {
-        this.onPlay();
+        this.isPlaying = true;
+        this.isLoading = false;
+        this.setMediaSessionPlaybackState();
     }
 
     @action onRateChange() {
@@ -130,21 +130,18 @@ export default class AudioService extends Service {
     }
 
     @action onSeeked() {
-        this.isSeeking = false;
+        this.isLoading = false;
         this.setMediaSessionPlaybackState();
     }
 
     @action onSeeking() {
-        this.isSeeking = true;
+        this.isLoading = true;
         this.setMediaSessionPlaybackState();
-    }
-
-    @action onStalled() {
-        this.isLoadingEpisode = this.episode?.slug;
     }
 
     @action onTimeUpdate() {
         if (this.audioElement) {
+            // Round down to whole second in order not to spam with updates:
             const currentTime = Math.floor(this.audioElement.currentTime);
 
             if (currentTime != this.currentTime) {
@@ -162,7 +159,7 @@ export default class AudioService extends Service {
     }
 
     @action onWaiting() {
-        this.isLoadingEpisode = this.episode?.slug;
+        this.isLoading = true;
     }
 
     /** Other actions ********************************************************/
@@ -192,7 +189,6 @@ export default class AudioService extends Service {
     @action play() {
         // Triggered from <PlayerBar>
         this.audioElement?.play().catch((reason) => {
-            this.pause();
             this.message.addToast({ level: "error", text: String(reason) });
         });
     }
@@ -200,10 +196,7 @@ export default class AudioService extends Service {
     @action toggleMute() {
         // Triggered from <VolumeControl::Inner>
         if (this.audioElement) {
-            const isMuted = !this.isMuted;
-
-            this.isMuted = isMuted;
-            this.audioElement.muted = isMuted;
+            this.audioElement.muted = !this.audioElement.muted;
         }
     }
 
@@ -212,13 +205,13 @@ export default class AudioService extends Service {
     playEpisode(episode: EpisodeModel, start?: number) {
         // start = seconds
         if (this.episode != episode) {
-            this.isLoadingEpisode = episode.slug;
+            this.isLoading = true;
+            this.setEpisode(episode);
             if (episode["dbfs-array"] == undefined) {
                 episode.reload().catch((reason) => {
                     this.message.addToast({ level: "error", text: String(reason) });
                 });
             }
-            this.setEpisode(episode);
             if (!start) this.seekToTime(0);
         }
         if (start) this.seekToTime(start);
@@ -285,7 +278,6 @@ export default class AudioService extends Service {
 
     setPlaybackRate(value: number) {
         if (this.audioElement) {
-            this.playbackRate = value;
             this.audioElement.playbackRate = value;
         }
     }

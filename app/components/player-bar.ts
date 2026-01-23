@@ -16,10 +16,6 @@ export default class PlayerBar extends Component<PlayerBarSignature> {
     @service declare audio: AudioService;
     @tracked isExpanded: boolean = false;
 
-    get playerIsBusy() {
-        return this.audio.isSeeking || this.audio.isLoadingEpisode != undefined;
-    }
-
     @action onCollapseClick() {
         this.isExpanded = false;
     }

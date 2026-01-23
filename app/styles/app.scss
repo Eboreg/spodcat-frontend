@@ -229,7 +229,6 @@ h3 {
 
 .icon {
     aspect-ratio: 1/1;
-    overflow: hidden;
     position: relative;
 
     &:active {
@@ -239,20 +238,19 @@ h3 {
 }
 
 .keyboard-key {
-    padding: 0 map.get($lengths, "half");
-    background: linear-gradient(to right top, #444, #666);
-    border-style: outset;
-    border-color: #666;
-    border-width: 2px 5px 5px 2px;
-    border-radius: $border-radius;
-    display: inline-block;
-    height: 25px;
-    display: flex;
     align-items: center;
+    background: linear-gradient(to right top, #444, #666);
+    border-color: #666;
+    border-radius: $border-radius;
+    border-style: outset;
+    border-width: 2px 5px 5px 2px;
+    display: flex;
+    height: 25px;
+    padding: 0 map.get($lengths, "half");
 
     .text {
-        font-size: var(--mm-font-size-xs);
         font-family: monospace;
+        font-size: var(--mm-font-size-xs);
     }
 }
 
@@ -294,7 +292,6 @@ h3 {
     }
 
     .icon {
-        aspect-ratio: 1/1;
         font-size: 30px;
         height: 30px;
 
@@ -327,20 +324,20 @@ h3 {
     }
 
     .loader {
-        aspect-ratio: 1/1;
         font-size: 30px;
         height: 30px;
+        width: 30px;
 
         @include responsive.min(sm) {
             font-size: 30px;
             height: 40px;
+            width: 40px;
         }
     }
 }
 
 .podcast-content-leading-icon {
     align-items: center;
-    aspect-ratio: 1/1;
     border-radius: 100%;
     border-style: outset;
     display: flex;

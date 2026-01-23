@@ -10,16 +10,15 @@
   <audio
     preload="none"
     {{on-insert this.audio.onAudioElementInsert}}
+    {{on "canplay" this.audio.onCanPlay}}
     {{on "durationchange" this.audio.onDurationChange}}
     {{on "ended" this.audio.onEnded}}
     {{on "error" this.audio.onError}}
     {{on "pause" this.audio.onPause}}
-    {{on "play" this.audio.onPlay}}
     {{on "playing" this.audio.onPlaying}}
     {{on "ratechange" this.audio.onRateChange}}
     {{on "seeked" this.audio.onSeeked}}
     {{on "seeking" this.audio.onSeeking}}
-    {{on "stalled" this.audio.onStalled}}
     {{on "timeupdate" this.audio.onTimeUpdate}}
     {{on "volumechange" this.audio.onVolumeChange}}
     {{on "waiting" this.audio.onWaiting}}

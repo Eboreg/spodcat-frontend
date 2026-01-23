@@ -6,6 +6,25 @@ As it stands, it's pretty tailor-made for my needs and tastes. The deployment sc
 
 A live instance can be viewed [here](https://podd.huseli.us).
 
+## Installation
+
+```shell
+$ npm i -g ember
+$ npm i
+```
+
+## Local dev server
+
+```shell
+$ npm run start
+```
+
+## Deployment
+
+```shell
+$ npm run deploy
+```
+
 ## Configuration
 
 ### Build environment
@@ -20,4 +39,5 @@ FRONTEND_HOST_DEV=http://localhost:4200
 FRONTEND_HOST_PROD=https://podd.huseli.us
 SITE_NAME=podd.huseli.us
 ```
+
 `SITE_NAME` is only used for setting `<meta property="og:site_name">` in the HTML head. The rest should be self-explanatory.
