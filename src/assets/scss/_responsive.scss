@@ -1,0 +1,86 @@
+@use "sass:map";
+@use "sass:list";
+@use "variables" as *;
+
+$dimens: (
+  "t": (
+    "top",
+  ),
+  "r": (
+    "right",
+  ),
+  "l": (
+    "left",
+  ),
+  "b": (
+    "bottom",
+  ),
+  "x": (
+    "left",
+    "right",
+  ),
+  "y": (
+    "top",
+    "bottom",
+  ),
+);
+
+@function add-empty($list) {
+  @return list.join((""), $list);
+}
+
+@function format-prefix($v) {
+  @if $v == "" {
+    @return "";
+  }
+  @return "#{$v}-";
+}
+
+@mixin maxsize($size) {
+  @if $size == "" {
+    @content;
+  } @else {
+    @media screen and (max-width: map.get($max-sizes, $size)) {
+      @content;
+    }
+  }
+}
+
+@mixin minsize($size) {
+  @if $size == "" {
+    @content;
+  } @else {
+    @media screen and (min-width: map.get($min-sizes, $size)) {
+      @content;
+    }
+  }
+}
+
+@mixin sized-property($prop-key, $property) {
+  // "", "xs", "sm", etc:
+  @each $size in add-empty(map.keys($min-sizes)) {
+    @include minsize(#{$size}) {
+      // (quarter, 0.25rem), (half, 0.5rem), etc:
+      @each $lname, $length in $lengths {
+        .#{$prop-key}-#{format-prefix($size)}#{$lname} {
+          #{$property}: #{$length} !important;
+        }
+        @content ($size, $lname, $length);
+      }
+    }
+  }
+}
+
+@mixin sized-property-extended($prop-key, $property) {
+  @include sized-property($prop-key, $property) using ($size, $lname, $length) {
+    // (t, (top)), (x, (left, right)), etc:
+    @each $abbr, $dlist in $dimens {
+      // e.g. .mt-xs-quarter:
+      .#{$prop-key}#{$abbr}-#{format-prefix($size)}#{$lname} {
+        @each $dimen in $dlist {
+          #{$property}-#{$dimen}: #{$length} !important;
+        }
+      }
+    }
+  }
+}

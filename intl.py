@@ -9,12 +9,14 @@ from typing import Any
 try:
     import yaml
 except ImportError:
-    print("Error! You need to do `pip install pyyaml` or `poetry add pyyaml`.")
+    print("Error! You need to do `pip install pyyaml`, `uv add pyyaml`, or whatever.")
     sys.exit(1)
 
 
 MAX_LENGTH = 120
-cwd = Path(__file__).parent
+CWD = Path(__file__).parent
+I18N_DIR = CWD / "src/i18n"
+APP_DIR = CWD / "src"
 
 
 def dump(d: dict, indent: int = 0) -> list[str]:
@@ -109,7 +111,7 @@ def split_row(row: str, overflow_indent: int = 2, accumulated: list[str] | None 
 
 
 def format_cmd(locale: str, **kwargs):
-    file = cwd / f"translations/{locale}.yaml"
+    file = I18N_DIR / f"{locale}.yaml"
     dct = load(file)
     rows = [f"{row}\n" for row in dump(dct)]
 
@@ -120,14 +122,13 @@ def format_cmd(locale: str, **kwargs):
 
 
 def orphans_cmd(locale: str, **kwargs):
-    dct = load(cwd / f"translations/{locale}.yaml")
+    dct = load(I18N_DIR / f"{locale}.yaml")
     keys = list_composite_keys(dct)
-    app_dir = cwd / "app"
     not_found = []
 
     for key in keys:
         encoded_key = key.replace(".", "\\.")
-        cmd = f"grep --include='*.ts' --include='*.hbs' -Irn \"['\\\"]{encoded_key}['\\\"]\" {app_dir}/"
+        cmd = f"grep --include='*.ts' --include='*.vue' -Irn \"t(['\\\"]{encoded_key}['\\\"]\" {APP_DIR}/"
         out = subprocess.run(cmd, capture_output=True, shell=True, check=False)
         if out.returncode == 1:
             not_found.append(key)
@@ -143,8 +144,8 @@ def orphans_cmd(locale: str, **kwargs):
 
 
 def trans_cmd(from_locale: str, to_locale: str, stdout: bool, **kwargs):
-    from_file = cwd / f"translations/{from_locale}.yaml"
-    to_file = cwd / f"translations/{to_locale}.yaml"
+    from_file = I18N_DIR / f"{from_locale}.yaml"
+    to_file = I18N_DIR / f"{to_locale}.yaml"
     from_dict = load(from_file)
     to_dict = load(to_file)
 
