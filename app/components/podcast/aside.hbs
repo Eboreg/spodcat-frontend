@@ -34,6 +34,12 @@
 
   <SearchModal @on-dismiss-request={{this.closeSearchModal}} @open={{this.isSearchModalOpen}} />
 
+  {{#if this.showPodcastLink}}
+    <Button @route={{@podcast.route}} @models={{@podcast.routeModels}} @theme="secondary" @material-icon="arrow_back">
+      <span class="label">{{t "go-to-x" x=@podcast.name}}</span>
+    </Button>
+  {{/if}}
+
   <Attribution class="d-none d-md-flex" />
 
   {{yield}}

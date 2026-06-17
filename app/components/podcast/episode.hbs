@@ -1,7 +1,4 @@
 {{page-title @episode.pageTitle}}
-<Button @route={{@podcast.route}} @models={{@podcast.routeModels}} @theme="secondary" @material-icon="arrow_back">
-  <span class="label">{{t "go-to-x" x=@podcast.name}}</span>
-</Button>
 {{yield}}
 <Podcast::Content::EpisodeCard @episode={{@episode}} @expand={{true}}>
   <div class="gap-single px-single column pb-single">

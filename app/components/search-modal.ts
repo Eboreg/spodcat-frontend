@@ -51,7 +51,7 @@ export default class SearchModal extends Component<SearchModalSignature> {
         return this.term.length > 0 && this.term.length < 3;
     }
 
-    @action onInput(event: InputEvent) {
+    @action onInput(event: Event) {
         if (event.target instanceof HTMLInputElement) {
             this.term = event.target.value;
 
@@ -108,8 +108,8 @@ export default class SearchModal extends Component<SearchModalSignature> {
         }
     }
 
-    @action onOpenChange(elem: HTMLInputElement, open: boolean) {
-        if (open) elem.select();
+    @action onOpenChange(elem: HTMLElement, open: boolean) {
+        if (open && elem instanceof HTMLInputElement) elem.select();
     }
 
     @action onResultClick() {

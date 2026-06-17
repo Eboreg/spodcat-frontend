@@ -3,7 +3,7 @@ import Modifier, { type PositionalArgs } from "ember-modifier";
 interface OnUpdateSignature {
     Element: HTMLElement;
     Args: {
-        Positional: [(element: HTMLElement, ...args: unknown[]) => void, ...args: unknown[]];
+        Positional: [(element: HTMLElement, ...args: any[]) => void, ...args: any[]];
     };
 }
 

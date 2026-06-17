@@ -8,7 +8,25 @@
   <VolumeControl />
   <PlaybackRateControl />
 
-  <div class="pos-relative" {{on-outside-click this.onKeyboardHelpOutsideClick}}>
+  <div class="pos-relative d-md-none">
+    <span
+      class="material-symbols button"
+      role="button"
+      title="{{t 'rewind-10s'}}"
+      {{on "click" this.onRewindClick}}
+    >replay_10</span>
+  </div>
+
+  <div class="pos-relative d-md-none">
+    <span
+      class="material-symbols button"
+      role="button"
+      title="{{t 'forward-10s'}}"
+      {{on "click" this.onForwardClick}}
+    >forward_10</span>
+  </div>
+
+  <div class="pos-relative d-none d-md-flex" {{on-outside-click this.onKeyboardHelpOutsideClick}}>
     <span
       class="material-symbols button"
       role="button"
@@ -27,7 +45,7 @@
         </div>
         <div class="nowrap row align-center gap-half">
           <div class="keyboard-key"><span class="material-symbols">arrow_right</span></div>
-          <span>{{t "forward-30s"}}</span>
+          <span>{{t "forward-10s"}}</span>
         </div>
         <div class="nowrap row align-center gap-half">
           <div class="keyboard-key"><span class="text">{{t "keyboard.ctrl"}}</span></div>
@@ -39,7 +57,7 @@
           <div class="keyboard-key"><span class="text">{{t "keyboard.ctrl"}}</span></div>
           +
           <div class="keyboard-key"><span class="material-symbols">arrow_right</span></div>
-          <span>{{t "forward-180s"}}</span>
+          <span>{{t "forward-60s"}}</span>
         </div>
       </Popup>
     {{/if}}

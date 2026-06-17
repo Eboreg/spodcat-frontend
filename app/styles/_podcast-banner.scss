@@ -4,6 +4,21 @@
 @use "color";
 @use "responsive";
 
+.menu-button {
+    background-color: #000c;
+    border-radius: $border-radius;
+    border-style: outset;
+    border-width: 3px;
+    color: var(--mm-text-color);
+    font-size: 30px;
+
+    &.open {
+        // background-color: var(--mm-text-color);
+        background-color: #fffc;
+        color: $background-color-opaque;
+    }
+}
+
 .podcast-details .podcast-banner.has-banner-image {
     aspect-ratio: 3/1;
 }

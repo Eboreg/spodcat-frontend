@@ -55,15 +55,15 @@ export default class PodcastContentModel extends Model {
 
     get strippedDescription(): string | undefined {
         return this.description
-            ?.replaceAll(/!\[.*?\]\(.*?\)\s*/g, "") // remove image tags completely
-            ?.replaceAll(/\[(.*?)\]\(.*?\)/g, "$1") // replace links with link text only
+            ?.replaceAll(/!\[.*?]\(.*?\)\s*/g, "") // remove image tags completely
+            ?.replaceAll(/\[(.*?)]\(.*?\)/g, "$1") // replace links with link text only
             ?.replaceAll(/\s+/g, " ") // replace all whitespace sequences with single spaces
             ?.trim();
     }
 
     extractImageUrls(): string[] {
         if (this.description) {
-            return [...this.description.matchAll(/!\[.*?\]\((?<url>.*?)\)/g)].map((m) => m.groups!["url"]!);
+            return [...this.description.matchAll(/!\[.*?]\((?<url>.*?)\)/g)].map((m) => m.groups!["url"]!);
         }
         return [];
     }

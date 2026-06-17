@@ -13,11 +13,12 @@ import type Modal from "spodcat/components/modal";
 import type onInsert from "spodcat/modifiers/on-insert";
 import type onOutsideClick from "spodcat/modifiers/on-outside-click";
 import type onSizeChange from "spodcat/modifiers/on-size-change";
+import type onUpdate from "spodcat/modifiers/on-update";
 import type PlaybackRateControl from "spodcat/components/playback-rate-control";
-import type PlayerBar from "spodcat/components/player-bar";
 import type PlayerBar from "spodcat/components/player-bar";
 import type PlayerBarExpanded from "spodcat/components/player-bar/expanded";
 import type PodcastAside from "spodcat/components/podcast/aside";
+import type PodcastBanner from "spodcat/components/podcast/banner";
 import type PodcastContentComments from "spodcat/components/podcast/content/comments";
 import type PodcastContentDescription from "spodcat/components/podcast/content/description";
 import type PodcastContentEpisodeCard from "spodcat/components/podcast/content/episode-card";
@@ -31,10 +32,12 @@ import type PodcastIndex from "spodcat/components/podcast/index";
 import type PodcastPost from "spodcat/components/podcast/post";
 import type Popup from "spodcat/components/popup";
 import type ProgressCircle from "spodcat/components/progress-circle";
+import type SearchModal from "spodcat/components/search-modal";
 import type setBodyClass from "ember-set-body-class/addon/helpers/set-body-class";
 import type staticUrl from "spodcat/helpers/static-url";
 import type TextInput from "spodcat/components/text-input";
 import type Toast from "spodcat/components/toast";
+import type Video from "spodcat/components/video";
 import type VolumeControl from "spodcat/components/volume-control";
 import type VolumeControlInner from "spodcat/components/volume-control/inner";
 
@@ -58,9 +61,11 @@ declare module "@glint/environment-ember-loose/registry" {
         "on-insert": typeof onInsert;
         "on-outside-click": typeof onOutsideClick;
         "on-size-change": typeof onSizeChange;
+        "on-update": typeof onUpdate;
         "page-title": PageTitle;
         "PlayerBar::Expanded": typeof PlayerBarExpanded;
         "Podcast::Aside": typeof PodcastAside;
+        "Podcast::Banner": typeof PodcastBanner;
         "Podcast::Content::Comments": typeof PodcastContentComments;
         "Podcast::Content::Description": typeof PodcastContentDescription;
         "Podcast::Content::EpisodeCard::Head": typeof PodcastContentEpisodeCardHead;
@@ -83,8 +88,10 @@ declare module "@glint/environment-ember-loose/registry" {
         PlayerBar: typeof PlayerBar;
         Popup: typeof Popup;
         ProgressCircle: typeof ProgressCircle;
+        SearchModal: typeof SearchModal;
         TextInput: typeof TextInput;
         Toast: typeof Toast;
+        Video: typeof Video;
         VolumeControl: typeof VolumeControl;
     }
 }

@@ -16,11 +16,19 @@ export default class PlayerBarExpanded extends Component<PlayerBarExpandedSignat
     @service declare audio: AudioService;
     @tracked isKeyboardHelpOpen: boolean = false;
 
+    @action onForwardClick() {
+        this.audio.seek(10);
+    }
+
     @action onKeyboardHelpOutsideClick() {
         this.isKeyboardHelpOpen = false;
     }
 
     @action onKeyboardHelpButtonClick() {
         this.isKeyboardHelpOpen = !this.isKeyboardHelpOpen;
+    }
+
+    @action onRewindClick() {
+        this.audio.seek(-10);
     }
 }

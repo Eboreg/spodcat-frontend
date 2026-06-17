@@ -44,7 +44,7 @@ export default class AudioService extends Service {
                 this.seek((details.seekOffset || 10) * -1);
             });
             navigator.mediaSession.setActionHandler("seekforward", (details) => {
-                this.seek(details.seekOffset || 30);
+                this.seek(details.seekOffset || 10);
             });
             navigator.mediaSession.setActionHandler("seekto", (details) => {
                 if (details.seekTime) this.seekToTime(details.seekTime);
@@ -135,6 +135,7 @@ export default class AudioService extends Service {
     }
 
     @action onSeeking() {
+        console.log("onSeeking");
         this.isLoading = true;
         this.setMediaSessionPlaybackState();
     }
@@ -159,6 +160,7 @@ export default class AudioService extends Service {
     }
 
     @action onWaiting() {
+        console.log("onWaiting");
         this.isLoading = true;
     }
 
@@ -171,8 +173,8 @@ export default class AudioService extends Service {
         if (event.key == " " && !event.ctrlKey) {
             this.playOrPause();
         } else if (event.key == "ArrowRight") {
-            if (!event.ctrlKey) this.seek(30);
-            else this.seek(180);
+            if (!event.ctrlKey) this.seek(10);
+            else this.seek(60);
         } else if (event.key == "ArrowLeft") {
             if (!event.ctrlKey) this.seek(-10);
             else this.seek(-60);
@@ -205,6 +207,7 @@ export default class AudioService extends Service {
     playEpisode(episode: EpisodeModel, start?: number) {
         // start = seconds
         if (this.episode != episode) {
+            console.log("playEpisode");
             this.isLoading = true;
             this.setEpisode(episode);
             if (episode["dbfs-array"] == undefined) {
