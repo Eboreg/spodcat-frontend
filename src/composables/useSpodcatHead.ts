@@ -2,7 +2,7 @@ import type { EpisodeModel, PodcastModel, PostModel } from "@/types/api";
 import { type ResolvableLink, type ResolvableMeta, useHead, useSeoMeta } from "@unhead/vue";
 import { makeAbsoluteUrl } from "@/utils";
 import type { Image } from "@/types";
-import { type ComputedRef, type Ref, computed, toValue } from "vue";
+import { type ComputedRef, type Ref, computed } from "vue";
 import spodcatFavicon from "@/assets/spodcat-favicon.png";
 
 function extractImageUrl(description: string): string | undefined {

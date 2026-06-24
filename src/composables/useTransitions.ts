@@ -1,6 +1,7 @@
 import type { Offsets, RelativePosition } from "@/types";
-import type { ElementSize } from "@vueuse/core";
 import { type MaybeRefOrGetter, readonly, ref, toValue, watchEffect } from "vue";
+
+import type { ElementSize } from "@vueuse/core";
 
 interface Size {
   width: MaybeRefOrGetter<number>;

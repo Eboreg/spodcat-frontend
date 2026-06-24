@@ -1,7 +1,8 @@
+import { type MaybeRefOrGetter, computed, ref, toValue } from "vue";
+
+import { useQuery } from "@pinia/colada";
 import { listPodcastSeasons } from "@/api";
 import { getSeasonTheme } from "@/utils";
-import { useQuery } from "@pinia/colada";
-import { computed, ref, toValue, type MaybeRefOrGetter } from "vue";
 
 export default function useSeason(
   podcastSlug: MaybeRefOrGetter<string | undefined>,

@@ -40,7 +40,7 @@ function onTextareaInput(event: InputEvent) {
     ></textarea>
     <input v-else v-model="value" :type="type" :id="id" :class="classes" :maxlength="maxLength" />
     <div v-if="errors" class="errors">
-      <div v-for="error in errors" class="error">{{ error.message }}</div>
+      <div v-for="(error, idx) in errors" :key="idx" class="error">{{ error.message }}</div>
     </div>
   </div>
 </template>

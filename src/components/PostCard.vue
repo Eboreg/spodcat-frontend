@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { PartialPostModel } from "@/types/api";
 import { computed, inject, ref } from "vue";
-import { ContentCard, ShareModal, MaterialSymbol, RoundIcon, Loading } from "@/components";
+import { ContentCard, Loading, MaterialSymbol, RoundIcon, ShareModal } from "@/components";
 import { getLocaleDateString, makeAbsoluteUrl } from "@/utils";
 import { useI18n } from "vue-i18n";
 import { podcastKey } from "@/symbols";

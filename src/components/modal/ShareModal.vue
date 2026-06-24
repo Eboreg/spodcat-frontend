@@ -2,8 +2,9 @@
 import { computed, onUnmounted, ref } from "vue";
 import { Modal, ModalMessage } from "@/components/modal";
 import { timeFromString, timeToString } from "@/utils";
-import useMessageStore from "@/composables/useMessageStore";
 import { Button, MaterialSymbol } from "@/components";
+
+import useMessageStore from "@/composables/useMessageStore";
 import { useI18n } from "vue-i18n";
 
 async function onCopyClick() {

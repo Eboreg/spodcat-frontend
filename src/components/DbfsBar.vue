@@ -91,14 +91,15 @@ watchEffect(() => {
       <div class="tooltip-line"></div>
     </div>
 
-    <div
-      v-if="dbfsArray"
-      v-for="(dbfs, idx) in dbfsArray"
-      :key="idx"
-      class="dbfs-column"
-      :style="`height: max(2px, ${dbfs}%); flex-basis: ${100 / dbfsArray.length}%`"
-    >
-      <div></div>
+    <div v-if="dbfsArray">
+      <div
+        v-for="(dbfs, idx) in dbfsArray"
+        :key="idx"
+        class="dbfs-column"
+        :style="`height: max(2px, ${dbfs}%); flex-basis: ${100 / dbfsArray.length}%`"
+      >
+        <div></div>
+      </div>
     </div>
   </div>
 </template>

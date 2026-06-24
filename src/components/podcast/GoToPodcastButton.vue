@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { inject } from "vue";
 import { Button } from "@/components";
-import { useI18n } from "vue-i18n";
 import { podcastKey } from "@/symbols";
+import { inject } from "vue";
+import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
 const podcast = inject(podcastKey);

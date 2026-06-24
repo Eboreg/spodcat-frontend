@@ -1,5 +1,5 @@
 <script lang="ts">
-import { usePodcast, podcastLoader } from "@/composables/usePodcast";
+import { podcastLoader, usePodcast } from "@/composables/usePodcast";
 import { defineColadaLoader } from "vue-router/experimental/pinia-colada";
 import { getPostBySlug } from "@/api";
 

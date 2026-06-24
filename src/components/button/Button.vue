@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Theme } from "@/utils";
 import { computed, ref } from "vue";
+
 import ButtonContent from "./ButtonContent.vue";
 
 const props = defineProps<{

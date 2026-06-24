@@ -5,8 +5,9 @@ import {
   listComments,
 } from "@/api";
 import type { ChallengeModel, PodcastContentType } from "@/types/api";
+import { type MaybeRefOrGetter, computed, ref, toRef, toValue, watch } from "vue";
+
 import { useQuery } from "@pinia/colada";
-import { computed, ref, toRef, toValue, watch, type MaybeRefOrGetter } from "vue";
 
 export default function useComments(
   contentType: MaybeRefOrGetter<PodcastContentType>,

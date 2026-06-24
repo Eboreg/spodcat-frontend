@@ -1,6 +1,6 @@
 <script lang="ts">
-import { usePodcast, podcastLoader } from "@/composables/usePodcast";
-import { usePodcastContents, podcastContentsLoader } from "@/composables/usePodcastContents";
+import { podcastLoader, usePodcast } from "@/composables/usePodcast";
+import { podcastContentsLoader, usePodcastContents } from "@/composables/usePodcastContents";
 
 export { usePodcast, usePodcastContents, podcastLoader, podcastContentsLoader };
 </script>

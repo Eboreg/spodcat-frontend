@@ -3,7 +3,7 @@ import type { PartialEpisodeModel } from "@/types/api";
 import { computed, inject, ref } from "vue";
 import { getLocaleDateString, makeAbsoluteUrl, timeToString } from "@/utils";
 import useAudioStore from "@/composables/useAudioStore";
-import { ContentCard, MaterialSymbol, ShareModal, Loading } from "@/components";
+import { ContentCard, Loading, MaterialSymbol, ShareModal } from "@/components";
 import { useQuery } from "@pinia/colada";
 import { getEpisodeBySlug } from "@/api.ts";
 import EpisodeRoundIcon from "./EpisodeRoundIcon.vue";

@@ -1,4 +1,4 @@
-import { useI18n as baseUseI18n, type UseI18nOptions } from "vue-i18n";
+import { type UseI18nOptions, useI18n as baseUseI18n } from "vue-i18n";
 
 import en from "./en.yaml";
 import sv from "./sv.yaml";

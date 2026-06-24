@@ -1,6 +1,7 @@
 import type { ElementSize } from "@vueuse/core";
-import { defineStore } from "pinia";
 import { computed, ref } from "vue";
+
+import { defineStore } from "pinia";
 
 export type MessageLevel = "error" | "info" | "success";
 

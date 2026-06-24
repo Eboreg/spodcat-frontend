@@ -1,6 +1,7 @@
 import { getPodcastBySlug } from "@/api";
 import { podcastKey } from "@/symbols";
 import { computed, provide } from "vue";
+
 import { defineColadaLoader } from "vue-router/experimental/pinia-colada";
 
 export const podcastLoader = defineColadaLoader("/[podcast_slug]/", {

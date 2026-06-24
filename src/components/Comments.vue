@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { computed, inject, onMounted, onUnmounted, ref, watchEffect } from "vue";
-import type { ValidationError } from "@/types";
-import useMessageStore from "@/composables/useMessageStore";
 import { Button, TextInput } from "@/components";
 import useComments from "@/composables/useComments";
-import { useI18n } from "vue-i18n";
+import useMessageStore from "@/composables/useMessageStore";
 import { podcastKey } from "@/symbols";
+import type { ValidationError } from "@/types";
 import type { PodcastContentType } from "@/types/api";
+import { computed, inject, onMounted, onUnmounted, ref, watchEffect } from "vue";
+import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
 const props = defineProps<{
