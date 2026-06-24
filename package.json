@@ -1,66 +1,32 @@
 {
-    "name": "spodcat",
-    "version": "0.8.0",
-    "private": true,
-    "description": "A podcast platform frontend",
-    "repository": "",
-    "license": "GPL-3.0-only",
-    "author": "",
-    "type": "module",
-    "scripts": {
-        "dev": "vite",
-        "build": "run-p type-check \"build-only {@}\" --",
-        "preview": "vite preview",
-        "test:unit": "vitest",
-        "build-only": "vite build",
-        "type-check": "vue-tsc --build",
-        "lint": "run-s lint:*",
-        "lint:oxlint": "oxlint . --fix",
-        "lint:eslint": "eslint . --fix --cache",
-        "format": "prettier --write --experimental-cli src/"
-    },
-    "dependencies": {
-        "@fortawesome/fontawesome-svg-core": "^7.2.0",
-        "@fortawesome/free-brands-svg-icons": "^7.2.0",
-        "@fortawesome/vue-fontawesome": "^3.2.0",
-        "@pinia/colada": "^1.3.1",
-        "@unhead/vue": "^3.1.0",
-        "@vueuse/core": "^14.3.0",
-        "material-symbols": "^0.44.9",
-        "node-fetch": "^3.3.2",
-        "pinia": "^3.0.4",
-        "vue": "^3.5.32",
-        "vue-i18n": "^11.4.4",
-        "vue-router": "^5.0.4"
-    },
-    "devDependencies": {
-        "@tsconfig/node24": "^24.0.4",
-        "@types/js-yaml": "^4.0.9",
-        "@types/jsdom": "^28.0.1",
-        "@types/node": "^24.12.2",
-        "@vitejs/plugin-vue": "^6.0.6",
-        "@vitest/eslint-plugin": "^1.6.16",
-        "@vue/eslint-config-typescript": "^14.7.0",
-        "@vue/test-utils": "^2.4.6",
-        "@vue/tsconfig": "^0.9.1",
-        "eslint": "^10.2.1",
-        "eslint-config-prettier": "^10.1.8",
-        "eslint-plugin-oxlint": "~1.60.0",
-        "eslint-plugin-vue": "~10.8.0",
-        "jiti": "^2.6.1",
-        "jsdom": "^29.0.2",
-        "npm-run-all2": "^8.0.4",
-        "oxlint": "~1.60.0",
-        "prettier": "3.8.3",
-        "sass": "^1.100.0",
-        "typescript": "~6.0.0",
-        "vite": "^8.0.8",
-        "vite-plugin-vue-devtools": "^8.1.1",
-        "vite-yaml-plugin": "^2.0.5",
-        "vitest": "^4.1.4",
-        "vue-tsc": "^3.2.6"
-    },
-    "engines": {
-        "node": "^20.19.0 || >=22.12.0"
-    }
+  "name": "frontend-nuxt",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@lucide/vue": "^1.21.0",
+    "@nuxt/icon": "2.2.3",
+    "@nuxtjs/i18n": "10.4.0",
+    "@pinia/colada": "^1.3.1",
+    "@pinia/colada-nuxt": "^1.0.1",
+    "@pinia/nuxt": "0.11.3",
+    "@vueuse/core": "^14.3.0",
+    "@vueuse/nuxt": "14.3.0",
+    "nuxt": "^4.4.8",
+    "pinia": "^3.0.4",
+    "vue": "^3.5.35",
+    "vue-router": "^5.1.0"
+  },
+  "devDependencies": {
+    "@iconify-json/mdi": "^1.2.3",
+    "sass": "^1.101.0",
+    "typescript": "^6.0.3",
+    "vue-tsc": "^3.3.5"
+  }
 }

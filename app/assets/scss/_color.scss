@@ -1,0 +1,30 @@
+@use "sass:map";
+@use "variables" as *;
+
+@function get-color($theme, $variant-name: "normal") {
+  @return map.get(map.get($color-themes, $theme), $variant-name);
+}
+
+@mixin themed($property, $theme-variants, $variant-name) {
+  #{$property}: #{map.get($theme-variants, $variant-name)} !important;
+
+  &.hover-border:hover {
+    border-color: #{map.get($theme-variants, "dark")} !important;
+  }
+
+  @if $variant-name == "normal" {
+    &.hover-light:hover {
+      #{$property}: #{map.get($theme-variants, "light")} !important;
+    }
+    &.hover-border:active {
+      border-color: #{map.get($theme-variants, "light")} !important;
+    }
+  } @else if $variant-name == "dark" {
+    &.hover-light:hover {
+      #{$property}: #{map.get($theme-variants, "normal")} !important;
+    }
+    &.hover-border:active {
+      border-color: #{map.get($theme-variants, "normal")} !important;
+    }
+  }
+}
