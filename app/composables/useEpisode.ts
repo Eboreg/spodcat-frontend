@@ -1,13 +1,9 @@
-export function useEpisode(
-  podcastSlug: MaybeRefOrGetter<string>,
-  episodeSlug: MaybeRefOrGetter<string>,
-) {
+export function useEpisode(podcastSlug: string, episodeSlug: string) {
   const result = useQuery({
-    key: () => ["podcast", toValue(podcastSlug), "episode", toValue(episodeSlug)],
-    query: () => $fetch(`/api/podcasts/${toValue(podcastSlug)}/episode/${toValue(episodeSlug)}`),
+    key: () => ["podcast", podcastSlug, "episode", episodeSlug],
+    query: () => $fetch(`/api/podcasts/${podcastSlug}/episode/${episodeSlug}`),
     staleTime: 60000,
   });
-  const episode = computed(() => (result.isLoading.value ? undefined : result.data.value));
 
-  return { episode, ...result };
+  return { episode: result.data, ...result };
 }

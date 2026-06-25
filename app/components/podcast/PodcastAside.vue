@@ -11,6 +11,7 @@ const podcast = inject(podcastKey);
 <template>
   <aside class="gap-half column">
     <Loading v-if="!podcast" height="100px" />
+
     <template v-else>
       <Button
         :class="{ show: isVisibleMobile }"
@@ -33,9 +34,11 @@ const podcast = inject(podcastKey);
         >
           <span>{{ t("subscribe") }}</span>
         </Button>
+
         <Button :href="podcast.rss_url" :icon-size="20" new-tab theme="primary" :icon="Rss">
           <span>{{ t("rss-feed") }}</span>
         </Button>
+
         <Button
           v-for="link in podcast.links"
           :href="link.url"
@@ -47,9 +50,11 @@ const podcast = inject(podcastKey);
           <SpodcatIcon v-else-if="link.icon" :icon="`mdi:${link.icon}`" :size="20" />
           <span>{{ link.label }}</span>
         </Button>
+
         <Button route="/" theme="secondary" :icon="Home" :icon-size="20">
           <span>{{ t("all-podcasts") }}</span>
         </Button>
+
         <Button :icon-size="20" :icon="Search" @click="isSearchModalOpen = true" theme="secondary">
           <span>{{ t("search") }}</span>
         </Button>

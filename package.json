@@ -1,7 +1,8 @@
 {
-  "name": "frontend-nuxt",
+  "name": "spodcat-frontend",
   "type": "module",
-  "private": true,
+  "version": "0.6.0",
+  "license": " GPL-3.0-or-later",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",

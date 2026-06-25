@@ -8,7 +8,7 @@ export default defineNuxtConfig({
   },
   vite: {
     optimizeDeps: {
-      include: ["@pinia/colada", "@vueuse/core", "pinia", "vue-i18n"],
+      include: ["@pinia/colada", "@vueuse/core", "pinia", "vue-i18n", "@lucide/vue"],
     },
     css: {
       preprocessorOptions: {

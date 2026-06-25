@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { detectLocale } from "@/utils";
+import { detectLocale, ping } from "@/utils";
 import { podcastSlugKey } from "@/symbols";
 
 const route = useRoute();
@@ -11,6 +11,9 @@ provide(podcastSlugKey, route.params.podcast_slug as string);
 useSpodcatHead({ podcast, post });
 watchEffect(() => {
   setLocale(detectLocale(podcast.value?.language));
+});
+watchEffect(() => {
+  if (post.value) ping(`v2/posts/${post.value.id}/ping/`);
 });
 </script>
 

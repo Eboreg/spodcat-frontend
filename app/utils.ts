@@ -66,6 +66,12 @@ export function modulo(n: number, d: number): number {
   return ((n % d) + d) % d;
 }
 
+export function ping(path: string) {
+  if (import.meta.client) {
+    callOnce(() => navigator.sendBeacon(makeBackendUrl(path)), { mode: "navigation" });
+  }
+}
+
 export function timeFromString(time: string): number | null {
   if (!time.match(/^(?:\d{1,2}:)?(?:\d{1,2}:)?\d{1,2}$/)) return null;
 

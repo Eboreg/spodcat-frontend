@@ -12,12 +12,12 @@ const props = defineProps<{
 
 <template>
   <div class="gap-single px-single column pb-single">
-    <Loading v-if="!content" :opacity="0.5" height="100px" />
     <div
       v-if="content?.description_html"
       class="description"
       v-html="content.description_html"
     ></div>
+
     <Video
       v-for="video in content?.videos"
       :video="video"
@@ -25,7 +25,9 @@ const props = defineProps<{
       @consent-click="videoConsent = true"
       :consent="videoConsent"
     />
+
     <slot />
+
     <ClientOnly>
       <Comments
         v-if="podcast?.enable_comments"

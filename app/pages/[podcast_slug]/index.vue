@@ -1,19 +1,18 @@
 <script setup lang="ts">
-import { detectLocale } from "@/utils";
+import { detectLocale, ping } from "@/utils";
 import { podcastSlugKey } from "~/symbols";
 
 const { setLocale } = useI18n();
 const route = useRoute();
 const { podcast } = usePodcast(route.params.podcast_slug as string);
-const { contents, isLoading: isContentsLoading } = usePodcastContents(
-  route.params.podcast_slug as string,
-);
+const { contents } = usePodcastContents(route.params.podcast_slug as string);
 
 provide(podcastSlugKey, route.params.podcast_slug as string);
 useSpodcatHead({ podcast });
 watchEffect(async () => {
   await setLocale(detectLocale(podcast.value?.language));
 });
+ping(`v2/podcasts/${route.params.podcast_slug}/ping/`);
 </script>
 
 <template>
@@ -25,7 +24,7 @@ watchEffect(async () => {
     </template>
 
     <div class="column gap-half">
-      <Loading v-if="isContentsLoading" height="100px" />
+      <Loading v-if="contents === undefined" height="150px" />
       <template v-for="content in contents" :key="content.id">
         <EpisodeCard v-if="content.resourcetype === 'episode'" :episode="content" :expand="false" />
         <PostCard v-else-if="content.resourcetype === 'post'" :post="content" :expand="false" />

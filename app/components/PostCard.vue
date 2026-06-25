@@ -16,9 +16,9 @@ const absoluteUrl = computed(() => (route.value ? makeAbsoluteUrl(route.value) :
 
 <template>
   <ContentCard :route="route" :expand="expand" :content="post">
-    <template #head-start>
+    <template #head-start v-if="post">
       <RoundIcon :data="[{ type: 'icon', value: FileText }]" theme="secondary" />
-      <div v-if="post" class="fill column gap-quarter">
+      <div class="fill column gap-quarter">
         <div class="font-weight-bold">{{ post.name }}</div>
         <div class="row gap-half">
           <div class="badge theme-secondary">
@@ -26,10 +26,9 @@ const absoluteUrl = computed(() => (route.value ? makeAbsoluteUrl(route.value) :
           </div>
         </div>
       </div>
-      <Loading v-else :opacity="0.5" />
     </template>
 
-    <template #head-end>
+    <template #head-end v-if="post">
       <div v-if="expand && absoluteUrl" class="py-single px-sm-half">
         <ContentShareIcon @click="showShareModal = true" />
       </div>

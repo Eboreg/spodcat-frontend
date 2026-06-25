@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { detectLocale, timeToString } from "@/utils";
+import { detectLocale, ping, timeToString } from "@/utils";
 import type { EpisodeSongModel } from "@/types/api";
 import { podcastSlugKey } from "@/symbols";
 
@@ -25,6 +25,9 @@ useSpodcatHead({ podcast, episode });
 watchEffect(() => {
   if (episode.value && podcast.value && !isPlaying) setEpisode(episode.value, podcast.value);
   setLocale(detectLocale(podcast.value?.language));
+});
+watchEffect(() => {
+  if (episode.value) ping(`v2/episodes/${episode.value.id}/ping/`);
 });
 </script>
 

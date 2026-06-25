@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { detectLocale } from "@/utils";
 
-const { data: podcasts, isLoading } = useQuery({
+const { data: podcasts } = useQuery({
   key: ["podcast"],
   query: () => $fetch("/api/podcasts"),
   staleTime: 60000,
@@ -23,10 +23,13 @@ setLocale(detectLocale());
         <img src="/img/spodcat-logo.png" alt="" class="logo d-none d-sm-block" />
       </div>
     </div>
-    <Loading v-if="isLoading" height="120px" />
+
+    <Loading v-if="podcasts === undefined" height="150px" />
+
     <template v-else>
       <PodcastBanner v-for="podcast in podcasts" :podcast="podcast" :key="podcast.slug" compact />
     </template>
+
     <Attribution />
   </main>
 </template>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const props = defineProps<{ opacity?: number; height?: string }>();
+const props = defineProps<{ height?: string }>();
 const outer = useTemplateRef("outer");
 const { height: actualHeight } = useElementSize(outer);
 const actualHeightString = computed(() => `${actualHeight.value}px`);
@@ -8,23 +8,30 @@ const { t } = useI18n();
 
 <template>
   <div ref="outer" class="loading outer">
-    <div class="inner"></div>
+    <div class="inner-frame"><div class="inner-colors"></div></div>
     <div class="text">{{ t("loading") }}</div>
   </div>
 </template>
 
 <style scoped lang="scss">
-@keyframes inner {
+@keyframes inner-frame {
   0% {
-    width: 100%;
-    left: -100%;
+    left: -110%;
+  }
+  100% {
+    left: 10%;
+  }
+}
+
+@keyframes inner-colors {
+  0% {
+    width: 0%;
   }
   50% {
-    width: 200%;
+    width: 100%;
   }
   100% {
     width: 0%;
-    left: 100%;
   }
 }
 
@@ -42,25 +49,18 @@ const { t } = useI18n();
   }
 }
 
-.outer,
-.inner {
-  width: 100%;
-}
-
 .outer {
   align-items: center;
-  background-color: $spodcat-yellow;
   border-radius: var(--spod-length-quarter);
   display: flex;
   height: v-bind(height);
   justify-content: center;
-  opacity: v-bind(opacity);
   overflow: hidden;
   position: relative;
+  width: 100%;
 }
 
 .text {
-  animation-delay: 0.5s;
   animation-duration: 2s;
   animation-iteration-count: infinite;
   animation-name: text;
@@ -71,11 +71,23 @@ const { t } = useI18n();
   text-transform: uppercase;
 }
 
-.inner {
+.inner-frame {
   animation-duration: 2s;
   animation-iteration-count: infinite;
-  animation-name: inner;
-  animation-timing-function: linear;
+  animation-name: inner-frame;
+  animation-timing-function: ease-in-out;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  position: absolute;
+  width: 200%;
+}
+
+.inner-colors {
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-name: inner-colors;
+  animation-timing-function: ease-in-out;
   background-image: linear-gradient(
     90deg,
     #{$spodcat-yellow}00,
@@ -85,6 +97,5 @@ const { t } = useI18n();
     #{$spodcat-yellow}00 100%
   );
   height: 100%;
-  position: absolute;
 }
 </style>

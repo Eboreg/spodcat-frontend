@@ -43,9 +43,9 @@ const { season, theme } = useSeason(podcastSlug, () => props.episode?.season);
 
 <template>
   <ContentCard :route="route" :expand="expand" :content="episode">
-    <template #head-start>
+    <template #head-start v-if="episode">
       <EpisodeRoundIcon :episode="episode" :podcast="podcast" />
-      <div v-if="episode" class="fill column gap-quarter">
+      <div class="fill column gap-quarter">
         <div class="font-weight-bold">{{ episode.name }}</div>
         <div class="row column-gap-half row-gap-quarter wrap">
           <div v-if="season" class="badge" :class="`theme-${theme}`">
@@ -69,16 +69,15 @@ const { season, theme } = useSeason(podcastSlug, () => props.episode?.season);
           </div>
         </div>
       </div>
-      <Loading v-else :opacity="0.5" />
     </template>
 
-    <template #head-end>
+    <template #head-end v-if="episode">
       <div v-if="expand && absoluteUrl" class="py-single px-sm-half">
         <ContentShareIcon @click="openShareModal" />
       </div>
 
       <NuxtLink
-        v-if="route && episode?.has_songs && !expand"
+        v-if="route && episode.has_songs && !expand"
         :title="t('has-tracklist')"
         :to="route"
         class="d-none d-sm-block py-single px-half"
@@ -93,7 +92,7 @@ const { season, theme } = useSeason(podcastSlug, () => props.episode?.season);
         />
       </NuxtLink>
 
-      <div v-if="episode" class="py-single px-sm-half">
+      <div class="py-single px-sm-half">
         <a :href="episode.audio_url" target="_blank">
           <SpodcatIcon
             :icon="Download"
@@ -106,7 +105,7 @@ const { season, theme } = useSeason(podcastSlug, () => props.episode?.season);
         </a>
       </div>
 
-      <div v-if="episode" class="py-single px-sm-half">
+      <div class="py-single px-sm-half">
         <SpodcatIcon
           :icon="Play"
           :icon-size="{ xs: 25, sm: 30 }"

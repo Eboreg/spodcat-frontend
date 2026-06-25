@@ -49,7 +49,7 @@ watchEffect(() => {
 });
 
 watch(
-  () => [audio.error],
+  () => [audio.error, audio.episode?.id],
   () => {
     if (audio.error) addToast({ level: "error", text: audio.error });
   },

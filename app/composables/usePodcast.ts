@@ -1,14 +1,13 @@
 import { podcastKey } from "@/symbols";
 
-export function usePodcast(slug: MaybeRefOrGetter<string>) {
+export function usePodcast(slug: string) {
   const result = useQuery({
-    key: () => ["podcast", toValue(slug)],
-    query: () => $fetch(`/api/podcasts/${toValue(slug)}`),
+    key: () => ["podcast", slug],
+    query: () => $fetch(`/api/podcasts/${slug}`),
     staleTime: 60000,
   });
-  const podcast = computed(() => (result.isLoading.value ? undefined : result.data.value));
 
-  provide(podcastKey, podcast);
+  provide(podcastKey, result.data);
 
-  return { podcast, ...result };
+  return { podcast: result.data, ...result };
 }

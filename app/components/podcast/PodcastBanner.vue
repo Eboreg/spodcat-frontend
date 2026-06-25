@@ -28,6 +28,7 @@ const nameCssStyle = computed(() =>
         :style="`background-image: url('${podcast.banner}')`"
         class="podcast-banner-image"
       ></div>
+
       <div v-else class="podcast-banner-image"></div>
 
       <NuxtLink :to="`/${podcast.slug}`" class="row gap-single align-center p-single">
@@ -45,6 +46,7 @@ const nameCssStyle = computed(() =>
         </div>
       </NuxtLink>
     </template>
+
     <Loading v-else height="120px" />
   </header>
 </template>
