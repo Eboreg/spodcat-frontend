@@ -8,10 +8,11 @@ const props = defineProps<{
   contentType: PodcastContentType;
   content?: PodcastContentModel;
 }>();
+const show = computed(() => !!props.content || podcast?.value?.enable_comments);
 </script>
 
 <template>
-  <div class="gap-single px-single column pb-single">
+  <div v-if="show" class="gap-single px-single column pb-single">
     <div
       v-if="content?.description_html"
       class="description"

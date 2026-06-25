@@ -15,7 +15,7 @@ const route = computed(() => (!props.expand ? props.route : undefined));
     <div class="bg column">
       <Loading v-if="!content" height="120px" />
 
-      <div v-if="content" class="row align-center pl-single">
+      <div v-else class="row align-center pl-single">
         <MaybeLink :route="route" class="row gap-single fill py-single">
           <slot name="head-start" />
         </MaybeLink>
