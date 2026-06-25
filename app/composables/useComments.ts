@@ -12,7 +12,6 @@ export default function useComments(
   } = useQuery({
     key: () => ["content", toValue(contentId)!, "comments"],
     query: () => $fetch(`/api/contents/${toValue(contentId)}/comments`),
-    staleTime: 60000,
     enabled: () => !!toValue(contentId),
   });
   const isSubmitting = ref<boolean>(false);

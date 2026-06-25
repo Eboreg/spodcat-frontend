@@ -7,7 +7,6 @@ export default function useSeason(
   const result = useQuery({
     key: () => ["podcast", toValue(podcastSlug)!, "seasons"],
     query: () => $fetch(`/api/podcasts/${toValue(podcastSlug)!}/seasons`),
-    staleTime: 60000,
     enabled: () => !!toValue(podcastSlug) && !!toValue(seasonId),
   });
   const season = computed(() => result.data.value?.find((s) => s.id === toValue(seasonId)));

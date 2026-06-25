@@ -4,7 +4,6 @@ import { detectLocale } from "@/utils";
 const { data: podcasts } = useQuery({
   key: ["podcast"],
   query: () => $fetch("/api/podcasts"),
-  staleTime: 60000,
 });
 const { t, setLocale } = useI18n();
 
