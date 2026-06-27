@@ -1,9 +1,14 @@
 <script setup lang="ts">
+import useResponsiveSize from "~/composables/useResponsiveSize";
 import { type BreakpointSizesArg } from "~/responsive";
 
 type Attribute = "size" | "font-size";
 
-const props = defineProps<{ attribute?: Attribute | Attribute[]; size?: BreakpointSizesArg }>();
+const props = defineProps<{
+  attribute?: Attribute | Attribute[];
+  size?: BreakpointSizesArg;
+  element?: string;
+}>();
 const attributes = computed(() => {
   if (typeof props.attribute === "string") return [props.attribute];
   return props.attribute ?? [];
@@ -12,9 +17,9 @@ const { sizeString } = useResponsiveSize(props.size);
 </script>
 
 <template>
-  <div class="responsive-size d-flex" :class="attributes">
+  <component :is="element ?? 'div'" class="responsive-size d-flex" :class="attributes">
     <slot />
-  </div>
+  </component>
 </template>
 
 <style lang="scss">

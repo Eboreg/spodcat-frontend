@@ -2,6 +2,10 @@
 import { detectLocale, ping, timeToString } from "@/utils";
 import type { EpisodeSongModel } from "@/types/api";
 import { podcastSlugKey } from "@/symbols";
+import useAudioStore from "~/composables/useAudioStore";
+import useSpodcatHead from "~/composables/useSpodcatHead";
+import useEpisode from "~/composables/useEpisode";
+import usePodcast from "~/composables/usePodcast";
 
 function getSongDisplayString(song: EpisodeSongModel): string {
   let result = "";

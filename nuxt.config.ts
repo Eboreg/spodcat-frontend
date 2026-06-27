@@ -4,7 +4,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   css: ["~/assets/scss/base.scss"],
   imports: {
-    // autoImport: false,
+    scan: false,
   },
   vite: {
     optimizeDeps: {

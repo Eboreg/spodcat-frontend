@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ChevronDown, ChevronUp, Pause, Play, TriangleAlert } from "@lucide/vue";
 import type { EpisodeModel, PodcastModel } from "@/types/api";
+import useAudioStore from "~/composables/useAudioStore";
 
 // Don't use inject() for podcast here, since it may happen that the user
 // navigates to one podcast while listening to another.
@@ -8,7 +9,6 @@ const { t } = useI18n();
 const props = defineProps<{ episode: EpisodeModel; podcast: PodcastModel }>();
 const isExpanded = ref<boolean>(false);
 const audio = useAudioStore();
-const { addToast } = useMessageStore();
 const { pause, play } = audio;
 </script>
 
@@ -33,9 +33,10 @@ const { pause, play } = audio;
         v-else-if="audio.error"
         :icon="TriangleAlert"
         :size="30"
-        @click="addToast({ level: 'error', text: audio.error })"
-        class="p-half hover-light cursor-pointer"
+        @click="play"
+        class="p-half hover-light"
         theme="error"
+        element="button"
       />
       <SpodcatIcon
         v-else-if="audio.isPlaying"
@@ -43,8 +44,9 @@ const { pause, play } = audio;
         :size="30"
         :title="t('pause')"
         @click="pause"
-        class="hover-light cursor-pointer p-half"
+        class="hover-light p-half"
         theme="info"
+        element="button"
       />
       <SpodcatIcon
         v-else
@@ -52,8 +54,9 @@ const { pause, play } = audio;
         :size="30"
         :title="t('play')"
         @click="play"
-        class="hover-light cursor-pointer p-half"
+        class="hover-light p-half"
         theme="success"
+        element="button"
       />
 
       <PlayerBarExpanded :episode="episode" class="d-none d-xl-flex fill" />

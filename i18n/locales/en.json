@@ -33,6 +33,7 @@
     "space": "Space"
   },
   "loading": "Loading",
+  "loading-ellipsis": "Loading...",
   "menu": {
     "hide": "Hide menu",
     "show": "Show menu"

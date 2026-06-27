@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Podcast } from "@lucide/vue";
 import type { PartialEpisodeModel, PodcastModel } from "@/types/api";
+import useSeason from "~/composables/useSeason";
 
 const props = defineProps<{
   podcast?: PodcastModel;

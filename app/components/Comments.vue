@@ -1,57 +1,38 @@
 <script setup lang="ts">
 import { podcastKey } from "@/symbols";
 import type { PodcastContentType } from "@/types/api";
-
-const { t } = useI18n();
-const props = defineProps<{
-  contentType: PodcastContentType;
-  contentId?: string;
-}>();
-const podcast = inject(podcastKey);
-const { getValue, getValidationErrors, hasErrors, setValidationErrors } = useTextInputs(
-  "name",
-  "text",
-  "challenge_answer",
-);
-const name = getValue("name");
-const text = getValue("text");
-const challengeAnswer = getValue("challenge_answer");
-const nameErrors = getValidationErrors("name");
-const textErrors = getValidationErrors("text");
-const challengeAnswerErrors = getValidationErrors("challenge_answer");
-const { addToast } = useMessageStore();
-const { canSubmit, challenge, comments, deleteChallenge, postComment, resetChallenge } =
-  useComments(
-    () => podcast?.value?.slug,
-    () => props.contentId,
-  );
-const isSubmitDisabled = computed(
-  () => !canSubmit.value || !name.value || !text.value || !challengeAnswer.value || hasErrors.value,
-);
+import useChallenge from "~/composables/useChallenge";
+import useComments from "~/composables/useComments";
+import useMessageStore from "~/composables/useMessageStore";
+import type { InputData } from "./Input.vue";
 
 async function onSubmitComment() {
-  try {
-    const toast = podcast?.value?.require_comment_approval
-      ? t("comment.thanks.approval-required")
-      : t("comment.thanks.no-approval-required");
+  if (name.value.value && text.value.value && challengeAnswer.value.value) {
+    try {
+      const toast = podcast?.value?.require_comment_approval
+        ? t("comment.thanks.approval-required")
+        : t("comment.thanks.no-approval-required");
 
-    await postComment(name.value, text.value, challengeAnswer.value);
-    addToast({ level: "success", text: toast });
-    resetComment();
-    challengeAnswer.value = "";
-  } catch (err: any) {
-    if (err.data && err.data.data) {
-      setValidationErrors(err.data.data as Record<string, string[]>);
-    } else {
-      addToast({ level: "error", text: t("comment.something-wrong") });
+      await postComment(name.value.value, text.value.value, challengeAnswer.value.value);
+      addToast({ level: "success", text: toast });
+      resetComment();
+    } catch (err: any) {
+      if (err.data && err.data.data) {
+        validationErrors.value = err.data.data as Record<string, string[]>;
+      } else {
+        addToast({ level: "error", text: t("comment.something-wrong") });
+      }
     }
   }
 }
 
 function resetComment() {
-  name.value = "";
-  text.value = "";
-  setValidationErrors({});
+  name.value.value = "";
+  name.hasErrors.value = false;
+  text.value.value = "";
+  text.hasErrors.value = false;
+  challengeAnswer.value.value = undefined;
+  challengeAnswer.hasErrors.value = false;
 }
 
 function dateToString(date: string) {
@@ -61,18 +42,55 @@ function dateToString(date: string) {
   });
 }
 
-onMounted(() => {
-  if (podcast?.value) resetChallenge(podcast?.value?.slug);
-});
+const { t } = useI18n();
+const props = defineProps<{
+  contentType: PodcastContentType;
+  contentId?: string;
+}>();
+const podcast = inject(podcastKey);
 
-onUnmounted(deleteChallenge);
+// const name = ref<InputData<string>>({});
+// const text = ref<InputData<string>>({});
+// const challengeAnswer = ref<InputData<number>>({});
+const validationErrors = ref<Record<string, string[]>>();
+
+const name = {
+  value: ref<string>(""),
+  hasErrors: ref<boolean>(false),
+};
+const text = {
+  value: ref<string>(""),
+  hasErrors: ref<boolean>(false),
+};
+const challengeAnswer = {
+  value: ref<number>(),
+  hasErrors: ref<boolean>(false),
+};
+
+const { addToast } = useMessageStore();
+const { comments, isSubmitting, postComment } = useComments(
+  () => podcast?.value?.slug,
+  () => props.contentId,
+);
+const { challenge } = useChallenge();
+const isChallengeInputDisabled = computed(() => isSubmitting.value || !challenge.value);
+const isSubmitDisabled = computed(
+  () =>
+    isChallengeInputDisabled.value ||
+    !name.value.value ||
+    !text.value.value ||
+    !challengeAnswer.value.value ||
+    name.hasErrors.value ||
+    text.hasErrors.value ||
+    challengeAnswer.hasErrors.value,
+);
 </script>
 
 <template>
   <div v-if="comments && comments.length > 0">
     <h3>{{ t("comment.comments") }}</h3>
     <div class="column gap-half">
-      <div v-for="comment in comments" :key="comment.id" class="comment mb-half p-half">
+      <div v-for="comment in comments" :key="comment.id" class="comment p-half">
         <p class="text-xs">
           {{
             t("comment.x-said-on-date", { x: comment.name, date: dateToString(comment.created) })
@@ -90,24 +108,38 @@ onUnmounted(deleteChallenge);
         <div v-if="podcast?.require_comment_approval" class="text-xs">
           {{ t("comment.approval-required") }}
         </div>
-        <TextInput v-model="text" id="text" :errors="textErrors" multiline />
+        <TextInput
+          :disabled="isSubmitting"
+          :validation-errors="validationErrors"
+          id="text"
+          multiline
+          required
+          v-model="text.value.value"
+          v-model:has-errors="text.hasErrors.value"
+        />
       </div>
       <div class="row gap-half wrap align-start">
         <TextInput
-          :errors="nameErrors"
+          :disabled="isSubmitting"
           :label="t('comment.your-name')"
-          :max-length="50"
-          class="name-wrapper"
+          :maxlength="50"
+          :validation-errors="validationErrors"
           id="name"
-          v-model="name"
+          required
+          v-model="name.value.value"
+          v-model:has-errors="name.hasErrors.value"
+          wrapper-class="name-wrapper"
         />
-        <TextInput
-          :errors="challengeAnswerErrors"
-          :label="t('comment.challenge', { q: challenge?.challenge_string })"
-          class="challenge-wrapper"
+        <NumberInput
           id="challenge_answer"
-          type="number"
-          v-model="challengeAnswer"
+          :disabled="isChallengeInputDisabled"
+          :label="challenge ? t('comment.challenge', { q: challenge.challenge_string }) : '&nbsp;'"
+          :placeholder="isChallengeInputDisabled ? t('loading-ellipsis') : undefined"
+          :validation-errors="validationErrors"
+          required
+          v-model="challengeAnswer.value.value"
+          v-model:has-errors="challengeAnswer.hasErrors.value"
+          wrapper-class="challenge-wrapper"
         />
         <Button :disabled="isSubmitDisabled" theme="secondary" @click="onSubmitComment">
           {{ t("comment.send") }}

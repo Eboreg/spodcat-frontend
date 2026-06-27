@@ -2,14 +2,14 @@ import type { H3Event } from "h3";
 
 const SUPPORTED_LOCALES = ["sv", "en"] as const;
 const THEMES = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "boring",
   "boring-inverse",
+  "boring",
   "error",
   "info",
+  "primary",
+  "secondary",
   "success",
+  "tertiary",
 ] as const;
 
 export type SupportedLocale = (typeof SUPPORTED_LOCALES)[number];

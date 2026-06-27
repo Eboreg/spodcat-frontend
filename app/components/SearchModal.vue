@@ -8,22 +8,32 @@ const isOpen = defineModel<boolean>();
 const { t } = useI18n();
 const router = useRouter();
 const term = ref<string>("");
+const isLoading = ref<boolean>(false);
 const results = ref<(PartialEpisodePolymorphicModel | PartialPostPolymorphicModel)[]>([]);
 const activeIdx = ref<number>(0);
 const showMinCharsText = computed(() => term.value.length > 0 && term.value.length < 3);
-const showEmptyResultText = computed(() => term.value.length >= 3 && results.value.length === 0);
+const showEmptyResultText = computed(
+  () => term.value.length >= 3 && results.value.length === 0 && !isLoading.value,
+);
 const podcastSlug = inject(podcastSlugKey);
 
 watchEffect(async (onCleanup) => {
   const controller = new AbortController();
 
   if (term.value.length >= 3 && podcastSlug) {
-    const r = await $fetch(`/api/podcasts/${podcastSlug}/search/${term.value}`, {
-      signal: controller.signal,
-    });
-    results.value = r;
+    isLoading.value = true;
+    results.value = [];
+    try {
+      const r = await $fetch(`/api/podcasts/${podcastSlug}/search/${term.value}`, {
+        signal: controller.signal,
+      });
+      results.value = r;
+    } finally {
+      isLoading.value = false;
+    }
   } else {
     results.value = [];
+    isLoading.value = false;
   }
   onCleanup(() => controller.abort());
 });
@@ -73,6 +83,7 @@ function onKeyDown(event: KeyboardEvent) {
       <div v-if="showEmptyResultText" class="px-single pb-half text-small text-boring-inverse">
         {{ t("no-search-results") }}
       </div>
+      <Loading v-if="isLoading" height="54px" />
       <div class="search-results">
         <NuxtLink
           v-for="(result, index) in results"
@@ -81,6 +92,8 @@ function onKeyDown(event: KeyboardEvent) {
           @click="isOpen = false"
           class="search-result d-block py-half px-single"
           :class="{ active: index === activeIdx }"
+          tabindex="0"
+          @focus="activeIdx = index"
         >
           <div class="row align-center gap-single">
             <SpodcatIcon v-if="result.resourcetype === 'episode'" :icon="Podcast" :size="24" />
@@ -125,12 +138,8 @@ function onKeyDown(event: KeyboardEvent) {
     background-color: var(--spod-theme-primary-dark);
   }
 
-  &:last-child {
-    margin-bottom: 0.5rem;
-  }
-
   &:hover:not(.active) {
-    background-color: var(--spod-theme-boring-normal-dark);
+    background-color: var(--spod-theme-boring-dark);
   }
 }
 

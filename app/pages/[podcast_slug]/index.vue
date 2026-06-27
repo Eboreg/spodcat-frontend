@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { detectLocale, ping } from "@/utils";
+import usePodcast from "~/composables/usePodcast";
+import usePodcastContents from "~/composables/usePodcastContents";
+import useSpodcatHead from "~/composables/useSpodcatHead";
 import { podcastSlugKey } from "~/symbols";
 
 const { setLocale } = useI18n();

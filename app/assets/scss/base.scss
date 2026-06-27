@@ -111,6 +111,16 @@ html {
   width: 100dvw;
 }
 
+button {
+  background-color: unset;
+  border: unset;
+  color: unset;
+  cursor: pointer;
+  font-family: unset;
+  font-size: unset;
+  padding: unset;
+}
+
 h2,
 h3 {
   margin-bottom: var(--spod-length-half);
@@ -127,6 +137,12 @@ input[type="range"] {
 
 main {
   flex: 1 1 auto;
+}
+
+textarea:disabled,
+input:disabled {
+  background-color: darkgray;
+  color: black;
 }
 
 .align-baseline {

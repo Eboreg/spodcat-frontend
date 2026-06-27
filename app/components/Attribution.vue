@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Cookie } from "@lucide/vue";
+import useMessageStore from "~/composables/useMessageStore";
 
 const { t } = useI18n();
 const { addToast } = useMessageStore();
@@ -27,8 +28,8 @@ function onCookiesClick() {
         Robert
       </a>
     </div>
-    <div class="text-xs font-weight-bold cursor-pointer" @click="onCookiesClick">
+    <button class="text-xs font-weight-bold" @click="onCookiesClick">
       {{ t("cookies.question") }}
-    </div>
+    </button>
   </div>
 </template>

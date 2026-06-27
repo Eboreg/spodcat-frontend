@@ -47,6 +47,10 @@ const show = computed(() => !!props.content || podcast?.value?.enable_comments);
     margin-top: 0;
   }
 
+  & > :deep(:last-child) {
+    margin-bottom: 0;
+  }
+
   :deep(a:not(.button)) {
     font-weight: bold;
   }

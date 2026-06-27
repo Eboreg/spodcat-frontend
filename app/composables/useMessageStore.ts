@@ -1,17 +1,16 @@
 import type { LucideIcon } from "@lucide/vue";
 import type { ElementSize } from "@vueuse/core";
-import { defineStore } from "pinia";
 
 export type MessageLevel = "error" | "info" | "success";
 
 export interface Message {
   level: MessageLevel;
-  text: string;
+  text: string | string[];
   timeout?: number;
   type?: string;
 }
 
-export interface ToastMessage extends Message {
+export interface ToastMessage extends Omit<Message, "type"> {
   icon?: string | LucideIcon | null;
 }
 
@@ -25,7 +24,7 @@ export class PlacedMessage {
   constructor(id: number, message: Message) {
     this.id = id;
     this.level = message.level;
-    this.text = message.text;
+    this.text = typeof message.text === "string" ? message.text : message.text.join("<br>");
     this.timeout = message.timeout ?? 5000;
     this.type = message.type;
   }

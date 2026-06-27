@@ -11,7 +11,8 @@ const { t } = useI18n();
     :icon="X"
     :size="size ?? 20"
     :title="t('close')"
-    class="hover-light cursor-pointer"
+    class="hover-light"
     theme="boring-inverse"
+    element="button"
   />
 </template>

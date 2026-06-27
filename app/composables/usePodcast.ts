@@ -1,9 +1,9 @@
 import { podcastKey } from "@/symbols";
 
-export function usePodcast(slug: string) {
+export default function usePodcast(slug: string) {
   const result = useQuery({
     key: () => ["podcast", slug],
-    query: () => $fetch(`/api/podcasts/${slug}`),
+    query: ({ signal }) => $fetch(`/api/podcasts/${slug}`, { signal }),
   });
 
   provide(podcastKey, result.data);

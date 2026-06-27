@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Check, CircleGauge } from "@lucide/vue";
+import useAudioStore from "~/composables/useAudioStore";
 
 const { t } = useI18n();
 const popupVisible = ref<boolean>(false);
@@ -36,11 +37,12 @@ onClickOutside(container, () => (popupVisible.value = false));
         })
       "
       @click="popupVisible = !popupVisible"
-      class="hover-light cursor-pointer p-half"
+      class="hover-light p-half"
+      element="button"
     />
     <Popup class="pb-half" v-if="popupVisible">
       <div class="popup-header">{{ t("playback-rate") }}</div>
-      <div
+      <button
         v-for="rate in playbackRates"
         :key="rate.rate"
         @click="onRateClick(rate.rate)"
@@ -50,7 +52,7 @@ onClickOutside(container, () => (popupVisible.value = false));
           <SpodcatIcon v-if="rate.rate === audio.playbackRate" :icon="Check" :size="16" />
         </div>
         <div>{{ rate.label }}</div>
-      </div>
+      </button>
     </Popup>
   </div>
 </template>

@@ -41,6 +41,7 @@ function onClick(event: MouseEvent) {
     :new-tab="newTab"
     :route="route"
     @click="onClick"
+    element="button"
   >
     <ProgressCircle v-if="icon && isLoading" class="icon" />
     <SpodcatIcon v-else-if="icon" :icon="icon" :size="iconSize" />

@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { Frown } from "@lucide/vue";
-import type { PlacedToast } from "@/composables/useMessageStore";
 import type { Offsets } from "@/types";
+import useAudioStore from "~/composables/useAudioStore";
+import useMessageStore, { PlacedToast } from "~/composables/useMessageStore";
+import useTransitions from "~/composables/useTransitions";
 
 const props = defineProps<{ toast: PlacedToast }>();
 const placedToast = reactive(props.toast);
@@ -56,26 +58,25 @@ watch([height, width], ([h, w]) =>
 <template>
   <div
     ref="container"
-    :class="`toast theme-${placedToast.level}`"
+    :class="`toast column theme-${placedToast.level}`"
     @mouseenter="if (transitionState !== 'created') pauseAnimation();"
     @mouseleave="playAnimation"
   >
-    <SpodcatIcon v-if="icon" :icon="icon" class="toast-icon p-half" :size="30" />
-    <div class="toast-text">{{ placedToast.text }}</div>
-    <CloseIcon @click="finishAnimation" class="toast-close-icon p-half" />
+    <div class="row">
+      <SpodcatIcon v-if="icon" :icon="icon" class="toast-icon p-half" :size="30" />
+      <div class="toast-text fill" v-html="placedToast.text"></div>
+      <CloseIcon @click="finishAnimation" class="toast-close-icon p-half" />
+    </div>
     <div ref="countdown" :class="`toast-countdown bg-${placedToast.level}-dark`"></div>
   </div>
 </template>
 
 <style scoped lang="scss">
 .toast {
-  align-items: start;
   border-left-width: 0;
   border-radius: var(--spod-border-radius);
   border-style: outset;
   border-top-width: 0;
-  display: grid;
-  grid-template: "icon text close" "countdown countdown countdown" / auto 1fr auto;
   overflow: hidden;
   padding-top: var(--spod-length-quarter);
   position: fixed;
@@ -85,23 +86,16 @@ watch([height, width], ([h, w]) =>
   z-index: var(--spod-zindex-toast);
 }
 
-:deep(.toast-close-icon) {
-  grid-area: close;
-}
-
 .toast-countdown {
-  grid-area: countdown;
   height: 5px;
   width: 0%;
 }
 
-:deep(.toast-icon) {
+.toast-icon {
   align-self: center;
-  grid-area: icon;
 }
 
 .toast-text {
-  grid-area: text;
   padding: 11px var(--spod-length-half);
 }
 </style>

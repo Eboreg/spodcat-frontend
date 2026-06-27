@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { detectLocale } from "@/utils";
+import useSpodcatHead from "~/composables/useSpodcatHead";
 
 const { data: podcasts } = useQuery({
   key: ["podcast"],
-  query: () => $fetch("/api/podcasts"),
+  query: ({ signal }) => $fetch("/api/podcasts", { signal }),
 });
 const { t, setLocale } = useI18n();
 

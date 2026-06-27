@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import useAudioStore from "~/composables/useAudioStore";
+
 const { t } = useI18n();
 const audio = useAudioStore();
 const { toggleMute, setVolume } = audio;

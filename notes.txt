@@ -1,0 +1,1 @@
+input ej tillfredsst, går ej nollställa challengeanwer value fr comments efter inskick (write operation failed computed value is readlonly)

@@ -5,6 +5,7 @@ const props = defineProps<{
   href?: string;
   newTab?: boolean;
   route?: string;
+  element?: string;
 }>();
 
 function onClick(event: MouseEvent) {
@@ -29,7 +30,7 @@ function onClick(event: MouseEvent) {
   <NuxtLink v-else-if="route" :to="route" @click="onClick">
     <slot />
   </NuxtLink>
-  <span v-else @click="onClick">
+  <component v-else :is="element ?? 'span'" @click="onClick">
     <slot />
-  </span>
+  </component>
 </template>

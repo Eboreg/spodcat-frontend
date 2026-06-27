@@ -10,7 +10,8 @@ const { t } = useI18n();
     :icon="Share2"
     :size="{ xs: 35, sm: 40 }"
     :title="t('share.share')"
-    class="hover-light hover-border cursor-pointer"
+    class="hover-light hover-border"
     theme="secondary"
+    element="button"
   />
 </template>

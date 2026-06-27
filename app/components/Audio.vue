@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import useAudioStore from "~/composables/useAudioStore";
+import useMessageStore from "~/composables/useMessageStore";
+
 const audioElement = useTemplateRef("audioElement");
 const audio = useAudioStore();
 const {

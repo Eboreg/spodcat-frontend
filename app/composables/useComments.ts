@@ -1,37 +1,18 @@
-import type { ChallengeModel } from "@/types/api";
+import useChallenge from "./useChallenge";
 
 export default function useComments(
   podcastSlug: MaybeRefOrGetter<string | undefined>,
   contentId: MaybeRefOrGetter<string | undefined>,
 ) {
-  const {
-    data: comments,
-    isLoading,
-    refetch,
-    error,
-  } = useQuery({
+  const { data: comments, refetch } = useQuery({
     key: () => ["content", toValue(contentId)!, "comments"],
-    query: () => $fetch(`/api/contents/${toValue(contentId)}/comments`),
+    query: ({ signal }) => $fetch(`/api/contents/${toValue(contentId)}/comments`, { signal }),
     enabled: () => !!toValue(contentId),
   });
+  const { challenge, resetChallenge } = useChallenge();
   const isSubmitting = ref<boolean>(false);
-  const challenge = ref<ChallengeModel>();
-  const canSubmit = computed(
-    () =>
-      !isSubmitting.value && !!challenge.value && !!toValue(podcastSlug) && !!toValue(contentId),
-  );
 
-  function deleteChallenge() {
-    if (challenge.value) {
-      $fetch(`/api/challenges/${challenge.value.id}`, { method: "DELETE" });
-    }
-  }
-
-  async function resetChallenge(podcastSlug: string) {
-    challenge.value = await $fetch(`/api/podcasts/${podcastSlug}/challenges`, { method: "POST" });
-  }
-
-  async function postComment(name: string, text: string, challengeAnswer: string) {
+  async function postComment(name: string, text: string, challengeAnswer: string | number) {
     const _podcastSlug = toValue(podcastSlug);
     const _contentId = toValue(contentId);
 
@@ -47,7 +28,7 @@ export default function useComments(
             challenge_answer: challengeAnswer,
           },
         });
-        await resetChallenge(_podcastSlug);
+        resetChallenge();
         if (comment.is_approved) await refetch();
       } finally {
         isSubmitting.value = false;
@@ -55,19 +36,9 @@ export default function useComments(
     }
   }
 
-  watch(toRef(podcastSlug), (newValue, oldValue) => {
-    if (newValue && newValue !== oldValue) resetChallenge(newValue);
-  });
-
   return {
     comments,
-    refetch,
-    error,
-    canSubmit,
-    challenge,
-    isLoading,
-    deleteChallenge,
+    isSubmitting,
     postComment,
-    resetChallenge,
   };
 }

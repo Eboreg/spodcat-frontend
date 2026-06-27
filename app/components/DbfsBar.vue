@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { EpisodeModel } from "@/types/api";
 import { timeToString } from "@/utils";
+import useAudioStore from "~/composables/useAudioStore";
 
 function getMouseProgress(event: MouseEvent): number | null {
   if (event.target instanceof HTMLElement) {

@@ -2,6 +2,7 @@
 import { ArrowLeft, ArrowRight, FastForward, Keyboard, Rewind } from "@lucide/vue";
 import type { EpisodeModel } from "@/types/api";
 import { timeToString } from "@/utils";
+import useAudioStore from "~/composables/useAudioStore";
 
 const { t } = useI18n();
 const props = defineProps<{ episode: EpisodeModel }>();
@@ -32,6 +33,7 @@ onClickOutside(keyboardHelp, () => (isKeyboardHelpOpen.value = false));
         @click="seek(-10)"
         class="hover-light p-half"
         theme="boring-inverse"
+        element="button"
       />
     </div>
 
@@ -43,6 +45,7 @@ onClickOutside(keyboardHelp, () => (isKeyboardHelpOpen.value = false));
         @click="seek(10)"
         class="hover-light p-half"
         theme="boring-inverse"
+        element="button"
       />
     </div>
 
@@ -52,8 +55,9 @@ onClickOutside(keyboardHelp, () => (isKeyboardHelpOpen.value = false));
         :size="30"
         :title="t('keyboard.shortcuts')"
         @click="isKeyboardHelpOpen = !isKeyboardHelpOpen"
-        class="hover-light cursor-pointer p-half"
+        class="hover-light p-half"
         theme="boring-inverse"
+        element="button"
       />
 
       <Popup v-if="isKeyboardHelpOpen" class="gap-half p-single">

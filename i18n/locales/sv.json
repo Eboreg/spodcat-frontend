@@ -33,6 +33,7 @@
     "space": "Mellanslag"
   },
   "loading": "Laddar",
+  "loading-ellipsis": "Laddar ...",
   "menu": {
     "hide": "Dölj meny",
     "show": "Visa meny"

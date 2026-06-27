@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Copy } from "@lucide/vue";
 import { timeFromString, timeToString } from "@/utils";
+import useMessageStore from "~/composables/useMessageStore";
 
 async function onCopyClick() {
   try {
@@ -56,6 +57,7 @@ onUnmounted(() => clearMessages("shareModal"));
             @click="onCopyClick"
             class="cursor-pointer hover-light"
             theme="boring-inverse"
+            element="button"
           />
         </div>
         <div class="row gap-half wrap">

@@ -1,6 +1,5 @@
 import type { EpisodeModel, PodcastModel } from "@/types/api";
 import { coerceBetween } from "@/utils";
-import { defineStore } from "pinia";
 
 const useAudioStore = defineStore("audio", () => {
   const audioElement = ref<HTMLAudioElement>();
@@ -24,25 +23,11 @@ const useAudioStore = defineStore("audio", () => {
     return 0;
   });
 
-  async function checkAudioUrl() {
-    const url = audioElement.value?.src ?? episode.value?.audio_url;
-
-    if (url !== undefined) {
-      try {
-        await $fetch(url, { method: "HEAD" });
-        error.value = undefined;
-      } catch (err: any) {
-        setError(err.statusMessage ?? err.statusText, err.statusCode ?? err.status);
-      }
-    }
-  }
-
   function setError(text?: string, code?: number) {
-    const _text = text ?? t("unknown-error");
-    const status = code ? `${code} ${_text}` : _text;
+    const status = text ? (code ? `${code} ${text}` : text) : undefined;
     const message = t("audio-file-error");
 
-    error.value = `${message}: ${status}`;
+    error.value = status ? `${message}: ${status}` : `${message}.`;
   }
 
   function onCanPlay() {
@@ -62,10 +47,10 @@ const useAudioStore = defineStore("audio", () => {
     setMediaSessionPlaybackState();
   }
 
-  async function onError() {
+  async function onError(event: Event) {
     isPlaying.value = false;
     isLoading.value = false;
-    await checkAudioUrl();
+    setError();
   }
 
   function onPause() {
@@ -169,6 +154,7 @@ const useAudioStore = defineStore("audio", () => {
   }
 
   function setEpisode(newEpisode: EpisodeModel, newPodcast?: PodcastModel) {
+    if (newEpisode.id !== episode.value?.id) error.value = undefined;
     episode.value = newEpisode;
     podcast.value = newPodcast;
     setSrc(newEpisode.audio_url);
@@ -259,7 +245,6 @@ const useAudioStore = defineStore("audio", () => {
   }
 
   return {
-    audioElement,
     canPlay,
     currentProgress,
     currentTime,
