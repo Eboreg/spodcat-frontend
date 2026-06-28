@@ -1,9 +1,6 @@
 import useChallenge from "./useChallenge";
 
-export default function useComments(
-  podcastSlug: MaybeRefOrGetter<string | undefined>,
-  contentId: MaybeRefOrGetter<string | undefined>,
-) {
+export default function useComments(contentId: MaybeRefOrGetter<string | undefined>) {
   const { data: comments, refetch } = useQuery({
     key: () => ["content", toValue(contentId)!, "comments"],
     query: ({ signal }) => $fetch(`/api/contents/${toValue(contentId)}/comments`, { signal }),
@@ -13,10 +10,9 @@ export default function useComments(
   const isSubmitting = ref<boolean>(false);
 
   async function postComment(name: string, text: string, challengeAnswer: string | number) {
-    const _podcastSlug = toValue(podcastSlug);
     const _contentId = toValue(contentId);
 
-    if (_podcastSlug && _contentId) {
+    if (_contentId) {
       isSubmitting.value = true;
       try {
         const comment = await $fetch(`/api/contents/${_contentId}/comments`, {
@@ -37,6 +33,7 @@ export default function useComments(
   }
 
   return {
+    challenge,
     comments,
     isSubmitting,
     postComment,

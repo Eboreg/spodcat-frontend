@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type LucideIcon } from "@lucide/vue";
+import type { LucideIcon } from "@lucide/vue";
 import type { Theme } from "@/utils";
 import type { BreakpointSizesArg } from "~/responsive";
 

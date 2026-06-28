@@ -19,17 +19,24 @@ function getSongDisplayString(song: EpisodeSongModel): string {
 }
 
 const route = useRoute();
-const { episode } = useEpisode(route.params.podcast_slug as string, route.params.slug as string);
+const podcastSlug = route.params.podcast_slug as string;
+const slug = route.params.slug as string;
+const { episode } = useEpisode(podcastSlug, slug);
 const { t, setLocale } = useI18n();
-const { podcast } = usePodcast(route.params.podcast_slug as string);
+const { podcast } = usePodcast(podcastSlug);
 const { setEpisode, playEpisode, isPlaying } = useAudioStore();
 
-provide(podcastSlugKey, route.params.podcast_slug as string);
+provide(podcastSlugKey, podcastSlug);
 useSpodcatHead({ podcast, episode });
+
 watchEffect(() => {
   if (episode.value && podcast.value && !isPlaying) setEpisode(episode.value, podcast.value);
+});
+
+watchEffect(() => {
   setLocale(detectLocale(podcast.value?.language));
 });
+
 watchEffect(() => {
   if (episode.value) ping(`v2/episodes/${episode.value.id}/ping/`);
 });
@@ -39,7 +46,7 @@ watchEffect(() => {
   <PodcastMain>
     <PodcastGoToButton />
     <EpisodeCard :episode="episode" expand>
-      <ContentDescription content-type="episode" :content="episode">
+      <ContentDescription :content="episode">
         <ClientOnly>
           <div v-if="episode?.has_songs" class="text-article">
             <h2>{{ t("songs") }}</h2>

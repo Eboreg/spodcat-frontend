@@ -6,15 +6,19 @@ import usePodcast from "~/composables/usePodcast";
 import usePost from "~/composables/usePost";
 
 const route = useRoute();
-const { podcast } = usePodcast(route.params.podcast_slug as string);
-const { post } = usePost(route.params.podcast_slug as string, route.params.slug as string);
+const podcastSlug = route.params.podcast_slug as string;
+const slug = route.params.slug as string;
+const { podcast } = usePodcast(podcastSlug);
+const { post } = usePost(podcastSlug, slug);
 const { setLocale } = useI18n();
 
-provide(podcastSlugKey, route.params.podcast_slug as string);
+provide(podcastSlugKey, podcastSlug);
 useSpodcatHead({ podcast, post });
+
 watchEffect(() => {
   setLocale(detectLocale(podcast.value?.language));
 });
+
 watchEffect(() => {
   if (post.value) ping(`v2/posts/${post.value.id}/ping/`);
 });
@@ -24,7 +28,7 @@ watchEffect(() => {
   <PodcastMain>
     <PodcastGoToButton />
     <PostCard :post="post" expand>
-      <ContentDescription content-type="post" :content="post" />
+      <ContentDescription :content="post" />
     </PostCard>
   </PodcastMain>
 </template>

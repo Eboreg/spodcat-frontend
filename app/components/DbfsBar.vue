@@ -88,22 +88,21 @@ watchEffect(() => {
     @mousemove="onMouseMove"
     @mouseleave="showTooltip = false"
   >
-    <div class="dbfs-overlay bg-opaque" :style="`width: ${100 - audio.currentProgress}%`"></div>
+    <div class="dbfs-overlay bg-opaque" :style="`width: ${100 - audio.currentProgress}%`" />
     <div v-if="showTooltip" class="tooltip" :style="`left: ${tooltipProgress * 100}%`">
       <div class="tooltip-box text-xs bg">
         {{ timeToString(episode.duration_seconds * tooltipProgress) }}
       </div>
-      <div class="tooltip-line"></div>
+      <div class="tooltip-line" />
     </div>
 
     <div
-      v-if="dbfsArray"
       v-for="(dbfs, idx) in dbfsArray"
       :key="idx"
       :style="`height: max(2px, ${dbfs}%)`"
       class="dbfs-column"
     >
-      <div></div>
+      <div />
     </div>
   </div>
 </template>

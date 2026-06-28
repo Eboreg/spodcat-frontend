@@ -6,10 +6,11 @@ import useAudioStore from "~/composables/useAudioStore";
 // Don't use inject() for podcast here, since it may happen that the user
 // navigates to one podcast while listening to another.
 const { t } = useI18n();
-const props = defineProps<{ episode: EpisodeModel; podcast: PodcastModel }>();
 const isExpanded = ref<boolean>(false);
 const audio = useAudioStore();
 const { pause, play } = audio;
+
+defineProps<{ episode: EpisodeModel; podcast: PodcastModel }>();
 </script>
 
 <template>

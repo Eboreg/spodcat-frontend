@@ -92,5 +92,5 @@ function doOnCanPlay() {
     @timeupdate="onTimeUpdate"
     @volumechange="onVolumeChange"
     @waiting="audio.isLoading = true"
-  ></audio>
+  />
 </template>

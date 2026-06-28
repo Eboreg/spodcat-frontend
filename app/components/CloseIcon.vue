@@ -2,8 +2,9 @@
 import { X } from "@lucide/vue";
 import type { BreakpointSizesArg } from "~/responsive";
 
-const props = defineProps<{ size?: BreakpointSizesArg }>();
 const { t } = useI18n();
+
+defineProps<{ size?: BreakpointSizesArg }>();
 </script>
 
 <template>

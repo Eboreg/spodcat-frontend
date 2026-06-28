@@ -47,7 +47,7 @@ const useAudioStore = defineStore("audio", () => {
     setMediaSessionPlaybackState();
   }
 
-  async function onError(event: Event) {
+  async function onError() {
     isPlaying.value = false;
     isLoading.value = false;
     setError();

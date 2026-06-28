@@ -14,7 +14,7 @@ const strokeWidth = computed(() => `${props.strokeWidth ?? 8}px`);
 <template>
   <div class="progress-circle">
     <svg class="progress-circle-outer" viewBox="25 25 50 50">
-      <circle class="progress-circle-stroke" cx="50" cy="50" r="20" fill="none"></circle>
+      <circle class="progress-circle-stroke" cx="50" cy="50" r="20" fill="none" />
     </svg>
   </div>
 </template>

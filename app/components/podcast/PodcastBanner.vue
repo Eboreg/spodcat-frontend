@@ -27,9 +27,9 @@ const nameCssStyle = computed(() =>
         v-if="podcast.banner"
         :style="`background-image: url('${podcast.banner}')`"
         class="podcast-banner-image"
-      ></div>
+      />
 
-      <div v-else class="podcast-banner-image"></div>
+      <div v-else class="podcast-banner-image" />
 
       <NuxtLink :to="`/${podcast.slug}`" class="row gap-single align-center p-single">
         <img

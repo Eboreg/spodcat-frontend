@@ -8,8 +8,7 @@ function onInput(event: InputEvent) {
   }
 }
 
-const VALID_TYPES = ["text", "number", "date", "email", "password", "tel", "time", "url"] as const;
-type Type = (typeof VALID_TYPES)[number];
+type Type = "text" | "number" | "date" | "email" | "password" | "tel" | "time" | "url";
 
 type Props = {
   id: string;
@@ -21,17 +20,18 @@ type Props = {
   wrapperClass?: string;
 };
 
-export interface InputData<T = string | number> {
-  value?: T;
-  hasErrors?: boolean;
-}
-
 const value = defineModel<string | number>();
 const hasErrors = defineModel<boolean>("hasErrors");
 
-const props = withDefaults(defineProps<Props>(), { type: "text" });
+const props = withDefaults(defineProps<Props>(), {
+  type: "text",
+  label: undefined,
+  maxlength: undefined,
+  validationErrors: undefined,
+  wrapperClass: undefined,
+});
 
-const validationErrors = ref<string[]>([]);
+const backendErrors = ref<string[]>([]);
 const frontendError = ref<string>();
 const valueAtValidation = ref<string | number>();
 
@@ -41,7 +41,7 @@ const multiline = computed(() => props.multiline && props.type === "text");
 const valueAsString = computed(() => (value.value !== undefined ? String(value.value) : undefined));
 
 const errors = computed(() => {
-  const _errors = valueAtValidation.value === value.value ? validationErrors.value : [];
+  const _errors = valueAtValidation.value === value.value ? backendErrors.value : [];
 
   if (frontendError.value) _errors.push(frontendError.value);
   return _errors;
@@ -55,7 +55,7 @@ watch(
   () => props.validationErrors,
   () => {
     valueAtValidation.value = value.value;
-    validationErrors.value = Object.entries(props.validationErrors ?? {})
+    backendErrors.value = Object.entries(props.validationErrors ?? {})
       .filter(([id]) => id === props.id)
       .flatMap(([_, err]) => err);
   },
@@ -63,7 +63,6 @@ watch(
 
 defineOptions({ inheritAttrs: false });
 </script>
-
 <template>
   <div class="input-wrapper column-gap-single" :class="wrapperClass">
     <label v-if="label !== undefined" :for="id">{{ label }}</label>
@@ -77,7 +76,7 @@ defineOptions({ inheritAttrs: false });
       class="input"
       v-bind="$attrs"
       v-model="value"
-    ></textarea>
+    />
     <input
       v-else
       :class="{ 'has-error': hasErrors }"
@@ -90,11 +89,10 @@ defineOptions({ inheritAttrs: false });
       v-model="value"
     />
     <div v-if="hasErrors" class="errors">
-      <div v-for="error in errors" class="text-error-light">{{ error }}</div>
+      <div v-for="(error, index) in errors" :key="index" class="text-error-light">{{ error }}</div>
     </div>
   </div>
 </template>
-
 <style scoped lang="scss">
 .input-wrapper {
   display: grid;

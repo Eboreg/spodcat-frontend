@@ -23,7 +23,14 @@ export default defineNuxtConfig({
       },
     },
   },
-  modules: ["@nuxtjs/i18n", "@pinia/nuxt", "@pinia/colada-nuxt", "@nuxt/icon", "@vueuse/nuxt"],
+  modules: [
+    "@nuxtjs/i18n",
+    "@pinia/nuxt",
+    "@pinia/colada-nuxt",
+    "@nuxt/icon",
+    "@vueuse/nuxt",
+    "@nuxt/eslint",
+  ],
   i18n: {
     strategy: "no_prefix",
     locales: [

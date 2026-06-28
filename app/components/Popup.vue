@@ -7,7 +7,7 @@ defineOptions({ inheritAttrs: false });
     <div class="popup column bg-opaque" :class="$attrs.class">
       <slot />
     </div>
-    <div class="arrow bg-opaque"></div>
+    <div class="arrow bg-opaque" />
   </div>
 </template>
 

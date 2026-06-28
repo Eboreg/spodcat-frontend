@@ -1,5 +1,5 @@
 import type { EpisodeModel, PodcastModel, PostModel } from "@/types/api";
-import { type ResolvableLink, type ResolvableMeta } from "@unhead/vue";
+import type { ResolvableLink, ResolvableMeta } from "@unhead/vue";
 import type { Image } from "@/types";
 
 function extractImageUrl(description: string): string | undefined {

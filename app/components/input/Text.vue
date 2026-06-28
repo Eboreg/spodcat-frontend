@@ -1,14 +1,14 @@
 <script setup lang="ts">
-const props = defineProps<{
+const value = defineModel<string>();
+const hasErrors = defineModel<boolean>("hasErrors");
+
+defineProps<{
   id: string;
   label?: string;
   multiline?: boolean;
   validationErrors?: Record<string, string[]>;
   wrapperClass?: string;
 }>();
-
-const value = defineModel<string>();
-const hasErrors = defineModel<boolean>("hasErrors");
 </script>
 
 <template>

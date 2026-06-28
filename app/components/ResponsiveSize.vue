@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import useResponsiveSize from "~/composables/useResponsiveSize";
-import { type BreakpointSizesArg } from "~/responsive";
+import type { BreakpointSizesArg } from "~/responsive";
 
 type Attribute = "size" | "font-size";
 

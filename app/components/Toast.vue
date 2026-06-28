@@ -2,7 +2,7 @@
 import { Frown } from "@lucide/vue";
 import type { Offsets } from "@/types";
 import useAudioStore from "~/composables/useAudioStore";
-import useMessageStore, { PlacedToast } from "~/composables/useMessageStore";
+import useMessageStore, { type PlacedToast } from "~/composables/useMessageStore";
 import useTransitions from "~/composables/useTransitions";
 
 const props = defineProps<{ toast: PlacedToast }>();
@@ -64,10 +64,10 @@ watch([height, width], ([h, w]) =>
   >
     <div class="row">
       <SpodcatIcon v-if="icon" :icon="icon" class="toast-icon p-half" :size="30" />
-      <div class="toast-text fill" v-html="placedToast.text"></div>
+      <div class="toast-text fill" v-html="placedToast.text" />
       <CloseIcon @click="finishAnimation" class="toast-close-icon p-half" />
     </div>
-    <div ref="countdown" :class="`toast-countdown bg-${placedToast.level}-dark`"></div>
+    <div ref="countdown" :class="`toast-countdown bg-${placedToast.level}-dark`" />
   </div>
 </template>
 

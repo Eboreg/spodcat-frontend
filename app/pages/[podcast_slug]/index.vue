@@ -7,22 +7,23 @@ import { podcastSlugKey } from "~/symbols";
 
 const { setLocale } = useI18n();
 const route = useRoute();
-const { podcast } = usePodcast(route.params.podcast_slug as string);
-const { contents } = usePodcastContents(route.params.podcast_slug as string);
+const slug = route.params.podcast_slug as string;
+const { podcast } = usePodcast(slug);
+const { contents } = usePodcastContents(slug);
 
-provide(podcastSlugKey, route.params.podcast_slug as string);
+provide(podcastSlugKey, slug);
 useSpodcatHead({ podcast });
 watchEffect(async () => {
   await setLocale(detectLocale(podcast.value?.language));
 });
-ping(`v2/podcasts/${route.params.podcast_slug}/ping/`);
+ping(`v2/podcasts/${slug}/ping/`);
 </script>
 
 <template>
   <PodcastMain>
     <template #before>
       <div class="dashed-border before" v-if="podcast?.description_html">
-        <div class="podcast-description bg p-single" v-html="podcast.description_html"></div>
+        <div class="podcast-description bg p-single" v-html="podcast.description_html" />
       </div>
     </template>
 

@@ -1,23 +1,16 @@
 <script setup lang="ts">
-import type { PodcastContentModel, PodcastContentType } from "@/types/api";
+import type { PodcastContentModel } from "@/types/api";
 import { podcastKey } from "@/symbols";
 
 const videoConsent = ref<boolean>(false);
 const podcast = inject(podcastKey);
-const props = defineProps<{
-  contentType: PodcastContentType;
-  content?: PodcastContentModel;
-}>();
+const props = defineProps<{ content?: PodcastContentModel }>();
 const show = computed(() => !!props.content || podcast?.value?.enable_comments);
 </script>
 
 <template>
   <div v-if="show" class="gap-single px-single column pb-single">
-    <div
-      v-if="content?.description_html"
-      class="description"
-      v-html="content.description_html"
-    ></div>
+    <div v-if="content?.description_html" class="description" v-html="content.description_html" />
 
     <Video
       v-for="video in content?.videos"
@@ -30,11 +23,7 @@ const show = computed(() => !!props.content || podcast?.value?.enable_comments);
     <slot />
 
     <ClientOnly>
-      <Comments
-        v-if="podcast?.enable_comments"
-        :content-type="contentType"
-        :content-id="content?.id"
-      />
+      <Comments v-if="podcast?.enable_comments" :content-id="content?.id" />
     </ClientOnly>
   </div>
 </template>

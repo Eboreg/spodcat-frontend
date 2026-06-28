@@ -10,15 +10,10 @@ const icon = computed(() => {
   if (audio.volume < 2 / 3) return Volume1;
   return Volume2;
 });
-const props = defineProps<{ size?: BreakpointSizesArg }>();
+
+defineProps<{ size?: BreakpointSizesArg }>();
 </script>
 
 <template>
-  <SpodcatIcon
-    :icon="icon"
-    :size="size"
-    class="hover-light p-half"
-    theme="boring-inverse"
-    element="button"
-  />
+  <SpodcatIcon :icon :size class="hover-light p-half" theme="boring-inverse" element="button" />
 </template>

@@ -34,17 +34,9 @@ function onClick(event: MouseEvent) {
 </script>
 
 <template>
-  <MaybeLink
-    :class="classes"
-    :disabled="disabled"
-    :href="href"
-    :new-tab="newTab"
-    :route="route"
-    @click="onClick"
-    element="button"
-  >
+  <MaybeLink :class="classes" :disabled :href :new-tab :route @click="onClick" element="button">
     <ProgressCircle v-if="icon && isLoading" class="icon" />
-    <SpodcatIcon v-else-if="icon" :icon="icon" :size="iconSize" />
+    <SpodcatIcon v-else-if="icon" :icon :size="iconSize" />
     <slot />
   </MaybeLink>
 </template>

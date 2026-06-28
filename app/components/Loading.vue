@@ -1,14 +1,15 @@
 <script setup lang="ts">
-const props = defineProps<{ height?: string }>();
 const outer = useTemplateRef("outer");
 const { height: actualHeight } = useElementSize(outer);
 const actualHeightString = computed(() => `${actualHeight.value}px`);
 const { t } = useI18n();
+
+defineProps<{ height?: string }>();
 </script>
 
 <template>
   <div ref="outer" class="loading outer">
-    <div class="inner-frame"><div class="inner-colors"></div></div>
+    <div class="inner-frame"><div class="inner-colors" /></div>
     <div class="text">{{ t("loading") }}</div>
   </div>
 </template>

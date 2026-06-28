@@ -1,4 +1,4 @@
-import { ChallengeModel } from "~/types/api";
+import type { ChallengeModel } from "~/types/api";
 import { makeBackendUrl } from "~/utils";
 
 export default defineEventHandler(async (event) => {

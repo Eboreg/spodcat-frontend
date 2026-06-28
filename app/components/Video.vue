@@ -2,12 +2,13 @@
 import type { VideoModel } from "@/types/api";
 
 const { t } = useI18n();
-const props = defineProps<{ consent?: boolean; video: VideoModel }>();
-const emit = defineEmits<{ consentClick: [] }>();
 const videoIframe = useTemplateRef("iframe");
 const videoContainer = useTemplateRef("container");
 const width = ref<number>(600);
 const height = computed(() => width.value * (9 / 16));
+
+defineProps<{ consent?: boolean; video: VideoModel }>();
+defineEmits<{ consentClick: [] }>();
 
 useResizeObserver(videoContainer, (entries) => {
   const [entry] = entries;
@@ -36,7 +37,7 @@ watchEffect(() => {
         allow="encrypted-media; gyroscope; web-share"
         referrerpolicy="strict-origin-when-cross-origin"
         allowfullscreen
-      ></iframe>
+      />
     </div>
     <div v-if="video.title">
       <em>{{ video.title }}</em>

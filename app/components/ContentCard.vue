@@ -22,7 +22,7 @@ function openShareModal() {
 
 <template>
   <div class="dashed-border">
-    <a v-if="content" :id="content.slug"></a>
+    <a v-if="content" :id="content.slug" />
     <div class="bg column">
       <Loading v-if="!content" height="120px" />
 

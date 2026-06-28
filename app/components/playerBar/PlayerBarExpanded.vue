@@ -5,12 +5,12 @@ import { timeToString } from "@/utils";
 import useAudioStore from "~/composables/useAudioStore";
 
 const { t } = useI18n();
-const props = defineProps<{ episode: EpisodeModel }>();
 const isKeyboardHelpOpen = ref<boolean>(false);
 const keyboardHelp = useTemplateRef("keyboardHelp");
 const audio = useAudioStore();
 const { seek } = audio;
 
+defineProps<{ episode: EpisodeModel }>();
 onClickOutside(keyboardHelp, () => (isKeyboardHelpOpen.value = false));
 </script>
 
