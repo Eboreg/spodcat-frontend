@@ -24,7 +24,10 @@ const podcast = inject(podcastKey);
         <span v-else>{{ t("menu.show") }}</span>
       </Button>
 
-      <div :class="{ 'd-none': !isVisibleMobile }" class="d-md-flex column gap-half">
+      <div
+        :class="{ 'd-none': !isVisibleMobile }"
+        class="d-md-flex column gap-half px-sm-0 px-half pb-sm-0 pb-half"
+      >
         <Button
           :href="podcast.episodes_fm_url"
           :icon-size="20"
@@ -70,15 +73,17 @@ const podcast = inject(podcastKey);
 </template>
 
 <style scoped lang="scss">
-.toggle-menu-button {
-  background-color: var(--spod-background-color);
-  border-color: var(--spod-background-color);
-  color: var(--spod-text-color);
-
-  &.show {
-    background-color: var(--spod-text-color);
-    border-color: var(--spod-text-color);
-    color: var(--spod-background-color);
+@include maxsize(sm) {
+  aside {
+    background-color: var(--spod-background-color);
+    border-color: var(--spod-background-color);
+    border-radius: var(--spod-border-radius);
+    border-style: outset;
+    border-width: 0 1px 1px 0;
   }
+}
+.toggle-menu-button {
+  border: none !important;
+  color: var(--spod-text-color);
 }
 </style>

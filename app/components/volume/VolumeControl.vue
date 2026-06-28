@@ -10,11 +10,7 @@ onClickOutside(container, () => (popupVisible.value = false));
   <VolumeControlInner class="d-none d-lg-flex" />
 
   <div class="d-lg-none pos-relative" ref="container">
-    <VolumeIcon
-      :size="{ sm: 30 }"
-      :title="t('volume.volume')"
-      @click="popupVisible = !popupVisible"
-    />
+    <VolumeIcon :size="30" :title="t('volume.volume')" @click="popupVisible = !popupVisible" />
     <Popup v-if="popupVisible">
       <VolumeControlInner />
     </Popup>

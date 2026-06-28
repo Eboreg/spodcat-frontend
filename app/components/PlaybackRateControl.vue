@@ -29,7 +29,7 @@ onClickOutside(container, () => (popupVisible.value = false));
   <div class="pos-relative" ref="container">
     <SpodcatIcon
       :icon="CircleGauge"
-      :size="{ sm: 30 }"
+      :size="30"
       :theme="audio.playbackRate === 1 ? 'boring-inverse' : 'primary'"
       :title="
         t('change-playback-rate-x', {

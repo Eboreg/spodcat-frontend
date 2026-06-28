@@ -93,6 +93,7 @@ $background-color: rgba(0, 0, 0, 0.8) !default;
 $body-background: radial-gradient(circle at 100%, #33d, #333 60%, #f33 80%, #000 90%) !default;
 $border-radius: 4px !default;
 $content-width: min(980px, calc(100dvw - 20px)) !default;
+$font-family: Arial, FreeSans, "Liberation Sans", sans-serif;
 $modal-width: min(800px, calc(100dvw - 20px)) !default;
 $player-bar-height: 60px !default;
 $spodcat-blue: #000067;

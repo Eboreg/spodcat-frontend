@@ -47,6 +47,13 @@ $variant-suffixes: (
   --spod-body-background: #{$body-background};
   --spod-border-radius: #{$border-radius};
   --spod-content-width: #{$content-width};
+  --spod-dotted-border-width: #{map.get($lengths, "quarter")};
+  --spod-font-family: #{$font-family};
+  --spod-font-size-article: #{$font-size-article-mobile};
+  --spod-font-size-body: #{$font-size-body-mobile};
+  --spod-font-size-small: #{$font-size-small-mobile};
+  --spod-font-size-xs: #{$font-size-xs-mobile};
+  --spod-modal-top-margin: 4rem;
   --spod-modal-width: #{$modal-width};
   --spod-player-bar-height: #{$player-bar-height};
   --spod-podcast-banner-background-1: #{$podcast-banner-background-1};
@@ -54,12 +61,6 @@ $variant-suffixes: (
   --spod-text-color-dark: #{$text-color-dark};
   --spod-text-color: #{$text-color};
   --spod-toast-width: #{$toast-width};
-  --spod-font-size-article: #{$font-size-article-mobile};
-  --spod-font-size-body: #{$font-size-body-mobile};
-  --spod-font-size-small: #{$font-size-small-mobile};
-  --spod-font-size-xs: #{$font-size-xs-mobile};
-  --spod-dotted-border-width: #{map.get($lengths, "quarter")};
-  --spod-modal-top-margin: 4rem;
 
   @each $lname, $length in $lengths {
     --spod-length-#{$lname}: #{$length};
@@ -98,7 +99,7 @@ body {
   background-attachment: fixed !important;
   background: var(--spod-body-background);
   color: var(--spod-text-color);
-  font-family: Arial, FreeSans, "Liberation Sans", sans-serif;
+  font-family: var(--spod-font-family);
   font-size: var(--spod-font-size-body);
   margin: 0;
 }

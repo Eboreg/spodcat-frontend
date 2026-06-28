@@ -15,7 +15,7 @@ function onVolumeInput(event: Event) {
 <template>
   <div class="row align-center p-half gap-half">
     <VolumeIcon
-      :size="{ sm: 30 }"
+      :size="30"
       :title="audio.isMuted ? t('volume.unmute') : t('volume.mute')"
       @click="toggleMute"
     />

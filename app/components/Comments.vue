@@ -176,7 +176,7 @@ const isSubmitDisabled = computed(
   }
 
   .button {
-    margin-top: 1px;
+    margin-top: 2px;
   }
 }
 </style>

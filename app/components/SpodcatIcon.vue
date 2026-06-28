@@ -4,23 +4,23 @@ import type { Theme } from "@/utils";
 import type { BreakpointSizesArg } from "~/responsive";
 
 const props = defineProps<{
+  element?: string;
   icon: string | LucideIcon;
   iconSize?: BreakpointSizesArg;
   size?: BreakpointSizesArg;
   theme?: Theme;
-  element?: string;
 }>();
-const themeClass = computed(() => (props.theme ? `text-${props.theme}` : undefined));
 const iconName = computed(() => (typeof props.icon === "string" ? props.icon : undefined));
 const lucideIcon = computed(() => (typeof props.icon === "function" ? props.icon : undefined));
+const themeClass = computed(() => (props.theme ? `text-${props.theme}` : undefined));
 </script>
 
 <template>
   <ResponsiveSize
-    :size="size ?? iconSize ?? 24"
-    attribute="size"
     :class="themeClass"
     :element="element"
+    :size="size ?? iconSize ?? 24"
+    attribute="size"
     class="outer"
   >
     <div class="inner">

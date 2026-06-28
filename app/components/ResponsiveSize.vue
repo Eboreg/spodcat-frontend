@@ -17,12 +17,15 @@ const { sizeString } = useResponsiveSize(props.size);
 </script>
 
 <template>
-  <component :is="element ?? 'div'" class="responsive-size d-flex" :class="attributes">
+  <component :is="element ?? 'div'" class="responsive-size" :class="attributes">
     <slot />
   </component>
 </template>
 
 <style lang="scss">
+.responsive-size {
+  display: flex;
+}
 .responsive-size.size > * {
   height: v-bind(sizeString);
   width: v-bind(sizeString);

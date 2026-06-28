@@ -25,29 +25,27 @@ onClickOutside(keyboardHelp, () => (isKeyboardHelpOpen.value = false));
     <VolumeControl />
     <PlaybackRateControl />
 
-    <div class="d-md-none">
-      <SpodcatIcon
-        :class="audio.error ? 'cursor-not-allowed' : 'cursor-pointer'"
-        :icon="Rewind"
-        :title="t('rewind-10s')"
-        @click="seek(-10)"
-        class="hover-light p-half"
-        theme="boring-inverse"
-        element="button"
-      />
-    </div>
+    <SpodcatIcon
+      :class="audio.error ? 'cursor-not-allowed' : 'cursor-pointer'"
+      :icon="Rewind"
+      :size="30"
+      :title="t('rewind-10s')"
+      @click="seek(-10)"
+      class="hover-light p-half d-md-none"
+      element="button"
+      theme="boring-inverse"
+    />
 
-    <div class="d-md-none">
-      <SpodcatIcon
-        :class="audio.error ? 'cursor-not-allowed' : 'cursor-pointer'"
-        :icon="FastForward"
-        :title="t('forward-10s')"
-        @click="seek(10)"
-        class="hover-light p-half"
-        theme="boring-inverse"
-        element="button"
-      />
-    </div>
+    <SpodcatIcon
+      :class="audio.error ? 'cursor-not-allowed' : 'cursor-pointer'"
+      :icon="FastForward"
+      :size="30"
+      :title="t('forward-10s')"
+      @click="seek(10)"
+      class="hover-light p-half d-md-none"
+      element="button"
+      theme="boring-inverse"
+    />
 
     <div ref="keyboardHelp" class="pos-relative d-none d-md-flex">
       <SpodcatIcon
@@ -56,8 +54,8 @@ onClickOutside(keyboardHelp, () => (isKeyboardHelpOpen.value = false));
         :title="t('keyboard.shortcuts')"
         @click="isKeyboardHelpOpen = !isKeyboardHelpOpen"
         class="hover-light p-half"
-        theme="boring-inverse"
         element="button"
+        theme="boring-inverse"
       />
 
       <Popup v-if="isKeyboardHelpOpen" class="gap-half p-single">

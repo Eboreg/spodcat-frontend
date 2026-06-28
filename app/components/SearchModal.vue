@@ -125,7 +125,8 @@ function onKeyDown(event: KeyboardEvent) {
   background-color: transparent;
   border: none;
   color: var(--spod-text-color);
-  font-size: 16px;
+  font-family: var(--spod-font-family);
+  font-size: var(--spod-font-size-body);
   height: 44px;
   outline: none;
   width: 100%;

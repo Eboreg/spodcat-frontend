@@ -62,15 +62,13 @@ defineProps<{ episode: EpisodeModel; podcast: PodcastModel }>();
 
       <PlayerBarExpanded :episode="episode" class="d-none d-xl-flex fill" />
 
-      <div class="d-xl-none">
-        <SpodcatIcon
-          :icon="isExpanded ? ChevronDown : ChevronUp"
-          :size="30"
-          @click="isExpanded = !isExpanded"
-          class="hover-light cursor-pointer p-half"
-          theme="boring-inverse"
-        />
-      </div>
+      <SpodcatIcon
+        :icon="isExpanded ? ChevronDown : ChevronUp"
+        :size="30"
+        @click="isExpanded = !isExpanded"
+        class="hover-light cursor-pointer p-half d-xl-none"
+        theme="boring-inverse"
+      />
     </div>
   </div>
 </template>

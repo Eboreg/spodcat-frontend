@@ -8,7 +8,7 @@ function onInput(event: InputEvent) {
   }
 }
 
-type Type = "text" | "number" | "date" | "email" | "password" | "tel" | "time" | "url";
+type Type = "text" | "number" | "date" | "email" | "password" | "tel" | "time" | "url" | "search";
 
 type Props = {
   id: string;
@@ -73,7 +73,7 @@ defineOptions({ inheritAttrs: false });
       :id
       :maxlength
       @input="onInput"
-      class="input"
+      class="input p-half"
       v-bind="$attrs"
       v-model="value"
     />
@@ -84,7 +84,7 @@ defineOptions({ inheritAttrs: false });
       :maxlength
       :type
       @input="onInput"
-      class="input"
+      class="input p-half"
       v-bind="$attrs"
       v-model="value"
     />
@@ -107,6 +107,11 @@ textarea {
 .input,
 .errors {
   grid-column-end: span 2;
+}
+
+.input {
+  font-size: var(--spod-font-size-body);
+  font-family: var(--spod-font-family);
 }
 
 .has-error {

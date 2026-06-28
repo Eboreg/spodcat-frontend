@@ -1,17 +1,18 @@
 {
   "name": "spodcat-frontend",
   "type": "module",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "license": " GPL-3.0-or-later",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
+    "format": "prettier -c .",
     "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare",
-    "typecheck": "nuxt typecheck",
     "lint": "eslint",
-    "format": "prettier -c ."
+    "postinstall": "nuxt prepare",
+    "prepare": "nuxt prepare",
+    "preview": "nuxt preview",
+    "typecheck": "nuxt typecheck"
   },
   "dependencies": {
     "@lucide/vue": "^1.21.0",

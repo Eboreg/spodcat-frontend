@@ -50,7 +50,7 @@ function onClick(event: MouseEvent) {
   cursor: pointer;
   display: flex;
   gap: var(--spod-length-half);
-  padding: var(--spod-length-half);
+  padding: var(--spod-length-single);
   text-decoration: none;
 
   &:active:not(.loading):not(.disabled) {
