@@ -7,7 +7,7 @@ function extractImageUrl(description: string): string | undefined {
 }
 
 function imageData(url: string, width?: number | null, height?: number | null): Image {
-  return { url, size: width && height ? { width, height } : undefined };
+  return { url, width: width ?? undefined, height: height ?? undefined };
 }
 
 function stripDescription(description: string): string {
@@ -23,59 +23,61 @@ export default function useSpodcatHead({
   episode,
   post,
 }: {
-  podcast?: Ref<PodcastModel | undefined>;
-  episode?: Ref<EpisodeModel | undefined>;
-  post?: Ref<PostModel | undefined>;
+  podcast?: MaybeRefOrGetter<PodcastModel | undefined>;
+  episode?: MaybeRefOrGetter<EpisodeModel | undefined>;
+  post?: MaybeRefOrGetter<PostModel | undefined>;
 } = {}) {
+  const podcastRef = toRef(podcast);
+  const episodeRef = toRef(episode);
+  const postRef = toRef(post);
   const runtimeConfig = useRuntimeConfig();
-  const podcastContent = computed(() => episode?.value ?? post?.value);
+  const podcastContent = computed(() => episodeRef.value ?? postRef.value);
 
   const title = computed(() => {
-    const _podcastContent = podcastContent.value;
-    const _podcast = podcast?.value;
-
-    return _podcastContent && _podcast
-      ? `${_podcastContent.name} | ${_podcast.name}`
-      : _podcast
-        ? _podcast.name
-        : import.meta.env.VITE_SITE_NAME;
+    if (podcastContent.value && podcastRef.value)
+      return `${podcastContent.value.name} | ${podcastRef.value.name}`;
+    if (podcastRef.value) return podcastRef.value.name;
+    return runtimeConfig.public.siteName;
   });
 
   const favicon = computed(() => {
-    const _podcast = podcast?.value;
-
-    return _podcast?.favicon && _podcast.favicon_content_type
-      ? { href: _podcast.favicon, type: _podcast.favicon_content_type }
+    return podcastRef.value?.favicon && podcastRef.value.favicon_content_type
+      ? { href: podcastRef.value.favicon, type: podcastRef.value.favicon_content_type }
       : { href: "/img/spodcat-favicon.png", type: "image/png" };
   });
 
   const ogUrl = computed(() => {
-    const _post = post?.value;
-    const _episode = episode?.value;
-    const _podcast = podcast?.value;
+    let route: string;
 
-    const route = _post
-      ? `/${_post.podcast}/post/${_post.slug}`
-      : _episode
-        ? `/${_episode.podcast}/episode/${_episode.slug}`
-        : _podcast
-          ? `/${_podcast.slug}/`
-          : "/";
+    if (postRef.value) route = `/${postRef.value.podcast}/post/${postRef.value.slug}`;
+    else if (episodeRef.value)
+      route = `/${episodeRef.value.podcast}/episode/${episodeRef.value.slug}`;
+    else if (podcastRef.value) route = `/${podcastRef.value.slug}/`;
+    else route = "/";
 
     return new URL(route, runtimeConfig.public.frontendHost).toString();
   });
 
   const ogImage = computed(() => {
-    const _episode = episode?.value;
-    const _podcastContent = podcastContent.value;
-
-    if (_episode?.image)
-      return imageData(_episode.image, _episode.image_width, _episode.image_height);
-    if (_podcastContent?.description) {
-      const imageUrl = extractImageUrl(_podcastContent.description);
+    if (episodeRef.value?.image) {
+      return imageData(
+        episodeRef.value.image,
+        episodeRef.value.image_width,
+        episodeRef.value.image_height,
+      );
+    }
+    if (podcastContent.value?.description) {
+      const imageUrl = extractImageUrl(podcastContent.value.description);
       if (imageUrl) return imageUrl;
     }
-    return undefined;
+    if (podcastRef.value?.cover) {
+      return imageData(
+        podcastRef.value.cover,
+        podcastRef.value.cover_width,
+        podcastRef.value.cover_height,
+      );
+    }
+    return "/img/spodcat-favicon.png";
   });
 
   const link = computed(() => {
@@ -84,48 +86,39 @@ export default function useSpodcatHead({
       { rel: "shortcut icon", ...favicon.value },
       { rel: "stylesheet", href: fontFacesUrl.toString() },
     ];
-    const _podcast = podcast?.value;
 
-    if (_podcast) {
+    if (podcastRef.value) {
       l.push({
         rel: "alternate",
         type: "application/rss+xml",
-        title: _podcast.name,
-        href: _podcast.rss_url,
+        title: podcastRef.value.name,
+        href: podcastRef.value.rss_url,
       });
     }
     return l;
   });
 
   const meta: ComputedRef<ResolvableMeta[]> = computed(() => {
-    const _episode = episode?.value;
-
-    if (_episode) {
+    if (episodeRef.value) {
       return [
-        { name: "music:duration", content: _episode.duration_seconds.toString() },
-        { name: "music:release_date", content: _episode.published },
+        { name: "music:duration", content: episodeRef.value.duration_seconds.toString() },
+        { name: "music:release_date", content: episodeRef.value.published },
       ];
     }
     return [];
   });
 
   const ogType = computed(() => {
-    const _episode = episode?.value;
-    const _post = post?.value;
-
-    return _post ? "article" : _episode ? "music.song" : "website";
+    if (episodeRef.value) return "music.song";
+    if (postRef.value) return "article";
+    return "website";
   });
 
   const description = computed(() => {
-    const _episode = episode?.value;
-    const _post = post?.value;
-    const _podcast = podcast?.value;
-
-    return _episode?.description
-      ? stripDescription(_episode.description)
-      : _post?.description
-        ? stripDescription(_post.description)
-        : _podcast?.tagline;
+    if (episodeRef.value?.description) return stripDescription(episodeRef.value.description);
+    if (postRef.value?.description) return stripDescription(postRef.value.description);
+    if (podcastRef.value) return podcastRef.value.tagline;
+    return "This is a podcast platform.";
   });
 
   useHead({ link, meta });
@@ -136,8 +129,8 @@ export default function useSpodcatHead({
     title,
     ogUrl,
     description,
-    ogAudio: computed(() => episode?.value?.audio_url),
-    ogLocale: computed(() => podcast?.value?.language),
+    ogAudio: computed(() => episodeRef.value?.audio_url),
+    ogLocale: computed(() => podcastRef.value?.language),
     ogImage,
   });
 }

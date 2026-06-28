@@ -1,8 +1,7 @@
-import type { ElementSize } from "@vueuse/core";
-
 export interface Image {
   url: string;
-  size?: ElementSize;
+  width?: string | number;
+  height?: string | number;
 }
 
 export interface Offsets {
