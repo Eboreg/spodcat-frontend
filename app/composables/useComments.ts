@@ -34,8 +34,8 @@ export default function useComments(contentId: MaybeRefOrGetter<string | undefin
 
   return {
     challenge,
-    comments,
-    isSubmitting,
+    comments: readonly(comments),
+    isSubmitting: readonly(isSubmitting),
     postComment,
   };
 }

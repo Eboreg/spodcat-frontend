@@ -45,4 +45,7 @@ export default defineNuxtConfig({
       siteName: "podd.huseli.us",
     },
   },
+  app: {
+    layoutTransition: { name: "player" },
+  },
 });

@@ -9,7 +9,7 @@ const podcast = inject(podcastKey);
 </script>
 
 <template>
-  <aside class="gap-half column">
+  <aside class="gap-half column border-radius">
     <Loading v-if="!podcast" height="100px" />
 
     <template v-else>
@@ -29,24 +29,24 @@ const podcast = inject(podcastKey);
         class="d-md-flex column gap-half px-sm-0 px-half pb-sm-0 pb-half"
       >
         <Button
-          :href="podcast.episodes_fm_url"
           :icon-size="20"
           :icon="Podcast"
+          :to="podcast.episodes_fm_url"
           new-tab
           theme="tertiary"
         >
           <span>{{ t("subscribe") }}</span>
         </Button>
 
-        <Button :href="podcast.rss_url" :icon-size="20" new-tab theme="primary" :icon="Rss">
+        <Button :to="podcast.rss_url" :icon-size="20" new-tab theme="primary" :icon="Rss">
           <span>{{ t("rss-feed") }}</span>
         </Button>
 
         <Button
           v-for="link in podcast.links"
-          :href="link.url"
           :key="link.id"
           :theme="link.theme"
+          :to="link.url"
           new-tab
         >
           <img v-if="link.custom_icon" :src="link.custom_icon" alt="" class="icon" />
@@ -54,7 +54,7 @@ const podcast = inject(podcastKey);
           <span>{{ link.label }}</span>
         </Button>
 
-        <Button route="/" theme="secondary" :icon="Home" :icon-size="20">
+        <Button to="/" theme="secondary" :icon="Home" :icon-size="20">
           <span>{{ t("all-podcasts") }}</span>
         </Button>
 
@@ -77,7 +77,6 @@ const podcast = inject(podcastKey);
   aside {
     background-color: var(--spod-background-color);
     border-color: var(--spod-background-color);
-    border-radius: var(--spod-border-radius);
     border-style: outset;
     border-width: 0 1px 1px 0;
   }

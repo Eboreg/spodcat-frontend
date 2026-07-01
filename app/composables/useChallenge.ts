@@ -14,5 +14,5 @@ export default function useChallenge() {
     await refetch();
   }
 
-  return { challenge, resetChallenge };
+  return { challenge: readonly(challenge), resetChallenge };
 }

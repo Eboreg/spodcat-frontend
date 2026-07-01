@@ -30,8 +30,8 @@ ping(`v2/podcasts/${slug}/ping/`);
     <div class="column gap-half">
       <Loading v-if="contents === undefined" height="150px" />
       <template v-for="content in contents" :key="content.id">
-        <EpisodeCard v-if="content.resourcetype === 'episode'" :episode="content" :expand="false" />
-        <PostCard v-else-if="content.resourcetype === 'post'" :post="content" :expand="false" />
+        <EpisodeCard v-if="content.resourcetype === 'episode'" :episode="content" />
+        <PostCard v-else-if="content.resourcetype === 'post'" :post="content" />
       </template>
     </div>
   </PodcastMain>

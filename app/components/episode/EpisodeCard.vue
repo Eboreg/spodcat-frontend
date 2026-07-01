@@ -12,9 +12,9 @@ function onPlayOrPauseClick() {
   const podcastSlug = podcast?.value?.slug ?? props.episode?.podcast;
 
   if (isPlaying.value) {
-    audio.pause();
+    audio.playing = false;
   } else if (audio.episode?.id === props.episode?.id) {
-    audio.play();
+    audio.playing = true;
   } else if (podcastSlug && episodeSlug) {
     useEpisode(podcastSlug, episodeSlug)
       .refresh()
@@ -26,12 +26,9 @@ function onPlayOrPauseClick() {
 
 const { t } = useI18n();
 const audio = useAudioStore();
-const props = defineProps<{
-  episode?: PartialEpisodeModel;
-  expand: boolean;
-}>();
+const props = defineProps<{ episode?: PartialEpisodeModel; expand?: boolean }>();
 const podcast = inject(podcastKey);
-const currentTimestampSnapshot = ref<number>(0);
+const currentTimestamp = ref<number>(0);
 const podcastSlug = computed(() => podcast?.value?.slug ?? props.episode?.podcast);
 const route = computed(() =>
   props.episode && podcastSlug.value
@@ -44,14 +41,14 @@ const isPlaying = computed(() => audio.isPlaying && audio.episode?.id === props.
 
 <template>
   <ContentCard
-    :route="route"
-    :expand="expand"
     :content="episode"
-    :current-timestamp="currentTimestampSnapshot"
-    @share-modal-open="currentTimestampSnapshot = audio.currentTime"
+    :current-timestamp
+    :expand
+    :route
+    @share-modal-open="currentTimestamp = audio.currentTime"
   >
     <template #icon v-if="episode">
-      <EpisodeRoundIcon :episode="episode" :podcast="podcast" />
+      <EpisodeRoundIcon :episode :podcast />
     </template>
 
     <template #badges>
@@ -59,8 +56,8 @@ const isPlaying = computed(() => audio.isPlaying && audio.episode?.id === props.
         <template v-if="season.name">
           {{
             t("season-number-name", {
-              number: season.number,
               name: season.name,
+              number: season.number,
             })
           }}
         </template>

@@ -5,5 +5,5 @@ export default function useEpisode(podcastSlug: string, episodeSlug: string) {
       $fetch(`/api/podcasts/${podcastSlug}/episode/${episodeSlug}`, { signal }),
   });
 
-  return { episode: result.data, ...result };
+  return { episode: readonly(result.data), ...result };
 }

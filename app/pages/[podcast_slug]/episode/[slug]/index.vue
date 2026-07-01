@@ -24,13 +24,14 @@ const slug = route.params.slug as string;
 const { episode } = useEpisode(podcastSlug, slug);
 const { t, setLocale } = useI18n();
 const { podcast } = usePodcast(podcastSlug);
-const { setEpisode, playEpisode, isPlaying } = useAudioStore();
+const audio = useAudioStore();
 
 provide(podcastSlugKey, podcastSlug);
 useSpodcatHead({ podcast, episode });
 
 watchEffect(() => {
-  if (episode.value && podcast.value && !isPlaying) setEpisode(episode.value, podcast.value);
+  if (episode.value && podcast.value && !audio.isPlaying)
+    audio.setEpisode(episode.value, podcast.value);
 });
 
 watchEffect(() => {
@@ -45,13 +46,13 @@ watchEffect(() => {
 <template>
   <PodcastMain>
     <PodcastGoToButton />
-    <EpisodeCard :episode="episode" expand>
+    <EpisodeCard :episode expand>
       <ContentDescription :content="episode">
         <ClientOnly>
           <div v-if="episode?.has_songs" class="text-article">
             <h2>{{ t("songs") }}</h2>
             <div v-for="song in episode.songs" :key="song.id" class="episode-song my-half">
-              <span @click="playEpisode(episode, podcast, song.start_time)">
+              <span @click="audio.playEpisode(episode, podcast, song.start_time)">
                 <span class="text-boring-inverse-dark pr-half">
                   {{ timeToString(song.start_time) }}
                 </span>

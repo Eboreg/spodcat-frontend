@@ -8,5 +8,5 @@ export default function usePodcast(slug: string) {
 
   provide(podcastKey, result.data);
 
-  return { podcast: result.data, ...result };
+  return { podcast: readonly(result.data), ...result };
 }

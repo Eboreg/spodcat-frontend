@@ -1,22 +1,20 @@
 <script setup lang="ts">
 import { FileText } from "@lucide/vue";
 import type { PartialPostModel } from "@/types/api";
-import { podcastKey } from "@/symbols";
 
-const props = defineProps<{ post?: PartialPostModel; expand: boolean }>();
-const podcast = inject(podcastKey);
-const route = computed(() => {
-  const podcastSlug = podcast?.value?.slug ?? props.post?.podcast;
-  return podcastSlug && props.post ? `/${podcastSlug}/post/${props.post.slug}` : undefined;
-});
+const props = defineProps<{ post?: PartialPostModel; expand?: boolean }>();
+const route = computed(() =>
+  props.post ? `/${props.post.podcast}/post/${props.post.slug}` : undefined,
+);
 </script>
 
 <template>
-  <ContentCard :route="route" :expand="expand" :content="post">
+  <ContentCard :route :expand :content="post">
     <template #icon v-if="post">
-      <RoundIcon :data="[{ type: 'icon', value: FileText }]" theme="secondary" />
+      <RoundIcon :size="{ xs: 35, sm: 38 }" theme="secondary">
+        <SpodcatIcon :icon="FileText" />
+      </RoundIcon>
     </template>
-
     <slot />
   </ContentCard>
 </template>

@@ -2,7 +2,7 @@
 import type { PodcastContentModel } from "@/types/api";
 import { podcastKey } from "@/symbols";
 
-const videoConsent = ref<boolean>(false);
+const consent = ref<boolean>(false);
 const podcast = inject(podcastKey);
 const props = defineProps<{ content?: PodcastContentModel }>();
 const show = computed(() => !!props.content || podcast?.value?.enable_comments);
@@ -14,10 +14,10 @@ const show = computed(() => !!props.content || podcast?.value?.enable_comments);
 
     <Video
       v-for="video in content?.videos"
-      :video="video"
+      :consent
       :key="video.id"
-      @consent-click="videoConsent = true"
-      :consent="videoConsent"
+      :video
+      @consent-click="consent = true"
     />
 
     <slot />

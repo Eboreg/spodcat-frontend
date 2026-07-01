@@ -9,9 +9,9 @@ const podcast = inject(podcastKey);
 <template>
   <Button
     v-if="podcast"
-    :icon="ArrowLeft"
-    :route="`/${podcast.slug}/`"
     :icon-size="20"
+    :icon="ArrowLeft"
+    :to="`/${podcast.slug}/`"
     class="mb-half"
     theme="secondary"
   >

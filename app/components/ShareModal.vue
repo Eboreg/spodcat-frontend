@@ -3,6 +3,10 @@ import { Copy } from "@lucide/vue";
 import { timeFromString, timeToString } from "@/utils";
 import useMessageStore from "~/composables/useMessageStore";
 
+function onContentUrlClick(event: Event) {
+  if (event.target instanceof HTMLInputElement) event.target.select();
+}
+
 async function onCopyClick() {
   try {
     await navigator.clipboard.writeText(contentUrl.value);
@@ -10,10 +14,6 @@ async function onCopyClick() {
   } catch (error) {
     addMessage({ level: "error", text: String(error), type: "shareModal" });
   }
-}
-
-function onContentUrlClick(event: Event) {
-  if (event.target instanceof HTMLInputElement) event.target.select();
 }
 
 function onCurrentTimestampStringChange() {
@@ -55,40 +55,40 @@ onUnmounted(() => clearMessages("shareModal"));
             :size="20"
             :title="t('share.copy-address')"
             @click="onCopyClick"
-            class="cursor-pointer hover-light"
-            theme="boring-inverse"
+            class="cursor-pointer hover-light button-press"
             element="button"
+            theme="boring-inverse"
           />
         </div>
         <div class="row gap-half wrap">
           <Button
-            :href="`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(contentUrl)}`"
-            new-tab
+            :to="`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(contentUrl)}`"
             class="small border-boring"
+            new-tab
           >
             <Icon name="mdi:facebook" class="icon share-icon" />
             <span class="nowrap">{{ t("share.the-facebook") }}</span>
           </Button>
           <Button
-            :href="`https://x.com/intent/tweet?url=${encodeURIComponent(contentUrl)}`"
-            new-tab
+            :to="`https://x.com/intent/tweet?url=${encodeURIComponent(contentUrl)}`"
             class="small border-boring"
+            new-tab
           >
             <Icon name="mdi:twitter" class="icon share-icon" />
             <span class="nowrap">{{ t("share.eggs") }}</span>
           </Button>
           <Button
-            :href="`https://t.me/share/url?url=${encodeURIComponent(contentUrl)}`"
-            new-tab
+            :to="`https://t.me/share/url?url=${encodeURIComponent(contentUrl)}`"
             class="small border-boring"
+            new-tab
           >
             <Icon name="mdi:telegram" class="icon share-icon" />
             <span class="nowrap">{{ t("share.telegram") }}</span>
           </Button>
           <Button
-            :href="`https://api.whatsapp.com/send?text=${encodeURIComponent(contentUrl)}`"
-            new-tab
+            :to="`https://api.whatsapp.com/send?text=${encodeURIComponent(contentUrl)}`"
             class="small border-boring"
+            new-tab
           >
             <Icon name="mdi:whatsapp" class="icon share-icon" />
             <span class="nowrap">{{ t("share.whatsapp") }}</span>
@@ -97,13 +97,13 @@ onUnmounted(() => clearMessages("shareModal"));
         <div v-if="currentTimestamp !== undefined" class="row gap-half align-center">
           <input type="checkbox" v-model="attachTimeCode" id="attach-time-code" class="m-0" />
           <div class="row gap-quarter align-baseline">
-            <label for="attach-time-code" class="text-small">{{ t("share.start-at") }}</label>
+            <label for="attach-time-code" class="text-sm">{{ t("share.start-at") }}</label>
             <input
-              type="text"
-              :value="currentTimestampString"
               :disabled="!attachTimeCode"
+              :value="currentTimestampString"
               @change="onCurrentTimestampStringChange"
               class="current-time-string"
+              type="text"
             />
           </div>
         </div>

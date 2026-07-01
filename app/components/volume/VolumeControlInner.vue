@@ -3,25 +3,27 @@ import useAudioStore from "~/composables/useAudioStore";
 
 const { t } = useI18n();
 const audio = useAudioStore();
-const { toggleMute, setVolume } = audio;
 
 function onVolumeInput(event: Event) {
   if (event.target instanceof HTMLInputElement) {
-    setVolume(event.target.valueAsNumber);
+    audio.setVolume(event.target.valueAsNumber);
   }
 }
+
+defineProps<{ vertical?: boolean }>();
 </script>
 
 <template>
-  <div class="row align-center p-half gap-half">
+  <div class="align-center p-half gap-half" :class="{ column: vertical, row: !vertical }">
     <VolumeIcon
       :size="30"
-      :title="audio.isMuted ? t('volume.unmute') : t('volume.mute')"
-      @click="toggleMute"
+      :title="audio.muted ? t('volume.unmute') : t('volume.mute')"
+      @click="audio.muted = !audio.muted"
     />
     <input
-      :disabled="audio.isMuted"
-      :value="audio.isMuted ? 0 : audio.volume"
+      :disabled="audio.muted"
+      :orient="vertical ? 'vertical' : 'horizontal'"
+      :value="audio.muted ? 0 : audio.volume"
       @input="onVolumeInput"
       max="1"
       min="0"

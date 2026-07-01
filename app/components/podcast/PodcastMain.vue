@@ -6,7 +6,7 @@ const podcast = inject(podcastKey);
 
 <template>
   <main class="content-width pt-half column-gap-half" :class="podcast?.slug ?? ''">
-    <PodcastBanner :podcast="podcast" />
+    <PodcastBanner :podcast />
     <slot name="before" />
     <div class="content">
       <slot />

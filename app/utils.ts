@@ -1,19 +1,10 @@
 import type { H3Event } from "h3";
+import type { SupportedLocale } from "@/types";
+import { SUPPORTED_LOCALES } from "@/constants";
 
-const SUPPORTED_LOCALES = ["sv", "en"] as const;
-const THEMES = [
-  "boring-inverse",
-  "boring",
-  "error",
-  "info",
-  "primary",
-  "secondary",
-  "success",
-  "tertiary",
-] as const;
-
-export type SupportedLocale = (typeof SUPPORTED_LOCALES)[number];
-export type Theme = (typeof THEMES)[number];
+function isSupportedLocale(value: string): value is SupportedLocale {
+  return SUPPORTED_LOCALES.includes(value as SupportedLocale);
+}
 
 export function coerceBetween(value: number, min: number, max: number): number {
   if (value < min) return min;
@@ -34,24 +25,13 @@ export function detectLocale(value?: string | null): SupportedLocale {
   return "en";
 }
 
-export function getLocaleDateString(date: Date, locale?: string | null): string {
-  if (locale !== undefined && locale !== null) return new Intl.DateTimeFormat(locale).format(date);
-  return new Intl.DateTimeFormat().format(date);
+export function extractImageUrlsFromMarkdown(description: string): string[] {
+  return [...description.matchAll(/!\[.*?]\((?<url>.*?)\)/g)].map((m) => m.groups!["url"]!);
 }
 
-export function getSeasonTheme(number: number): Theme {
-  return THEMES[number % (THEMES.length - 1)]!;
-}
-
-export function isSupportedLocale(value: string): value is SupportedLocale {
-  return SUPPORTED_LOCALES.includes(value as SupportedLocale);
-}
-
-export function makeAbsoluteUrl(url: string): string {
-  const runtimeConfig = useRuntimeConfig();
-
-  if (url.match(/^https?:\/\/.*/)) return url;
-  return new URL(url, runtimeConfig.public.frontendHost).toString();
+export function getLocaleDateString(date: Date | string, locale?: string | null): string {
+  if (typeof date === "string") date = new Date(date);
+  return date.toLocaleDateString(locale ?? undefined, { dateStyle: "short" });
 }
 
 export function makeBackendUrl(path: string, event?: H3Event<EventHandlerRequest>): string {

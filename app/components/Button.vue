@@ -1,40 +1,39 @@
 <script setup lang="ts">
-import type { Theme } from "@/utils";
+import type { BreakpointSizesArg, Theme } from "@/types";
 import type { LucideIcon } from "@lucide/vue";
-import type { BreakpointSizesArg } from "~/responsive";
 
 const props = defineProps<{
   disabled?: boolean;
-  href?: string;
   icon?: string | LucideIcon;
   iconSize?: BreakpointSizesArg;
   newTab?: boolean;
-  route?: string;
   theme?: Theme;
+  to?: string;
 }>();
 const emit = defineEmits<{ click: [MouseEvent] }>();
 const isLoading = ref<boolean>(false);
-const classes = computed(() => {
-  const ret: string[] = ["button", "hover-light"];
-
-  if (props.theme) ret.push(`theme-${props.theme}`);
-  if (isLoading.value) ret.push("loading");
-  if (props.disabled) ret.push("disabled");
-  return ret;
-});
+const themeClass = computed(() => (props.theme ? `theme-${props.theme}` : undefined));
 
 function onClick(event: MouseEvent) {
   if (isLoading.value || props.disabled) {
     event.preventDefault();
   } else {
-    if (props.href && !props.newTab) isLoading.value = true;
+    if (props.to && !props.newTab) isLoading.value = true;
     emit("click", event);
   }
 }
 </script>
 
 <template>
-  <MaybeLink :class="classes" :disabled :href :new-tab :route @click="onClick" element="button">
+  <MaybeLink
+    :class="[themeClass, { loading: isLoading, disabled: disabled }]"
+    :disabled
+    :new-tab
+    :to
+    @click="onClick"
+    class="button button-press hover-light border-radius"
+    element="button"
+  >
     <ProgressCircle v-if="icon && isLoading" class="icon" />
     <SpodcatIcon v-else-if="icon" :icon :size="iconSize" />
     <slot />
@@ -44,7 +43,6 @@ function onClick(event: MouseEvent) {
 <style scoped lang="scss">
 .button {
   align-items: center;
-  border-radius: var(--spod-border-radius);
   border-style: outset;
   border-width: 0 1px 1px 0;
   cursor: pointer;
@@ -52,11 +50,6 @@ function onClick(event: MouseEvent) {
   gap: var(--spod-length-half);
   padding: var(--spod-length-single);
   text-decoration: none;
-
-  &:active:not(.loading):not(.disabled) {
-    border-style: inset;
-    translate: 1px 1px;
-  }
 
   &.disabled {
     color: var(--spod-text-color-dark) !important;

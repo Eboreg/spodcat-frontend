@@ -18,7 +18,7 @@ const playbackRates = [
 ];
 
 function onRateClick(rate: number) {
-  audio.setPlaybackRate(rate);
+  audio.rate = rate;
   popupVisible.value = false;
 }
 
@@ -30,14 +30,14 @@ onClickOutside(container, () => (popupVisible.value = false));
     <SpodcatIcon
       :icon="CircleGauge"
       :size="30"
-      :theme="audio.playbackRate === 1 ? 'boring-inverse' : 'primary'"
+      :theme="audio.rate === 1 ? 'boring-inverse' : 'primary'"
       :title="
         t('change-playback-rate-x', {
-          x: playbackRates.find((r) => r.rate === audio.playbackRate)?.label,
+          x: playbackRates.find((r) => r.rate === audio.rate)?.label,
         })
       "
       @click="popupVisible = !popupVisible"
-      class="hover-light p-half"
+      class="hover-light p-half button-press"
       element="button"
     />
     <Popup class="pb-half" v-if="popupVisible">
@@ -49,7 +49,7 @@ onClickOutside(container, () => (popupVisible.value = false));
         class="pt-half pr-single pb-quarter pl-half gap-half align-center cursor-pointer d-flex"
       >
         <div class="popup-row-check align-center d-flex">
-          <SpodcatIcon v-if="rate.rate === audio.playbackRate" :icon="Check" :size="16" />
+          <SpodcatIcon v-if="rate.rate === audio.rate" :icon="Check" :size="16" />
         </div>
         <div>{{ rate.label }}</div>
       </button>

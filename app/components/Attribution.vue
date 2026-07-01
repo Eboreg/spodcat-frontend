@@ -7,10 +7,10 @@ const { addToast } = useMessageStore();
 
 function onCookiesClick() {
   addToast({
+    icon: Cookie,
     level: "info",
     text: t("cookies.answer"),
     timeout: 10000,
-    icon: Cookie,
   });
 }
 </script>
@@ -20,10 +20,10 @@ function onCookiesClick() {
     <div class="text-xs">
       {{ t("site-made-by") }}
       <a
-        href="https://robert.huseli.us/"
         class="font-weight-bold"
-        target="_blank"
+        href="https://robert.huseli.us/"
         rel="noopener noreferrer"
+        target="_blank"
       >
         Robert
       </a>

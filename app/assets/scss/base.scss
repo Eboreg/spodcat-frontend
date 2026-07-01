@@ -20,6 +20,7 @@ $variant-suffixes: (
       @include themed("background-color", $theme-variants, $variant-name);
     }
     .border-#{$theme}#{$variant-suffix} {
+      border-style: solid;
       border-width: 2px;
       @include themed("border-color", $theme-variants, $variant-name);
     }
@@ -49,13 +50,15 @@ $variant-suffixes: (
   --spod-content-width: #{$content-width};
   --spod-dotted-border-width: #{map.get($lengths, "quarter")};
   --spod-font-family: #{$font-family};
-  --spod-font-size-article: #{$font-size-article-mobile};
-  --spod-font-size-body: #{$font-size-body-mobile};
-  --spod-font-size-small: #{$font-size-small-mobile};
-  --spod-font-size-xs: #{$font-size-xs-mobile};
+  --spod-font-size-article: #{$font-size-article};
+  --spod-font-size-body: #{$font-size-body};
+  --spod-font-size-lg: #{$font-size-lg};
+  --spod-font-size-sm: #{$font-size-sm};
+  --spod-font-size-xs: #{$font-size-xs};
   --spod-modal-top-margin: 4rem;
   --spod-modal-width: #{$modal-width};
   --spod-player-bar-height: #{$player-bar-height};
+  --spod-player-transition-duration: #{$player-transition-duration};
   --spod-podcast-banner-background-1: #{$podcast-banner-background-1};
   --spod-podcast-banner-background-2: #{$podcast-banner-background-2};
   --spod-text-color-dark: #{$text-color-dark};
@@ -77,10 +80,6 @@ $variant-suffixes: (
   }
 
   @include minsize(sm) {
-    --spod-font-size-article: #{$font-size-article-desktop};
-    --spod-font-size-body: #{$font-size-body-desktop};
-    --spod-font-size-small: #{$font-size-small-desktop};
-    --spod-font-size-xs: #{$font-size-xs-desktop};
     --spod-dotted-border-width: #{map.get($lengths, "half")};
     --spod-modal-top-margin: 8rem;
   }
@@ -179,8 +178,16 @@ input:disabled {
   background-color: var(--spod-background-color-opaque);
 }
 
+.border-radius {
+  border-radius: var(--spod-border-radius);
+}
+
 .box-shadow {
   box-shadow: 1px 1px 3px var(--spod-background-color);
+}
+
+.button-press:active:not(.loading):not(.disabled) {
+  translate: 1px 1px;
 }
 
 .column {
@@ -243,8 +250,16 @@ input:disabled {
     max(1px, 0.02em) max(1px, 0.02em) 0.02em black;
 }
 
+.overflow-x-hidden {
+  overflow-x: hidden;
+}
+
 .pos-relative {
   position: relative;
+}
+
+.primary-top-border {
+  border-top: 5px solid get-color("primary");
 }
 
 .row {
@@ -269,12 +284,16 @@ input:disabled {
   font-size: var(--spod-font-size-article);
 }
 
-.text-small {
-  font-size: var(--spod-font-size-small);
+.text-sm {
+  font-size: var(--spod-font-size-sm);
 }
 
 .text-xs {
   font-size: var(--spod-font-size-xs);
+}
+
+.text-lg {
+  font-size: var(--spod-font-size-lg);
 }
 
 .wrap {

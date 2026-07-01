@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import useResponsiveSize from "~/composables/useResponsiveSize";
-import type { BreakpointSizesArg } from "~/responsive";
+import type { BreakpointSizesArg } from "~/types";
 
 type Attribute = "size" | "font-size";
 
 const props = defineProps<{
   attribute?: Attribute | Attribute[];
-  size?: BreakpointSizesArg;
   element?: string;
+  size?: BreakpointSizesArg;
 }>();
 const attributes = computed(() => {
   if (typeof props.attribute === "string") return [props.attribute];

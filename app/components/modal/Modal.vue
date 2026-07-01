@@ -1,4 +1,10 @@
 <script setup lang="ts">
+function onClick(event: MouseEvent) {
+  // Safari (who else?) doesn't support closedby="any" and will not close
+  // dialog by clicking on backdrop.
+  if (dialog.value && dialog.value === event.target) dialog.value.close();
+}
+
 const isOpen = defineModel<boolean>();
 const dialog = useTemplateRef("dialog");
 
@@ -11,7 +17,13 @@ watchEffect(() => {
 </script>
 
 <template>
-  <dialog ref="dialog" class="modal dotted-border p-0" closedby="any" @close="isOpen = false">
+  <dialog
+    @click="onClick"
+    @close="isOpen = false"
+    class="modal dotted-border p-0"
+    closedby="any"
+    ref="dialog"
+  >
     <div class="d-flex align-center">
       <div class="fill"><slot name="header" /></div>
       <CloseIcon @click="isOpen = false" class="p-half" />

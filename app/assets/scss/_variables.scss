@@ -79,14 +79,11 @@ $z-index: (
   "toast": 40,
 ) !default;
 
-$font-size-article-desktop: 14px !default;
-$font-size-article-mobile: 14px !default;
-$font-size-body-desktop: 16px !default;
-$font-size-body-mobile: 14px !default;
-$font-size-small-desktop: 14px !default;
-$font-size-small-mobile: 14px !default;
-$font-size-xs-desktop: 12px !default;
-$font-size-xs-mobile: 12px !default;
+$font-size-lg: 20px !default;
+$font-size-article: 14px !default;
+$font-size-body: 16px !default;
+$font-size-sm: 14px !default;
+$font-size-xs: 12px !default;
 
 $background-color-opaque: #111 !default;
 $background-color: rgba(0, 0, 0, 0.8) !default;
@@ -96,6 +93,7 @@ $content-width: min(980px, calc(100dvw - 20px)) !default;
 $font-family: Arial, FreeSans, "Liberation Sans", sans-serif;
 $modal-width: min(800px, calc(100dvw - 20px)) !default;
 $player-bar-height: 60px !default;
+$player-transition-duration: 0.2s !default;
 $spodcat-blue: #000067;
 $spodcat-yellow: #da9c3b;
 $text-color-dark: rgb(180, 180, 180) !default;

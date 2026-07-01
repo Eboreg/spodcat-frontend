@@ -70,7 +70,7 @@ const isSubmitDisabled = computed(
   <div v-if="comments && comments.length > 0">
     <h3>{{ t("comment.comments") }}</h3>
     <div class="column gap-half">
-      <div v-for="comment in comments" :key="comment.id" class="comment p-half">
+      <div v-for="comment in comments" :key="comment.id" class="comment border-radius p-half">
         <p class="text-xs">
           {{
             t("comment.x-said-on-date", { x: comment.name, date: dateToString(comment.created) })
@@ -94,8 +94,8 @@ const isSubmitDisabled = computed(
           id="text"
           multiline
           required
-          v-model="text"
           v-model:has-errors="textHasErrors"
+          v-model="text"
         />
       </div>
       <div class="row gap-half wrap align-start">
@@ -103,22 +103,22 @@ const isSubmitDisabled = computed(
           :disabled="isSubmitting"
           :label="t('comment.your-name')"
           :maxlength="50"
-          :validation-errors="validationErrors"
+          :validation-errors
           id="name"
           required
-          v-model="name"
           v-model:has-errors="nameHasErrors"
+          v-model="name"
           wrapper-class="name-wrapper"
         />
         <InputNumber
-          id="challenge_answer"
           :disabled="isChallengeInputDisabled"
           :label="challenge ? t('comment.challenge', { q: challenge.challenge_string }) : '&nbsp;'"
           :placeholder="isChallengeInputDisabled ? t('loading-ellipsis') : undefined"
-          :validation-errors="validationErrors"
+          :validation-errors
+          id="challenge_answer"
           required
-          v-model="challengeAnswer"
           v-model:has-errors="challengeAnswerHasErrors"
+          v-model="challengeAnswer"
           wrapper-class="challenge-wrapper"
         />
         <Button :disabled="isSubmitDisabled" theme="secondary" @click="onSubmitComment">
@@ -131,8 +131,6 @@ const isSubmitDisabled = computed(
 
 <style scoped lang="scss">
 .comment {
-  border-radius: var(--spod-border-radius);
-
   &:nth-child(odd) {
     background-color: get-color("secondary", "dark");
   }

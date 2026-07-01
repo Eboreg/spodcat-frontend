@@ -4,7 +4,7 @@ defineOptions({ inheritAttrs: false });
 
 <template>
   <div class="popup-container">
-    <div class="popup column bg-opaque" :class="$attrs.class">
+    <div class="popup column bg-opaque border-radius" :class="$attrs.class">
       <slot />
     </div>
     <div class="arrow bg-opaque" />
@@ -27,7 +27,6 @@ defineOptions({ inheritAttrs: false });
 .popup {
   border: 2px solid get-color("primary");
   border-bottom-color: get-color("primary", "dark");
-  border-radius: var(--spod-border-radius);
   border-right-color: get-color("primary", "dark");
   box-shadow: 0 2px 5px black;
 }

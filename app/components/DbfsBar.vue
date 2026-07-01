@@ -3,40 +3,7 @@ import type { EpisodeModel } from "@/types/api";
 import { timeToString } from "@/utils";
 import useAudioStore from "~/composables/useAudioStore";
 
-function getMouseProgress(event: MouseEvent): number | null {
-  if (event.target instanceof HTMLElement) {
-    const parent = event.target.closest(".dbfs");
-
-    if (parent instanceof HTMLElement) {
-      return (event.clientX - parent.offsetLeft) / parent.offsetWidth;
-    }
-  }
-
-  return null;
-}
-
-function onClick(event: MouseEvent) {
-  if (!audio.error) {
-    const progress = getMouseProgress(event);
-
-    if (progress !== null) {
-      seekToProgress(progress);
-      play();
-    }
-  }
-}
-
-function onMouseMove(event: MouseEvent) {
-  const progress = getMouseProgress(event);
-
-  if (progress !== null) {
-    tooltipProgress.value = progress;
-    showTooltip.value = true;
-  }
-}
-
 const audio = useAudioStore();
-const { seekToProgress, play } = audio;
 const props = defineProps<{ episode: EpisodeModel }>();
 const tooltipProgress = ref<number>(0);
 const showTooltip = ref<boolean>(false);
@@ -67,8 +34,27 @@ const dbfsColumnFlexBasis = computed(() =>
   dbfsArray.value ? `${100 / dbfsArray.value.length}%` : undefined,
 );
 
-useResizeObserver(dbfsBar, (entries) => {
-  const [entry] = entries;
+const pointer = usePointer({ target: dbfsBar });
+
+watch([pointer.x, pointer.pressure, pointer.isInside], () => {
+  if (pointer.isInside.value) {
+    if (dbfsBar.value && dbfsBar.value.clientWidth > 0) {
+      const progress = (pointer.x.value - dbfsBar.value.offsetLeft) / dbfsBar.value.clientWidth;
+
+      tooltipProgress.value = progress;
+      showTooltip.value = true;
+
+      if (pointer.pressure.value > 0 && !audio.isError) {
+        audio.seekToProgress(progress);
+        audio.playing = true;
+      }
+    }
+  } else {
+    showTooltip.value = false;
+  }
+});
+
+useResizeObserver(dbfsBar, ([entry]) => {
   if (entry !== undefined) {
     dbfsBarWidth.value = entry.contentRect.width;
   }
@@ -80,14 +66,7 @@ watchEffect(() => {
 </script>
 
 <template>
-  <div
-    ref="dbfs"
-    class="dbfs"
-    :class="{ 'cursor-not-allowed': audio.error }"
-    @click="onClick"
-    @mousemove="onMouseMove"
-    @mouseleave="showTooltip = false"
-  >
+  <div ref="dbfs" class="dbfs" :class="{ 'cursor-not-allowed': audio.isError }">
     <div class="dbfs-overlay bg-opaque" :style="`width: ${100 - audio.currentProgress}%`" />
     <div v-if="showTooltip" class="tooltip" :style="`left: ${tooltipProgress * 100}%`">
       <div class="tooltip-box text-xs bg">
@@ -111,7 +90,6 @@ watchEffect(() => {
 .dbfs {
   align-items: center;
   display: flex;
-  flex-grow: 1;
   height: 50px;
   position: relative;
 }

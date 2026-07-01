@@ -4,5 +4,5 @@ export default function usePost(podcastSlug: string, postSlug: string) {
     query: ({ signal }) => $fetch(`/api/podcasts/${podcastSlug}/post/${postSlug}`, { signal }),
   });
 
-  return { post: result.data, ...result };
+  return { post: readonly(result.data), ...result };
 }

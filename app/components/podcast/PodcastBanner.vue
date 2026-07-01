@@ -19,8 +19,8 @@ const nameCssStyle = computed(() =>
 
 <template>
   <header
-    class="podcast-banner box-shadow"
     :class="{ 'has-banner-image': podcast?.banner, compact }"
+    class="podcast-banner box-shadow border-radius column"
   >
     <template v-if="podcast">
       <div
@@ -53,9 +53,6 @@ const nameCssStyle = computed(() =>
 
 <style scoped lang="scss">
 .podcast-banner {
-  border-radius: var(--spod-border-radius);
-  display: flex;
-  flex-direction: column;
   justify-content: center;
   min-height: 120px;
   overflow: hidden;
@@ -85,8 +82,8 @@ const nameCssStyle = computed(() =>
 }
 
 .podcast-cover {
-  border: 5px outset get-color("primary");
   border-radius: 100%;
+  border: 5px outset get-color("primary");
   height: 100px;
   object-fit: cover;
   object-position: center;

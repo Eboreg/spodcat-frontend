@@ -1,14 +1,7 @@
 import type { EpisodeModel, PodcastModel, PostModel } from "@/types/api";
 import type { ResolvableLink, ResolvableMeta } from "@unhead/vue";
-import type { Image } from "@/types";
-
-function extractImageUrl(description: string): string | undefined {
-  return [...description.matchAll(/!\[.*?]\((?<url>.*?)\)/g)].map((m) => m.groups!["url"]!)[0];
-}
-
-function imageData(url: string, width?: number | null, height?: number | null): Image {
-  return { url, width: width ?? undefined, height: height ?? undefined };
-}
+import { extractImageUrlsFromMarkdown } from "~/utils";
+import { SPODCAT_FAVICON, SPODCAT_LOGO } from "~/constants";
 
 function stripDescription(description: string): string {
   return description
@@ -34,50 +27,52 @@ export default function useSpodcatHead({
   const podcastContent = computed(() => episodeRef.value ?? postRef.value);
 
   const title = computed(() => {
-    if (podcastContent.value && podcastRef.value)
+    if (podcastContent.value && podcastRef.value) {
       return `${podcastContent.value.name} | ${podcastRef.value.name}`;
-    if (podcastRef.value) return podcastRef.value.name;
+    }
+    if (podcastRef.value) {
+      return podcastRef.value.name;
+    }
     return runtimeConfig.public.siteName;
   });
 
   const favicon = computed(() => {
     return podcastRef.value?.favicon && podcastRef.value.favicon_content_type
       ? { href: podcastRef.value.favicon, type: podcastRef.value.favicon_content_type }
-      : { href: "/img/spodcat-favicon.png", type: "image/png" };
+      : SPODCAT_FAVICON;
   });
 
   const ogUrl = computed(() => {
-    let route: string;
+    const route = () => {
+      if (postRef.value) return `/${postRef.value.podcast}/post/${postRef.value.slug}`;
+      if (episodeRef.value) return `/${episodeRef.value.podcast}/episode/${episodeRef.value.slug}`;
+      if (podcastRef.value) return `/${podcastRef.value.slug}/`;
+      return "/";
+    };
 
-    if (postRef.value) route = `/${postRef.value.podcast}/post/${postRef.value.slug}`;
-    else if (episodeRef.value)
-      route = `/${episodeRef.value.podcast}/episode/${episodeRef.value.slug}`;
-    else if (podcastRef.value) route = `/${podcastRef.value.slug}/`;
-    else route = "/";
-
-    return new URL(route, runtimeConfig.public.frontendHost).toString();
+    return new URL(route(), runtimeConfig.public.frontendHost).toString();
   });
 
   const ogImage = computed(() => {
     if (episodeRef.value?.image) {
-      return imageData(
-        episodeRef.value.image,
-        episodeRef.value.image_width,
-        episodeRef.value.image_height,
-      );
+      return {
+        height: episodeRef.value.image_height ?? undefined,
+        url: episodeRef.value.image,
+        width: episodeRef.value.image_width ?? undefined,
+      };
     }
     if (podcastContent.value?.description) {
-      const imageUrl = extractImageUrl(podcastContent.value.description);
+      const imageUrl = extractImageUrlsFromMarkdown(podcastContent.value.description)[0];
       if (imageUrl) return imageUrl;
     }
     if (podcastRef.value?.cover) {
-      return imageData(
-        podcastRef.value.cover,
-        podcastRef.value.cover_width,
-        podcastRef.value.cover_height,
-      );
+      return {
+        height: podcastRef.value.cover_height ?? undefined,
+        url: podcastRef.value.cover,
+        width: podcastRef.value.cover_width ?? undefined,
+      };
     }
-    return "/img/spodcat-favicon.png";
+    return SPODCAT_LOGO;
   });
 
   const link = computed(() => {
@@ -89,10 +84,10 @@ export default function useSpodcatHead({
 
     if (podcastRef.value) {
       l.push({
-        rel: "alternate",
-        type: "application/rss+xml",
-        title: podcastRef.value.name,
         href: podcastRef.value.rss_url,
+        rel: "alternate",
+        title: podcastRef.value.name,
+        type: "application/rss+xml",
       });
     }
     return l;
@@ -124,13 +119,13 @@ export default function useSpodcatHead({
   useHead({ link, meta });
 
   useSeoMeta({
-    ogSiteName: runtimeConfig.public.siteName,
-    ogType,
-    title,
-    ogUrl,
     description,
     ogAudio: computed(() => episodeRef.value?.audio_url),
-    ogLocale: computed(() => podcastRef.value?.language),
     ogImage,
+    ogLocale: computed(() => podcastRef.value?.language),
+    ogSiteName: runtimeConfig.public.siteName,
+    ogType,
+    ogUrl,
+    title,
   });
 }

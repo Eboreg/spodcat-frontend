@@ -2,7 +2,7 @@
 import { FileText, Podcast, Search } from "@lucide/vue";
 import { getLocaleDateString, modulo } from "@/utils";
 import type { PartialEpisodePolymorphicModel, PartialPostPolymorphicModel } from "@/types/api";
-import { podcastSlugKey } from "~/symbols";
+import { podcastKey } from "~/symbols";
 
 const isOpen = defineModel<boolean>();
 const { t } = useI18n();
@@ -15,16 +15,16 @@ const showMinCharsText = computed(() => term.value.length > 0 && term.value.leng
 const showEmptyResultText = computed(
   () => term.value.length >= 3 && results.value.length === 0 && !isLoading.value,
 );
-const podcastSlug = inject(podcastSlugKey);
+const podcast = inject(podcastKey);
 
 watchEffect(async (onCleanup) => {
   const controller = new AbortController();
 
-  if (term.value.length >= 3 && podcastSlug) {
+  if (term.value.length >= 3 && podcast?.value?.slug) {
     isLoading.value = true;
     results.value = [];
     try {
-      const r = await $fetch(`/api/podcasts/${podcastSlug}/search/${term.value}`, {
+      const r = await $fetch(`/api/podcasts/${podcast.value.slug}/search/${term.value}`, {
         signal: controller.signal,
       });
       results.value = r;
@@ -77,30 +77,30 @@ function onKeyDown(event: KeyboardEvent) {
     </template>
 
     <template #default>
-      <div v-if="showMinCharsText" class="px-single pb-half text-small text-boring-inverse">
+      <div v-if="showMinCharsText" class="px-single pb-half text-sm text-boring-inverse">
         {{ t("enter-min-3-chars") }}
       </div>
-      <div v-if="showEmptyResultText" class="px-single pb-half text-small text-boring-inverse">
+      <div v-if="showEmptyResultText" class="px-single pb-half text-sm text-boring-inverse">
         {{ t("no-search-results") }}
       </div>
       <Loading v-if="isLoading" height="54px" />
       <div class="search-results">
         <NuxtLink
           v-for="(result, index) in results"
+          :class="{ active: index === activeIdx }"
           :key="index"
           :to="`/${result.podcast}/${result.resourcetype}/${result.slug}`"
           @click="isOpen = false"
-          class="search-result d-block py-half px-single"
-          :class="{ active: index === activeIdx }"
-          tabindex="0"
           @focus="activeIdx = index"
+          class="search-result d-block py-half px-single border-radius"
+          tabindex="0"
         >
           <div class="row align-center gap-single">
             <SpodcatIcon v-if="result.resourcetype === 'episode'" :icon="Podcast" :size="24" />
             <SpodcatIcon v-else-if="result.resourcetype === 'post'" :icon="FileText" :size="24" />
             <div class="column">
               <div class="breadcrumbs mb-quarter">
-                {{ getLocaleDateString(new Date(result.published)) }}
+                {{ getLocaleDateString(result.published, podcast?.language) }}
               </div>
               <div>{{ result.name }}</div>
             </div>
@@ -133,8 +133,6 @@ function onKeyDown(event: KeyboardEvent) {
 }
 
 .search-result {
-  border-radius: var(--spod-border-radius);
-
   &.active {
     background-color: var(--spod-theme-primary-dark);
   }
@@ -146,6 +144,6 @@ function onKeyDown(event: KeyboardEvent) {
 
 .search-results {
   height: 100%;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 </style>

@@ -1,4 +1,9 @@
-import { getSeasonTheme } from "@/utils";
+import { THEMES } from "~/constants";
+import type { Theme } from "~/types";
+
+function getSeasonTheme(number: number): Theme {
+  return THEMES[number % (THEMES.length - 1)]!;
+}
 
 export default function useSeason(
   podcastSlug: MaybeRefOrGetter<string | undefined>,

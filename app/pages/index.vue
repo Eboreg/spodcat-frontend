@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { detectLocale } from "@/utils";
 import useSpodcatHead from "~/composables/useSpodcatHead";
+import { SPODCAT_LOGO_TRANSPARENT } from "~/constants";
 
 const { data: podcasts } = useQuery({
   key: ["podcast"],
@@ -14,20 +15,20 @@ setLocale(detectLocale());
 
 <template>
   <main class="content-width column gap-half py-half">
-    <div class="spodcat-banner p-single">
+    <div class="spodcat-banner p-single border-radius">
       <div class="row space-between align-center w-100">
         <div>
           <div class="title">Spodcat</div>
           <div class="subtitle">{{ t("spodcat-subtitle") }}</div>
         </div>
-        <img src="/img/spodcat-logo.png" alt="" class="logo d-none d-sm-block" />
+        <img :src="SPODCAT_LOGO_TRANSPARENT.url" alt="" class="logo d-none d-sm-block" />
       </div>
     </div>
 
     <Loading v-if="podcasts === undefined" height="150px" />
 
     <template v-else>
-      <PodcastBanner v-for="podcast in podcasts" :podcast="podcast" :key="podcast.slug" compact />
+      <PodcastBanner v-for="podcast in podcasts" :podcast :key="podcast.slug" compact />
     </template>
 
     <Attribution />
@@ -43,7 +44,6 @@ setLocale(detectLocale());
 
 .spodcat-banner {
   background-color: $spodcat-yellow;
-  border-radius: var(--spod-border-radius);
 
   .subtitle {
     color: black;

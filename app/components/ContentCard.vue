@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import type { PartialPodcastContentModel } from "@/types/api";
+import { Share2 } from "@lucide/vue";
 import { podcastKey } from "~/symbols";
-import { getLocaleDateString, makeAbsoluteUrl } from "~/utils";
+import { getLocaleDateString } from "~/utils";
 
 const props = defineProps<{
   content?: PartialPodcastContentModel;
@@ -9,10 +10,15 @@ const props = defineProps<{
   expand?: boolean;
   route?: string;
 }>();
+const runtimeConfig = useRuntimeConfig();
 const emit = defineEmits<{ shareModalOpen: [] }>();
 const showShareModal = ref<boolean>(false);
-const absoluteUrl = computed(() => (props.route ? makeAbsoluteUrl(props.route) : undefined));
+const absoluteUrl = computed(() => {
+  if (props.route) return new URL(props.route, runtimeConfig.public.frontendHost).toString();
+  return undefined;
+});
 const podcast = inject(podcastKey);
+const { t } = useI18n();
 
 function openShareModal() {
   emit("shareModalOpen");
@@ -22,14 +28,16 @@ function openShareModal() {
 
 <template>
   <div class="dashed-border">
-    <a v-if="content && !expand" :id="content.slug" />
+    <a v-if="content" :id="content.slug" />
+
     <div class="bg column">
       <Loading v-if="!content" height="120px" />
 
       <div v-else class="row">
         <MaybeLink
+          :no-link="expand"
+          :to="route"
           class="row align-center gap-single p-single fill"
-          :route="!expand ? route : undefined"
           element="div"
         >
           <div class="icon-wrapper">
@@ -41,7 +49,7 @@ function openShareModal() {
               <div class="font-weight-bold">{{ content.name }}</div>
               <div class="row column-gap-half row-gap-quarter wrap">
                 <div class="badge theme-secondary">
-                  {{ getLocaleDateString(new Date(content.published), podcast?.language) }}
+                  {{ getLocaleDateString(content.published, podcast?.language) }}
                 </div>
 
                 <slot name="badges" />
@@ -49,7 +57,17 @@ function openShareModal() {
             </div>
 
             <div v-if="expand" class="row align-center gap-half">
-              <ContentShareIcon v-if="absoluteUrl" @click="openShareModal" />
+              <SpodcatIcon
+                v-if="absoluteUrl"
+                :icon-size="30"
+                :icon="Share2"
+                :size="40"
+                :title="t('share.share')"
+                @click="openShareModal"
+                class="hover-light hover-border"
+                element="button"
+                theme="secondary"
+              />
               <slot name="head-end" />
             </div>
           </div>
@@ -66,7 +84,7 @@ function openShareModal() {
 
   <ShareModal
     v-if="absoluteUrl && showShareModal"
-    :current-timestamp="currentTimestamp"
+    :current-timestamp
     :url="absoluteUrl"
     v-model="showShareModal"
   />
@@ -75,5 +93,6 @@ function openShareModal() {
 <style scoped lang="scss">
 .icon-wrapper {
   align-self: flex-start;
+  flex: 0 0 auto;
 }
 </style>

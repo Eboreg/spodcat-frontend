@@ -24,9 +24,9 @@ const value = defineModel<string | number>();
 const hasErrors = defineModel<boolean>("hasErrors");
 
 const props = withDefaults(defineProps<Props>(), {
-  type: "text",
   label: undefined,
   maxlength: undefined,
+  type: "text",
   validationErrors: undefined,
   wrapperClass: undefined,
 });
@@ -65,7 +65,7 @@ defineOptions({ inheritAttrs: false });
 </script>
 <template>
   <div class="input-wrapper column-gap-single" :class="wrapperClass">
-    <label v-if="label !== undefined" :for="id">{{ label }}</label>
+    <label v-if="label" :for="id">{{ label }}</label>
     <div v-if="maxlength" :class="{ 'text-primary': overflow }">{{ length }}/{{ maxlength }}</div>
     <textarea
       v-if="multiline"
@@ -110,8 +110,8 @@ textarea {
 }
 
 .input {
-  font-size: var(--spod-font-size-body);
   font-family: var(--spod-font-family);
+  font-size: var(--spod-font-size-body);
 }
 
 .has-error {

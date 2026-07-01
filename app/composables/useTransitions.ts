@@ -2,31 +2,31 @@ import type { Offsets, RelativePosition } from "@/types";
 import type { ElementSize } from "@vueuse/core";
 
 interface Size {
-  width: MaybeRefOrGetter<number>;
   height: MaybeRefOrGetter<number>;
+  width: MaybeRefOrGetter<number>;
 }
 
 interface TransitionStyle {
+  "transition-property"?: string;
   bottom?: string;
   left?: string;
-  scale?: number;
   opacity?: number;
-  "transition-property"?: string;
+  scale?: number;
 }
 
 interface UseTransitionsOptions {
   immediate?: boolean;
   offsets?: MaybeRefOrGetter<Offsets>;
+  onEndTransitionEnd?: () => void;
   onReady?: (state: TransitionState) => void;
   onStartTransitionEnd?: () => void;
-  onEndTransitionEnd?: () => void;
 }
 
 const transitionKeys = ["top", "right", "bottom", "left", "size0x", "size100x"] as const;
 
 type TransitionKey = (typeof transitionKeys)[number];
 
-export type TransitionState = "created" | "stable" | "end";
+type TransitionState = "created" | "stable" | "end";
 
 function getStartOrEndStyle(key: TransitionKey, size: ElementSize): TransitionStyle {
   switch (key) {

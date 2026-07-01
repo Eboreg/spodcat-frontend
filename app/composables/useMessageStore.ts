@@ -1,16 +1,16 @@
 import type { LucideIcon } from "@lucide/vue";
 import type { ElementSize } from "@vueuse/core";
 
-export type MessageLevel = "error" | "info" | "success";
+type MessageLevel = "error" | "info" | "success";
 
-export interface Message {
+interface Message {
   level: MessageLevel;
   text: string | string[];
   timeout?: number;
   type?: string;
 }
 
-export interface ToastMessage extends Omit<Message, "type"> {
+interface ToastMessage extends Omit<Message, "type"> {
   icon?: string | LucideIcon | null;
 }
 
@@ -98,7 +98,7 @@ const useMessageStore = defineStore("message", () => {
 
     for (const toast of toasts.value) {
       if (toast.bottomOffset !== acc) toast.bottomOffset = acc;
-      acc += toast.size.height + 8;
+      acc += toast.size.height + 10;
     }
   }
 

@@ -4,5 +4,5 @@ export default function usePodcastContents(podcastSlug: string) {
     query: ({ signal }) => $fetch(`/api/podcasts/${podcastSlug}/contents`, { signal }),
   });
 
-  return { contents: result.data, ...result };
+  return { contents: readonly(result.data), ...result };
 }

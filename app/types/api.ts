@@ -1,4 +1,4 @@
-import type { Theme } from "@/utils";
+import type { Theme } from "@/types";
 
 export interface CategoryModel {
   cat: string;
@@ -23,7 +23,7 @@ export interface CommentModel {
 }
 
 export interface EpisodeSongModel {
-  artists: { id: number; name: string }[];
+  artists: readonly { id: number; name: string }[];
   comment: string | null;
   end_time: number | null;
   id: number;
@@ -69,7 +69,7 @@ export interface PodcastModel extends PartialPodcastModel {
   favicon_content_type: string | null;
   favicon: string | null;
   language: string | null;
-  links: PodcastLinkModel[];
+  links: readonly PodcastLinkModel[];
   name_font_face: number | null;
   require_comment_approval: boolean;
   rss_url: string;
@@ -77,6 +77,7 @@ export interface PodcastModel extends PartialPodcastModel {
 
 export interface SeasonModel {
   id: number;
+  image: string | null;
   image_thumbnail: string | null;
   name: string | null;
   number: number;
@@ -110,7 +111,7 @@ export interface PodcastContentModel extends PartialPodcastContentModel {
   description_html: string;
   description: string | null;
   podcast_name: string;
-  videos: VideoModel[];
+  videos: readonly VideoModel[];
 }
 
 export interface PartialEpisodeModel extends PartialPodcastContentModel {
@@ -125,7 +126,8 @@ export interface PartialEpisodeModel extends PartialPodcastContentModel {
 export interface PartialPostModel extends PartialPodcastContentModel {}
 
 export interface EpisodeModel extends PodcastContentModel, PartialEpisodeModel {
-  dbfs_array: number[];
+  audio_content_type: string;
+  dbfs_array: readonly number[];
   image_height: number | null;
   image_mimetype: string | null;
   image_thumbnail_height: number | null;
@@ -133,7 +135,7 @@ export interface EpisodeModel extends PodcastContentModel, PartialEpisodeModel {
   image_thumbnail_width: number | null;
   image_width: number | null;
   image: string | null;
-  songs: EpisodeSongModel[];
+  songs: readonly EpisodeSongModel[];
 }
 
 export interface PostModel extends PodcastContentModel {}

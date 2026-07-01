@@ -17,7 +17,7 @@ defineProps<{
     :validation-errors
     :wrapper-class
     type="number"
-    v-model="value"
     v-model:has-errors="hasErrors"
+    v-model="value"
   />
 </template>

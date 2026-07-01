@@ -27,7 +27,7 @@ watchEffect(() => {
 <template>
   <PodcastMain>
     <PodcastGoToButton />
-    <PostCard :post="post" expand>
+    <PostCard :post expand>
       <ContentDescription :content="post" />
     </PostCard>
   </PodcastMain>

@@ -1,34 +1,30 @@
 <script setup lang="ts">
 import type { LucideIcon } from "@lucide/vue";
-import type { Theme } from "@/utils";
-import type { BreakpointSizesArg } from "~/responsive";
+import type { BreakpointSizesArg, Theme } from "@/types";
 
-const props = defineProps<{
+export interface SpodcatIconProps {
   element?: string;
   icon: string | LucideIcon;
   iconSize?: BreakpointSizesArg;
   size?: BreakpointSizesArg;
   theme?: Theme;
-}>();
+}
+
+const props = defineProps<SpodcatIconProps>();
 const iconName = computed(() => (typeof props.icon === "string" ? props.icon : undefined));
 const lucideIcon = computed(() => (typeof props.icon === "function" ? props.icon : undefined));
 const themeClass = computed(() => (props.theme ? `text-${props.theme}` : undefined));
+const outerSize = computed(() => props.size ?? props.iconSize ?? 24);
+const innerSize = computed(() => props.iconSize ?? props.size ?? 24);
+const attribute = computed(() => (iconName.value ? "font-size" : "size"));
 </script>
 
 <template>
-  <ResponsiveSize
-    :class="themeClass"
-    :element="element"
-    :size="size ?? iconSize ?? 24"
-    attribute="size"
-    class="outer"
-  >
+  <ResponsiveSize :class="themeClass" :element :size="outerSize" attribute="size" class="outer">
     <div class="inner">
-      <ResponsiveSize v-if="iconName" :size="iconSize ?? size ?? 24" attribute="font-size">
-        <Icon :name="iconName" />
-      </ResponsiveSize>
-      <ResponsiveSize v-else-if="lucideIcon" :size="iconSize ?? size ?? 24" attribute="size">
-        <component :is="lucideIcon" />
+      <ResponsiveSize :size="innerSize" :attribute>
+        <Icon v-if="iconName" :name="iconName" />
+        <component v-else-if="lucideIcon" :is="lucideIcon" />
       </ResponsiveSize>
     </div>
   </ResponsiveSize>
