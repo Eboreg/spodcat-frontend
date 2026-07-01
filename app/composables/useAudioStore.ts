@@ -11,10 +11,9 @@ const useAudioStore = defineStore("audio", () => {
   const podcast = ref<PodcastModel>();
 
   const src = computed(() => {
-    console.log("src computed", episode.value?.slug, episode.value?.audio_url);
     if (episode.value)
-      return { src: episode.value.audio_url, type: episode.value.audio_content_type };
-    return { src: "" };
+      return [{ src: episode.value.audio_url, type: episode.value.audio_content_type }];
+    return [];
   });
 
   const { t } = useI18n();
@@ -122,7 +121,7 @@ const useAudioStore = defineStore("audio", () => {
 
   watch([src, audioElement], () => {
     error.value = undefined;
-    if (src.value && audioElement.value) audioElement.value.src = src.value.src;
+    if (src.value.length > 0 && audioElement.value) audioElement.value.src = src.value[0]!.src;
   });
 
   watch(audioElement, () => {
@@ -229,6 +228,7 @@ const useAudioStore = defineStore("audio", () => {
     seeking,
     stalled,
     season,
+    error,
   };
 });
 
