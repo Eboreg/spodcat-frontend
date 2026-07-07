@@ -9,7 +9,6 @@
     "comments": "Comments",
     "leave-a-comment": "Leave a comment",
     "send": "Send",
-    "something-wrong": "Something went wrong.",
     "thanks": {
       "approval-required": "Thanks! Your comment will be shown when it has been approved.",
       "no-approval-required": "Thanks for your comment."
@@ -61,6 +60,7 @@
     "whatsapp": "Whatsapp"
   },
   "site-made-by": "The site was made by",
+  "something-wrong": "Something went wrong. Wonder what?",
   "songs": "Songs",
   "spodcat-subtitle": "Hi, this is a podcast platform. Please choose a podcast:",
   "subscribe": "Subscribe",

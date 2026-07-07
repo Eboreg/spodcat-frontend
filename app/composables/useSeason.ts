@@ -1,5 +1,5 @@
-import { THEMES } from "~/constants";
 import type { Theme } from "~/types";
+import { THEMES } from "~/constants";
 
 function getSeasonTheme(number: number): Theme {
   return THEMES[number % (THEMES.length - 1)]!;

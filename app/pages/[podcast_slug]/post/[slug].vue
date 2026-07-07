@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { detectLocale, ping } from "@/utils";
 import { podcastSlugKey } from "@/symbols";
-import useSpodcatHead from "~/composables/useSpodcatHead";
+import { detectLocale, ping } from "@/utils";
 import usePodcast from "~/composables/usePodcast";
 import usePost from "~/composables/usePost";
+import useSpodcatHead from "~/composables/useSpodcatHead";
 
 const route = useRoute();
 const podcastSlug = route.params.podcast_slug as string;

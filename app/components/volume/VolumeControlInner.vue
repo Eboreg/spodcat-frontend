@@ -24,12 +24,12 @@ defineProps<{ vertical?: boolean }>();
       :disabled="audio.muted"
       :orient="vertical ? 'vertical' : 'horizontal'"
       :value="audio.muted ? 0 : audio.volume"
-      @input="onVolumeInput"
       max="1"
       min="0"
       name="volume"
       step="0.01"
       type="range"
-    />
+      @input="onVolumeInput"
+    >
   </div>
 </template>

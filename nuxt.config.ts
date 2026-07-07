@@ -1,43 +1,17 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  compatibilityDate: "2025-07-15",
-  devtools: { enabled: true },
-  css: ["~/assets/scss/base.scss"],
+  modules: ["@nuxtjs/i18n", "@pinia/nuxt", "@pinia/colada-nuxt", "@nuxt/icon", "@vueuse/nuxt", "@nuxt/eslint"],
+  components: {
+    dirs: [{ path: "~/components/ui", pathPrefix: false }, "~/components"],
+  },
   imports: {
     scan: false,
   },
-  vite: {
-    optimizeDeps: {
-      include: ["@pinia/colada", "@vueuse/core", "pinia", "vue-i18n", "@lucide/vue"],
-    },
-    css: {
-      preprocessorOptions: {
-        scss: {
-          additionalData: `
-            @use "sass:map";
-            @use "@/assets/scss/_variables.scss" as *;
-            @use "@/assets/scss/_color.scss" as *;
-            @use "@/assets/scss/_responsive.scss" as *;
-          `,
-        },
-      },
-    },
+  devtools: { enabled: true },
+  app: {
+    layoutTransition: { name: "player" },
   },
-  modules: [
-    "@nuxtjs/i18n",
-    "@pinia/nuxt",
-    "@pinia/colada-nuxt",
-    "@nuxt/icon",
-    "@vueuse/nuxt",
-    "@nuxt/eslint",
-  ],
-  i18n: {
-    strategy: "no_prefix",
-    locales: [
-      { code: "en", language: "en-UK", file: "en.json" },
-      { code: "sv", language: "sv-SE", file: "sv.json" },
-    ],
-  },
+  css: ["~/assets/scss/base.scss"],
   runtimeConfig: {
     public: {
       backendHost: "https://backend.podd.huseli.us",
@@ -45,7 +19,26 @@ export default defineNuxtConfig({
       siteName: "podd.huseli.us",
     },
   },
-  app: {
-    layoutTransition: { name: "player" },
+  compatibilityDate: "2025-07-15",
+  vite: {
+    optimizeDeps: {
+      include: ["@pinia/colada", "@vueuse/core", "pinia", "vue-i18n", "@lucide/vue"],
+    },
+  },
+  eslint: {
+    config: {
+      autoInit: true,
+      formatters: false,
+      import: false,
+      stylistic: false,
+      standalone: false,
+    },
+  },
+  i18n: {
+    strategy: "no_prefix",
+    locales: [
+      { code: "en", language: "en-UK", file: "en.json" },
+      { code: "sv", language: "sv-SE", file: "sv.json" },
+    ],
   },
 });

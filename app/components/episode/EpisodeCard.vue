@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { Download, ListMusic, Pause, Play } from "@lucide/vue";
 import type { PartialEpisodeModel } from "@/types/api";
-import { timeToString } from "@/utils";
+import { Download, ListMusic, Pause, Play } from "@lucide/vue";
 import { podcastKey } from "@/symbols";
+import { timeToString } from "@/utils";
 import useAudioStore from "~/composables/useAudioStore";
-import useSeason from "~/composables/useSeason";
 import useEpisode from "~/composables/useEpisode";
+import useSeason from "~/composables/useSeason";
+
+const props = defineProps<{ episode?: PartialEpisodeModel; expand?: boolean }>();
 
 function onPlayOrPauseClick() {
   const episodeSlug = props.episode?.slug;
@@ -26,14 +28,11 @@ function onPlayOrPauseClick() {
 
 const { t } = useI18n();
 const audio = useAudioStore();
-const props = defineProps<{ episode?: PartialEpisodeModel; expand?: boolean }>();
 const podcast = inject(podcastKey);
-const currentTimestamp = ref<number>(0);
+const currentTimestamp = shallowRef<number>(0);
 const podcastSlug = computed(() => podcast?.value?.slug ?? props.episode?.podcast);
 const route = computed(() =>
-  props.episode && podcastSlug.value
-    ? `/${podcastSlug.value}/episode/${props.episode.slug}`
-    : undefined,
+  props.episode && podcastSlug.value ? `/${podcastSlug.value}/episode/${props.episode.slug}` : undefined,
 );
 const { season, theme } = useSeason(podcastSlug, () => props.episode?.season);
 const isPlaying = computed(() => audio.isPlaying && audio.episode?.id === props.episode?.id);
@@ -47,12 +46,12 @@ const isPlaying = computed(() => audio.isPlaying && audio.episode?.id === props.
     :route
     @share-modal-open="currentTimestamp = audio.currentTime"
   >
-    <template #icon v-if="episode">
-      <EpisodeRoundIcon :episode :podcast />
+    <template v-if="episode" #icon>
+      <EpisodeRoundIcon :episode :podcast class="content-round-icon" />
     </template>
 
     <template #badges>
-      <div v-if="season" class="badge" :class="`theme-${theme}`">
+      <Badge v-if="season" :theme>
         <template v-if="season.name">
           {{
             t("season-number-name", {
@@ -64,13 +63,13 @@ const isPlaying = computed(() => audio.isPlaying && audio.episode?.id === props.
         <template v-else>
           {{ t("season-number", { number: season.number }) }}
         </template>
-      </div>
-      <div v-if="episode" class="badge theme-tertiary d-none d-sm-block">
+      </Badge>
+      <Badge v-if="episode" theme="tertiary" class="d-none d-sm-block">
         {{ timeToString(episode.duration_seconds) }}
-      </div>
+      </Badge>
     </template>
 
-    <template #head-end v-if="episode">
+    <template v-if="episode" #head-end>
       <NuxtLink
         v-if="route && episode.has_songs && !expand"
         :title="t('has-tracklist')"
@@ -82,9 +81,10 @@ const isPlaying = computed(() => audio.isPlaying && audio.episode?.id === props.
           :icon="ListMusic"
           :size="40"
           :title="t('has-tracklist')"
-          class="hover-light hover-border"
+          class="on-hover-border"
           element="button"
-          theme="secondary"
+          text-theme="secondary"
+          lighten-on-hover
         />
       </NuxtLink>
 
@@ -95,21 +95,23 @@ const isPlaying = computed(() => audio.isPlaying && audio.episode?.id === props.
         :icon="Download"
         :size="40"
         :title="t('download')"
-        class="hover-light hover-border d-sm-flex"
+        class="on-hover-border d-sm-flex"
         element="a"
         target="_blank"
-        theme="primary"
+        text-theme="primary"
+        lighten-on-hover
       />
 
       <SpodcatIcon
         :icon-size="30"
         :icon="isPlaying ? Pause : Play"
         :size="40"
-        :theme="isPlaying ? 'info' : 'success'"
+        :text-theme="isPlaying ? 'info' : 'success'"
         :title="isPlaying ? t('pause') : t('play')"
-        @click="onPlayOrPauseClick"
-        class="hover-light hover-border"
+        class="on-hover-border"
         element="button"
+        lighten-on-hover
+        @click="onPlayOrPauseClick"
       />
     </template>
 

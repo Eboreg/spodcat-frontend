@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { Pause, Play, TriangleAlert } from "@lucide/vue";
 import type { BreakpointSizesArg, Theme } from "~/types";
+import { Pause, Play, TriangleAlert } from "@lucide/vue";
 import useAudioStore from "~/composables/useAudioStore";
 
+const props = defineProps<{ size?: BreakpointSizesArg; noTheme?: boolean }>();
 const audio = useAudioStore();
 const { t } = useI18n();
 const theme: ComputedRef<Theme | undefined> = computed(() => {
@@ -17,11 +18,10 @@ const icon = computed(() => {
   return Play;
 });
 const title = computed(() => {
+  if (audio.isError) return t("something-wrong");
   if (audio.isPlaying) return t("pause");
-  if (!audio.isError) return t("play");
-  return undefined;
+  return t("play");
 });
-const props = defineProps<{ size?: BreakpointSizesArg; noTheme?: boolean }>();
 </script>
 
 <template>
@@ -30,8 +30,9 @@ const props = defineProps<{ size?: BreakpointSizesArg; noTheme?: boolean }>();
     :size
     :theme
     :title
-    @click="audio.playing = !audio.playing"
-    class="hover-light p-half button-press"
+    class="p-half on-press-translate"
     element="button"
+    lighten-on-hover
+    @click="audio.playing = !audio.playing"
   />
 </template>

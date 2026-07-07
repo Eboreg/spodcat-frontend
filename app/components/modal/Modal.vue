@@ -17,16 +17,10 @@ watchEffect(() => {
 </script>
 
 <template>
-  <dialog
-    @click="onClick"
-    @close="isOpen = false"
-    class="modal dotted-border p-0"
-    closedby="any"
-    ref="dialog"
-  >
+  <dialog ref="dialog" class="modal dotted-border p-0" closedby="any" @click="onClick" @close="isOpen = false">
     <div class="d-flex align-center">
       <div class="fill"><slot name="header" /></div>
-      <CloseIcon @click="isOpen = false" class="p-half" />
+      <CloseIcon class="p-half" @click="isOpen = false" />
     </div>
     <div class="modal-content">
       <slot />
@@ -38,11 +32,9 @@ watchEffect(() => {
 .modal {
   background-color: var(--spod-background-color-opaque);
   box-shadow: 0 0 10px black;
-  color: var(--spod-text-color);
+  color: var(--spod-text-color-on-dark);
   margin: var(--spod-modal-top-margin) auto 1rem;
-  max-height: calc(
-    100% - var(--spod-modal-top-margin) - 1rem - (var(--spod-dotted-border-width) * 2)
-  );
+  max-height: calc(100% - var(--spod-modal-top-margin) - 1rem - (var(--spod-dotted-border-width) * 2));
   max-width: var(--spod-modal-width);
 
   &[open] {

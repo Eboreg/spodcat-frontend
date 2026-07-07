@@ -26,7 +26,7 @@ export function detectLocale(value?: string | null): SupportedLocale {
 }
 
 export function extractImageUrlsFromMarkdown(description: string): string[] {
-  return [...description.matchAll(/!\[.*?]\((?<url>.*?)\)/g)].map((m) => m.groups!["url"]!);
+  return [...description.matchAll(/!\[.*?\]\((?<url>.*?)\)/g)].map((m) => m.groups!.url!);
 }
 
 export function getLocaleDateString(date: Date | string, locale?: string | null): string {
@@ -35,7 +35,7 @@ export function getLocaleDateString(date: Date | string, locale?: string | null)
 }
 
 export function makeBackendUrl(path: string, event?: H3Event<EventHandlerRequest>): string {
-  if (path.match(/^https?:\/\/.*/)) return path;
+  if (/^https?:\/\/.*/.test(path)) return path;
   const runtimeConfig = useRuntimeConfig(event);
   return new URL(path, runtimeConfig.public.backendHost).toString();
 }
@@ -53,7 +53,7 @@ export function ping(path: string) {
 }
 
 export function timeFromString(time: string): number | null {
-  if (!time.match(/^(?:\d{1,2}:)?(?:\d{1,2}:)?\d{1,2}$/)) return null;
+  if (!/^(?:\d{1,2}:)?(?:\d{1,2}:)?\d{1,2}$/.test(time)) return null;
 
   const parts = time.split(":");
   let seconds = 0;
@@ -61,7 +61,7 @@ export function timeFromString(time: string): number | null {
   parts.forEach((part, idx) => {
     const partInt = parseInt(part);
 
-    if (!isNaN(partInt)) {
+    if (!Number.isNaN(partInt)) {
       if (parts.length - idx === 3) seconds += partInt * 60 * 60;
       else if (parts.length - idx === 2) seconds += partInt * 60;
       else if (parts.length - idx === 1) seconds += partInt;

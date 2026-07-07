@@ -2,9 +2,9 @@
 import type { PodcastContentModel } from "@/types/api";
 import { podcastKey } from "@/symbols";
 
-const consent = ref<boolean>(false);
-const podcast = inject(podcastKey);
 const props = defineProps<{ content?: PodcastContentModel }>();
+const consent = shallowRef<boolean>(false);
+const podcast = inject(podcastKey);
 const show = computed(() => !!props.content || podcast?.value?.enable_comments);
 </script>
 
@@ -14,8 +14,8 @@ const show = computed(() => !!props.content || podcast?.value?.enable_comments);
 
     <Video
       v-for="video in content?.videos"
-      :consent
       :key="video.id"
+      :consent
       :video
       @consent-click="consent = true"
     />
@@ -50,7 +50,7 @@ const show = computed(() => !!props.content || podcast?.value?.enable_comments);
   }
 
   :deep(img) {
-    border-radius: var(--spod-border-radius);
+    border-radius: var(--spod-border-radius-md);
   }
 }
 </style>

@@ -17,18 +17,13 @@ function onCookiesClick() {
 
 <template>
   <div class="column gap-half align-center">
-    <div class="text-xs">
+    <div class="font-size-xs">
       {{ t("site-made-by") }}
-      <a
-        class="font-weight-bold"
-        href="https://robert.huseli.us/"
-        rel="noopener noreferrer"
-        target="_blank"
-      >
+      <a class="font-weight-bold" href="https://robert.huseli.us/" rel="noopener noreferrer" target="_blank">
         Robert
       </a>
     </div>
-    <button class="text-xs font-weight-bold" @click="onCookiesClick">
+    <button class="font-size-xs font-weight-bold" @click="onCookiesClick">
       {{ t("cookies.question") }}
     </button>
   </div>

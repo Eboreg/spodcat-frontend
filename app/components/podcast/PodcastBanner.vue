@@ -20,7 +20,7 @@ const nameCssStyle = computed(() =>
 <template>
   <header
     :class="{ 'has-banner-image': podcast?.banner, compact }"
-    class="podcast-banner box-shadow border-radius column"
+    class="podcast-banner box-shadow border-radius-md column"
   >
     <template v-if="podcast">
       <div
@@ -36,8 +36,8 @@ const nameCssStyle = computed(() =>
           v-if="podcast.cover_thumbnail"
           :src="podcast.cover_thumbnail"
           alt=""
-          class="podcast-cover d-none d-sm-block"
-        />
+          class="podcast-cover d-none d-sm-block border-md border-primary border-radius-100 border-outset"
+        >
         <div>
           <div :class="nameCssClass" :style="nameCssStyle">{{ podcast.name }}</div>
           <div v-if="podcast.tagline" class="podcast-tagline outlined-text mt-quarter">
@@ -52,6 +52,8 @@ const nameCssStyle = computed(() =>
 </template>
 
 <style scoped lang="scss">
+@use "@/assets/scss/_responsive.scss" as *;
+
 .podcast-banner {
   justify-content: center;
   min-height: 120px;
@@ -82,8 +84,6 @@ const nameCssStyle = computed(() =>
 }
 
 .podcast-cover {
-  border-radius: 100%;
-  border: 5px outset get-color("primary");
   height: 100px;
   object-fit: cover;
   object-position: center;

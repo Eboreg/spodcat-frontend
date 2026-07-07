@@ -5,9 +5,19 @@ export default function useResponsiveSize(
   breakpointSizes?: MaybeRefOrGetter<BreakpointSizesArg | undefined>,
 ) {
   const { breakpoint } = useResponsiveBreakpoint();
+
+  const normalizedArg = () => {
+    const b = toValue(breakpointSizes);
+
+    if (typeof b === "number" || typeof b === "string") {
+      return { xs: b };
+    }
+    if (b === undefined) return {};
+    return b;
+  };
+
   const size = computed(() => {
-    const bValue = toValue(breakpointSizes);
-    const b = typeof bValue === "number" ? { xs: bValue } : bValue === undefined ? {} : bValue;
+    const b = normalizedArg();
 
     switch (breakpoint.value.key) {
       case "xs":
@@ -24,7 +34,12 @@ export default function useResponsiveSize(
         return b.xxl ?? b.xl ?? b.lg ?? b.md ?? b.sm ?? b.xs;
     }
   });
-  const sizeString = computed(() => (size.value !== undefined ? `${size.value}px` : undefined));
+
+  const sizeString = computed(() => {
+    if (typeof size.value === "string") return size.value;
+    if (typeof size.value === "number") return `${size.value}px`;
+    return undefined;
+  });
 
   return { size, sizeString };
 }

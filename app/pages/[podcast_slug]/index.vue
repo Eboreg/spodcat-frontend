@@ -22,7 +22,7 @@ ping(`v2/podcasts/${slug}/ping/`);
 <template>
   <PodcastMain>
     <template #before>
-      <div class="dashed-border before" v-if="podcast?.description_html">
+      <div v-if="podcast?.description_html" class="dashed-border before">
         <div class="podcast-description bg p-single" v-html="podcast.description_html" />
       </div>
     </template>

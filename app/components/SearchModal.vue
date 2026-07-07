@@ -1,20 +1,18 @@
 <script setup lang="ts">
+import type { PartialEpisodePolymorphicModel, PartialPostPolymorphicModel } from "@/types/api";
 import { FileText, Podcast, Search } from "@lucide/vue";
 import { getLocaleDateString, modulo } from "@/utils";
-import type { PartialEpisodePolymorphicModel, PartialPostPolymorphicModel } from "@/types/api";
 import { podcastKey } from "~/symbols";
 
 const isOpen = defineModel<boolean>();
 const { t } = useI18n();
 const router = useRouter();
-const term = ref<string>("");
-const isLoading = ref<boolean>(false);
-const results = ref<(PartialEpisodePolymorphicModel | PartialPostPolymorphicModel)[]>([]);
-const activeIdx = ref<number>(0);
+const term = shallowRef<string>("");
+const isLoading = shallowRef<boolean>(false);
+const results = shallowRef<(PartialEpisodePolymorphicModel | PartialPostPolymorphicModel)[]>([]);
+const activeIdx = shallowRef<number>(0);
 const showMinCharsText = computed(() => term.value.length > 0 && term.value.length < 3);
-const showEmptyResultText = computed(
-  () => term.value.length >= 3 && results.value.length === 0 && !isLoading.value,
-);
+const showEmptyResultText = computed(() => term.value.length >= 3 && results.value.length === 0 && !isLoading.value);
 const podcast = inject(podcastKey);
 
 watchEffect(async (onCleanup) => {
@@ -68,32 +66,32 @@ function onKeyDown(event: KeyboardEvent) {
 </script>
 
 <template>
-  <Modal @keydown="onKeyDown" v-model="isOpen">
+  <Modal v-model="isOpen" @keydown="onKeyDown">
     <template #header>
       <div class="row align-center">
-        <SpodcatIcon :icon="Search" :size="25" class="p-half" theme="boring-inverse" />
-        <input type="search" v-model="term" autofocus class="search-input" />
+        <SpodcatIcon :icon="Search" :size="25" class="p-half" theme="boring" />
+        <input v-model="term" type="search" autofocus class="search-input">
       </div>
     </template>
 
     <template #default>
-      <div v-if="showMinCharsText" class="px-single pb-half text-sm text-boring-inverse">
+      <div v-if="showMinCharsText" class="px-single pb-half font-size-sm text-boring">
         {{ t("enter-min-3-chars") }}
       </div>
-      <div v-if="showEmptyResultText" class="px-single pb-half text-sm text-boring-inverse">
+      <div v-if="showEmptyResultText" class="px-single pb-half font-size-sm text-boring">
         {{ t("no-search-results") }}
       </div>
       <Loading v-if="isLoading" height="54px" />
       <div class="search-results">
         <NuxtLink
           v-for="(result, index) in results"
-          :class="{ active: index === activeIdx }"
           :key="index"
+          :class="{ active: index === activeIdx }"
           :to="`/${result.podcast}/${result.resourcetype}/${result.slug}`"
+          class="search-result d-block py-half px-single border-radius-md"
+          tabindex="0"
           @click="isOpen = false"
           @focus="activeIdx = index"
-          class="search-result d-block py-half px-single border-radius"
-          tabindex="0"
         >
           <div class="row align-center gap-single">
             <SpodcatIcon v-if="result.resourcetype === 'episode'" :icon="Podcast" :size="24" />
@@ -113,7 +111,7 @@ function onKeyDown(event: KeyboardEvent) {
 
 <style scoped lang="scss">
 .breadcrumbs {
-  color: var(--spod-text-color-dark);
+  color: var(--spod-text-color-on-dark-variant);
   font-size: 13px;
 }
 
@@ -124,7 +122,7 @@ function onKeyDown(event: KeyboardEvent) {
 .search-input {
   background-color: transparent;
   border: none;
-  color: var(--spod-text-color);
+  color: var(--spod-text-color-on-dark);
   font-family: var(--spod-font-family);
   font-size: var(--spod-font-size-body);
   height: 44px;
@@ -134,11 +132,11 @@ function onKeyDown(event: KeyboardEvent) {
 
 .search-result {
   &.active {
-    background-color: var(--spod-theme-primary-dark);
+    background-color: var(--spod-color-primary-normal);
   }
 
   &:hover:not(.active) {
-    background-color: var(--spod-theme-boring-dark);
+    background-color: var(--spod-color-boring-dark);
   }
 }
 

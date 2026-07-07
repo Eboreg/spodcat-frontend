@@ -1,14 +1,16 @@
 <script setup lang="ts">
 import type { SpodcatIconProps } from "./SpodcatIcon.vue";
+import useTheme from "~/composables/useTheme";
 
 interface Props extends Omit<SpodcatIconProps, "icon" | "iconSize"> {}
 
-defineProps<Props>();
+const props = defineProps<Props>();
+const { themeClasses } = useTheme(toRef(props));
 </script>
 
 <template>
-  <ResponsiveSize :element :size="size ?? 24" attribute="size">
-    <div class="round-icon" :class="`theme-${theme ?? 'primary'}`">
+  <ResponsiveSize :sized-element="element" :size="size ?? 24" attribute="size">
+    <div class="round-icon border-sm border-radius-100" :class="themeClasses">
       <slot />
     </div>
   </ResponsiveSize>
@@ -17,7 +19,6 @@ defineProps<Props>();
 <style scoped lang="scss">
 .round-icon {
   align-items: center;
-  border-radius: 100%;
   border-style: outset;
   display: flex;
   flex: 0 0 auto;

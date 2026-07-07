@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { detectLocale, ping, timeToString } from "@/utils";
 import type { EpisodeSongModel } from "@/types/api";
 import { podcastSlugKey } from "@/symbols";
+import { detectLocale, ping, timeToString } from "@/utils";
 import useAudioStore from "~/composables/useAudioStore";
-import useSpodcatHead from "~/composables/useSpodcatHead";
 import useEpisode from "~/composables/useEpisode";
 import usePodcast from "~/composables/usePodcast";
+import useSpodcatHead from "~/composables/useSpodcatHead";
 
 function getSongDisplayString(song: EpisodeSongModel): string {
   let result = "";
@@ -30,8 +30,7 @@ provide(podcastSlugKey, podcastSlug);
 useSpodcatHead({ podcast, episode });
 
 watchEffect(() => {
-  if (episode.value && podcast.value && !audio.isPlaying)
-    audio.setEpisode(episode.value, podcast.value);
+  if (episode.value && podcast.value && !audio.isPlaying) audio.setEpisode(episode.value, podcast.value);
 });
 
 watchEffect(() => {
@@ -49,11 +48,11 @@ watchEffect(() => {
     <EpisodeCard :episode expand>
       <ContentDescription :content="episode">
         <ClientOnly>
-          <div v-if="episode?.has_songs" class="text-article">
+          <div v-if="episode?.has_songs" class="font-size-article">
             <h2>{{ t("songs") }}</h2>
             <div v-for="song in episode.songs" :key="song.id" class="episode-song my-half">
               <span @click="audio.playEpisode(episode, podcast, song.start_time)">
-                <span class="text-boring-inverse-dark pr-half">
+                <span class="text-boring pr-half">
                   {{ timeToString(song.start_time) }}
                 </span>
                 <span>{{ getSongDisplayString(song) }}</span>

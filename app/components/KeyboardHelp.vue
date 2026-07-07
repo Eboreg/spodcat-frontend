@@ -2,7 +2,7 @@
 import { ArrowLeft, ArrowRight, Keyboard } from "@lucide/vue";
 
 const { t } = useI18n();
-const isPopupOpen = ref<boolean>(false);
+const isPopupOpen = shallowRef<boolean>(false);
 const container = useTemplateRef("container");
 
 onClickOutside(container, () => (isPopupOpen.value = false));
@@ -14,10 +14,12 @@ onClickOutside(container, () => (isPopupOpen.value = false));
       :icon="Keyboard"
       :size="30"
       :title="t('keyboard.shortcuts')"
-      @click="isPopupOpen = !isPopupOpen"
-      class="hover-light p-half button-press"
+      class="p-half on-press-translate"
       element="button"
-      theme="boring-inverse"
+      lighten-on-hover
+      theme="boring"
+      theme-variant="light"
+      @click="isPopupOpen = !isPopupOpen"
     />
 
     <Popup v-if="isPopupOpen" class="gap-half p-single">
@@ -60,7 +62,7 @@ onClickOutside(container, () => (isPopupOpen.value = false));
   align-items: center;
   background: linear-gradient(to right top, #444, #666);
   border-color: #666;
-  border-radius: var(--spod-border-radius);
+  border-radius: var(--spod-border-radius-md);
   border-style: outset;
   border-width: 2px 5px 5px 2px;
   display: flex;

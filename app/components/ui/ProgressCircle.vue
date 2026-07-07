@@ -1,22 +1,29 @@
 <script setup lang="ts">
-const props = defineProps<{
-  innerDuration?: number;
-  outerDuration?: number;
-  size?: number;
-  strokeWidth?: number;
-}>();
-const innerDuration = computed(() => `${props.innerDuration ?? 1.5}s`);
-const outerDuration = computed(() => `${props.outerDuration ?? 2}s`);
-const size = computed(() => (props.size ? `${props.size}px` : "initial"));
-const strokeWidth = computed(() => `${props.strokeWidth ?? 8}px`);
+import type { BreakpointSizesArg } from "~/types";
+
+type Props = {
+  innerDuration?: string;
+  outerDuration?: string;
+  size?: BreakpointSizesArg;
+  stroke?: string;
+  strokeWidth?: string;
+};
+
+const props = withDefaults(defineProps<Props>(), {
+  innerDuration: "1.5s",
+  outerDuration: "2s",
+  stroke: "var(--spod-color-boring-light)",
+  strokeWidth: "8px",
+});
+const stroke = computed(() => props.stroke ?? "var(--spod-color-boring-light)");
 </script>
 
 <template>
-  <div class="progress-circle">
+  <ResponsiveSize :size="size ?? 'initial'" class="progress-circle" attribute="size">
     <svg class="progress-circle-outer" viewBox="25 25 50 50">
       <circle class="progress-circle-stroke" cx="50" cy="50" r="20" fill="none" />
     </svg>
-  </div>
+  </ResponsiveSize>
 </template>
 
 <style scoped lang="scss">
@@ -42,9 +49,7 @@ const strokeWidth = computed(() => `${props.strokeWidth ?? 8}px`);
 }
 
 .progress-circle {
-  height: v-bind(size);
   line-height: 1;
-  width: v-bind(size);
 }
 
 .progress-circle-outer {
@@ -63,6 +68,6 @@ const strokeWidth = computed(() => `${props.strokeWidth ?? 8}px`);
   stroke-dasharray: 10, 10;
   stroke-linecap: round;
   stroke-width: v-bind(strokeWidth);
-  stroke: var(--spod-theme-boring-inverse-normal);
+  stroke: v-bind(stroke);
 }
 </style>

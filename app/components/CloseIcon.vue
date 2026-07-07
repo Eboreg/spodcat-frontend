@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { X } from "@lucide/vue";
 import type { BreakpointSizesArg } from "~/types";
-
-const { t } = useI18n();
+import { X } from "@lucide/vue";
 
 defineProps<{ size?: BreakpointSizesArg }>();
+
+const { t } = useI18n();
 </script>
 
 <template>
@@ -12,8 +12,10 @@ defineProps<{ size?: BreakpointSizesArg }>();
     :icon="X"
     :size="size ?? 20"
     :title="t('close')"
-    class="hover-light button-press"
+    class="on-press-translate"
     element="button"
-    theme="boring-inverse"
+    theme="boring"
+    theme-variant="light"
+    lighten-on-hover
   />
 </template>

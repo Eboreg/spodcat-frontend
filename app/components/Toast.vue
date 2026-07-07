@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { Frown } from "@lucide/vue";
 import type { Offsets } from "@/types";
-import useMessageStore, { type PlacedToast } from "~/composables/useMessageStore";
+import type { PlacedToast } from "~/composables/useMessageStore";
+import { Frown } from "@lucide/vue";
+import useMessageStore from "~/composables/useMessageStore";
+import useTheme from "~/composables/useTheme";
 import useTransitions from "~/composables/useTransitions";
 
 const props = defineProps<{ toast: PlacedToast }>();
@@ -10,6 +12,7 @@ const container = useTemplateRef("container");
 const countdownElement = useTemplateRef("countdown");
 const messageStore = useMessageStore();
 const isAnimationActive = computed(() => placedToast.timeout > 0);
+const { themeClasses } = useTheme({ theme: placedToast.level });
 
 const offsets: ComputedRef<Offsets> = computed(() => ({
   bottom: placedToast.bottomOffset + 10,
@@ -50,33 +53,32 @@ const {
   },
 );
 
-watch([height, width], ([h, w]) =>
-  messageStore.onToastSizeChange(placedToast.id, { width: w, height: h }),
-);
+watch([height, width], ([h, w]) => messageStore.onToastSizeChange(placedToast.id, { width: w, height: h }));
 </script>
 
 <template>
   <div
     ref="container"
-    :class="`toast column border-radius pt-quarter theme-${placedToast.level}`"
+    class="toast column border-radius-md border-outset"
+    :class="themeClasses"
     @mouseenter="if (transitionState !== 'created' && isAnimationActive) pauseAnimation();"
     @mouseleave="if (isAnimationActive) playAnimation();"
   >
-    <div class="row">
-      <SpodcatIcon v-if="icon" :icon class="toast-icon p-half" :size="30" />
-      <div class="toast-text fill" v-html="placedToast.text" />
-      <CloseIcon @click="finishAnimation" class="toast-close-icon p-half" />
+    <div class="row gap-single px-single py-half">
+      <SpodcatIcon v-if="icon" :icon class="toast-icon" :size="30" />
+      <div class="fill" v-html="placedToast.text" />
+      <CloseIcon @click="finishAnimation" />
     </div>
-    <div ref="countdown" :class="`toast-countdown bg-${placedToast.level}-dark`" />
+    <div ref="countdown" :class="`toast-countdown bg-${placedToast.level} dark`" />
   </div>
 </template>
 
 <style scoped lang="scss">
 .toast {
   border-left-width: 0;
-  border-style: outset;
   border-top-width: 0;
   overflow: hidden;
+  padding-top: 5px;
   position: absolute;
   transition-duration: 300ms;
   transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
@@ -91,9 +93,5 @@ watch([height, width], ([h, w]) =>
 
 .toast-icon {
   align-self: center;
-}
-
-.toast-text {
-  padding: 11px var(--spod-length-half);
 }
 </style>

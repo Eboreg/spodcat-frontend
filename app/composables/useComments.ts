@@ -7,7 +7,7 @@ export default function useComments(contentId: MaybeRefOrGetter<string | undefin
     enabled: () => !!toValue(contentId),
   });
   const { challenge, resetChallenge } = useChallenge();
-  const isSubmitting = ref<boolean>(false);
+  const isSubmitting = shallowRef<boolean>(false);
 
   async function postComment(name: string, text: string, challengeAnswer: string | number) {
     const _contentId = toValue(contentId);

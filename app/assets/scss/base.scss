@@ -1,9 +1,56 @@
-$variant-suffixes: (
-  "normal": "",
-  "dark": "-dark",
-  "light": "-light",
-);
+@use "sass:map";
+@use "sass:list";
+@use "variables" as *;
+@use "color" as *;
+@use "responsive" as *;
 
+/**
+ * Produces for THEME in [primary, secondary, tertiary, boring, error, info,
+ * success]:
+ *
+ * .theme-THEME: whiteish text, red background, darker red border
+ *   &.dark: same but darker variant
+ *   &.light: same but lighter variant, with blackish text
+ */
+@each $tname, $theme in $color-themes {
+  .theme-#{$tname} {
+    &:not(.transparent) {
+      &.diagonal-bg {
+        @include themed("border-color", $theme, -0.2);
+        @include themed-diagonal-background($theme) using ($variant) {
+          color: map.get($text-colors, "on-#{$variant}");
+        }
+      }
+      &:not(.diagonal-bg) {
+        @include themed(("background-color", "border-color"), $theme, (0, -0.2)) using ($variant) {
+          color: map.get($text-colors, "on-#{$variant}");
+        }
+      }
+    }
+    &.transparent {
+      @include themed(("color", "border-color"), $theme, (0, -0.2));
+    }
+  }
+
+  .bg-#{$tname} {
+    @include themed("background-color", $theme, 0, true);
+  }
+
+  .border-#{$tname} {
+    border-style: solid;
+    @include themed("border-color", $theme, 0, true);
+  }
+
+  .diagonal-bg-#{$tname} {
+    @include themed-diagonal-background($theme, true);
+  }
+
+  .text-#{$tname} {
+    @include themed("color", $theme, 0, true);
+  }
+}
+
+/** Produces .d-flex, .d-lg-none, etc. */
 @each $size in add-empty(map.keys($min-sizes)) {
   @include minsize(#{$size}) {
     @each $variant in (none, block, flex) {
@@ -14,64 +61,72 @@ $variant-suffixes: (
   }
 }
 
-@each $theme, $theme-variants in $color-themes {
-  @each $variant-name, $variant-suffix in $variant-suffixes {
-    .bg-#{$theme}#{$variant-suffix} {
-      @include themed("background-color", $theme-variants, $variant-name);
-    }
-    .border-#{$theme}#{$variant-suffix} {
-      border-style: solid;
-      border-width: 2px;
-      @include themed("border-color", $theme-variants, $variant-name);
-    }
-    .text-#{$theme}#{$variant-suffix} {
-      @include themed("color", $theme-variants, $variant-name);
-    }
-    .theme-#{$theme}#{$variant-suffix} {
-      border-width: 2px;
-      color: #{map.get($theme-variants, "on")};
-      @include themed("background-color", $theme-variants, $variant-name);
-      @include themed("border-color", $theme-variants, $variant-name);
-    }
+/** Produces .border-xs, ..., .border-lg */
+@each $wname, $wvalue in $border-widths {
+  .border-#{$wname} {
+    border-style: solid;
+    border-width: #{$wvalue} !important;
   }
 }
 
+@each $brname, $brvalue in $border-radii {
+  .border-radius-#{$brname} {
+    border-radius: #{$brvalue} !important;
+  }
+}
+
+@each $fsize-name, $fsize in $font-sizes {
+  .font-size-#{$fsize-name} {
+    font-size: #{$fsize} !important;
+  }
+}
+
+/** Produces .gap-quarter, .gap-sm-half, etc. */
 @include sized-property("gap", "gap");
 @include sized-property("row-gap", "row-gap");
 @include sized-property("column-gap", "column-gap");
-@include sized-property-extended("p", "padding");
-@include sized-property-extended("m", "margin");
+
+/** Produces .p-single, .p-sm-half, .px-lg-quarter, etc. */
+@include sized-property-multidim("p", "padding");
+@include sized-property-multidim("m", "margin");
 
 :root {
-  --spod-background-color-opaque: #{$background-color-opaque};
-  --spod-background-color: #{$background-color};
-  --spod-body-background: #{$body-background};
-  --spod-border-radius: #{$border-radius};
+  --spod-background-color-opaque: #{map.get($background-colors, "opaque")};
+  --spod-background-color: #{map.get($background-colors, "default")};
+  --spod-body-background: #{map.get($background-colors, "body")};
   --spod-content-width: #{$content-width};
-  --spod-dotted-border-width: #{map.get($lengths, "quarter")};
   --spod-font-family: #{$font-family};
-  --spod-font-size-article: #{$font-size-article};
-  --spod-font-size-body: #{$font-size-body};
-  --spod-font-size-lg: #{$font-size-lg};
-  --spod-font-size-sm: #{$font-size-sm};
-  --spod-font-size-xs: #{$font-size-xs};
-  --spod-modal-top-margin: 4rem;
   --spod-modal-width: #{$modal-width};
   --spod-player-bar-height: #{$player-bar-height};
   --spod-player-transition-duration: #{$player-transition-duration};
-  --spod-podcast-banner-background-1: #{$podcast-banner-background-1};
-  --spod-podcast-banner-background-2: #{$podcast-banner-background-2};
-  --spod-text-color-dark: #{$text-color-dark};
-  --spod-text-color: #{$text-color};
+  --spod-podcast-banner-background-1: #{map.get($background-colors, "podcast-banner-1")};
+  --spod-podcast-banner-background-2: #{map.get($background-colors, "podcast-banner-2")};
+  --spod-spodcat-blue: #{$spodcat-blue};
+  --spod-spodcat-yellow: #{$spodcat-yellow};
   --spod-toast-width: #{$toast-width};
+
+  --spod-dotted-border-width: #{map.get($lengths, "quarter")};
+  --spod-modal-top-margin: 4rem;
+  @include minsize(sm) {
+    --spod-dotted-border-width: #{map.get($lengths, "half")};
+    --spod-modal-top-margin: 8rem;
+  }
+
+  @each $fsname, $fsvalue in $font-sizes {
+    --spod-font-size-#{$fsname}: #{$fsvalue};
+  }
+
+  @each $cname, $color in $text-colors {
+    --spod-text-color-#{$cname}: #{$color};
+  }
 
   @each $lname, $length in $lengths {
     --spod-length-#{$lname}: #{$length};
   }
 
-  @each $tname, $theme in $color-themes {
-    @each $cname, $color in $theme {
-      --spod-theme-#{$tname}-#{$cname}: #{$color};
+  @each $theme-name, $theme in $color-themes {
+    @each $variant, $color in $theme {
+      --spod-color-#{$theme-name}-#{$variant}: #{$color};
     }
   }
 
@@ -79,9 +134,12 @@ $variant-suffixes: (
     --spod-zindex-#{$zname}: #{$zvalue};
   }
 
-  @include minsize(sm) {
-    --spod-dotted-border-width: #{map.get($lengths, "half")};
-    --spod-modal-top-margin: 8rem;
+  @each $wname, $wvalue in $border-widths {
+    --spod-border-width-#{$wname}: #{$wvalue};
+  }
+
+  @each $brname, $brvalue in $border-radii {
+    --spod-border-radius-#{$brname}: #{$brvalue};
   }
 }
 
@@ -97,7 +155,7 @@ a {
 body {
   background-attachment: fixed !important;
   background: var(--spod-body-background);
-  color: var(--spod-text-color);
+  color: var(--spod-text-color-on-dark);
   font-family: var(--spod-font-family);
   font-size: var(--spod-font-size-body);
   margin: 0;
@@ -116,8 +174,8 @@ button {
   border: unset;
   color: unset;
   cursor: pointer;
-  font-family: unset;
-  font-size: unset;
+  font-family: inherit;
+  font-size: inherit;
   padding: unset;
 }
 
@@ -141,53 +199,41 @@ main {
 
 textarea:disabled,
 input:disabled {
+  // Otherwise, at least Firefox makes it an illegible gray-on-gray
   background-color: darkgray;
   color: black;
 }
 
 .align-baseline {
-  align-items: baseline;
+  align-items: baseline !important;
 }
 
 .align-center {
-  align-items: center;
+  align-items: center !important;
 }
 
 .align-end {
-  align-items: flex-end;
+  align-items: flex-end !important;
 }
 
 .align-start {
-  align-items: flex-start;
-}
-
-.badge {
-  border-radius: var(--spod-border-radius);
-  border-style: outset;
-  border-width: 2px;
-  font-size: var(--spod-font-size-xs);
-  font-weight: bold;
-  padding: 0 2px;
+  align-items: flex-start !important;
 }
 
 .bg {
-  background-color: var(--spod-background-color);
+  background-color: var(--spod-background-color) !important;
 }
 
 .bg-opaque {
-  background-color: var(--spod-background-color-opaque);
+  background-color: var(--spod-background-color-opaque) !important;
 }
 
-.border-radius {
-  border-radius: var(--spod-border-radius);
+.border-outset {
+  border-style: outset !important;
 }
 
 .box-shadow {
   box-shadow: 1px 1px 3px var(--spod-background-color);
-}
-
-.button-press:active:not(.loading):not(.disabled) {
-  translate: 1px 1px;
 }
 
 .column {
@@ -242,6 +288,19 @@ input:disabled {
   white-space: nowrap;
 }
 
+.on-disabled-darken.disabled {
+  filter: brightness(0.8) grayscale(0.5);
+}
+
+.on-hover-lighten:hover:not(.disabled),
+.on-active-lighten:active:not(.disabled) {
+  filter: brightness(1.3);
+}
+
+.on-press-translate:active:not(.loading):not(.disabled) {
+  translate: 1px 1px;
+}
+
 .outlined-text {
   text-shadow:
     min(-1px, -0.02em) min(-1px, -0.02em) 0.02em black,
@@ -259,7 +318,7 @@ input:disabled {
 }
 
 .primary-top-border {
-  border-top: 5px solid get-color("primary");
+  border-top: var(--spod-border-width-md) solid get-color("primary");
 }
 
 .row {
@@ -278,22 +337,6 @@ input:disabled {
 
 .space-between {
   justify-content: space-between;
-}
-
-.text-article {
-  font-size: var(--spod-font-size-article);
-}
-
-.text-sm {
-  font-size: var(--spod-font-size-sm);
-}
-
-.text-xs {
-  font-size: var(--spod-font-size-xs);
-}
-
-.text-lg {
-  font-size: var(--spod-font-size-lg);
 }
 
 .wrap {

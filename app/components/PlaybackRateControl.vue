@@ -3,7 +3,7 @@ import { Check, CircleGauge } from "@lucide/vue";
 import useAudioStore from "~/composables/useAudioStore";
 
 const { t } = useI18n();
-const popupVisible = ref<boolean>(false);
+const popupVisible = shallowRef<boolean>(false);
 const audio = useAudioStore();
 const container = useTemplateRef("container");
 const playbackRates = [
@@ -26,27 +26,30 @@ onClickOutside(container, () => (popupVisible.value = false));
 </script>
 
 <template>
-  <div class="pos-relative" ref="container">
+  <div ref="container" class="pos-relative">
     <SpodcatIcon
       :icon="CircleGauge"
       :size="30"
-      :theme="audio.rate === 1 ? 'boring-inverse' : 'primary'"
+      :theme="audio.rate === 1 ? 'boring' : 'primary'"
+      :theme-variant="audio.rate === 1 ? 'light' : undefined"
       :title="
         t('change-playback-rate-x', {
           x: playbackRates.find((r) => r.rate === audio.rate)?.label,
         })
       "
-      @click="popupVisible = !popupVisible"
-      class="hover-light p-half button-press"
+      class="p-half on-press-translate"
       element="button"
+      lighten-on-hover
+      @click="popupVisible = !popupVisible"
     />
-    <Popup class="pb-half" v-if="popupVisible">
+
+    <Popup v-if="popupVisible" class="pb-half">
       <div class="popup-header">{{ t("playback-rate") }}</div>
       <button
         v-for="rate in playbackRates"
         :key="rate.rate"
-        @click="onRateClick(rate.rate)"
         class="pt-half pr-single pb-quarter pl-half gap-half align-center cursor-pointer d-flex"
+        @click="onRateClick(rate.rate)"
       >
         <div class="popup-row-check align-center d-flex">
           <SpodcatIcon v-if="rate.rate === audio.rate" :icon="Check" :size="16" />

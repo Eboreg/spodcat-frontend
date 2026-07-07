@@ -9,7 +9,6 @@
     "comments": "Kommentarer",
     "leave-a-comment": "Lämna en kommentar",
     "send": "Skicka",
-    "something-wrong": "Någonting gick snett.",
     "thanks": {
       "approval-required": "Tackar! Din kommentar kommer att visas när den godkänts.",
       "no-approval-required": "Tackar för din kommentar."
@@ -61,6 +60,7 @@
     "whatsapp": "Whatsapp"
   },
   "site-made-by": "Webbsidan tillverkades av",
+  "something-wrong": "Någonting gick snett. Undrar vad?",
   "songs": "Låtar",
   "spodcat-subtitle": "Hej, detta är en podcastplattform. Välj en podd:",
   "subscribe": "Prenumerera",

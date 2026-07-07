@@ -16,25 +16,22 @@ const titlesRoute = computed(() => {
 <template>
   <div class="player-bar bg-opaque primary-top-border px-half">
     <div class="row align-center">
-      <MaybeLink
-        class="row gap-single align-center episode overflow-x-hidden nowrap cursor-pointer"
-        :to="titlesRoute"
-      >
+      <MaybeLink class="row gap-single align-center episode overflow-x-hidden nowrap cursor-pointer" :to="titlesRoute">
         <EpisodeRoundIcon :episode="audio.episode" :podcast="audio.podcast" fallback-to-cover />
         <div class="overflow-x-hidden column gap-quarter">
           <HorizontalScroll>{{ audio.episode?.name }}</HorizontalScroll>
-          <HorizontalScroll class="text-xs">{{ audio.episode?.podcast_name }}</HorizontalScroll>
+          <HorizontalScroll class="font-size-xs">{{ audio.episode?.podcast_name }}</HorizontalScroll>
         </div>
       </MaybeLink>
 
-      <ProgressCircle v-if="audio.isLoading" class="p-half" :size="30" :stroke-width="6" />
+      <ProgressCircle v-if="audio.isLoading" class="p-half" :size="30" stroke-width="6" />
       <PlayButton v-else :size="30" />
 
       <div class="row align-center d-none d-xl-flex fill">
         <div class="row align-center gap-half fill">
-          <div class="text-xs time-string">{{ timeToString(audio.currentTime) }}</div>
-          <DbfsBar v-if="audio.episode" :episode="audio.episode" class="fill" />
-          <div class="text-xs time-string">
+          <div class="font-size-xs time-string">{{ timeToString(audio.currentTime) }}</div>
+          <DbfsBar v-if="audio.episode" :episode="audio.episode" class="fill" margin-x=".5rem" />
+          <div class="font-size-xs time-string">
             {{ timeToString(audio.duration) }}
           </div>
         </div>
@@ -48,6 +45,8 @@ const titlesRoute = computed(() => {
 </template>
 
 <style scoped lang="scss">
+@use "@/assets/scss/_responsive.scss" as *;
+
 .player-bar > .row {
   height: var(--spod-player-bar-height);
 }

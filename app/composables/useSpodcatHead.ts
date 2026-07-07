@@ -1,12 +1,12 @@
-import type { EpisodeModel, PodcastModel, PostModel } from "@/types/api";
 import type { ResolvableLink, ResolvableMeta } from "@unhead/vue";
-import { extractImageUrlsFromMarkdown } from "~/utils";
+import type { EpisodeModel, PodcastModel, PostModel } from "@/types/api";
 import { SPODCAT_FAVICON, SPODCAT_LOGO } from "~/constants";
+import { extractImageUrlsFromMarkdown } from "~/utils";
 
 function stripDescription(description: string): string {
   return description
-    .replaceAll(/!\[.*?]\(.*?\)\s*/g, "") // remove image tags completely
-    .replaceAll(/\[(.*?)]\(.*?\)/g, "$1") // replace links with link text only
+    .replaceAll(/!\[.*?\]\(.*?\)\s*/g, "") // remove image tags completely
+    .replaceAll(/\[(.*?)\]\(.*?\)/g, "$1") // replace links with link text only
     .replaceAll(/\s+/g, " ") // replace all whitespace sequences with single spaces
     .trim();
 }

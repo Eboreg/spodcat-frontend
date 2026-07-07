@@ -10,9 +10,10 @@ const props = defineProps<{
   expand?: boolean;
   route?: string;
 }>();
-const runtimeConfig = useRuntimeConfig();
 const emit = defineEmits<{ shareModalOpen: [] }>();
-const showShareModal = ref<boolean>(false);
+
+const runtimeConfig = useRuntimeConfig();
+const showShareModal = shallowRef<boolean>(false);
 const absoluteUrl = computed(() => {
   if (props.route) return new URL(props.route, runtimeConfig.public.frontendHost).toString();
   return undefined;
@@ -34,46 +35,36 @@ function openShareModal() {
       <Loading v-if="!content" height="120px" />
 
       <div v-else class="row">
-        <MaybeLink
-          :no-link="expand"
-          :to="route"
-          class="row align-center gap-single p-single fill"
-          element="div"
-        >
-          <div class="icon-wrapper">
-            <slot name="icon" />
-          </div>
+        <MaybeLink is="div" :no-link="expand" :to="route" class="row align-center gap-single p-single fill">
+          <slot name="icon" />
 
           <div class="row fill column-gap-single row-gap-half" :class="{ wrap: expand }">
             <div class="fill column gap-quarter">
               <div class="font-weight-bold">{{ content.name }}</div>
               <div class="row column-gap-half row-gap-quarter wrap">
-                <div class="badge theme-secondary">
+                <Badge theme="secondary">
                   {{ getLocaleDateString(content.published, podcast?.language) }}
-                </div>
+                </Badge>
 
                 <slot name="badges" />
               </div>
             </div>
-
-            <div v-if="expand" class="row align-center gap-half">
-              <SpodcatIcon
-                v-if="absoluteUrl"
-                :icon-size="30"
-                :icon="Share2"
-                :size="40"
-                :title="t('share.share')"
-                @click="openShareModal"
-                class="hover-light hover-border"
-                element="button"
-                theme="secondary"
-              />
-              <slot name="head-end" />
-            </div>
           </div>
         </MaybeLink>
 
-        <div v-if="!expand" class="row align-center gap-half pr-single">
+        <div class="row align-center gap-half pr-single">
+          <SpodcatIcon
+            v-if="absoluteUrl && expand"
+            :icon-size="30"
+            :icon="Share2"
+            :size="40"
+            :title="t('share.share')"
+            class="on-hover-border"
+            element="button"
+            lighten-on-hover
+            text-theme="secondary"
+            @click="openShareModal"
+          />
           <slot name="head-end" />
         </div>
       </div>
@@ -82,16 +73,11 @@ function openShareModal() {
     </div>
   </div>
 
-  <ShareModal
-    v-if="absoluteUrl && showShareModal"
-    :current-timestamp
-    :url="absoluteUrl"
-    v-model="showShareModal"
-  />
+  <ShareModal v-if="absoluteUrl && showShareModal" v-model="showShareModal" :current-timestamp :url="absoluteUrl" />
 </template>
 
 <style scoped lang="scss">
-.icon-wrapper {
+:slotted(.content-round-icon) {
   align-self: flex-start;
   flex: 0 0 auto;
 }

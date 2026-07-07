@@ -16,6 +16,8 @@ const podcast = inject(podcastKey);
 </template>
 
 <style scoped lang="scss">
+@use "@/assets/scss/_responsive.scss" as *;
+
 main {
   display: grid;
   grid-template-areas: "header" "before" "aside" "content";

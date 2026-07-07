@@ -1,14 +1,14 @@
 <script setup lang="ts">
+defineProps<{ height?: string }>();
+
 const outer = useTemplateRef("outer");
 const { height: actualHeight } = useElementSize(outer);
 const actualHeightString = computed(() => `${actualHeight.value}px`);
 const { t } = useI18n();
-
-defineProps<{ height?: string }>();
 </script>
 
 <template>
-  <div ref="outer" class="loading outer">
+  <div ref="outer" class="loading outer border-radius-md">
     <div class="inner-frame"><div class="inner-colors" /></div>
     <div class="text">{{ t("loading") }}</div>
   </div>
@@ -52,7 +52,6 @@ defineProps<{ height?: string }>();
 
 .outer {
   align-items: center;
-  border-radius: var(--spod-length-quarter);
   display: flex;
   height: v-bind(height);
   justify-content: center;
@@ -91,11 +90,11 @@ defineProps<{ height?: string }>();
   animation-timing-function: ease-in-out;
   background-image: linear-gradient(
     90deg,
-    #{$spodcat-yellow}00,
+    rgb(from var(--spod-spodcat-yellow) r g b / 0),
     #f33 25%,
     #33d 50%,
     #f33 75%,
-    #{$spodcat-yellow}00 100%
+    rgb(from var(--spod-spodcat-yellow) r g b / 0) 100%
   );
   height: 100%;
 }

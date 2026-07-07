@@ -11,7 +11,7 @@ const props = withDefaults(defineProps<Props>(), {
   iterations: Infinity,
 });
 const target = useTemplateRef("target");
-const overflow = ref<number>(0);
+const overflow = shallowRef<number>(0);
 const keyframes = computed(() => [
   { right: "0px", offset: 0 },
   { right: "0px", offset: 0.25 },
@@ -22,8 +22,7 @@ const { play, finish } = useAnimate(target, keyframes, props);
 
 useResizeObserver(target, ([entry]) => {
   if (entry) {
-    const _overflow = entry.target.scrollWidth - entry.contentRect.width;
-    overflow.value = Math.max(_overflow, 0);
+    overflow.value = Math.max(entry.target.scrollWidth - entry.contentRect.width, 0);
   }
 });
 
@@ -34,15 +33,21 @@ watch(overflow, () => {
 </script>
 
 <template>
-  <div class="nowrap outer horizontal-scroll">
-    <div class="pos-relative" ref="target">
+  <div class="outer">
+    <div ref="target" class="inner">
       <slot />
     </div>
   </div>
 </template>
 
-<style scoped lang="scss">
+<style scoped>
 .outer {
+  max-width: 100%;
   overflow-x: hidden;
+  white-space: nowrap;
+}
+
+.inner {
+  position: relative;
 }
 </style>

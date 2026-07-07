@@ -1,32 +1,37 @@
 <script setup lang="ts">
 import type { LucideIcon } from "@lucide/vue";
-import type { BreakpointSizesArg, Theme } from "@/types";
+import type { Component } from "vue";
+import type { BreakpointSizesArg, ThemedProps } from "@/types";
+import useTheme from "~/composables/useTheme";
 
-export interface SpodcatIconProps {
-  element?: string;
+export interface SpodcatIconProps extends ThemedProps {
+  element?: string | Component;
   icon: string | LucideIcon;
   iconSize?: BreakpointSizesArg;
   size?: BreakpointSizesArg;
-  theme?: Theme;
 }
 
-const props = defineProps<SpodcatIconProps>();
+const props = withDefaults(defineProps<SpodcatIconProps>(), { transparent: true });
 const iconName = computed(() => (typeof props.icon === "string" ? props.icon : undefined));
 const lucideIcon = computed(() => (typeof props.icon === "function" ? props.icon : undefined));
-const themeClass = computed(() => (props.theme ? `text-${props.theme}` : undefined));
+const attribute = computed(() => (iconName.value ? "font-size" : "size"));
 const outerSize = computed(() => props.size ?? props.iconSize ?? 24);
 const innerSize = computed(() => props.iconSize ?? props.size ?? 24);
-const attribute = computed(() => (iconName.value ? "font-size" : "size"));
+const { themeClasses } = useTheme(toRef(props));
 </script>
 
 <template>
-  <ResponsiveSize :class="themeClass" :element :size="outerSize" attribute="size" class="outer">
-    <div class="inner">
+  <ResponsiveSize :class="themeClasses" :sized-element="element" :size="outerSize" attribute="size" class="outer">
+    <div v-if="innerSize !== outerSize" class="inner">
       <ResponsiveSize :size="innerSize" :attribute>
         <Icon v-if="iconName" :name="iconName" />
-        <component v-else-if="lucideIcon" :is="lucideIcon" />
+        <component :is="lucideIcon" v-else-if="lucideIcon" />
       </ResponsiveSize>
     </div>
+    <template v-else>
+      <Icon v-if="iconName" :name="iconName" />
+      <component :is="lucideIcon" v-else-if="lucideIcon" />
+    </template>
   </ResponsiveSize>
 </template>
 
@@ -42,13 +47,13 @@ button.outer {
   display: flex;
   justify-content: center;
 }
-.hover-border:hover {
-  border-radius: 10px;
+.on-hover-border:hover {
+  border-radius: var(--spod-border-radius-xl);
   border-style: solid;
   border-width: 3px;
   margin: -3px;
 }
-.hover-border:active {
+.on-hover-border:active {
   margin: -2px -4px -4px -2px;
 }
 </style>

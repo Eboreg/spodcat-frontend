@@ -3,6 +3,8 @@ import { Copy } from "@lucide/vue";
 import { timeFromString, timeToString } from "@/utils";
 import useMessageStore from "~/composables/useMessageStore";
 
+const props = defineProps<{ url: string | URL; currentTimestamp?: number }>();
+
 function onContentUrlClick(event: Event) {
   if (event.target instanceof HTMLInputElement) event.target.select();
 }
@@ -23,17 +25,15 @@ function onCurrentTimestampStringChange() {
 
 const isOpen = defineModel<boolean>();
 const { t } = useI18n();
-const props = defineProps<{ url: string | URL; currentTimestamp?: number }>();
-const attachTimeCode = ref<boolean>(false);
-const currentTimestamp = ref<number | undefined>(props.currentTimestamp);
+const attachTimeCode = shallowRef<boolean>(false);
+const currentTimestamp = shallowRef<number | undefined>(props.currentTimestamp);
 const contentUrl = computed(() => {
   const url = props.url instanceof URL ? props.url.toString() : props.url;
 
-  if (attachTimeCode.value && currentTimestamp.value)
-    return `${url}?start=${currentTimestamp.value}`;
+  if (attachTimeCode.value && currentTimestamp.value) return `${url}?start=${currentTimestamp.value}`;
   return url;
 });
-const currentTimestampString = ref<string>(timeToString(props.currentTimestamp ?? 0));
+const currentTimestampString = shallowRef<string>(timeToString(props.currentTimestamp ?? 0));
 const messageStore = useMessageStore();
 const { addMessage, clearMessages } = messageStore;
 const messages = computed(() => messageStore.messages.filter((m) => m.type === "shareModal"));
@@ -49,62 +49,72 @@ onUnmounted(() => clearMessages("shareModal"));
     <template #default>
       <div class="column gap-single p-single">
         <div class="row gap-half align-center">
-          <input type="text" :value="contentUrl" readonly class="fill" @click="onContentUrlClick" />
+          <input type="text" :value="contentUrl" readonly class="fill" @click="onContentUrlClick">
           <SpodcatIcon
             :icon="Copy"
             :size="20"
             :title="t('share.copy-address')"
-            @click="onCopyClick"
-            class="cursor-pointer hover-light button-press"
+            class="cursor-pointer on-press-translate"
             element="button"
-            theme="boring-inverse"
+            theme="boring"
+            theme-variant="light"
+            lighten-on-hover
+            @click="onCopyClick"
           />
         </div>
         <div class="row gap-half wrap">
           <Button
             :to="`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(contentUrl)}`"
-            class="small border-boring"
+            class="small"
+            theme="boring"
+            theme-variant="dark"
             new-tab
           >
-            <Icon name="mdi:facebook" class="icon share-icon" />
+            <Icon name="mdi:facebook" class="share-icon" />
             <span class="nowrap">{{ t("share.the-facebook") }}</span>
           </Button>
           <Button
             :to="`https://x.com/intent/tweet?url=${encodeURIComponent(contentUrl)}`"
-            class="small border-boring"
+            class="small"
+            theme="boring"
+            theme-variant="dark"
             new-tab
           >
-            <Icon name="mdi:twitter" class="icon share-icon" />
+            <Icon name="mdi:twitter" class="share-icon" />
             <span class="nowrap">{{ t("share.eggs") }}</span>
           </Button>
           <Button
             :to="`https://t.me/share/url?url=${encodeURIComponent(contentUrl)}`"
-            class="small border-boring"
+            class="small"
+            theme="boring"
+            theme-variant="dark"
             new-tab
           >
-            <Icon name="mdi:telegram" class="icon share-icon" />
+            <Icon name="mdi:telegram" class="share-icon" />
             <span class="nowrap">{{ t("share.telegram") }}</span>
           </Button>
           <Button
             :to="`https://api.whatsapp.com/send?text=${encodeURIComponent(contentUrl)}`"
-            class="small border-boring"
+            class="small"
+            theme="boring"
+            theme-variant="dark"
             new-tab
           >
-            <Icon name="mdi:whatsapp" class="icon share-icon" />
+            <Icon name="mdi:whatsapp" class="share-icon" />
             <span class="nowrap">{{ t("share.whatsapp") }}</span>
           </Button>
         </div>
         <div v-if="currentTimestamp !== undefined" class="row gap-half align-center">
-          <input type="checkbox" v-model="attachTimeCode" id="attach-time-code" class="m-0" />
+          <input id="attach-time-code" v-model="attachTimeCode" type="checkbox" class="m-0">
           <div class="row gap-quarter align-baseline">
-            <label for="attach-time-code" class="text-sm">{{ t("share.start-at") }}</label>
+            <label for="attach-time-code" class="font-size-sm">{{ t("share.start-at") }}</label>
             <input
               :disabled="!attachTimeCode"
               :value="currentTimestampString"
-              @change="onCurrentTimestampStringChange"
               class="current-time-string"
               type="text"
-            />
+              @change="onCurrentTimestampStringChange"
+            >
           </div>
         </div>
       </div>
@@ -116,7 +126,7 @@ onUnmounted(() => clearMessages("shareModal"));
 <style scoped lang="scss">
 .current-time-string {
   background-color: inherit;
-  border-color: var(--spod-text-color-dark);
+  border-color: var(--spod-text-color-on-dark-variant);
   border-width: 0 0 1px 0;
   color: inherit;
   width: 70px;
@@ -126,11 +136,7 @@ onUnmounted(() => clearMessages("shareModal"));
   }
 }
 
-.button {
-  border-width: 2px;
-}
-
 .share-icon {
-  color: var(--spod-text-color-dark);
+  font-size: var(--spod-font-size-md);
 }
 </style>

@@ -1,13 +1,14 @@
 import type { EpisodeModel, PodcastModel } from "@/types/api";
+import useSeason from "@/composables/useSeason";
 import { coerceBetween, extractImageUrlsFromMarkdown } from "@/utils";
 import { SPODCAT_LOGO } from "~/constants";
-import useSeason from "@/composables/useSeason";
 
 const useAudioStore = defineStore("audio", () => {
   const audioElement = ref<HTMLAudioElement | null>();
   const episode = ref<EpisodeModel>();
   const error = shallowRef<string | undefined>();
   const errorEvent = createEventHook<string>();
+  const isSourceError = shallowRef<boolean>(false);
   const podcast = ref<PodcastModel>();
 
   const src = computed(() => {
@@ -82,10 +83,10 @@ const useAudioStore = defineStore("audio", () => {
     return mediaImages;
   });
 
-  const isError = computed(() => !!error.value);
+  const isError = computed(() => !!error.value || isSourceError.value);
 
   const isLoading = computed(
-    () => (waiting.value || seeking.value || stalled.value) && !error.value,
+    () => (waiting.value || seeking.value || stalled.value) && !error.value && !isSourceError.value,
   );
 
   const isPlaying = computed(
@@ -117,16 +118,20 @@ const useAudioStore = defineStore("audio", () => {
   onPlaybackError((event) => {
     const message = (event as any).message as string | undefined;
     errorEvent.trigger(message ?? audioElement.value?.error?.message ?? t("unknown-error"));
+    playing.value = false;
   });
 
   watch([src, audioElement], () => {
     error.value = undefined;
+    isSourceError.value = false;
+    currentTime.value = 0;
     if (src.value.length > 0 && audioElement.value) audioElement.value.src = src.value[0]!.src;
   });
 
   watch(audioElement, () => {
     audioElement.value?.addEventListener("error", () => {
-      errorEvent.trigger(audioElement.value?.error?.message ?? t("unknown-error"));
+      isSourceError.value = true;
+      waiting.value = false;
     });
   });
 
@@ -197,7 +202,7 @@ const useAudioStore = defineStore("audio", () => {
   }
 
   function setVolume(value: number) {
-    _volume.value = Math.pow(value, 2);
+    _volume.value = value ** 2;
   }
 
   return {

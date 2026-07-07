@@ -7,7 +7,7 @@ const messages = useMessageStore();
 <template>
   <div id="player">
     <slot />
-    <Toast v-for="toast in messages.toasts" :toast :key="toast.id" />
+    <Toast v-for="toast in messages.toasts" :key="toast.id" :toast />
   </div>
 </template>
 

@@ -1,5 +1,5 @@
-import type { Offsets, RelativePosition } from "@/types";
 import type { ElementSize } from "@vueuse/core";
+import type { Offsets, RelativePosition } from "@/types";
 
 interface Size {
   height: MaybeRefOrGetter<number>;
@@ -117,11 +117,11 @@ export default function useTransitions(
   size: Size,
   options: UseTransitionsOptions = {},
 ) {
-  const state = ref<TransitionState>("created");
-  const startTransitionKey: TransitionKey =
-    transitionKeys[Math.floor(Math.random() * transitionKeys.length)]!;
-  const endTransitionKey: TransitionKey =
-    transitionKeys[Math.floor(Math.random() * transitionKeys.length)]!;
+  const state = shallowRef<TransitionState>("created");
+  const startTransitionKey: TransitionKey
+    = transitionKeys[Math.floor(Math.random() * transitionKeys.length)]!;
+  const endTransitionKey: TransitionKey
+    = transitionKeys[Math.floor(Math.random() * transitionKeys.length)]!;
 
   function startTransition() {
     const _element = toValue(element);

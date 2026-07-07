@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { Podcast } from "@lucide/vue";
 import type { PartialEpisodeModel, PodcastModel } from "@/types/api";
+import { Podcast } from "@lucide/vue";
 import useSeason from "~/composables/useSeason";
 
 const props = defineProps<{
@@ -17,8 +17,8 @@ const numberString = computed(() => props.episode?.number?.toLocaleString("sv") 
 
 <template>
   <RoundIcon :size="{ xs: 35, sm: 38 }" :theme>
-    <img v-if="episode?.image_thumbnail" :src="episode.image_thumbnail" alt="" />
-    <img v-else-if="season?.image_thumbnail" :src="season.image_thumbnail" alt="" />
+    <img v-if="episode?.image_thumbnail" :src="episode.image_thumbnail" alt="">
+    <img v-else-if="season?.image_thumbnail" :src="season.image_thumbnail" alt="">
     <div v-else-if="numberString" :class="{ small: numberString.length > 3 }">
       {{ numberString }}
     </div>
@@ -26,12 +26,14 @@ const numberString = computed(() => props.episode?.number?.toLocaleString("sv") 
       v-else-if="fallbackToCover && podcast?.cover_thumbnail"
       :src="podcast.cover_thumbnail"
       alt=""
-    />
+    >
     <SpodcatIcon v-else :icon="Podcast" />
   </RoundIcon>
 </template>
 
 <style scoped lang="scss">
+@use "@/assets/scss/_responsive.scss" as *;
+
 :deep(.round-icon) {
   font-size: 16px;
 

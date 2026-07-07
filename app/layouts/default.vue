@@ -11,7 +11,7 @@ const messages = useMessageStore();
     <div id="scroll-container" class="column fill">
       <div id="main-container" class="align-center column">
         <slot />
-        <Toast v-for="toast in messages.toasts" :toast :key="toast.id" />
+        <Toast v-for="toast in messages.toasts" :key="toast.id" :toast />
       </div>
     </div>
     <footer v-if="audio.episode">

@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import type { BreakpointSizesArg } from "~/types";
 import { Volume, Volume1, Volume2, VolumeX } from "@lucide/vue";
 import useAudioStore from "~/composables/useAudioStore";
-import type { BreakpointSizesArg } from "~/types";
 
 const audio = useAudioStore();
 const icon = computed(() => {
@@ -18,8 +18,10 @@ defineProps<{ size?: BreakpointSizesArg }>();
   <SpodcatIcon
     :icon
     :size
-    class="hover-light p-half button-press"
+    class="p-half on-press-translate"
     element="button"
-    theme="boring-inverse"
+    theme="boring"
+    theme-variant="light"
+    lighten-on-hover
   />
 </template>

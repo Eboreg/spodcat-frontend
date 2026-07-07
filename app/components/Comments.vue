@@ -1,35 +1,34 @@
 <script setup lang="ts">
+import { HandMetal } from "@lucide/vue";
 import { podcastKey } from "@/symbols";
 import useComments from "~/composables/useComments";
+import useForm from "~/composables/useForm";
 import useMessageStore from "~/composables/useMessageStore";
 
+const props = defineProps<{ contentId?: string }>();
+
 async function onSubmitComment() {
-  if (name.value && text.value && challengeAnswer.value) {
+  const nameValue = name.valueAsString;
+  const textValue = text.valueAsString;
+  const challengeAnswerValue = challengeAnswer.valueAsNumber;
+
+  if (nameValue && textValue && !Number.isNaN(challengeAnswerValue)) {
     try {
       const toast = podcast?.value?.require_comment_approval
         ? t("comment.thanks.approval-required")
         : t("comment.thanks.no-approval-required");
 
-      await postComment(name.value, text.value, challengeAnswer.value);
-      addToast({ level: "success", text: toast });
-      resetComment();
+      await postComment(nameValue, textValue, challengeAnswerValue);
+      addToast({ level: "success", text: toast, icon: HandMetal });
+      form.reset();
     } catch (err: any) {
       if (err.data && err.data.data) {
-        validationErrors.value = err.data.data as Record<string, string[]>;
+        form.setServerErrors(err.data.data as Record<string, string[]>);
       } else {
-        addToast({ level: "error", text: t("comment.something-wrong") });
+        addToast({ level: "error", text: t("something-wrong") });
       }
     }
   }
-}
-
-function resetComment() {
-  name.value = "";
-  nameHasErrors.value = false;
-  text.value = "";
-  textHasErrors.value = false;
-  challengeAnswer.value = "";
-  challengeAnswerHasErrors.value = false;
 }
 
 function dateToString(date: string) {
@@ -40,41 +39,25 @@ function dateToString(date: string) {
 }
 
 const { t } = useI18n();
-const props = defineProps<{ contentId?: string }>();
 const podcast = inject(podcastKey);
-const validationErrors = ref<Record<string, string[]>>();
 
-const name = ref<string>("");
-const nameHasErrors = ref<boolean>(false);
-const text = ref<string>("");
-const textHasErrors = ref<boolean>(false);
-const challengeAnswer = ref<string>("");
-const challengeAnswerHasErrors = ref<boolean>(false);
+const form = useForm();
+const text = form.addInput("text", { required: true, gridArea: "text" });
+const name = form.addInput("name", { required: true, maxlength: 50, gridArea: "name" });
+const challengeAnswer = form.addInput("challenge_answer", { required: true, gridArea: "challenge" });
 
 const { addToast } = useMessageStore();
 const { challenge, comments, isSubmitting, postComment } = useComments(() => props.contentId);
-const isChallengeInputDisabled = computed(() => isSubmitting.value || !challenge.value);
-const isSubmitDisabled = computed(
-  () =>
-    isChallengeInputDisabled.value ||
-    !name.value ||
-    !text.value ||
-    !challengeAnswer.value ||
-    nameHasErrors.value ||
-    textHasErrors.value ||
-    challengeAnswerHasErrors.value,
-);
+const isSubmitDisabled = computed(() => isSubmitting.value || !form.canSubmit.value);
 </script>
 
 <template>
   <div v-if="comments && comments.length > 0">
     <h3>{{ t("comment.comments") }}</h3>
     <div class="column gap-half">
-      <div v-for="comment in comments" :key="comment.id" class="comment border-radius p-half">
-        <p class="text-xs">
-          {{
-            t("comment.x-said-on-date", { x: comment.name, date: dateToString(comment.created) })
-          }}:
+      <div v-for="comment in comments" :key="comment.id" class="comment border-radius-md p-half">
+        <p class="font-size-xs">
+          {{ t("comment.x-said-on-date", { x: comment.name, date: dateToString(comment.created) }) }}:
         </p>
         <div class="comment-text" v-html="comment.text_html" />
       </div>
@@ -83,53 +66,42 @@ const isSubmitDisabled = computed(
 
   <div>
     <h3>{{ t("comment.leave-a-comment") }}</h3>
-    <div class="comment-form column gap-half">
-      <div class="column">
-        <div v-if="podcast?.require_comment_approval" class="text-xs">
-          {{ t("comment.approval-required") }}
-        </div>
-        <InputText
-          :disabled="isSubmitting"
-          :validation-errors="validationErrors"
-          id="text"
-          multiline
-          required
-          v-model:has-errors="textHasErrors"
-          v-model="text"
-        />
-      </div>
-      <div class="row gap-half wrap align-start">
-        <InputText
-          :disabled="isSubmitting"
-          :label="t('comment.your-name')"
-          :maxlength="50"
-          :validation-errors
-          id="name"
-          required
-          v-model:has-errors="nameHasErrors"
-          v-model="name"
-          wrapper-class="name-wrapper"
-        />
-        <InputNumber
-          :disabled="isChallengeInputDisabled"
-          :label="challenge ? t('comment.challenge', { q: challenge.challenge_string }) : '&nbsp;'"
-          :placeholder="isChallengeInputDisabled ? t('loading-ellipsis') : undefined"
-          :validation-errors
-          id="challenge_answer"
-          required
-          v-model:has-errors="challengeAnswerHasErrors"
-          v-model="challengeAnswer"
-          wrapper-class="challenge-wrapper"
-        />
-        <Button :disabled="isSubmitDisabled" theme="secondary" @click="onSubmitComment">
-          {{ t("comment.send") }}
-        </Button>
-      </div>
+    <div v-if="podcast?.require_comment_approval" class="font-size-xs">
+      {{ t("comment.approval-required") }}
+    </div>
+    <div class="comment-form row-gap-quarter column-gap-half">
+      <Input v-model="text.value" v-bind="text.props" :disabled="isSubmitting" multiline type="text" />
+      <InputErrors v-bind="text.errorsProps" />
+
+      <InputLabel v-bind="name.labelProps">
+        {{ t("comment.your-name") }}
+      </InputLabel>
+      <Input v-model="name.value" v-bind="name.props" :disabled="isSubmitting" type="text" />
+      <InputErrors v-bind="name.errorsProps" />
+
+      <InputLabel v-if="challenge" v-bind="challengeAnswer.labelProps">
+        {{ t("comment.challenge", { q: challenge.challenge_string }) }}
+      </InputLabel>
+      <Input
+        v-model="challengeAnswer.value"
+        v-bind="challengeAnswer.props"
+        :disabled="!challenge || isSubmitting"
+        :placeholder="!challenge ? t('loading-ellipsis') : undefined"
+        type="number"
+      />
+      <InputErrors v-bind="challengeAnswer.errorsProps" />
+
+      <Button id="submit" grid-area="submit" :disabled="isSubmitDisabled" theme="secondary" @click="onSubmitComment">
+        {{ t("comment.send") }}
+      </Button>
     </div>
   </div>
 </template>
 
 <style scoped lang="scss">
+@use "@/assets/scss/_color.scss" as *;
+@use "@/assets/scss/_responsive.scss" as *;
+
 .comment {
   &:nth-child(odd) {
     background-color: get-color("secondary", "dark");
@@ -152,29 +124,26 @@ const isSubmitDisabled = computed(
 }
 
 .comment-form {
-  textarea {
-    display: block;
-    min-height: 70px;
-  }
+  display: grid;
+  grid-template-areas:
+    "text text"
+    "text-errors text-errors"
+    "name-label name-label"
+    "name name"
+    "name-errors name-errors"
+    "challenge-label challenge-label"
+    "challenge submit"
+    "challenge-errors challenge-errors";
+  grid-template-columns: 1fr auto;
 
-  label {
-    display: block;
-  }
-
-  .name-wrapper {
-    flex: 1 1 300px;
-  }
-
-  .challenge-wrapper {
-    flex: 1 0 222px;
-  }
-
-  .has-error {
-    border: 2px solid get-color("error");
-  }
-
-  .button {
-    margin-top: 2px;
+  @include minsize(lg) {
+    grid-template-areas:
+      "text text text"
+      "text-errors text-errors text-errors"
+      "name-label challenge-label ."
+      "name challenge submit"
+      "name-errors challenge-errors .";
+    grid-template-columns: 3fr 2fr auto;
   }
 }
 </style>

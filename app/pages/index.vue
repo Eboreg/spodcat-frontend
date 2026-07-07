@@ -15,20 +15,20 @@ setLocale(detectLocale());
 
 <template>
   <main class="content-width column gap-half py-half">
-    <div class="spodcat-banner p-single border-radius">
+    <div class="spodcat-banner p-single border-radius-md">
       <div class="row space-between align-center w-100">
         <div>
           <div class="title">Spodcat</div>
           <div class="subtitle">{{ t("spodcat-subtitle") }}</div>
         </div>
-        <img :src="SPODCAT_LOGO_TRANSPARENT.url" alt="" class="logo d-none d-sm-block" />
+        <img :src="SPODCAT_LOGO_TRANSPARENT.url" alt="" class="logo d-none d-sm-block">
       </div>
     </div>
 
     <Loading v-if="podcasts === undefined" height="150px" />
 
     <template v-else>
-      <PodcastBanner v-for="podcast in podcasts" :podcast :key="podcast.slug" compact />
+      <PodcastBanner v-for="podcast in podcasts" :key="podcast.slug" :podcast compact />
     </template>
 
     <Attribution />
@@ -43,7 +43,7 @@ setLocale(detectLocale());
 }
 
 .spodcat-banner {
-  background-color: $spodcat-yellow;
+  background-color: var(--spod-spodcat-yellow);
 
   .subtitle {
     color: black;
@@ -51,7 +51,7 @@ setLocale(detectLocale());
   }
 
   .title {
-    color: $spodcat-blue;
+    color: var(--spod-spodcat-blue);
     font-family: "Limelight-Regular";
     font-size: 72px;
     line-height: 1;

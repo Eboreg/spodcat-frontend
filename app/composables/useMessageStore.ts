@@ -41,12 +41,13 @@ export class PlacedToast extends PlacedMessage {
 
   constructor(id: number, message: ToastMessage, bottomOffset?: number) {
     super(id, { ...message, type: "toast" });
-    if (bottomOffset != undefined) this.bottomOffset = bottomOffset;
+    if (bottomOffset !== undefined) this.bottomOffset = bottomOffset;
     if (message.icon) this.icon = message.icon;
   }
 
   override toString() {
-    return `PlacedToast(id=${this.id}, bottomOffset=${this.bottomOffset}, size={ width: ${this.size.width}, height: ${this.size.height} })`;
+    return `PlacedToast(id=${this.id}, bottomOffset=${this.bottomOffset}, `
+      + `size={ width: ${this.size.width}, height: ${this.size.height} })`;
   }
 }
 

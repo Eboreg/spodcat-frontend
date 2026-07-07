@@ -1,7 +1,4 @@
 {
-  // https://nuxt.com/docs/guide/concepts/typescript
-  "files": [],
-  "include": ["eslint.config.mjs"],
   "references": [
     {
       "path": "./.nuxt/tsconfig.app.json"
@@ -15,5 +12,7 @@
     {
       "path": "./.nuxt/tsconfig.node.json"
     }
-  ]
+  ],
+  "files": [],
+  "include": ["eslint.config.mjs"]
 }

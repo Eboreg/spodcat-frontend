@@ -1,30 +1,80 @@
 @use "sass:map";
+@use "sass:list";
 @use "variables" as *;
 
-@function get-color($theme, $variant-name: "normal") {
-  @return map.get(map.get($color-themes, $theme), $variant-name);
+@function get-color($theme-name, $variant-name: "normal") {
+  $theme: map.get($color-themes, $theme-name);
+  @if $theme {
+    @return map.get($theme, $variant-name);
+  }
+  @return initial;
 }
 
-@mixin themed($property, $theme-variants, $variant-name) {
-  #{$property}: #{map.get($theme-variants, $variant-name)} !important;
-
-  &.hover-border:hover {
-    border-color: #{map.get($theme-variants, "dark")} !important;
+@function adjust-color($color, $amount: 0) {
+  /** Positive $amount == lighten */
+  @if $amount == 0 {
+    @return $color;
   }
+  @return oklab(from #{$color} calc(l * (1 + $amount)) a b);
+}
 
-  @if $variant-name == "normal" {
-    &.hover-light:hover {
-      #{$property}: #{map.get($theme-variants, "light")} !important;
-    }
-    &.hover-border:active {
-      border-color: #{map.get($theme-variants, "light")} !important;
-    }
-  } @else if $variant-name == "dark" {
-    &.hover-light:hover {
-      #{$property}: #{map.get($theme-variants, "normal")} !important;
-    }
-    &.hover-border:active {
-      border-color: #{map.get($theme-variants, "normal")} !important;
-    }
+@mixin maybe-important($property, $value, $important) {
+  @if $important {
+    #{$property}: #{$value} !important;
+  } @else {
+    #{$property}: #{$value};
+  }
+}
+
+@function nth-or-default($list, $n, $default) {
+  @if list.length($list) >= $n {
+    @return list.nth($list, $n);
+  }
+  @return $default;
+}
+
+@mixin themed-variant($properties, $theme, $variant-name: "normal", $adjust-colors: null, $important: false) {
+  /** $properties and $adjust-colors can both be either lists or scalars. */
+  $color: map.get($theme, $variant-name);
+
+  @for $i from 1 through list.length($properties) {
+    $property: list.nth($properties, $i);
+    $adjust-color: nth-or-default($adjust-colors, $i, 0);
+
+    @include maybe-important($property, adjust-color($color, $adjust-color), $important);
+  }
+}
+
+@mixin foreach-theme-variant() {
+  &:not(.dark):not(.light) {
+    @content ("normal");
+  }
+  &.dark {
+    @content ("dark");
+  }
+  &.light {
+    @content ("light");
+  }
+}
+
+@mixin themed($properties, $theme, $adjust-colors: null, $important: false) {
+  @include foreach-theme-variant() using ($variant) {
+    @include themed-variant($properties, $theme, $variant, $adjust-colors, $important);
+    @content ($variant);
+  }
+}
+
+@mixin themed-diagonal-background($theme, $important: false) {
+  @include foreach-theme-variant() using ($variant) {
+    $color1: map.get($theme, $variant);
+    $color2: adjust-color($color1, -0.1);
+
+    @include maybe-important(
+      "background",
+      linear-gradient(to bottom right, #{$color1} 50%, #{$color2} 50%),
+      $important
+    );
+
+    @content ($variant);
   }
 }

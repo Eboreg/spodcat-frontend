@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import { ChevronDown, Rewind, FastForward } from "@lucide/vue";
+import type { Theme } from "~/types";
+import { ChevronDown, FastForward, Rewind } from "@lucide/vue";
 import useAudioStore from "~/composables/useAudioStore";
-import { detectLocale, timeToString } from "~/utils";
 import useEpisode from "~/composables/useEpisode";
 import usePodcast from "~/composables/usePodcast";
-import type { Theme } from "~/types";
+import useSpodcatHead from "~/composables/useSpodcatHead";
+import { podcastSlugKey } from "~/symbols";
+import { detectLocale, timeToString } from "~/utils";
 
 function onCloseClick() {
   if (navigation.canGoBack) router.back();
@@ -26,6 +28,9 @@ const playButtonTheme: ComputedRef<Theme> = computed(() => {
   if (audio.isPlaying) return "info";
   return "success";
 });
+
+provide(podcastSlugKey, podcastSlug);
+useSpodcatHead({ podcast, episode });
 
 watchEffect(() => {
   if (episode.value) audio.setEpisode(episode.value, podcast.value);
@@ -50,59 +55,74 @@ definePageMeta({
         :icon-size="30"
         :icon="ChevronDown"
         :size="40"
+        class="cursor-pointer on-press-translate"
+        lighten-on-hover
+        theme="boring"
+        theme-variant="light"
         @click="onCloseClick"
-        class="hover-light cursor-pointer button-press"
-        theme="boring-inverse"
       />
-      <div class="border-primary-dark image-container">
-        <img :src="audio.coverImageUrl" alt="" />
+      <div class="image-container theme-primary border-sm border-radius-lg">
+        <img :src="audio.coverImageUrl" alt="">
       </div>
     </div>
 
     <Loading v-if="!episode" height="120px" />
     <template v-else>
       <div class="column align-center gap-half">
-        <HorizontalScroll class="text-lg">{{ episode?.name }}</HorizontalScroll>
-        <HorizontalScroll>{{ episode?.podcast_name }}</HorizontalScroll>
+        <HorizontalScroll class="font-size-lgze-lg">
+          <NuxtLink :to="`/${episode.podcast}/episode/${episode.slug}`">
+            {{ episode.name }}
+          </NuxtLink>
+        </HorizontalScroll>
+        <HorizontalScroll>{{ episode.podcast_name }}</HorizontalScroll>
       </div>
-      <div v-if="episode" class="column">
-        <DbfsBar :episode />
+      <div class="column">
+        <DbfsBar :episode margin-x="1rem" />
         <div class="row space-between">
-          <div class="text-xs time-string">{{ timeToString(audio.currentTime) }}</div>
-          <div class="text-xs time-string">{{ timeToString(audio.duration) }}</div>
+          <div class="font-size-xs time-string">{{ timeToString(audio.currentTime) }}</div>
+          <div class="font-size-xs time-string">{{ timeToString(audio.duration) }}</div>
         </div>
       </div>
     </template>
 
     <div class="row align-center button-row mb-single">
       <VolumeControl vertical />
-      <RoundIcon
+
+      <Button
+        :icon="Rewind"
+        :icon-size="30"
         :size="40"
         :title="t('rewind-10s')"
+        class="py-0 px-single border-radius-lg border-sm border-outset"
+        theme="secondary"
+        theme-variant="light"
+        transparent
         @click="audio.seek(-10)"
-        class="hover-light button-press"
-        theme="boring-inverse"
-      >
-        <SpodcatIcon :icon="Rewind" :size="30" />
-      </RoundIcon>
-      <RoundIcon :theme="playButtonTheme" :size="60" class="hover-light button-press">
+      />
+
+      <RoundIcon :size="60" :theme="playButtonTheme" class="on-press-translate" lighten-on-hover>
         <PlayButton no-theme :size="40" />
       </RoundIcon>
-      <RoundIcon
+
+      <Button
+        :icon="FastForward"
+        :icon-size="30"
         :size="40"
         :title="t('forward-10s')"
+        class="p-0 border-radius-lg border-sm border-outset"
+        diagonal-bg
+        theme="secondary"
         @click="audio.seek(10)"
-        class="hover-light button-press"
-        theme="boring-inverse"
-      >
-        <SpodcatIcon :icon="FastForward" :size="30" />
-      </RoundIcon>
+      />
+
       <PlaybackRateControl />
     </div>
   </div>
 </template>
 
 <style scoped lang="scss">
+@use "@/assets/scss/_color.scss" as *;
+
 .container {
   justify-content: space-between;
   width: 100%;
@@ -116,7 +136,6 @@ definePageMeta({
 .image-container {
   align-self: center;
   aspect-ratio: 1/1;
-  border-radius: 8px;
   flex: 0 1 auto;
   overflow: hidden;
 
@@ -128,9 +147,5 @@ definePageMeta({
 
 .button-row {
   justify-content: space-evenly;
-}
-
-.horizontal-scroll {
-  max-width: 100%;
 }
 </style>

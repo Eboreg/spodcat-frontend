@@ -1,120 +1,85 @@
 <script setup lang="ts">
+export type InputType = "text" | "number" | "date" | "email" | "password" | "tel" | "time" | "url" | "search";
+
+export interface InputProps {
+  gridArea?: string
+  hasErrors?: boolean
+  multiline?: boolean
+  setClientValidationMessage?: (message: string) => void
+  type?: InputType
+}
+
 function onInput(event: InputEvent) {
+  emit("input", event);
+
   if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) {
-    frontendError.value = !event.target.validity.valid ? event.target.validationMessage : undefined;
+    emit("validationMessage", event.target.validationMessage);
+    if (props.setClientValidationMessage) {
+      props.setClientValidationMessage(event.target.validationMessage);
+    }
   }
+
   if (event.target instanceof HTMLTextAreaElement) {
-    event.target.rows = event.target.value.split("\n").length;
+    // Clumsily make sure the element not just grows, but also shrinks when
+    // text is removed:
+    if (event.data === null)
+      event.target.style.height = "";
+
+    const paddingTop = parseFloat(textareaStyle.value?.paddingTop ?? "0");
+    const paddingBottom = parseFloat(textareaStyle.value?.paddingBottom ?? "0");
+    const height = event.target.scrollHeight - paddingTop - paddingBottom;
+
+    event.target.style.height = `${height}px`;
   }
 }
 
-type Type = "text" | "number" | "date" | "email" | "password" | "tel" | "time" | "url" | "search";
-
-type Props = {
-  id: string;
-  label?: string;
-  maxlength?: number;
-  multiline?: boolean;
-  type?: Type;
-  validationErrors?: Record<string, string[]>;
-  wrapperClass?: string;
-};
+const props = withDefaults(defineProps<InputProps>(), { type: "text" });
+const emit = defineEmits<{ input: [InputEvent], validationMessage: [string] }>();
 
 const value = defineModel<string | number>();
-const hasErrors = defineModel<boolean>("hasErrors");
-
-const props = withDefaults(defineProps<Props>(), {
-  label: undefined,
-  maxlength: undefined,
-  type: "text",
-  validationErrors: undefined,
-  wrapperClass: undefined,
-});
-
-const backendErrors = ref<string[]>([]);
-const frontendError = ref<string>();
-const valueAtValidation = ref<string | number>();
-
-const length = computed(() => valueAsString.value?.length ?? 0);
-const overflow = computed(() => (props.maxlength ? length.value > props.maxlength : false));
 const multiline = computed(() => props.multiline && props.type === "text");
-const valueAsString = computed(() => (value.value !== undefined ? String(value.value) : undefined));
-
-const errors = computed(() => {
-  const _errors = valueAtValidation.value === value.value ? backendErrors.value : [];
-
-  if (frontendError.value) _errors.push(frontendError.value);
-  return _errors;
-});
-
-watch(errors, () => {
-  hasErrors.value = errors.value.length > 0;
-});
-
-watch(
-  () => props.validationErrors,
-  () => {
-    valueAtValidation.value = value.value;
-    backendErrors.value = Object.entries(props.validationErrors ?? {})
-      .filter(([id]) => id === props.id)
-      .flatMap(([_, err]) => err);
-  },
+const textarea = useTemplateRef("textarea");
+const textareaStyle = computed(() =>
+  textarea.value && import.meta.client ? window.getComputedStyle(textarea.value) : undefined,
 );
 
 defineOptions({ inheritAttrs: false });
 </script>
-<template>
-  <div class="input-wrapper column-gap-single" :class="wrapperClass">
-    <label v-if="label" :for="id">{{ label }}</label>
-    <div v-if="maxlength" :class="{ 'text-primary': overflow }">{{ length }}/{{ maxlength }}</div>
-    <textarea
-      v-if="multiline"
-      :class="{ 'has-error': hasErrors }"
-      :id
-      :maxlength
-      @input="onInput"
-      class="input p-half"
-      v-bind="$attrs"
-      v-model="value"
-    />
-    <input
-      v-else
-      :class="{ 'has-error': hasErrors }"
-      :id
-      :maxlength
-      :type
-      @input="onInput"
-      class="input p-half"
-      v-bind="$attrs"
-      v-model="value"
-    />
-    <div v-if="hasErrors" class="errors">
-      <div v-for="(error, index) in errors" :key="index" class="text-error-light">{{ error }}</div>
-    </div>
-  </div>
-</template>
-<style scoped lang="scss">
-.input-wrapper {
-  display: grid;
-  font-size: var(--spod-font-size-xs);
-  grid-template-columns: 1fr auto;
-}
 
+<template>
+  <textarea
+    v-if="multiline"
+    ref="textarea"
+    v-bind="$attrs"
+    v-model="value"
+    :class="{ 'border-error': hasErrors }"
+    class="input"
+    @input="onInput"
+  />
+  <input
+    v-else
+    v-bind="$attrs"
+    v-model="value"
+    :class="{ 'border-error': hasErrors }"
+    :type
+    class="input"
+    @input="onInput"
+  >
+</template>
+
+<style scoped lang="scss">
 textarea {
   min-height: var(--spod-length-3x);
 }
 
-.input,
-.errors {
-  grid-column-end: span 2;
+.border-error {
+  border-style: solid;
 }
 
 .input {
   font-family: var(--spod-font-family);
   font-size: var(--spod-font-size-body);
-}
-
-.has-error {
-  border: 2px solid get-color("error");
+  grid-area: v-bind(gridArea);
+  padding: var(--spod-length-half);
 }
 </style>

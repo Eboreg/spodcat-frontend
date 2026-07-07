@@ -1,1 +1,4 @@
 input ej tillfredsst, går ej nollställa challengeanwer value fr comments efter inskick (write operation failed computed value is readlonly)
+
+
+useTheme: bör kunna ställa theme & variant individuellt för border, text, bg osv. (ex. badge: ska ha samma themevariant för border som för bg)

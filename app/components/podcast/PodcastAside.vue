@@ -3,13 +3,13 @@ import { Home, Menu, Podcast, Rss, Search } from "@lucide/vue";
 import { podcastKey } from "@/symbols";
 
 const { t } = useI18n();
-const isSearchModalOpen = ref<boolean>(false);
-const isVisibleMobile = ref<boolean>(false);
+const isSearchModalOpen = shallowRef<boolean>(false);
+const isVisibleMobile = shallowRef<boolean>(false);
 const podcast = inject(podcastKey);
 </script>
 
 <template>
-  <aside class="gap-half column border-radius">
+  <aside class="gap-half column border-radius-md">
     <Loading v-if="!podcast" height="100px" />
 
     <template v-else>
@@ -17,48 +17,33 @@ const podcast = inject(podcastKey);
         :class="{ show: isVisibleMobile }"
         :icon-size="20"
         :icon="Menu"
-        @click="isVisibleMobile = !isVisibleMobile"
         class="d-md-none toggle-menu-button"
+        @click="isVisibleMobile = !isVisibleMobile"
       >
         <span v-if="isVisibleMobile">{{ t("menu.hide") }}</span>
         <span v-else>{{ t("menu.show") }}</span>
       </Button>
 
-      <div
-        :class="{ 'd-none': !isVisibleMobile }"
-        class="d-md-flex column gap-half px-sm-0 px-half pb-sm-0 pb-half"
-      >
-        <Button
-          :icon-size="20"
-          :icon="Podcast"
-          :to="podcast.episodes_fm_url"
-          new-tab
-          theme="tertiary"
-        >
+      <div :class="{ 'd-none': !isVisibleMobile }" class="d-md-flex column gap-half px-sm-0 px-half pb-sm-0 pb-half">
+        <Button :icon-size="20" :icon="Podcast" :to="podcast.episodes_fm_url" new-tab theme="tertiary">
           <span>{{ t("subscribe") }}</span>
         </Button>
 
-        <Button :to="podcast.rss_url" :icon-size="20" new-tab theme="primary" :icon="Rss">
+        <Button :to="podcast.rss_url" :icon-size="20" new-tab :icon="Rss" theme="primary">
           <span>{{ t("rss-feed") }}</span>
         </Button>
 
-        <Button
-          v-for="link in podcast.links"
-          :key="link.id"
-          :theme="link.theme"
-          :to="link.url"
-          new-tab
-        >
-          <img v-if="link.custom_icon" :src="link.custom_icon" alt="" class="icon" />
+        <Button v-for="link in podcast.links" :key="link.id" :to="link.url" new-tab :theme="link.theme">
+          <img v-if="link.custom_icon" :src="link.custom_icon" alt="">
           <SpodcatIcon v-else-if="link.icon" :icon="`mdi:${link.icon}`" :size="20" />
           <span>{{ link.label }}</span>
         </Button>
 
-        <Button to="/" theme="secondary" :icon="Home" :icon-size="20">
+        <Button to="/" :icon="Home" :icon-size="20" theme="secondary">
           <span>{{ t("all-podcasts") }}</span>
         </Button>
 
-        <Button :icon-size="20" :icon="Search" @click="isSearchModalOpen = true" theme="secondary">
+        <Button :icon-size="20" :icon="Search" theme="secondary" @click="isSearchModalOpen = true">
           <span>{{ t("search") }}</span>
         </Button>
 
@@ -73,6 +58,8 @@ const podcast = inject(podcastKey);
 </template>
 
 <style scoped lang="scss">
+@use "@/assets/scss/_responsive.scss" as *;
+
 @include maxsize(sm) {
   aside {
     background-color: var(--spod-background-color);
@@ -83,6 +70,6 @@ const podcast = inject(podcastKey);
 }
 .toggle-menu-button {
   border: none !important;
-  color: var(--spod-text-color);
+  color: var(--spod-text-color-on-dark);
 }
 </style>

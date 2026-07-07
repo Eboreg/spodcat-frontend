@@ -1,5 +1,5 @@
-import { BREAKPOINT_ORDER, BREAKPOINTS } from "~/constants";
 import type { Breakpoint } from "~/types";
+import { BREAKPOINT_ORDER, BREAKPOINTS } from "~/constants";
 
 function findBreakpoint(width: number): Breakpoint {
   return BREAKPOINTS.toSorted((a, b) => a.min - b.min).find((bp) => width <= bp.max)!;

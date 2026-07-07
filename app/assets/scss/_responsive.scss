@@ -60,7 +60,7 @@ $dimens: (
   // "", "xs", "sm", etc:
   @each $size in add-empty(map.keys($min-sizes)) {
     @include minsize(#{$size}) {
-      // (quarter, 0.25rem), (half, 0.5rem), etc:
+      // (xs, 0.25rem), (sm, 0.5rem), etc:
       @each $lname, $length in $lengths {
         .#{$prop-key}-#{format-prefix($size)}#{$lname} {
           #{$property}: #{$length} !important;
@@ -71,7 +71,7 @@ $dimens: (
   }
 }
 
-@mixin sized-property-extended($prop-key, $property) {
+@mixin sized-property-multidim($prop-key, $property) {
   @include sized-property($prop-key, $property) using ($size, $lname, $length) {
     // (t, (top)), (x, (left, right)), etc:
     @each $abbr, $dlist in $dimens {
