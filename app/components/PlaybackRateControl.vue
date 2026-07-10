@@ -1,6 +1,12 @@
 <script setup lang="ts">
+import type { Theme } from "~/types";
 import { Check, CircleGauge } from "@lucide/vue";
 import useAudioStore from "~/composables/useAudioStore";
+
+function onRateClick(rate: number) {
+  audio.rate = rate;
+  popupVisible.value = false;
+}
 
 const { t } = useI18n();
 const popupVisible = shallowRef<boolean>(false);
@@ -16,11 +22,11 @@ const playbackRates = [
   { rate: 1.75, label: "1,75" },
   { rate: 2, label: "2" },
 ];
-
-function onRateClick(rate: number) {
-  audio.rate = rate;
-  popupVisible.value = false;
-}
+const iconTextTheme = computed<Theme>(() => ({
+  color: audio.rate === 1 ? "gray" : "primary",
+  colorVariant: audio.rate === 1 ? "accented" : undefined,
+  accentedOnActive: true,
+}));
 
 onClickOutside(container, () => (popupVisible.value = false));
 </script>
@@ -30,21 +36,19 @@ onClickOutside(container, () => (popupVisible.value = false));
     <SpodcatIcon
       :icon="CircleGauge"
       :size="30"
-      :theme="audio.rate === 1 ? 'boring' : 'primary'"
-      :theme-variant="audio.rate === 1 ? 'light' : undefined"
+      :text="iconTextTheme"
       :title="
         t('change-playback-rate-x', {
           x: playbackRates.find((r) => r.rate === audio.rate)?.label,
         })
       "
-      class="p-half on-press-translate"
+      class="p-half translated-on-press"
       element="button"
-      lighten-on-hover
       @click="popupVisible = !popupVisible"
     />
 
     <Popup v-if="popupVisible" class="pb-half">
-      <div class="popup-header">{{ t("playback-rate") }}</div>
+      <div class="popup-header border-primary px-single py-half">{{ t("playback-rate") }}</div>
       <button
         v-for="rate in playbackRates"
         :key="rate.rate"
@@ -52,7 +56,7 @@ onClickOutside(container, () => (popupVisible.value = false));
         @click="onRateClick(rate.rate)"
       >
         <div class="popup-row-check align-center d-flex">
-          <SpodcatIcon v-if="rate.rate === audio.rate" :icon="Check" :size="16" />
+          <Check v-if="rate.rate === audio.rate" :size="16" />
         </div>
         <div>{{ rate.label }}</div>
       </button>
@@ -65,5 +69,9 @@ onClickOutside(container, () => (popupVisible.value = false));
   height: 24px;
   justify-content: center;
   width: 24px;
+}
+
+.popup-header {
+  border-bottom: 1px solid;
 }
 </style>

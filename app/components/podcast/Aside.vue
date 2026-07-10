@@ -25,25 +25,25 @@ const podcast = inject(podcastKey);
       </Button>
 
       <div :class="{ 'd-none': !isVisibleMobile }" class="d-md-flex column gap-half px-sm-0 px-half pb-sm-0 pb-half">
-        <Button :icon-size="20" :icon="Podcast" :to="podcast.episodes_fm_url" new-tab theme="tertiary">
+        <Button :icon-size="20" :icon="Podcast" :to="podcast.episodes_fm_url" new-tab color="tertiary">
           <span>{{ t("subscribe") }}</span>
         </Button>
 
-        <Button :to="podcast.rss_url" :icon-size="20" new-tab :icon="Rss" theme="primary">
+        <Button :to="podcast.rss_url" :icon-size="20" new-tab :icon="Rss" color="primary">
           <span>{{ t("rss-feed") }}</span>
         </Button>
 
-        <Button v-for="link in podcast.links" :key="link.id" :to="link.url" new-tab :theme="link.theme">
+        <Button v-for="link in podcast.links" :key="link.id" :to="link.url" new-tab :color="link.theme">
           <img v-if="link.custom_icon" :src="link.custom_icon" alt="">
           <SpodcatIcon v-else-if="link.icon" :icon="`mdi:${link.icon}`" :size="20" />
           <span>{{ link.label }}</span>
         </Button>
 
-        <Button to="/" :icon="Home" :icon-size="20" theme="secondary">
+        <Button to="/" :icon="Home" :icon-size="20" color="secondary">
           <span>{{ t("all-podcasts") }}</span>
         </Button>
 
-        <Button :icon-size="20" :icon="Search" theme="secondary" @click="isSearchModalOpen = true">
+        <Button :icon-size="20" :icon="Search" color="secondary" @click="isSearchModalOpen = true">
           <span>{{ t("search") }}</span>
         </Button>
 
@@ -58,7 +58,7 @@ const podcast = inject(podcastKey);
 </template>
 
 <style scoped lang="scss">
-@use "@/assets/scss/_responsive.scss" as *;
+@use "@/assets/scss/responsive" as *;
 
 @include maxsize(sm) {
   aside {
@@ -68,8 +68,9 @@ const podcast = inject(podcastKey);
     border-width: 0 1px 1px 0;
   }
 }
-.toggle-menu-button {
+
+:deep(.toggle-menu-button) {
   border: none !important;
-  color: var(--spod-text-color-on-dark);
+  color: var(--spod-text-color);
 }
 </style>

@@ -116,7 +116,9 @@ export default function useSpodcatHead({
     return "This is a podcast platform.";
   });
 
-  useHead({ link, meta });
+  const bodyAttrs = { class: runtimeConfig.public.darkMode ? "dark" : "light" };
+
+  useHead({ link, meta, bodyAttrs });
 
   useSeoMeta({
     description,

@@ -1,4 +1,5 @@
-import type { ElementSize } from "@vueuse/core";
+import type { ElementSize, MaybeComputedElementRef } from "@vueuse/core";
+import type * as CSS from "csstype";
 import type { Offsets, RelativePosition } from "@/types";
 
 interface Size {
@@ -6,7 +7,7 @@ interface Size {
   width: MaybeRefOrGetter<number>;
 }
 
-interface TransitionStyle {
+interface TransitionStyle extends CSS.PropertiesHyphen {
   "transition-property"?: string;
   bottom?: string;
   left?: string;
@@ -22,9 +23,9 @@ interface UseTransitionsOptions {
   onStartTransitionEnd?: () => void;
 }
 
-const transitionKeys = ["top", "right", "bottom", "left", "size0x", "size100x"] as const;
+const TRANSISION_KEYS = ["top", "right", "bottom", "left", "size0x", "size100x"] as const;
 
-type TransitionKey = (typeof transitionKeys)[number];
+type TransitionKey = (typeof TRANSISION_KEYS)[number];
 
 type TransitionState = "created" | "stable" | "end";
 
@@ -82,7 +83,7 @@ function getStyle(
   endTransitionKey: TransitionKey,
   offsets: Offsets = {},
 ): TransitionStyle {
-  const style: TransitionStyle = getStableStyle(size, stablePosition, offsets);
+  const style = getStableStyle(size, stablePosition, offsets);
 
   switch (state) {
     case "created":
@@ -105,44 +106,40 @@ function getStyle(
   }
 }
 
-function styleToString(style: TransitionStyle): string {
-  return Object.entries(style)
-    .map(([k, v]) => `${k}:${v}`)
-    .join(";");
+function applyStyle(element: HTMLElement | SVGElement, style: TransitionStyle) {
+  Object.entries(style).forEach(([k, v]) => {
+    element.style.setProperty(k, v);
+  });
 }
 
 export default function useTransitions(
-  element: MaybeRefOrGetter<HTMLElement | undefined | null>,
+  element: MaybeComputedElementRef,
   stablePosition: RelativePosition,
   size: Size,
-  options: UseTransitionsOptions = {},
+  { immediate, onReady, onEndTransitionEnd, onStartTransitionEnd, offsets }: UseTransitionsOptions = {},
 ) {
   const state = shallowRef<TransitionState>("created");
   const startTransitionKey: TransitionKey
-    = transitionKeys[Math.floor(Math.random() * transitionKeys.length)]!;
+    = TRANSISION_KEYS[Math.floor(Math.random() * TRANSISION_KEYS.length)]!;
   const endTransitionKey: TransitionKey
-    = transitionKeys[Math.floor(Math.random() * transitionKeys.length)]!;
+    = TRANSISION_KEYS[Math.floor(Math.random() * TRANSISION_KEYS.length)]!;
 
   function startTransition() {
-    const _element = toValue(element);
-
-    if (_element && options.onStartTransitionEnd) {
-      _element.addEventListener("transitionend", options.onStartTransitionEnd, { once: true });
+    if (onStartTransitionEnd) {
+      unrefElement(element)?.addEventListener("transitionend", onStartTransitionEnd, { once: true });
     }
     state.value = "stable";
   }
 
   function endTransition() {
-    const _element = toValue(element);
-
-    if (_element && options.onEndTransitionEnd) {
-      _element.addEventListener("transitionend", options.onEndTransitionEnd, { once: true });
+    if (onEndTransitionEnd) {
+      unrefElement(element)?.addEventListener("transitionend", onEndTransitionEnd, { once: true });
     }
     state.value = "end";
   }
 
   watchEffect(() => {
-    const _element = toValue(element);
+    const _element = unrefElement(element);
 
     if (_element) {
       const style = getStyle(
@@ -151,14 +148,20 @@ export default function useTransitions(
         state.value,
         startTransitionKey,
         endTransitionKey,
-        toValue(options.offsets),
+        toValue(offsets),
       );
-      const styleString = styleToString(style);
 
-      _element.style = styleString;
-      if (options.onReady) options.onReady(state.value);
-      if (options.immediate && state.value === "created") startTransition();
+      applyStyle(_element, style);
+
+      if (state.value === "created") {
+        if (onReady) onReady(state.value);
+        if (immediate) startTransition();
+      }
     }
+  });
+
+  watch(state, () => {
+    if (onReady) onReady(state.value);
   });
 
   return { transitionState: readonly(state), startTransition, endTransition };

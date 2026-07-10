@@ -9,8 +9,8 @@ const route = computed(() => (props.post ? `/${props.post.podcast}/post/${props.
 <template>
   <ContentCard :route :expand :content="post">
     <template v-if="post" #icon>
-      <RoundIcon :size="{ xs: 35, sm: 38 }" theme="secondary" class="content-round-icon">
-        <SpodcatIcon :icon="FileText" />
+      <RoundIcon :size="{ xs: 35, sm: 38 }" color="secondary" class="content-round-icon" bg-diagonal>
+        <FileText />
       </RoundIcon>
     </template>
     <slot />

@@ -22,8 +22,9 @@ const show = computed(() => !!props.content || podcast?.value?.enable_comments);
 
     <slot />
 
-    <ClientOnly>
-      <Comments v-if="podcast?.enable_comments" :content-id="content?.id" />
+    <ClientOnly v-if="podcast?.enable_comments">
+      <Comments :content-id="content?.id" />
+      <CommentForm :content-id="content?.id" />
     </ClientOnly>
   </div>
 </template>

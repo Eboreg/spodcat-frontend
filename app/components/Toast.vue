@@ -12,7 +12,7 @@ const container = useTemplateRef("container");
 const countdownElement = useTemplateRef("countdown");
 const messageStore = useMessageStore();
 const isAnimationActive = computed(() => placedToast.timeout > 0);
-const { themeClasses } = useTheme({ theme: placedToast.level });
+const { themeClasses } = useTheme({ color: placedToast.level });
 
 const offsets: ComputedRef<Offsets> = computed(() => ({
   bottom: placedToast.bottomOffset + 10,
@@ -69,7 +69,7 @@ watch([height, width], ([h, w]) => messageStore.onToastSizeChange(placedToast.id
       <div class="fill" v-html="placedToast.text" />
       <CloseIcon @click="finishAnimation" />
     </div>
-    <div ref="countdown" :class="`toast-countdown bg-${placedToast.level} dark`" />
+    <div ref="countdown" :class="`toast-countdown bg-${placedToast.level} bg-muted`" />
   </div>
 </template>
 

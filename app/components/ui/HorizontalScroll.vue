@@ -1,9 +1,9 @@
 <script setup lang="ts">
-type Props = {
+interface Props {
   duration?: number;
   easing?: string;
   iterations?: number;
-};
+}
 
 const props = withDefaults(defineProps<Props>(), {
   duration: 10_000,

@@ -4,6 +4,7 @@ import type { BreakpointSizesArg, ThemedProps } from "@/types";
 import useTheme from "~/composables/useTheme";
 
 interface Props extends ThemedProps {
+  bgDiagonal?: boolean;
   disabled?: boolean;
   gridArea?: string;
   icon?: string | LucideIcon;
@@ -11,18 +12,8 @@ interface Props extends ThemedProps {
   newTab?: boolean;
   size?: BreakpointSizesArg;
   to?: string;
-  translateOnPress?: boolean;
+  translatedOnPress?: boolean;
 }
-
-const props = withDefaults(defineProps<Props>(), {
-  darkenOnDisabled: true,
-  lightenOnActive: true,
-  lightenOnHover: true,
-  translateOnPress: true,
-});
-const emit = defineEmits<{ click: [MouseEvent] }>();
-const loading = shallowRef<boolean>(false);
-const { themeClasses } = useTheme(toRef(props));
 
 function onClick(event: MouseEvent) {
   if (loading.value || props.disabled) {
@@ -32,22 +23,45 @@ function onClick(event: MouseEvent) {
     emit("click", event);
   }
 }
+
+const props = withDefaults(defineProps<Props>(), {
+  mutedOnDisabled: true,
+  accentedOnActive: true,
+  translatedOnPress: true,
+});
+const emit = defineEmits<{ click: [MouseEvent] }>();
+const loading = shallowRef<boolean>(false);
+// const themeProps = computed(() => mergeThemedProps(props.theme, props));
+const { themeClasses } = useTheme(toRef(props));
+
+defineOptions({ inheritAttrs: false });
 </script>
 
 <template>
-  <MaybeLink
-    is="button"
-    :class="[{ loading, disabled, 'on-press-translate': translateOnPress }, ...themeClasses]"
-    :disabled
-    :new-tab
-    :to
-    class="button"
-    @click="onClick"
-  >
-    <ProgressCircle v-if="icon && loading" :size="iconSize" />
-    <SpodcatIcon v-else-if="icon" :icon :size :icon-size />
-    <slot />
-  </MaybeLink>
+  <DiagonalBackground v-bind="$props" :color-diff="-0.05" :softness="0">
+    <MaybeLink
+      is="button"
+      v-bind="$attrs"
+      :class="[
+        {
+          loading,
+          disabled,
+          'translated-on-press': translatedOnPress,
+          'bg-diagonal': bgDiagonal,
+        },
+        ...themeClasses,
+      ]"
+      :disabled
+      :new-tab
+      :to
+      class="button"
+      @click="onClick"
+    >
+      <ProgressCircle v-if="icon && loading" :size="iconSize" />
+      <SpodcatIcon v-else-if="icon" :icon :size :icon-size />
+      <slot />
+    </MaybeLink>
+  </DiagonalBackground>
 </template>
 
 <style scoped lang="scss">
@@ -70,7 +84,7 @@ function onClick(event: MouseEvent) {
     cursor: wait;
   }
 
-  &:not(.disabled):not(.loading) {
+  &:not(.disabled, .loading) {
     cursor: pointer;
   }
 

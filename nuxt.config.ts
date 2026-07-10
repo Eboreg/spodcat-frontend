@@ -17,6 +17,7 @@ export default defineNuxtConfig({
       backendHost: "https://backend.podd.huseli.us",
       frontendHost: "https://podd.huseli.us",
       siteName: "podd.huseli.us",
+      darkMode: true,
     },
   },
   compatibilityDate: "2025-07-15",

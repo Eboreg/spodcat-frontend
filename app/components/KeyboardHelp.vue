@@ -14,11 +14,11 @@ onClickOutside(container, () => (isPopupOpen.value = false));
       :icon="Keyboard"
       :size="30"
       :title="t('keyboard.shortcuts')"
-      class="p-half on-press-translate"
+      accented-on-active
+      class="p-half translated-on-press"
+      color-variant="accented"
       element="button"
-      lighten-on-hover
-      theme="boring"
-      theme-variant="light"
+      text="gray"
       @click="isPopupOpen = !isPopupOpen"
     />
 
@@ -30,11 +30,11 @@ onClickOutside(container, () => (isPopupOpen.value = false));
         <span>{{ t("play-pause") }}</span>
       </div>
       <div class="nowrap row align-center gap-half">
-        <div class="keyboard-key"><SpodcatIcon :icon="ArrowLeft" :size="16" /></div>
+        <div class="keyboard-key"><ArrowLeft :size="16" /></div>
         <span>{{ t("rewind-10s") }}</span>
       </div>
       <div class="nowrap row align-center gap-half">
-        <div class="keyboard-key"><SpodcatIcon :icon="ArrowRight" :size="16" /></div>
+        <div class="keyboard-key"><ArrowRight :size="16" /></div>
         <span>{{ t("forward-10s") }}</span>
       </div>
       <div class="nowrap row align-center gap-half">
@@ -42,7 +42,7 @@ onClickOutside(container, () => (isPopupOpen.value = false));
           <span class="text">{{ t("keyboard.ctrl") }}</span>
         </div>
         +
-        <div class="keyboard-key"><SpodcatIcon :icon="ArrowLeft" :size="16" /></div>
+        <div class="keyboard-key"><ArrowLeft :size="16" /></div>
         <span>{{ t("rewind-60s") }}</span>
       </div>
       <div class="nowrap row align-center gap-half">
@@ -50,7 +50,7 @@ onClickOutside(container, () => (isPopupOpen.value = false));
           <span class="text">{{ t("keyboard.ctrl") }}</span>
         </div>
         +
-        <div class="keyboard-key"><SpodcatIcon :icon="ArrowRight" :size="16" /></div>
+        <div class="keyboard-key"><ArrowRight :size="16" /></div>
         <span>{{ t("forward-60s") }}</span>
       </div>
     </Popup>

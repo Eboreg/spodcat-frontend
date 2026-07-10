@@ -5,7 +5,7 @@ import useTheme from "~/composables/useTheme";
 
 const props = defineProps<{ message: PlacedMessage }>();
 const { removeMessage } = useMessageStore();
-const { themeClasses } = useTheme({ theme: () => props.message.level });
+const { themeClasses } = useTheme(() => ({ color: props.message.level }));
 
 useTimeoutFn(() => removeMessage(props.message.id), 5000);
 </script>

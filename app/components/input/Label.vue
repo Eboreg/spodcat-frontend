@@ -1,10 +1,10 @@
 <script setup lang="ts">
-export type LabelProps = {
+export interface LabelProps {
   for?: string;
   length?: number;
   maxlength?: number;
   gridArea?: string;
-};
+}
 
 defineProps<LabelProps>();
 </script>

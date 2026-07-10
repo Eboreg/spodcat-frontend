@@ -1,21 +1,20 @@
 <script setup lang="ts">
 import type { BreakpointSizesArg } from "~/types";
 
-type Props = {
+interface Props {
   innerDuration?: string;
   outerDuration?: string;
   size?: BreakpointSizesArg;
   stroke?: string;
   strokeWidth?: string;
-};
+}
 
-const props = withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<Props>(), {
   innerDuration: "1.5s",
   outerDuration: "2s",
-  stroke: "var(--spod-color-boring-light)",
+  stroke: "var(--spod-gray-accented)",
   strokeWidth: "8px",
 });
-const stroke = computed(() => props.stroke ?? "var(--spod-color-boring-light)");
 </script>
 
 <template>
@@ -38,10 +37,12 @@ const stroke = computed(() => props.stroke ?? "var(--spod-color-boring-light)");
     stroke-dasharray: 1, 200;
     stroke-dashoffset: 0;
   }
+
   50% {
     stroke-dasharray: 89, 200;
     stroke-dashoffset: -35;
   }
+
   100% {
     stroke-dasharray: 89, 200;
     stroke-dashoffset: -124;

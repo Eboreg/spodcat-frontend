@@ -35,10 +35,11 @@ function onInput(event: InputEvent) {
 
 const props = withDefaults(defineProps<InputProps>(), { type: "text" });
 const emit = defineEmits<{ input: [InputEvent], validationMessage: [string] }>();
-
 const value = defineModel<string | number>();
-const multiline = computed(() => props.multiline && props.type === "text");
+
 const textarea = useTemplateRef("textarea");
+
+const multiline = computed(() => props.multiline && props.type === "text");
 const textareaStyle = computed(() =>
   textarea.value && import.meta.client ? window.getComputedStyle(textarea.value) : undefined,
 );

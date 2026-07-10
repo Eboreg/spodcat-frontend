@@ -16,7 +16,7 @@ const podcast = inject(podcastKey);
 </template>
 
 <style scoped lang="scss">
-@use "@/assets/scss/_responsive.scss" as *;
+@use "@/assets/scss/responsive" as *;
 
 main {
   display: grid;

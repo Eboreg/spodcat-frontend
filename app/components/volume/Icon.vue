@@ -18,10 +18,10 @@ defineProps<{ size?: BreakpointSizesArg }>();
   <SpodcatIcon
     :icon
     :size
-    class="p-half on-press-translate"
+    accented-on-active
+    class="p-half translated-on-press"
+    color-variant="accented"
     element="button"
-    theme="boring"
-    theme-variant="light"
-    lighten-on-hover
+    text="gray"
   />
 </template>

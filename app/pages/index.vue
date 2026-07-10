@@ -37,7 +37,7 @@ setLocale(detectLocale());
 
 <style scoped lang="scss">
 @font-face {
-  font-family: "Limelight-Regular";
+  font-family: Limelight-Regular;
   font-weight: 500;
   src: url("/fonts/Limelight-Regular.ttf") format(truetype);
 }
@@ -52,7 +52,7 @@ setLocale(detectLocale());
 
   .title {
     color: var(--spod-spodcat-blue);
-    font-family: "Limelight-Regular";
+    font-family: Limelight-Regular;
     font-size: 72px;
     line-height: 1;
   }

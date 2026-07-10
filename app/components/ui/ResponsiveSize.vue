@@ -5,33 +5,35 @@ import useResponsiveSize from "~/composables/useResponsiveSize";
 
 type Attribute = "size" | "font-size";
 
-const props = defineProps<{
-  attribute?: Attribute | Attribute[];
-  sizedElement?: string | Component;
-  size?: BreakpointSizesArg;
-}>();
-const classes = computed(() => {
-  if (typeof props.attribute === "string") return [props.attribute];
-  return props.attribute ?? [];
-});
-const { sizeString } = useResponsiveSize(props.size);
+const props = withDefaults(
+  defineProps<{
+    attribute?: Attribute | Attribute[];
+    sizedElement?: string | Component;
+    size?: BreakpointSizesArg;
+  }>(),
+  { sizedElement: "div", attribute: () => [] },
+);
+
+const { height, width } = useResponsiveSize(props.size);
 </script>
 
 <template>
-  <component :is="sizedElement ?? 'div'" class="responsive-size" :class="classes">
+  <component :is="sizedElement" class="responsive-size d-flex" :class="attribute">
     <slot />
   </component>
 </template>
 
-<style lang="scss">
-.responsive-size {
-  display: flex;
-}
+<style scoped lang="scss">
+// Yes, both are needed (the one on .size mostly for nested ResponsiveSize:s
+// or ones without child elements).
+.responsive-size.size,
 .responsive-size.size > * {
-  height: v-bind(sizeString);
-  width: v-bind(sizeString);
+  height: v-bind(height);
+  width: v-bind(width);
 }
+
+.responsive-size.font-size,
 .responsive-size.font-size > * {
-  font-size: v-bind(sizeString);
+  font-size: v-bind(height);
 }
 </style>

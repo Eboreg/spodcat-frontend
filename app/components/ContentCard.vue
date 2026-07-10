@@ -32,7 +32,7 @@ function openShareModal() {
     <a v-if="content" :id="content.slug" />
 
     <div class="bg column">
-      <Loading v-if="!content" height="120px" />
+      <Loading v-if="!content" height="120px" class="m-single" />
 
       <div v-else class="row">
         <MaybeLink is="div" :no-link="expand" :to="route" class="row align-center gap-single p-single fill">
@@ -42,9 +42,9 @@ function openShareModal() {
             <div class="fill column gap-quarter">
               <div class="font-weight-bold">{{ content.name }}</div>
               <div class="row column-gap-half row-gap-quarter wrap">
-                <Badge theme="secondary">
+                <Themed color="secondary" class="badge">
                   {{ getLocaleDateString(content.published, podcast?.language) }}
-                </Badge>
+                </Themed>
 
                 <slot name="badges" />
               </div>
@@ -53,16 +53,11 @@ function openShareModal() {
         </MaybeLink>
 
         <div class="row align-center gap-half pr-single">
-          <SpodcatIcon
+          <ContentCardIcon
             v-if="absoluteUrl && expand"
-            :icon-size="30"
             :icon="Share2"
-            :size="40"
             :title="t('share.share')"
-            class="on-hover-border"
-            element="button"
-            lighten-on-hover
-            text-theme="secondary"
+            color="secondary"
             @click="openShareModal"
           />
           <slot name="head-end" />

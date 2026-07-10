@@ -1,8 +1,8 @@
 <script setup lang="ts">
-export type ErrorsProps = {
+export interface ErrorsProps {
   errors?: string[];
   gridArea?: string;
-};
+}
 
 defineProps<ErrorsProps>();
 </script>

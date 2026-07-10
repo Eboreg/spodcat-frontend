@@ -1,50 +1,78 @@
-import type { Theme, ThemeVariant } from "~/types";
+import type { Theme, ThemeColor, ThemedProps } from "~/types";
 
-interface Args {
-  borderTheme?: MaybeRefOrGetter<Theme | undefined>;
-  darkenOnDisabled?: MaybeRefOrGetter<boolean>;
-  diagonalBg?: MaybeRefOrGetter<boolean>;
-  lightenOnActive?: MaybeRefOrGetter<boolean>;
-  lightenOnHover?: MaybeRefOrGetter<boolean>;
-  textTheme?: MaybeRefOrGetter<Theme>;
-  theme?: MaybeRefOrGetter<Theme>;
-  themeVariant?: MaybeRefOrGetter<ThemeVariant>;
-  transparent?: MaybeRefOrGetter<boolean>;
-}
+export default function useTheme(props: MaybeRefOrGetter<ThemedProps>) {
+  function unrefProps(): ThemedProps {
+    return toValue(props);
+  }
 
-export default function useTheme(args: MaybeRefOrGetter<Args>) {
-  const themeClasses = computed(() => {
-    const {
-      borderTheme,
-      darkenOnDisabled,
-      diagonalBg,
-      lightenOnActive,
-      lightenOnHover,
-      textTheme,
-      theme,
-      themeVariant,
-      transparent,
-    } = toValue(args);
-    const _theme = toValue(theme);
-    const _borderTheme = toValue(borderTheme);
-    const _textTheme = toValue(textTheme);
+  function ensureThemeObject(theme?: ThemeColor | Theme): Theme | undefined {
+    if (typeof theme === "string") return { ...defaults.value, color: theme };
+    if (theme !== undefined) return { ...defaults.value, ...theme };
+    return undefined;
+  }
 
-    if (!_theme && !_borderTheme && !_textTheme) return [];
+  function themeToClasses(prefix: string, theme?: Theme): string[] {
+    const classes = [];
 
-    return [
-      _theme ? `theme-${_theme}` : undefined,
-      _borderTheme ? `border-${_borderTheme}` : undefined,
-      _textTheme ? `text-${_textTheme}` : undefined,
-      toValue(themeVariant),
-      {
-        transparent: toValue(transparent),
-        "on-hover-lighten": toValue(lightenOnHover),
-        "on-active-lighten": toValue(lightenOnActive),
-        "on-disabled-darken": toValue(darkenOnDisabled),
-        "diagonal-bg": toValue(diagonalBg),
-      },
-    ];
+    if (theme?.color) classes.push(`${prefix}-${theme.color}`);
+    if (theme?.colorVariant) classes.push(`${prefix}-${theme.colorVariant}`);
+    if (theme?.accentedOnActive) classes.push(`${prefix}-accented-on-active`);
+    if (theme?.mutedOnDisabled) classes.push(`${prefix}-muted-on-disabled`);
+    return classes;
+  }
+
+  const background = computed<Theme | undefined>(() => {
+    const { background, transparent } = unrefProps();
+
+    if (transparent || background === "none") return undefined;
+    return ensureThemeObject(background ?? defaults.value);
   });
 
-  return { themeClasses };
+  const defaults = computed<Theme>(() => {
+    const { colorVariant, accentedOnActive, mutedOnDisabled, color } = unrefProps();
+    return { accentedOnActive, mutedOnDisabled, colorVariant, color };
+  });
+
+  const backgroundCssVars = computed(() => {
+    const bg = background.value;
+
+    if (bg?.color) {
+      return {
+        default: bg.colorVariant ? `var(--spod-${bg.color}-${bg.colorVariant})` : `var(--spod-${bg.color})`,
+        accented:
+          bg.colorVariant === "accented" ? `var(--spod-${bg.color}-accented-2)` : `var(--spod-${bg.color}-accented)`,
+        muted: bg.colorVariant === "muted" ? `var(--spod-${bg.color}-muted-2)` : `var(--spod-${bg.color}-muted)`,
+      };
+    }
+    return undefined;
+  });
+
+  const border = computed<Theme | undefined>(() => {
+    const { border } = unrefProps();
+
+    if (border === "none") return undefined;
+    return ensureThemeObject(border ?? defaults.value);
+  });
+
+  const text = computed<Theme | undefined>(() => {
+    const { text, transparent } = unrefProps();
+
+    if (text === "none") return undefined;
+    if (transparent) return ensureThemeObject(text ?? defaults.value);
+    return ensureThemeObject(text);
+  });
+
+  const themeClasses = computed(() => [
+    ...themeToClasses("bg", background.value),
+    ...themeToClasses("border", border.value),
+    ...themeToClasses("text", text.value),
+  ]);
+
+  return {
+    // background,
+    backgroundCssVars,
+    // border,
+    // text,
+    themeClasses,
+  };
 }

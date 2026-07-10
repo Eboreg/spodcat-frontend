@@ -1,7 +1,7 @@
 {
   "name": "spodcat-frontend",
   "type": "module",
-  "version": "0.11.0",
+  "version": "0.12.0",
   "packageManager": "pnpm@11.9.0",
   "license": " GPL-3.0-or-later",
   "scripts": {
@@ -9,6 +9,7 @@
     "dev": "nuxt dev",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
+    "lint:css": "stylelint 'app/**/*.scss' 'app/**/*.vue'",
     "postinstall": "nuxt prepare",
     "prepare": "nuxt prepare",
     "preview": "nuxt preview",
@@ -32,9 +33,15 @@
     "@antfu/eslint-config": "^9.1.0",
     "@iconify-json/mdi": "^1.2.3",
     "@nuxt/eslint": "1.16.0",
+    "csstype": "^3.2.3",
     "eslint": "^10.6.0",
+    "postcss-html": "^1.8.1",
     "prettier": "^3.8.5",
     "sass": "^1.101.0",
+    "stylelint": "^17.14.0",
+    "stylelint-config-standard": "^40.0.0",
+    "stylelint-config-standard-scss": "^17.0.0",
+    "stylelint-config-standard-vue": "^1.0.0",
     "typescript": "^6.0.3",
     "vue-tsc": "^3.3.5"
   }

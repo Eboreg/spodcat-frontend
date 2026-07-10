@@ -3,14 +3,14 @@ const { t } = useI18n();
 const popupVisible = shallowRef<boolean>(false);
 const container = useTemplateRef("container");
 
+defineProps<{ vertical?: boolean; alwaysCollapse?: boolean; }>();
 onClickOutside(container, () => (popupVisible.value = false));
-defineProps<{ vertical?: boolean }>();
 </script>
 
 <template>
-  <VolumeControlInner class="d-none d-lg-flex" :vertical />
+  <VolumeControlInner class="d-none" :class="{ 'd-xl-flex': !alwaysCollapse }" :vertical />
 
-  <div ref="container" class="d-lg-none pos-relative">
+  <div ref="container" class="pos-relative" :class="{ 'd-xl-none': !alwaysCollapse }">
     <VolumeIcon :size="30" :title="t('volume.volume')" @click="popupVisible = !popupVisible" />
     <Popup v-if="popupVisible">
       <VolumeControlInner :vertical />

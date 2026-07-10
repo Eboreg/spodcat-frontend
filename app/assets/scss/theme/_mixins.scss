@@ -1,0 +1,117 @@
+@use "sass:color";
+@use "sass:map";
+
+$color-names: ("primary" "secondary" "tertiary" "error" "info" "success" "gray" "gray-inverted");
+
+@mixin define-background-css-vars($background-colors) {
+  --spod-background-color-opaque: #{map.get($background-colors, "opaque")};
+  --spod-background-color: #{map.get($background-colors, "default")};
+  --spod-body-background: #{map.get($background-colors, "body")};
+  --spod-podcast-banner-background-1: #{map.get($background-colors, "podcast-banner-1")};
+  --spod-podcast-banner-background-2: #{map.get($background-colors, "podcast-banner-2")};
+}
+
+@mixin define-color-css-vars($color-map, $dark-mode: false, $interval: 0.1) {
+  /**
+   * Defines --spod-primary, --spod-secondary, etc.
+   * Also --spod-primary-muted-1..5 and --spod-primary-accented-1..5, etc.
+   * Also --spod-primary-muted, --spod-primary-accented, etc.
+   * $color-map: ("primary": #b13), ("secondary": #5014a0) etc.
+   * $dark-mode: "muted" is darker and "accented" lighter. Otherwise opposite.
+   */
+  @each $color-name, $color in $color-map {
+    // @for $i from 1 through 10 {
+      // Instead of a linear rise in lightness, it's a curve that "slows down"
+      // a bit in the middle. Not used ATM but kept for posterity.
+      // $l: calc((0.002 * pow($i, 3)) - (0.03 * pow($i, 2)) + (0.2 * $i));
+      // --spod-#{$color-name}-#{$i}: #{color.change($color, $lightness: $l, $space: oklab)};
+    // }
+    @for $i from 1 through 5 {
+      $darker: #{color.adjust($color, $lightness: calc($i * -1 * $interval), $space: oklab)};
+      $lighter: #{color.adjust($color, $lightness: calc($i * $interval), $space: oklab)};
+
+      @if $dark-mode {
+        --spod-#{$color-name}-muted-#{$i}: #{$darker};
+        --spod-#{$color-name}-accented-#{$i}: #{$lighter};
+      } @else {
+        --spod-#{$color-name}-muted-#{$i}: #{$lighter};
+        --spod-#{$color-name}-accented-#{$i}: #{$darker};
+      }
+    }
+
+    --spod-#{$color-name}: #{$color};
+    --spod-#{$color-name}-accented: var(--spod-#{$color-name}-accented-1);
+    --spod-#{$color-name}-muted: var(--spod-#{$color-name}-muted-1);
+  }
+}
+
+@mixin define-text-color-css-vars($text-color, $text-color-inverted, $text-color-muted: null, $text-color-inverted-muted: null) {
+  --spod-text-color: #{$text-color};
+  --spod-text-color-inverted: #{$text-color-inverted};
+  @if $text-color-muted {
+    --spod-text-color-muted: #{$text-color-muted};
+  }
+  @if $text-color-inverted-muted {
+    --spod-text-color-inverted-muted: #{$text-color-inverted-muted};
+  }
+}
+
+@mixin define-color-classes() {
+  /**
+   * Defines e.g.:
+   *   .bg-primary { background-color: var(--spod-primary) }
+   *   .text-secondary.text-accented { color: var(--spod-secondary-accented) }
+   * Requires define-named-color-css-vars().
+   */
+  $prefixed-properties: (
+    "bg": "background-color",
+    "text": "color",
+    "border": "border-color",
+  );
+
+  @each $color-name in $color-names {
+    @each $prefix, $property in $prefixed-properties {
+      .#{$prefix}-#{$color-name} {
+        #{$property}: var(--spod-#{$color-name});
+
+        &.#{$prefix}-accented {
+          #{$property}: var(--spod-#{$color-name}-accented);
+
+          &.#{$prefix}-muted-on-disabled.disabled {
+            #{$property}: var(--spod-#{$color-name});
+          }
+
+          &.#{$prefix}-accented-on-active:not(.disabled) {
+            &:hover, &:active, &:focus {
+              #{$property}: var(--spod-#{$color-name}-accented-2);
+            }
+          }
+        }
+
+        &.#{$prefix}-muted {
+          #{$property}: var(--spod-#{$color-name}-muted);
+
+          &.#{$prefix}-muted-on-disabled.disabled {
+            #{$property}: var(--spod-#{$color-name}-muted-2);
+          }
+
+          &.#{$prefix}-accented-on-active:not(.disabled) {
+            &:hover, &:active, &:focus {
+              #{$property}: var(--spod-#{$color-name});
+            }
+          }
+        }
+
+        &.#{$prefix}-accented-on-active:not(.disabled, .#{$prefix}-accented, .#{$prefix}-muted) {
+          &:hover, &:active, &:focus {
+            #{$property}: var(--spod-#{$color-name}-accented);
+          }
+        }
+
+        &.#{$prefix}-muted-on-disabled.disabled:not(.#{$prefix}-muted, .#{$prefix}-accented) {
+          #{$property}: var(--spod-#{$color-name}-muted);
+        }
+      }
+    }
+  }
+}

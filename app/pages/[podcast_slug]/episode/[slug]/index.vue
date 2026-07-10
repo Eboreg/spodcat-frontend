@@ -52,7 +52,7 @@ watchEffect(() => {
             <h2>{{ t("songs") }}</h2>
             <div v-for="song in episode.songs" :key="song.id" class="episode-song my-half">
               <span @click="audio.playEpisode(episode, podcast, song.start_time)">
-                <span class="text-boring pr-half">
+                <span class="text-gray pr-half">
                   {{ timeToString(song.start_time) }}
                 </span>
                 <span>{{ getSongDisplayString(song) }}</span>

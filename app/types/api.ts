@@ -1,4 +1,4 @@
-import type { Theme } from "@/types";
+import type { ThemeColor } from "@/types";
 
 export interface CategoryModel {
   cat: string;
@@ -38,7 +38,7 @@ export interface PodcastLinkModel {
   icon?: "facebook" | "discord" | "patreon" | "apple" | "android" | "spotify" | "itunes";
   id: number;
   label: string;
-  theme: Theme;
+  theme: ThemeColor;
   url: string;
 }
 

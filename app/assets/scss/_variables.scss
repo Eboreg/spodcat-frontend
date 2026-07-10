@@ -1,41 +1,10 @@
-@use "sass:map";
-
-$colors-primary: (
-  "dark": #620000,
-  "normal": #b13,
-  "light": #ff737d,
-) !default;
-
-$colors-secondary: (
-  "dark": #250061,
-  "normal": #5014a0,
-  "light": #845ae1,
-) !default;
-
-$colors-tertiary: (
-  "dark": #002601,
-  "normal": #3c643c,
-  "light": #7fa97e,
-) !default;
-
-$colors-boring: (
-  "dark": #222230,
-  "normal": #667,
-  "light": #b3b4c6,
-) !default;
-
-$colors-error: $colors-primary !default;
-$colors-info: $colors-secondary !default;
-$colors-success: $colors-tertiary !default;
-
-$color-themes: (
-  "boring": $colors-boring,
-  "error": $colors-error,
-  "info": $colors-info,
-  "primary": $colors-primary,
-  "secondary": $colors-secondary,
-  "success": $colors-success,
-  "tertiary": $colors-tertiary,
+$border-radii: (
+  "0": 0%,
+  "sm": 2px,
+  "md": 4px,
+  "lg": 8px,
+  "xl": 12px,
+  "100": 100%,
 ) !default;
 
 $border-widths: (
@@ -44,6 +13,15 @@ $border-widths: (
   "sm": 2px,
   "md": 4px,
   "lg": 8px,
+) !default;
+
+$font-sizes: (
+  "xs": 12px,
+  "sm": 14px,
+  "article": 14px,
+  "body": 16px,
+  "md": 16px,
+  "lg": 20px,
 ) !default;
 
 /**
@@ -77,51 +55,16 @@ $min-sizes: (
   "xxl": "1400px",
 ) !default;
 
-$text-colors: (
-  "on-dark": #eee,
-  "on-dark-variant": #bbb,
-  "on-light": #000,
-  "on-light-variant": #444,
-  "on-normal": #eee,
-  "on-normal-variant": #bbb,
-);
-
 $z-index: (
   "footer": 30,
   "toast": 40,
 ) !default;
 
-$font-sizes: (
-  "xs": 12px,
-  "sm": 14px,
-  "article": 14px,
-  "body": 16px,
-  "md": 16px,
-  "lg": 20px,
-) !default;
-
-$border-radii: (
-  "0": 0px,
-  "sm": 2px,
-  "md": 4px,
-  "lg": 8px,
-  "xl": 12px,
-  "100": 100%,
-) !default;
-
 $content-width: min(980px, calc(100dvw - 20px)) !default;
-$font-family: Arial, FreeSans, "Liberation Sans", sans-serif;
+$font-family: arial, freesans, "Liberation Sans", sans-serif;
 $modal-width: min(800px, calc(100dvw - 20px)) !default;
 $player-bar-height: 60px !default;
 $player-transition-duration: 0.2s !default;
 $spodcat-blue: #000067;
 $spodcat-yellow: #da9c3b;
 $toast-width: min(800px, calc(100dvw - 20px)) !default;
-
-$background-colors: (
-  "default": rgba(0, 0, 0, 0.8),
-  "opaque": #111,
-  "body": radial-gradient(circle at 100%, #33d, #333 60%, #f33 80%, #000 90%),
-  "podcast-banner-1": radial-gradient(circle at 0%, #33d, #333 33%, #f33 67%, #{$spodcat-yellow} 100%),
-  "podcast-banner-2": radial-gradient(circle at 0%, #{$spodcat-yellow}, #f33 33%, #333 67%, #33d 100%),
-) !default;

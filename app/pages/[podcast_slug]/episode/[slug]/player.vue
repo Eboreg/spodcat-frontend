@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Theme } from "~/types";
+import type { ThemeColor } from "~/types";
 import { ChevronDown, FastForward, Rewind } from "@lucide/vue";
 import useAudioStore from "~/composables/useAudioStore";
 import useEpisode from "~/composables/useEpisode";
@@ -23,7 +23,7 @@ const router = useRouter();
 const { t, setLocale } = useI18n();
 const audio = useAudioStore();
 
-const playButtonTheme: ComputedRef<Theme> = computed(() => {
+const playButtonTheme: ComputedRef<ThemeColor> = computed(() => {
   if (audio.isError) return "error";
   if (audio.isPlaying) return "info";
   return "success";
@@ -55,13 +55,13 @@ definePageMeta({
         :icon-size="30"
         :icon="ChevronDown"
         :size="40"
-        class="cursor-pointer on-press-translate"
-        lighten-on-hover
-        theme="boring"
-        theme-variant="light"
+        accented-on-active
+        class="cursor-pointer translated-on-press"
+        color-variant="accented"
+        text="gray"
         @click="onCloseClick"
       />
-      <div class="image-container theme-primary border-sm border-radius-lg">
+      <div class="image-container border-primary border-sm border-radius-lg">
         <img :src="audio.coverImageUrl" alt="">
       </div>
     </div>
@@ -86,32 +86,39 @@ definePageMeta({
     </template>
 
     <div class="row align-center button-row mb-single">
-      <VolumeControl vertical />
+      <VolumeControl vertical always-collapse />
 
       <Button
-        :icon="Rewind"
+        :border="{ colorVariant: 'muted' }"
         :icon-size="30"
+        :icon="Rewind"
         :size="40"
+        :text="{ colorVariant: 'accented' }"
         :title="t('rewind-10s')"
-        class="py-0 px-single border-radius-lg border-sm border-outset"
-        theme="secondary"
-        theme-variant="light"
+        class="py-0 px-half border-radius-lg border-sm border-outset"
+        color="gray"
         transparent
         @click="audio.seek(-10)"
       />
 
-      <RoundIcon :size="60" :theme="playButtonTheme" class="on-press-translate" lighten-on-hover>
-        <PlayButton no-theme :size="40" />
-      </RoundIcon>
+      <PlayButton
+        :color="playButtonTheme"
+        :icon-size="40"
+        :size="60"
+        class="p-0 border-sm border-radius-100"
+        bg-diagonal
+      />
 
       <Button
-        :icon="FastForward"
+        :border="{ colorVariant: 'muted' }"
         :icon-size="30"
+        :icon="FastForward"
         :size="40"
+        :text="{ colorVariant: 'accented' }"
         :title="t('forward-10s')"
-        class="p-0 border-radius-lg border-sm border-outset"
-        diagonal-bg
-        theme="secondary"
+        class="p-0 px-half border-radius-lg border-sm border-outset"
+        color="gray"
+        transparent
         @click="audio.seek(10)"
       />
 
@@ -121,8 +128,6 @@ definePageMeta({
 </template>
 
 <style scoped lang="scss">
-@use "@/assets/scss/_color.scss" as *;
-
 .container {
   justify-content: space-between;
   width: 100%;

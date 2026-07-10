@@ -1,0 +1,21 @@
+@use "sass:list";
+
+@function add-empty($list) {
+  @return list.join((""), $list);
+}
+
+@function format-prefix($v) {
+  @if $v == "" {
+    @return "";
+  }
+  @return "#{$v}-";
+}
+
+@function adjust-lightness($color, $amount: 0) {
+  /** Positive $amount == lighten */
+  @if $amount == 0 {
+    @return $color;
+  }
+
+  @return oklab(from #{$color} calc(l * (1 + $amount)) a b);
+}

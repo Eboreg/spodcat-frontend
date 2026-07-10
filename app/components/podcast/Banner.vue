@@ -40,7 +40,7 @@ const nameCssStyle = computed(() =>
         >
         <div>
           <div :class="nameCssClass" :style="nameCssStyle">{{ podcast.name }}</div>
-          <div v-if="podcast.tagline" class="podcast-tagline outlined-text mt-quarter">
+          <div v-if="podcast.tagline" class="font-size-article outlined-text mt-quarter">
             {{ podcast.tagline }}
           </div>
         </div>
@@ -52,7 +52,15 @@ const nameCssStyle = computed(() =>
 </template>
 
 <style scoped lang="scss">
-@use "@/assets/scss/_responsive.scss" as *;
+@use "@/assets/scss/responsive" as *;
+
+.outlined-text {
+  text-shadow:
+    min(-1px, -0.02em) min(-1px, -0.02em) 0.02em black,
+    min(-1px, -0.02em) max(1px, 0.02em) 0.02em black,
+    max(1px, 0.02em) min(-1px, -0.02em) 0.02em black,
+    max(1px, 0.02em) max(1px, 0.02em) 0.02em black;
+}
 
 .podcast-banner {
   justify-content: center;
@@ -132,7 +140,12 @@ const nameCssStyle = computed(() =>
   }
 }
 
-.podcast-tagline {
-  font-size: var(--spod-font-size-article);
+.shadowed-text {
+  text-shadow:
+    min(-1px, -0.02em) min(-1px, -0.02em) 0.01em black,
+    min(-1px, -0.02em) max(1px, 0.02em) 0.01em black,
+    max(1px, 0.02em) min(-1px, -0.02em) 0.01em black,
+    max(1px, 0.02em) max(1px, 0.02em) 0.01em black,
+    0.04em 0.1em black;
 }
 </style>

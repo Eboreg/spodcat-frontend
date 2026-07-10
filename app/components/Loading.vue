@@ -19,6 +19,7 @@ const { t } = useI18n();
   0% {
     left: -110%;
   }
+
   100% {
     left: 10%;
   }
@@ -28,9 +29,11 @@ const { t } = useI18n();
   0% {
     width: 0%;
   }
+
   50% {
     width: 100%;
   }
+
   100% {
     width: 0%;
   }
@@ -38,14 +41,16 @@ const { t } = useI18n();
 
 @keyframes text {
   0% {
-    font-size: 0px;
+    font-size: 0;
     left: -50%;
   }
+
   50% {
     font-size: v-bind(actualHeightString);
   }
+
   100% {
-    font-size: 0px;
+    font-size: 0;
     left: 50%;
   }
 }
@@ -57,7 +62,6 @@ const { t } = useI18n();
   justify-content: center;
   overflow: hidden;
   position: relative;
-  width: 100%;
 }
 
 .text {
@@ -65,7 +69,7 @@ const { t } = useI18n();
   animation-iteration-count: infinite;
   animation-name: text;
   animation-timing-function: ease-in-out;
-  font-size: 0px;
+  font-size: 0;
   left: -50%;
   position: relative;
   text-transform: uppercase;
@@ -90,11 +94,11 @@ const { t } = useI18n();
   animation-timing-function: ease-in-out;
   background-image: linear-gradient(
     90deg,
-    rgb(from var(--spod-spodcat-yellow) r g b / 0),
+    rgb(from var(--spod-spodcat-yellow) r g b / 0%),
     #f33 25%,
     #33d 50%,
     #f33 75%,
-    rgb(from var(--spod-spodcat-yellow) r g b / 0) 100%
+    rgb(from var(--spod-spodcat-yellow) r g b / 0%) 100%
   );
   height: 100%;
 }

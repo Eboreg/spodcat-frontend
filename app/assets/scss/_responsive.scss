@@ -1,6 +1,6 @@
 @use "sass:map";
-@use "sass:list";
 @use "variables" as *;
+@use "functions" as *;
 
 $dimens: (
   "t": (
@@ -24,17 +24,6 @@ $dimens: (
     "bottom",
   ),
 );
-
-@function add-empty($list) {
-  @return list.join((""), $list);
-}
-
-@function format-prefix($v) {
-  @if $v == "" {
-    @return "";
-  }
-  @return "#{$v}-";
-}
 
 @mixin maxsize($size) {
   @if $size == "" {

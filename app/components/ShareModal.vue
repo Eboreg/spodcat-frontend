@@ -54,11 +54,10 @@ onUnmounted(() => clearMessages("shareModal"));
             :icon="Copy"
             :size="20"
             :title="t('share.copy-address')"
-            class="cursor-pointer on-press-translate"
+            accented-on-active
+            class="cursor-pointer translated-on-press"
             element="button"
-            theme="boring"
-            theme-variant="light"
-            lighten-on-hover
+            color="gray"
             @click="onCopyClick"
           />
         </div>
@@ -66,9 +65,8 @@ onUnmounted(() => clearMessages("shareModal"));
           <Button
             :to="`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(contentUrl)}`"
             class="small"
-            theme="boring"
-            theme-variant="dark"
             new-tab
+            color="gray-inverted"
           >
             <Icon name="mdi:facebook" class="share-icon" />
             <span class="nowrap">{{ t("share.the-facebook") }}</span>
@@ -76,9 +74,8 @@ onUnmounted(() => clearMessages("shareModal"));
           <Button
             :to="`https://x.com/intent/tweet?url=${encodeURIComponent(contentUrl)}`"
             class="small"
-            theme="boring"
-            theme-variant="dark"
             new-tab
+            color="gray-inverted"
           >
             <Icon name="mdi:twitter" class="share-icon" />
             <span class="nowrap">{{ t("share.eggs") }}</span>
@@ -86,9 +83,8 @@ onUnmounted(() => clearMessages("shareModal"));
           <Button
             :to="`https://t.me/share/url?url=${encodeURIComponent(contentUrl)}`"
             class="small"
-            theme="boring"
-            theme-variant="dark"
             new-tab
+            color="gray-inverted"
           >
             <Icon name="mdi:telegram" class="share-icon" />
             <span class="nowrap">{{ t("share.telegram") }}</span>
@@ -96,9 +92,8 @@ onUnmounted(() => clearMessages("shareModal"));
           <Button
             :to="`https://api.whatsapp.com/send?text=${encodeURIComponent(contentUrl)}`"
             class="small"
-            theme="boring"
-            theme-variant="dark"
             new-tab
+            color="gray-inverted"
           >
             <Icon name="mdi:whatsapp" class="share-icon" />
             <span class="nowrap">{{ t("share.whatsapp") }}</span>
@@ -126,8 +121,8 @@ onUnmounted(() => clearMessages("shareModal"));
 <style scoped lang="scss">
 .current-time-string {
   background-color: inherit;
-  border-color: var(--spod-text-color-on-dark-variant);
-  border-width: 0 0 1px 0;
+  border-color: var(--spod-text-color-muted);
+  border-width: 0 0 1px;
   color: inherit;
   width: 70px;
 

@@ -115,12 +115,10 @@ watchEffect(() => {
 }
 
 .dbfs-column {
-  flex-basis: v-bind(dbfsColumnFlexBasis);
-  flex-grow: 1;
-  flex-shrink: 1;
+  flex: 1 1 v-bind(dbfsColumnFlexBasis);
 
   div {
-    background-color: var(--spod-text-color-on-dark);
+    background-color: var(--spod-text-color);
     height: 100%;
     width: max(60%, 3px);
   }

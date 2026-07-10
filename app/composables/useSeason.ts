@@ -1,8 +1,9 @@
-import type { Theme } from "~/types";
-import { THEMES } from "~/constants";
+import type { ThemeColor } from "~/types";
 
-function getSeasonTheme(number: number): Theme {
-  return THEMES[number % (THEMES.length - 1)]!;
+const colors: ThemeColor[] = ["primary", "secondary", "tertiary", "gray-inverted"];
+
+function getSeasonTheme(number: number): ThemeColor {
+  return colors[number % (colors.length - 1)]!;
 }
 
 export default function useSeason(

@@ -38,8 +38,8 @@ useResizeObserver(container, ([entry]) => {
     </h3>
     <p>{{ t("video.embed-explanation") }}</p>
     <div class="row gap-half wrap">
-      <Button theme="primary" @click="$emit('consentClick')">{{ t("video.show-embedded") }}</Button>
-      <Button :to="`https://youtu.be/${video.video_id}`" new-tab theme="secondary">
+      <Button color="primary" @click="$emit('consentClick')">{{ t("video.show-embedded") }}</Button>
+      <Button :to="`https://youtu.be/${video.video_id}`" new-tab color="secondary">
         {{ t("video.open-new-tab") }}
       </Button>
     </div>

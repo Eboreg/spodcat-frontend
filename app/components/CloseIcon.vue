@@ -12,10 +12,10 @@ const { t } = useI18n();
     :icon="X"
     :size="size ?? 20"
     :title="t('close')"
-    class="on-press-translate"
+    accented-on-active
+    class="translated-on-press"
+    color-variant="accented"
+    color="gray"
     element="button"
-    theme="boring"
-    theme-variant="light"
-    lighten-on-hover
   />
 </template>

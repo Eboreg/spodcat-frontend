@@ -13,7 +13,7 @@ const podcast = inject(podcastKey);
     :icon="ArrowLeft"
     :to="`/${podcast.slug}/`"
     class="mb-half"
-    theme="secondary"
+    color="secondary"
   >
     <span>{{ t("go-to-x", { x: podcast.name }) }}</span>
   </Button>

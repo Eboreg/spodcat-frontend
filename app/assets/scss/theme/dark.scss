@@ -1,0 +1,38 @@
+@use "./mixins" as *;
+@use "../variables" as *;
+
+$red: #b13 !default;
+$blue: #5014a0 !default;
+$green: #3c643c !default;
+$gray: #8f8fa2 !default;
+$gray-inverted: #3b3a4b;
+$text-color: #fff !default;
+$text-color-muted: #ccc !default;
+$text-color-inverted: #000 !default;
+$text-color-inverted-muted: #333 !default;
+
+$theme-base-colors: (
+  "primary": $red,
+  "secondary": $blue,
+  "tertiary": $green,
+  "error": $red,
+  "info": $blue,
+  "success": $green,
+  "gray": $gray,
+  "gray-inverted": $gray-inverted,
+) !default;
+
+$background-colors: (
+  "default": rgba(0, 0, 0, 80%),
+  "opaque": #111,
+  "body": radial-gradient(circle at 100%, #33d, #333 60%, #f33 80%, #000 90%),
+  "podcast-banner-1": radial-gradient(circle at 0%, #33d, #333 33%, #f33 67%, #{$spodcat-yellow} 100%),
+  "podcast-banner-2": radial-gradient(circle at 0%, #{$spodcat-yellow}, #f33 33%, #333 67%, #33d 100%),
+) !default;
+
+body.dark {
+  @include define-color-css-vars($color-map: $theme-base-colors, $dark-mode: true);
+  @include define-text-color-css-vars($text-color, $text-color-inverted, $text-color-muted, $text-color-inverted-muted);
+  @include define-background-css-vars($background-colors);
+  @include define-color-classes;
+}

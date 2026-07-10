@@ -69,16 +69,16 @@ function onKeyDown(event: KeyboardEvent) {
   <Modal v-model="isOpen" @keydown="onKeyDown">
     <template #header>
       <div class="row align-center">
-        <SpodcatIcon :icon="Search" :size="25" class="p-half" theme="boring" />
+        <Themed :is="Search" color="gray" :size="25" class="p-half" transparent />
         <input v-model="term" type="search" autofocus class="search-input">
       </div>
     </template>
 
     <template #default>
-      <div v-if="showMinCharsText" class="px-single pb-half font-size-sm text-boring">
+      <div v-if="showMinCharsText" class="px-single pb-half font-size-sm text-gray">
         {{ t("enter-min-3-chars") }}
       </div>
-      <div v-if="showEmptyResultText" class="px-single pb-half font-size-sm text-boring">
+      <div v-if="showEmptyResultText" class="px-single pb-half font-size-sm text-gray">
         {{ t("no-search-results") }}
       </div>
       <Loading v-if="isLoading" height="54px" />
@@ -94,8 +94,8 @@ function onKeyDown(event: KeyboardEvent) {
           @focus="activeIdx = index"
         >
           <div class="row align-center gap-single">
-            <SpodcatIcon v-if="result.resourcetype === 'episode'" :icon="Podcast" :size="24" />
-            <SpodcatIcon v-else-if="result.resourcetype === 'post'" :icon="FileText" :size="24" />
+            <Podcast v-if="result.resourcetype === 'episode'" :size="24" />
+            <FileText v-else-if="result.resourcetype === 'post'" :size="24" />
             <div class="column">
               <div class="breadcrumbs mb-quarter">
                 {{ getLocaleDateString(result.published, podcast?.language) }}
@@ -111,7 +111,7 @@ function onKeyDown(event: KeyboardEvent) {
 
 <style scoped lang="scss">
 .breadcrumbs {
-  color: var(--spod-text-color-on-dark-variant);
+  color: var(--spod-text-color-muted);
   font-size: 13px;
 }
 
@@ -122,7 +122,7 @@ function onKeyDown(event: KeyboardEvent) {
 .search-input {
   background-color: transparent;
   border: none;
-  color: var(--spod-text-color-on-dark);
+  color: var(--spod-text-color);
   font-family: var(--spod-font-family);
   font-size: var(--spod-font-size-body);
   height: 44px;
@@ -132,11 +132,11 @@ function onKeyDown(event: KeyboardEvent) {
 
 .search-result {
   &.active {
-    background-color: var(--spod-color-primary-normal);
+    background-color: var(--spod-primary);
   }
 
   &:hover:not(.active) {
-    background-color: var(--spod-color-boring-dark);
+    background-color: var(--spod-gray-muted-3);
   }
 }
 
