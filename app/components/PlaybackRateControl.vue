@@ -42,7 +42,7 @@ onClickOutside(container, () => (popupVisible.value = false));
           x: playbackRates.find((r) => r.rate === audio.rate)?.label,
         })
       "
-      class="p-half translated-on-press"
+      class="m-half translated-on-press"
       element="button"
       @click="popupVisible = !popupVisible"
     />

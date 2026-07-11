@@ -19,7 +19,7 @@ defineProps<{ size?: BreakpointSizesArg }>();
     :icon
     :size
     accented-on-active
-    class="p-half translated-on-press"
+    class="translated-on-press"
     color-variant="accented"
     element="button"
     text="gray"

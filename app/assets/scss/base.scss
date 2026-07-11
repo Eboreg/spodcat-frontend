@@ -83,6 +83,10 @@
   }
 }
 
+* {
+  box-sizing: content-box;
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -111,7 +115,6 @@ html {
 button {
   background-color: unset;
   border: unset;
-  box-sizing: content-box;
   color: unset;
   cursor: pointer;
   font-family: inherit;
@@ -220,6 +223,10 @@ input:disabled {
   font-weight: bold;
 }
 
+.h-100 {
+  height: 100%;
+}
+
 .iconify {
   mask-origin: content-box;
 }
@@ -230,6 +237,10 @@ input:disabled {
 
 .overflow-x-hidden {
   overflow-x: hidden;
+}
+
+.pos-absolute {
+  position: absolute;
 }
 
 .pos-relative {
@@ -251,6 +262,10 @@ input:disabled {
 
 .translated-on-press:active:not(.loading, .disabled) {
   translate: 1px 1px;
+}
+
+.w-100 {
+  width: 100%;
 }
 
 .wrap {

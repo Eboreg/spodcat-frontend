@@ -82,7 +82,7 @@ watch([pointer.x, pointer.pressure, pointer.isInside], () => {
 });
 
 watchEffect(() => {
-  if (dbfsBar.value !== null) dbfsBarWidth.value = dbfsBar.value.clientWidth;
+  if (dbfsBar.value) dbfsBarWidth.value = dbfsBar.value.clientWidth;
 });
 </script>
 

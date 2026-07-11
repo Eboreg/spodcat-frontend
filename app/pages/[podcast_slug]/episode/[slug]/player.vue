@@ -16,12 +16,33 @@ function onCloseClick() {
 const route = useRoute();
 const podcastSlug = route.params.podcast_slug as string;
 const slug = route.params.slug as string;
+
 const { episode } = useEpisode(podcastSlug, slug);
 const { podcast } = usePodcast(podcastSlug);
 const router = useRouter();
-
 const { t, setLocale } = useI18n();
 const audio = useAudioStore();
+const container = useTemplateRef("container");
+const containerHeight = computed(() => container.value?.offsetHeight);
+const top = shallowRef<number>(0);
+
+const { distanceY, isSwiping } = usePointerSwipe(container, {
+  disableTextSelect: true,
+  onSwipe: () => {
+    if (distanceY.value < 0) {
+      top.value = Math.abs(distanceY.value);
+    } else {
+      top.value = 0;
+    }
+  },
+  onSwipeEnd: () => {
+    if (distanceY.value < 0 && containerHeight.value && (Math.abs(distanceY.value) / containerHeight.value) >= 0.5) {
+      onCloseClick();
+    } else {
+      top.value = 0;
+    }
+  },
+});
 
 const playButtonTheme: ComputedRef<ThemeColor> = computed(() => {
   if (audio.isError) return "error";
@@ -49,80 +70,92 @@ definePageMeta({
 </script>
 
 <template>
-  <div class="container primary-top-border bg-opaque p-single column gap-single overflow-x-hidden">
-    <div class="column gap-single image-wrapper">
-      <SpodcatIcon
-        :icon-size="30"
-        :icon="ChevronDown"
-        :size="40"
-        accented-on-active
-        class="cursor-pointer translated-on-press"
-        color-variant="accented"
-        text="gray"
-        @click="onCloseClick"
-      />
-      <div class="image-container border-primary border-sm border-radius-lg">
-        <img :src="audio.coverImageUrl" alt="">
-      </div>
+  <div class="w-100">
+    <div v-if="top > 0" class="p-single" :style="{ height: `${top}px`, boxSizing: 'border-box' }">
+      <Loading height="100%" />
     </div>
 
-    <Loading v-if="!episode" height="120px" />
-    <template v-else>
-      <div class="column align-center gap-half">
-        <HorizontalScroll class="font-size-lgze-lg">
-          <NuxtLink :to="`/${episode.podcast}/episode/${episode.slug}`">
-            {{ episode.name }}
-          </NuxtLink>
-        </HorizontalScroll>
-        <HorizontalScroll>{{ episode.podcast_name }}</HorizontalScroll>
-      </div>
-      <div class="column">
-        <DbfsBar :episode margin-x="1rem" />
-        <div class="row space-between">
-          <div class="font-size-xs time-string">{{ timeToString(audio.currentTime) }}</div>
-          <div class="font-size-xs time-string">{{ timeToString(audio.duration) }}</div>
+    <div
+      ref="container"
+      class="container primary-top-border bg-opaque p-single column gap-single overflow-x-hidden pos-absolute"
+      :class="{ 'container-transition': !isSwiping }"
+      :style="{ top: `${top}px` }"
+    >
+      <div class="column gap-single image-wrapper">
+        <SpodcatIcon
+          :icon-size="30"
+          :icon="ChevronDown"
+          :size="40"
+          accented-on-active
+          class="cursor-pointer translated-on-press"
+          color-variant="accented"
+          text="gray"
+          @click="onCloseClick"
+        />
+        <div class="image-container border-primary border-sm border-radius-lg">
+          <img :src="audio.coverImageUrl" alt="">
         </div>
       </div>
-    </template>
 
-    <div class="row align-center button-row mb-single">
-      <VolumeControl vertical always-collapse />
+      <Loading v-if="!episode" height="120px" />
+      <template v-else>
+        <div class="column align-center gap-half">
+          <HorizontalScroll class="font-size-lgze-lg">
+            <NuxtLink :to="`/${episode.podcast}/episode/${episode.slug}`">
+              {{ episode.name }}
+            </NuxtLink>
+          </HorizontalScroll>
+          <HorizontalScroll>{{ episode.podcast_name }}</HorizontalScroll>
+        </div>
 
-      <Button
-        :border="{ colorVariant: 'muted' }"
-        :icon-size="30"
-        :icon="Rewind"
-        :size="40"
-        :text="{ colorVariant: 'accented' }"
-        :title="t('rewind-10s')"
-        class="py-0 px-half border-radius-lg border-sm border-outset"
-        color="gray"
-        transparent
-        @click="audio.seek(-10)"
-      />
+        <div class="column">
+          <DbfsBar :episode margin-x="1rem" />
+          <div class="row space-between">
+            <div class="font-size-xs time-string">{{ timeToString(audio.currentTime) }}</div>
+            <div class="font-size-xs time-string">{{ timeToString(audio.duration) }}</div>
+          </div>
+        </div>
+      </template>
 
-      <PlayButton
-        :color="playButtonTheme"
-        :icon-size="40"
-        :size="60"
-        class="p-0 border-sm border-radius-100"
-        bg-diagonal
-      />
+      <div class="row align-center button-row mb-single">
+        <VolumeControl vertical always-collapse />
 
-      <Button
-        :border="{ colorVariant: 'muted' }"
-        :icon-size="30"
-        :icon="FastForward"
-        :size="40"
-        :text="{ colorVariant: 'accented' }"
-        :title="t('forward-10s')"
-        class="p-0 px-half border-radius-lg border-sm border-outset"
-        color="gray"
-        transparent
-        @click="audio.seek(10)"
-      />
+        <Button
+          :border="{ colorVariant: 'muted' }"
+          :icon-size="30"
+          :icon="Rewind"
+          :size="40"
+          :text="{ colorVariant: 'accented' }"
+          :title="t('rewind-10s')"
+          class="py-0 px-half border-radius-lg border-sm border-outset"
+          color="gray"
+          transparent
+          @click="audio.seek(-10)"
+        />
 
-      <PlaybackRateControl />
+        <PlayButton
+          :color="playButtonTheme"
+          :icon-size="40"
+          :size="60"
+          class="p-0 border-sm border-radius-100"
+          bg-diagonal
+        />
+
+        <Button
+          :border="{ colorVariant: 'muted' }"
+          :icon-size="30"
+          :icon="FastForward"
+          :size="40"
+          :text="{ colorVariant: 'accented' }"
+          :title="t('forward-10s')"
+          class="p-0 px-half border-radius-lg border-sm border-outset"
+          color="gray"
+          transparent
+          @click="audio.seek(10)"
+        />
+
+        <PlaybackRateControl />
+      </div>
     </div>
   </div>
 </template>
@@ -130,7 +163,12 @@ definePageMeta({
 <style scoped lang="scss">
 .container {
   justify-content: space-between;
-  width: 100%;
+}
+
+.container-transition {
+  transition-property: top;
+  transition-duration: 0.2s;
+  transition-timing-function: linear;
 }
 
 .image-wrapper {

@@ -1,10 +1,10 @@
 <script setup lang="ts">
-defineProps<{ height?: string }>();
-
+const props = defineProps<{ height?: string | number }>();
 const outer = useTemplateRef("outer");
 const { height: actualHeight } = useElementSize(outer);
 const actualHeightString = computed(() => `${actualHeight.value}px`);
 const { t } = useI18n();
+const heightString = computed(() => typeof props.height === "number" ? `${props.height}px` : props.height);
 </script>
 
 <template>
@@ -19,7 +19,6 @@ const { t } = useI18n();
   0% {
     left: -110%;
   }
-
   100% {
     left: 10%;
   }
@@ -29,11 +28,9 @@ const { t } = useI18n();
   0% {
     width: 0%;
   }
-
   50% {
     width: 100%;
   }
-
   100% {
     width: 0%;
   }
@@ -44,11 +41,9 @@ const { t } = useI18n();
     font-size: 0;
     left: -50%;
   }
-
   50% {
     font-size: v-bind(actualHeightString);
   }
-
   100% {
     font-size: 0;
     left: 50%;
@@ -58,10 +53,11 @@ const { t } = useI18n();
 .outer {
   align-items: center;
   display: flex;
-  height: v-bind(height);
+  height: v-bind(heightString);
   justify-content: center;
   overflow: hidden;
   position: relative;
+  width: 100%;
 }
 
 .text {

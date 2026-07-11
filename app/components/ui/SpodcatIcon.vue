@@ -27,10 +27,10 @@ const iconElement = computed(() => iconName.value ? Icon : props.icon);
     <ResponsiveSize
       v-if="innerSize !== outerSize"
       :attribute="innerSizeAttribute"
-      :name="iconName"
       :size="innerSize"
-      :sized-element="iconElement"
-    />
+    >
+      <component :is="iconElement" :name="iconName" />
+    </ResponsiveSize>
     <component :is="iconElement" v-else :name="iconName" />
   </ResponsiveSize>
 </template>

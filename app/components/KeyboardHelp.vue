@@ -15,7 +15,7 @@ onClickOutside(container, () => (isPopupOpen.value = false));
       :size="30"
       :title="t('keyboard.shortcuts')"
       accented-on-active
-      class="p-half translated-on-press"
+      class="m-half translated-on-press"
       color-variant="accented"
       element="button"
       text="gray"

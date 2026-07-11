@@ -14,7 +14,7 @@ defineProps<{ vertical?: boolean }>();
 </script>
 
 <template>
-  <div class="align-center p-half gap-half" :class="{ column: vertical, row: !vertical }">
+  <div class="align-center gap-half" :class="{ column: vertical, row: !vertical }">
     <VolumeIcon
       :size="30"
       :title="audio.muted ? t('volume.unmute') : t('volume.mute')"
