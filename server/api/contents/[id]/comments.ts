@@ -1,5 +1,4 @@
 import type { CommentModel } from "@/types/api";
-import { makeBackendUrl } from "@/utils";
 
 export default defineEventHandler(async (event) => {
   const podcast_content = getRouterParam(event, "id");
