@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { PartialPodcastModel } from "@/types/api";
+import type { PartialPodcastModel } from "~/types/api";
 
 // Don't use inject() for podcast here! That would fuck up pages/index.vue.
 const props = defineProps<{ podcast?: PartialPodcastModel; compact?: boolean }>();
@@ -52,7 +52,7 @@ const nameCssStyle = computed(() =>
 </template>
 
 <style scoped lang="scss">
-@use "@/assets/scss/responsive" as *;
+@use "~/assets/scss/responsive" as *;
 
 .outlined-text {
   text-shadow:

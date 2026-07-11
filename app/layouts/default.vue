@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import useAudioStore from "@/composables/useAudioStore";
-import useMessageStore from "@/composables/useMessageStore";
+import useAudioStore from "~/composables/useAudioStore";
+import useMessageStore from "~/composables/useMessageStore";
 
 const audio = useAudioStore();
 const messages = useMessageStore();

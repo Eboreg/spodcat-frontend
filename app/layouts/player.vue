@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import useMessageStore from "@/composables/useMessageStore";
+import useMessageStore from "~/composables/useMessageStore";
 
 const messages = useMessageStore();
 </script>

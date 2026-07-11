@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { DiagonalBackgroundProps } from "@/components/ui/DiagonalBackground.vue";
-import type { SpodcatIconProps } from "@/components/ui/SpodcatIcon.vue";
+import type { DiagonalBackgroundProps } from "~/components/ui/DiagonalBackground.vue";
+import type { SpodcatIconProps } from "~/components/ui/SpodcatIcon.vue";
 import useTheme from "~/composables/useTheme";
 
 interface Props extends Omit<SpodcatIconProps, "icon" | "iconSize">, DiagonalBackgroundProps {

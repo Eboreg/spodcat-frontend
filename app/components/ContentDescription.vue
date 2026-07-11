@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { PodcastContentModel } from "@/types/api";
-import { podcastKey } from "@/symbols";
+import type { PodcastContentModel } from "~/types/api";
+import { podcastKey } from "~/symbols";
 
 const props = defineProps<{ content?: PodcastContentModel }>();
 const consent = shallowRef<boolean>(false);

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { PartialEpisodeModel, PodcastModel } from "@/types/api";
+import type { PartialEpisodeModel, PodcastModel } from "~/types/api";
 import { Podcast } from "@lucide/vue";
 import useSeason from "~/composables/useSeason";
 
@@ -25,8 +25,8 @@ const numberString = computed(() => props.episode?.number?.toLocaleString("sv") 
     <img v-else-if="season?.image_thumbnail" :src="season.image_thumbnail" alt="">
     <ResponsiveSize
       v-else-if="numberString"
-      attribute="font-size"
       :size="{ xs: 16, sm: numberString.length <= 3 ? 20 : 16 }"
+      attribute="font-size"
     >
       {{ numberString }}
     </ResponsiveSize>

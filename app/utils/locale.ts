@@ -1,5 +1,5 @@
-import type { SupportedLocale } from "@/types";
-import { SUPPORTED_LOCALES } from "@/constants";
+import type { SupportedLocale } from "~/types";
+import { SUPPORTED_LOCALES } from "~/constants";
 
 function isSupportedLocale(value: string): value is SupportedLocale {
   return SUPPORTED_LOCALES.includes(value as SupportedLocale);

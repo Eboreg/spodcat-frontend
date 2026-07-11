@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ArrowLeft } from "@lucide/vue";
-import { podcastKey } from "@/symbols";
+import { podcastKey } from "~/symbols";
 
 const { t } = useI18n();
 const podcast = inject(podcastKey);

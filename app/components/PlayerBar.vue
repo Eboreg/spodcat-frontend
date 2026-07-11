@@ -42,18 +42,18 @@ const titlesRoute = computed(() => {
           :icon="Rewind"
           :size="30"
           :title="t('rewind-10s')"
-          text="gray"
-          color-variant="accented"
           class="border-0"
+          color-variant="accented"
+          text="gray"
           @click="audio.seek(-10)"
         />
         <Button
           :icon="FastForward"
           :size="30"
           :title="t('forward-10s')"
-          text="gray"
-          color-variant="accented"
           class="border-0"
+          color-variant="accented"
+          text="gray"
           @click="audio.seek(10)"
         />
       </div>
@@ -68,7 +68,7 @@ const titlesRoute = computed(() => {
 </template>
 
 <style scoped lang="scss">
-@use "@/assets/scss/responsive" as *;
+@use "~/assets/scss/responsive" as *;
 
 .player-bar > .row {
   height: var(--spod-player-bar-height);

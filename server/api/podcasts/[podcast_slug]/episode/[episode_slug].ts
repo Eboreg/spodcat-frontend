@@ -1,4 +1,4 @@
-import type { EpisodeModel } from "@/types/api";
+import type { EpisodeModel } from "~/types/api";
 
 export default defineEventHandler(async (event) => {
   const podcast = getRouterParam(event, "podcast_slug");

@@ -53,13 +53,11 @@ const playButtonTheme: ComputedRef<ThemeColor> = computed(() => {
 provide(podcastSlugKey, podcastSlug);
 useSpodcatHead({ podcast, episode });
 
-watchEffect(() => {
+watch([episode, podcast], () => {
   if (episode.value) audio.setEpisode(episode.value, podcast.value);
-});
+}, { immediate: true });
 
-watchEffect(() => {
-  setLocale(detectLocale(podcast.value?.language));
-});
+watch(podcast, () => setLocale(detectLocale(podcast.value?.language)), { immediate: true });
 
 definePageMeta({
   layout: "player",
@@ -71,15 +69,15 @@ definePageMeta({
 
 <template>
   <div class="w-100">
-    <div v-if="top > 0" class="p-single" :style="{ height: `${top}px`, boxSizing: 'border-box' }">
+    <div v-if="top > 0" class="p-single loading-container" :style="{ height: `${top}px` }">
       <Loading height="100%" />
     </div>
 
     <div
       ref="container"
-      class="container primary-top-border bg-opaque p-single column gap-single overflow-x-hidden pos-absolute"
       :class="{ 'container-transition': !isSwiping }"
       :style="{ top: `${top}px` }"
+      class="container primary-top-border bg-opaque p-single column gap-single overflow-x-hidden"
     >
       <div class="column gap-single image-wrapper">
         <SpodcatIcon
@@ -137,8 +135,8 @@ definePageMeta({
           :color="playButtonTheme"
           :icon-size="40"
           :size="60"
-          class="p-0 border-sm border-radius-100"
           bg-diagonal
+          class="p-0 border-sm border-radius-100"
         />
 
         <Button
@@ -161,13 +159,20 @@ definePageMeta({
 </template>
 
 <style scoped lang="scss">
+.loading-container,
 .container {
+  box-sizing: border-box;
+}
+
+.container {
+  height: 100dvh;
   justify-content: space-between;
+  position: absolute;
 }
 
 .container-transition {
-  transition-property: top;
   transition-duration: 0.2s;
+  transition-property: top;
   transition-timing-function: linear;
 }
 

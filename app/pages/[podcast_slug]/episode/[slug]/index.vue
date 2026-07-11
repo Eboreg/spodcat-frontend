@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import type { EpisodeSongModel } from "@/types/api";
-import { podcastSlugKey } from "@/symbols";
-import { detectLocale, ping, timeToString } from "@/utils";
+import type { EpisodeSongModel } from "~/types/api";
 import useAudioStore from "~/composables/useAudioStore";
 import useEpisode from "~/composables/useEpisode";
 import usePodcast from "~/composables/usePodcast";
 import useSpodcatHead from "~/composables/useSpodcatHead";
+import { podcastSlugKey } from "~/symbols";
+import { detectLocale, ping, timeToString } from "~/utils";
 
 function getSongDisplayString(song: EpisodeSongModel): string {
   let result = "";
@@ -29,13 +29,11 @@ const audio = useAudioStore();
 provide(podcastSlugKey, podcastSlug);
 useSpodcatHead({ podcast, episode });
 
-watchEffect(() => {
-  if (episode.value && podcast.value && !audio.isPlaying) audio.setEpisode(episode.value, podcast.value);
-});
+watch([episode, podcast], () => {
+  if (episode.value && !audio.isPlaying) audio.setEpisode(episode.value, podcast.value);
+}, { immediate: true });
 
-watchEffect(() => {
-  setLocale(detectLocale(podcast.value?.language));
-});
+watch(podcast, () => setLocale(detectLocale(podcast.value?.language)), { immediate: true });
 
 watchEffect(() => {
   if (episode.value) ping(`v2/episodes/${episode.value.id}/ping/`);

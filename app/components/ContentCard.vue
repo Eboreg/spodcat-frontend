@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { PartialPodcastContentModel } from "@/types/api";
+import type { PartialPodcastContentModel } from "~/types/api";
 import { Share2 } from "@lucide/vue";
 import { podcastKey } from "~/symbols";
 import { getLocaleDateString } from "~/utils";

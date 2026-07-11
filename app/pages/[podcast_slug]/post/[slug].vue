@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { podcastSlugKey } from "@/symbols";
-import { detectLocale, ping } from "@/utils";
 import usePodcast from "~/composables/usePodcast";
 import usePost from "~/composables/usePost";
 import useSpodcatHead from "~/composables/useSpodcatHead";
+import { podcastSlugKey } from "~/symbols";
+import { detectLocale, ping } from "~/utils";
 
 const route = useRoute();
 const podcastSlug = route.params.podcast_slug as string;
@@ -15,9 +15,7 @@ const { setLocale } = useI18n();
 provide(podcastSlugKey, podcastSlug);
 useSpodcatHead({ podcast, post });
 
-watchEffect(() => {
-  setLocale(detectLocale(podcast.value?.language));
-});
+watch(podcast, () => setLocale(detectLocale(podcast.value?.language)), { immediate: true });
 
 watchEffect(() => {
   if (post.value) ping(`v2/posts/${post.value.id}/ping/`);

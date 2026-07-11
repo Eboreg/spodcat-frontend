@@ -1,4 +1,4 @@
-import type { Breakpoint, BreakpointKey } from "@/types";
+import type { Breakpoint, BreakpointKey } from "~/types";
 
 export const BREAKPOINT_ORDER = Object.fromEntries(
   ["xs", "sm", "md", "lg", "xl", "xxl"].map((key, idx) => [key, idx]),

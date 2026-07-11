@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { PartialPostModel } from "@/types/api";
+import type { PartialPostModel } from "~/types/api";
 import { FileText } from "@lucide/vue";
 
 const props = defineProps<{ post?: PartialPostModel; expand?: boolean }>();

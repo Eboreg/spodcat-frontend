@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { HandMetal } from "@lucide/vue";
-import { podcastKey } from "@/symbols";
 import useComments from "~/composables/useComments";
 import useForm from "~/composables/useForm";
 import useMessageStore from "~/composables/useMessageStore";
+import { podcastKey } from "~/symbols";
 
 const props = defineProps<{ contentId?: string }>();
 
@@ -64,8 +64,8 @@ const isSubmitDisabled = computed(() => isSubmitting.value || !form.canSubmit.va
         {{ t("comment.challenge", { q: challenge.challenge_string }) }}
       </InputLabel>
       <Input
-        v-model="challengeAnswer.value"
         v-bind="challengeAnswer.props"
+        v-model="challengeAnswer.value"
         :disabled="!challenge || isSubmitting"
         :placeholder="!challenge ? t('loading-ellipsis') : undefined"
         type="number"
@@ -86,7 +86,7 @@ const isSubmitDisabled = computed(() => isSubmitting.value || !form.canSubmit.va
 </template>
 
 <style scoped lang="scss">
-@use "@/assets/scss/responsive" as *;
+@use "~/assets/scss/responsive" as *;
 
 .comment-form {
   display: grid;

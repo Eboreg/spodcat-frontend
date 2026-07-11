@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Copy } from "@lucide/vue";
-import { timeFromString, timeToString } from "@/utils";
 import useMessageStore from "~/composables/useMessageStore";
+import { timeFromString, timeToString } from "~/utils";
 
 const props = defineProps<{ url: string | URL; currentTimestamp?: number }>();
 
@@ -56,8 +56,8 @@ onUnmounted(() => clearMessages("shareModal"));
             :title="t('share.copy-address')"
             accented-on-active
             class="cursor-pointer translated-on-press"
-            element="button"
             color="gray"
+            element="button"
             @click="onCopyClick"
           />
         </div>
@@ -65,8 +65,8 @@ onUnmounted(() => clearMessages("shareModal"));
           <Button
             :to="`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(contentUrl)}`"
             class="small"
-            new-tab
             color="gray-inverted"
+            new-tab
           >
             <Icon name="mdi:facebook" class="share-icon" />
             <span class="nowrap">{{ t("share.the-facebook") }}</span>
@@ -74,8 +74,8 @@ onUnmounted(() => clearMessages("shareModal"));
           <Button
             :to="`https://x.com/intent/tweet?url=${encodeURIComponent(contentUrl)}`"
             class="small"
-            new-tab
             color="gray-inverted"
+            new-tab
           >
             <Icon name="mdi:twitter" class="share-icon" />
             <span class="nowrap">{{ t("share.eggs") }}</span>
@@ -83,8 +83,8 @@ onUnmounted(() => clearMessages("shareModal"));
           <Button
             :to="`https://t.me/share/url?url=${encodeURIComponent(contentUrl)}`"
             class="small"
-            new-tab
             color="gray-inverted"
+            new-tab
           >
             <Icon name="mdi:telegram" class="share-icon" />
             <span class="nowrap">{{ t("share.telegram") }}</span>
@@ -92,8 +92,8 @@ onUnmounted(() => clearMessages("shareModal"));
           <Button
             :to="`https://api.whatsapp.com/send?text=${encodeURIComponent(contentUrl)}`"
             class="small"
-            new-tab
             color="gray-inverted"
+            new-tab
           >
             <Icon name="mdi:whatsapp" class="share-icon" />
             <span class="nowrap">{{ t("share.whatsapp") }}</span>

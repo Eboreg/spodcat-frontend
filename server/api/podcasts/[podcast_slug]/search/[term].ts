@@ -1,4 +1,4 @@
-import type { PartialEpisodePolymorphicModel, PartialPostPolymorphicModel } from "@/types/api";
+import type { PartialEpisodePolymorphicModel, PartialPostPolymorphicModel } from "~/types/api";
 
 export default defineEventHandler(async (event) => {
   const freetext = getRouterParam(event, "term");

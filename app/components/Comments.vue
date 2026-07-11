@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { podcastKey } from "@/symbols";
 import useComments from "~/composables/useComments";
+import { podcastKey } from "~/symbols";
 
 function dateToString(date: string) {
   return new Date(date).toLocaleString(podcast?.value?.language ?? undefined, {

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { Offsets } from "@/types";
 import type { PlacedToast } from "~/composables/useMessageStore";
+import type { Offsets } from "~/types";
 import { Frown } from "@lucide/vue";
 import useMessageStore from "~/composables/useMessageStore";
 import useTheme from "~/composables/useTheme";
@@ -59,8 +59,8 @@ watch([height, width], ([h, w]) => messageStore.onToastSizeChange(placedToast.id
 <template>
   <div
     ref="container"
-    class="toast column border-radius-md border-outset"
     :class="themeClasses"
+    class="toast column border-radius-md border-outset"
     @mouseenter="if (transitionState !== 'created' && isAnimationActive) pauseAnimation();"
     @mouseleave="if (isAnimationActive) playAnimation();"
   >

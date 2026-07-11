@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import type { PartialEpisodeModel } from "@/types/api";
+import type { PartialEpisodeModel } from "~/types/api";
 import { Download, ListMusic, Pause, Play } from "@lucide/vue";
 import { NuxtLink } from "#components";
-import { podcastKey } from "@/symbols";
-import { timeToString } from "@/utils";
 import useAudioStore from "~/composables/useAudioStore";
 import useEpisode from "~/composables/useEpisode";
 import useSeason from "~/composables/useSeason";
+import { podcastKey } from "~/symbols";
+import { timeToString } from "~/utils";
 
 const props = defineProps<{ episode?: PartialEpisodeModel; expand?: boolean }>();
 
@@ -27,7 +27,7 @@ function onPlayOrPauseClick() {
   }
 }
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
 const audio = useAudioStore();
 const podcast = inject(podcastKey);
 const currentTimestamp = shallowRef<number>(0);
@@ -37,6 +37,9 @@ const route = computed(() =>
 );
 const { season, theme } = useSeason(podcastSlug, () => props.episode?.season);
 const isPlaying = computed(() => audio.isPlaying && audio.episode?.id === props.episode?.id);
+const isLocaleReady = computed(
+  () => podcast?.value && (!podcast.value.language || locale.value === podcast.value.language),
+);
 </script>
 
 <template>
@@ -52,7 +55,7 @@ const isPlaying = computed(() => audio.isPlaying && audio.episode?.id === props.
     </template>
 
     <template #badges>
-      <Themed v-if="season" :color="theme" class="badge">
+      <Themed v-if="season && isLocaleReady" :color="theme" class="badge">
         <template v-if="season.name">
           {{
             t("season-number-name", {
@@ -93,8 +96,8 @@ const isPlaying = computed(() => audio.isPlaying && audio.episode?.id === props.
       />
 
       <ContentCardIcon
-        :icon="isPlaying ? Pause : Play"
         :color="isPlaying ? 'info' : 'success'"
+        :icon="isPlaying ? Pause : Play"
         :title="isPlaying ? t('pause') : t('play')"
         @click="onPlayOrPauseClick"
       />

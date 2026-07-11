@@ -1,64 +1,64 @@
 <script setup lang="ts">
 import { Home, Menu, Podcast, Rss, Search } from "@lucide/vue";
-import { podcastKey } from "@/symbols";
+import { podcastKey } from "~/symbols";
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
 const isSearchModalOpen = shallowRef<boolean>(false);
 const isVisibleMobile = shallowRef<boolean>(false);
 const podcast = inject(podcastKey);
+const isReady = computed(() => podcast?.value && (!podcast.value.language || locale.value === podcast.value.language));
 </script>
 
 <template>
-  <aside class="gap-half column border-radius-md">
-    <Loading v-if="!podcast" height="100px" />
+  <aside v-if="!isReady">
+    <Loading height="100px" />
+  </aside>
+  <aside v-else-if="podcast" class="gap-half column border-radius-md">
+    <Button
+      :class="{ show: isVisibleMobile }"
+      :icon-size="20"
+      :icon="Menu"
+      class="d-md-none toggle-menu-button"
+      @click="isVisibleMobile = !isVisibleMobile"
+    >
+      <span v-if="isVisibleMobile">{{ t("menu.hide") }}</span>
+      <span v-else>{{ t("menu.show") }}</span>
+    </Button>
 
-    <template v-else>
-      <Button
-        :class="{ show: isVisibleMobile }"
-        :icon-size="20"
-        :icon="Menu"
-        class="d-md-none toggle-menu-button"
-        @click="isVisibleMobile = !isVisibleMobile"
-      >
-        <span v-if="isVisibleMobile">{{ t("menu.hide") }}</span>
-        <span v-else>{{ t("menu.show") }}</span>
+    <div :class="{ 'd-none': !isVisibleMobile }" class="d-md-flex column gap-half px-md-0 px-half pb-md-0 pb-half">
+      <Button :icon-size="20" :icon="Podcast" :to="podcast.episodes_fm_url" new-tab color="tertiary">
+        <span>{{ t("subscribe") }}</span>
       </Button>
 
-      <div :class="{ 'd-none': !isVisibleMobile }" class="d-md-flex column gap-half px-sm-0 px-half pb-sm-0 pb-half">
-        <Button :icon-size="20" :icon="Podcast" :to="podcast.episodes_fm_url" new-tab color="tertiary">
-          <span>{{ t("subscribe") }}</span>
-        </Button>
+      <Button :to="podcast.rss_url" :icon-size="20" new-tab :icon="Rss" color="primary">
+        <span>{{ t("rss-feed") }}</span>
+      </Button>
 
-        <Button :to="podcast.rss_url" :icon-size="20" new-tab :icon="Rss" color="primary">
-          <span>{{ t("rss-feed") }}</span>
-        </Button>
+      <Button v-for="link in podcast.links" :key="link.id" :to="link.url" new-tab :color="link.theme">
+        <img v-if="link.custom_icon" :src="link.custom_icon" alt="">
+        <SpodcatIcon v-else-if="link.icon" :icon="`mdi:${link.icon}`" :size="20" />
+        <span>{{ link.label }}</span>
+      </Button>
 
-        <Button v-for="link in podcast.links" :key="link.id" :to="link.url" new-tab :color="link.theme">
-          <img v-if="link.custom_icon" :src="link.custom_icon" alt="">
-          <SpodcatIcon v-else-if="link.icon" :icon="`mdi:${link.icon}`" :size="20" />
-          <span>{{ link.label }}</span>
-        </Button>
+      <Button to="/" :icon="Home" :icon-size="20" color="secondary">
+        <span>{{ t("all-podcasts") }}</span>
+      </Button>
 
-        <Button to="/" :icon="Home" :icon-size="20" color="secondary">
-          <span>{{ t("all-podcasts") }}</span>
-        </Button>
+      <Button :icon-size="20" :icon="Search" color="secondary" @click="isSearchModalOpen = true">
+        <span>{{ t("search") }}</span>
+      </Button>
 
-        <Button :icon-size="20" :icon="Search" color="secondary" @click="isSearchModalOpen = true">
-          <span>{{ t("search") }}</span>
-        </Button>
+      <Attribution class="d-none d-md-flex" />
+    </div>
 
-        <Attribution class="d-none d-md-flex" />
-      </div>
-
-      <SearchModal v-if="isSearchModalOpen" v-model="isSearchModalOpen" />
-    </template>
+    <SearchModal v-if="isSearchModalOpen" v-model="isSearchModalOpen" />
 
     <slot />
   </aside>
 </template>
 
 <style scoped lang="scss">
-@use "@/assets/scss/responsive" as *;
+@use "~/assets/scss/responsive" as *;
 
 @include maxsize(sm) {
   aside {

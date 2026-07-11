@@ -1,4 +1,4 @@
-import type { CommentModel } from "@/types/api";
+import type { CommentModel } from "~/types/api";
 
 export default defineEventHandler(async (event) => {
   const contentId = getRouterParam(event, "id");

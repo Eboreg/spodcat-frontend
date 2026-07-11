@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { EpisodeModel } from "@/types/api";
-import { coerceBetween, timeToString } from "@/utils";
+import type { EpisodeModel } from "~/types/api";
 import useAudioStore from "~/composables/useAudioStore";
+import { coerceBetween, timeToString } from "~/utils";
 
 const props = defineProps<{ episode: EpisodeModel; marginX?: string }>();
 

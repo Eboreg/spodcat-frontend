@@ -1,4 +1,4 @@
-import { podcastKey } from "@/symbols";
+import { podcastKey } from "~/symbols";
 
 export default function usePodcast(slug: string) {
   const result = useQuery({

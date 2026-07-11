@@ -1,5 +1,5 @@
 import type { ResolvableLink, ResolvableMeta } from "@unhead/vue";
-import type { EpisodeModel, PodcastModel, PostModel } from "@/types/api";
+import type { EpisodeModel, PodcastModel, PostModel } from "~/types/api";
 import { SPODCAT_FAVICON, SPODCAT_LOGO } from "~/constants";
 import { extractImageUrlsFromMarkdown } from "~/utils";
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { LucideIcon } from "@lucide/vue";
 import type { Component } from "vue";
-import type { BreakpointSizesArg, ThemedProps } from "@/types";
+import type { BreakpointSizesArg, ThemedProps } from "~/types";
 import { Icon } from "#components";
 import useTheme from "~/composables/useTheme";
 

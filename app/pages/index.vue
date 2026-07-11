@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { detectLocale } from "@/utils";
 import useSpodcatHead from "~/composables/useSpodcatHead";
 import { SPODCAT_LOGO_TRANSPARENT } from "~/constants";
+import { detectLocale } from "~/utils";
 
 const { data: podcasts } = useQuery({
   key: ["podcast"],

@@ -1,4 +1,4 @@
-import type { MaybeRefOrGetterDeep } from "@/types";
+import type { MaybeRefOrGetterDeep } from "~/types";
 
 export * from "./locale";
 export { default as ping } from "./ping";

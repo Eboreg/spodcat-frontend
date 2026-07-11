@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { PartialEpisodePolymorphicModel, PartialPostPolymorphicModel } from "@/types/api";
+import type { PartialEpisodePolymorphicModel, PartialPostPolymorphicModel } from "~/types/api";
 import { FileText, Podcast, Search } from "@lucide/vue";
-import { getLocaleDateString, modulo } from "@/utils";
 import { podcastKey } from "~/symbols";
+import { getLocaleDateString, modulo } from "~/utils";
 
 const isOpen = defineModel<boolean>();
 const { t } = useI18n();

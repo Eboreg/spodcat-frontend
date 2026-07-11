@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { LucideIcon } from "@lucide/vue";
-import type { BreakpointSizesArg, ThemedProps } from "@/types";
+import type { BreakpointSizesArg, ThemedProps } from "~/types";
 import useTheme from "~/composables/useTheme";
 
 interface Props extends ThemedProps {
@@ -25,8 +25,8 @@ function onClick(event: MouseEvent) {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  mutedOnDisabled: true,
   accentedOnActive: true,
+  mutedOnDisabled: true,
   translatedOnPress: true,
 });
 const emit = defineEmits<{ click: [MouseEvent] }>();

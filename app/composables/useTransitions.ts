@@ -1,6 +1,6 @@
 import type { ElementSize, MaybeComputedElementRef } from "@vueuse/core";
 import type * as CSS from "csstype";
-import type { Offsets, RelativePosition } from "@/types";
+import type { Offsets, RelativePosition } from "~/types";
 
 interface Size {
   height: MaybeRefOrGetter<number>;

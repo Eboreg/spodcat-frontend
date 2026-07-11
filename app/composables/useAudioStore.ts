@@ -1,7 +1,7 @@
-import type { EpisodeModel, PodcastModel } from "@/types/api";
-import useSeason from "@/composables/useSeason";
-import { coerceBetween, extractImageUrlsFromMarkdown } from "@/utils";
+import type { EpisodeModel, PodcastModel } from "~/types/api";
+import useSeason from "~/composables/useSeason";
 import { SPODCAT_LOGO } from "~/constants";
+import { coerceBetween, extractImageUrlsFromMarkdown } from "~/utils";
 
 const useAudioStore = defineStore("audio", () => {
   const audioElement = ref<HTMLAudioElement | null>();

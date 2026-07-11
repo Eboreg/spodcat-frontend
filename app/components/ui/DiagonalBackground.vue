@@ -24,8 +24,8 @@ const backgroundImages = computed(() => {
   const bg = backgroundCssVars.value;
 
   return {
-    default: bg ? linearGradient(bg.default) : "none",
     accented: bg ? linearGradient(bg.accented) : "none",
+    default: bg ? linearGradient(bg.default) : "none",
     muted: bg ? linearGradient(bg.muted) : "none",
   };
 });

@@ -1,4 +1,4 @@
-import type { ThemeColor } from "@/types";
+import type { ThemeColor } from "~/types";
 
 export interface CategoryModel {
   cat: string;

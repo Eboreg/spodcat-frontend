@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { podcastKey } from "@/symbols";
+import { podcastKey } from "~/symbols";
 
 const podcast = inject(podcastKey);
 </script>
@@ -16,7 +16,7 @@ const podcast = inject(podcastKey);
 </template>
 
 <style scoped lang="scss">
-@use "@/assets/scss/responsive" as *;
+@use "~/assets/scss/responsive" as *;
 
 main {
   display: grid;

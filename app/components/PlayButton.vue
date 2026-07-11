@@ -34,10 +34,10 @@ const title = computed(() => {
 
 <template>
   <Button
+    :color
     :icon
     :icon-size
     :size
-    :color
     :title
     class="translated-on-press"
     @click="audio.playing = !audio.playing"

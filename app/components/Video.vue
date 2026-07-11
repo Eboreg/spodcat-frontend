@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { VideoModel } from "@/types/api";
+import type { VideoModel } from "~/types/api";
 
 defineProps<{ consent?: boolean; video: VideoModel }>();
 defineEmits<{ consentClick: [] }>();
