@@ -6,11 +6,13 @@ const { t, locale } = useI18n();
 const isSearchModalOpen = shallowRef<boolean>(false);
 const isVisibleMobile = shallowRef<boolean>(false);
 const podcast = inject(podcastKey);
-const isReady = computed(() => podcast?.value && (!podcast.value.language || locale.value === podcast.value.language));
+const isLocaleReady = computed(
+  () => podcast?.value && (!podcast.value.language || locale.value === podcast.value.language),
+);
 </script>
 
 <template>
-  <aside v-if="!isReady">
+  <aside v-if="!isLocaleReady">
     <Loading height="100px" />
   </aside>
   <aside v-else-if="podcast" class="gap-half column border-radius-md">

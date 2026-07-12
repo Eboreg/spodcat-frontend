@@ -57,7 +57,7 @@ defineOptions({ inheritAttrs: false });
       class="button"
       @click="onClick"
     >
-      <ProgressCircle v-if="icon && loading" :size="iconSize" />
+      <ProgressCircle v-if="icon && loading" :size="iconSize" grayscale />
       <SpodcatIcon v-else-if="icon" :icon :size :icon-size />
       <slot />
     </MaybeLink>

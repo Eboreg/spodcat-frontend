@@ -2,13 +2,16 @@
 import { ArrowLeft } from "@lucide/vue";
 import { podcastKey } from "~/symbols";
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
 const podcast = inject(podcastKey);
+const isLocaleReady = computed(
+  () => podcast?.value && (!podcast.value.language || locale.value === podcast.value.language),
+);
 </script>
 
 <template>
   <Button
-    v-if="podcast"
+    v-if="podcast && isLocaleReady"
     :icon-size="20"
     :icon="ArrowLeft"
     :to="`/${podcast.slug}/`"
