@@ -5,6 +5,11 @@ module.exports = {
       port: "3000",
       exec_mode: "cluster",
       script: "./.output/server/index.mjs",
+      env: {
+        NITRO_PORT: "3000",
+        NITRO_HOST: "localhost",
+        NODE_ENV: "production",
+      },
       env_development: {
         NODE_ENV: "development",
         NUXT_PUBLIC_BACKEND_HOST: "http://localhost:8000",
