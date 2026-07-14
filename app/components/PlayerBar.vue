@@ -26,7 +26,7 @@ const titlesRoute = computed(() => {
         </div>
       </MaybeLink>
 
-      <ProgressCircle v-if="audio.isLoading" class="p-half" :size="30" />
+      <ProgressCircle v-if="audio.isLoading" class="m-half" :size="30" />
       <PlayButton v-else :size="30" class="p-half border-0" transparent />
 
       <div class="row align-center gap-half fill d-none d-lg-flex">

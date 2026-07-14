@@ -3,7 +3,7 @@ import usePodcast from "~/composables/usePodcast";
 import usePost from "~/composables/usePost";
 import useSpodcatHead from "~/composables/useSpodcatHead";
 import { podcastSlugKey } from "~/symbols";
-import { detectLocale, ping } from "~/utils";
+import { detectLocale, pling } from "~/utils";
 
 const route = useRoute();
 const podcastSlug = route.params.podcast_slug as string;
@@ -18,7 +18,7 @@ useSpodcatHead({ podcast, post });
 watch(podcast, () => setLocale(detectLocale(podcast.value?.language)), { immediate: true });
 
 watchEffect(() => {
-  if (post.value) ping(`v2/posts/${post.value.id}/ping/`);
+  if (post.value) pling(`v2/posts/${post.value.id}/pling/`);
 });
 </script>
 

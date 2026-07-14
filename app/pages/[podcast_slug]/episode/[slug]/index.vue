@@ -5,7 +5,7 @@ import useEpisode from "~/composables/useEpisode";
 import usePodcast from "~/composables/usePodcast";
 import useSpodcatHead from "~/composables/useSpodcatHead";
 import { podcastSlugKey } from "~/symbols";
-import { detectLocale, ping, timeToString } from "~/utils";
+import { detectLocale, pling, timeToString } from "~/utils";
 
 function getSongDisplayString(song: EpisodeSongModel): string {
   let result = "";
@@ -36,7 +36,7 @@ watch([episode, podcast], () => {
 watch(podcast, () => setLocale(detectLocale(podcast.value?.language)), { immediate: true });
 
 watchEffect(() => {
-  if (episode.value) ping(`v2/episodes/${episode.value.id}/ping/`);
+  if (episode.value) pling(`v2/episodes/${episode.value.id}/pling/`);
 });
 </script>
 

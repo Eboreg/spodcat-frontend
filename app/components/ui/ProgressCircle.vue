@@ -31,6 +31,7 @@ const color2 = computed(() =>
     rotate 3s linear infinite normal;
   background-color: v-bind(color1);
   border-radius: 100%;
+  box-sizing: border-box;
   mask: radial-gradient(circle at 25% 25%, black 0, transparent 70%);
 }
 </style>

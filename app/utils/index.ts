@@ -1,7 +1,7 @@
 import type { MaybeRefOrGetterDeep } from "~/types";
 
 export * from "./locale";
-export { default as ping } from "./ping";
+export { default as pling } from "./pling";
 export * from "./time";
 
 export function coerceBetween(value: number, min: number, max: number): number {

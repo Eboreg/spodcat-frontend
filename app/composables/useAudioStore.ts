@@ -38,9 +38,7 @@ const useAudioStore = defineStore("audio", () => {
     () => episode.value?.season,
   );
 
-  const canPlay = computed(
-    () => !waiting.value && !ended.value && !seeking.value && !stalled.value && !error.value,
-  );
+  const canPlay = computed(() => !waiting.value && !seeking.value && !error.value && !!episode.value);
 
   const coverImageUrl = computed(() => {
     if (episode.value?.image) return episode.value.image;
@@ -86,7 +84,7 @@ const useAudioStore = defineStore("audio", () => {
   const isError = computed(() => !!error.value || isSourceError.value);
 
   const isLoading = computed(
-    () => (waiting.value || seeking.value || stalled.value) && !error.value && !isSourceError.value,
+    () => (waiting.value || seeking.value) && !error.value && !isSourceError.value,
   );
 
   const isPlaying = computed(
@@ -120,6 +118,8 @@ const useAudioStore = defineStore("audio", () => {
     errorEvent.trigger(message ?? audioElement.value?.error?.message ?? t("unknown-error"));
     playing.value = false;
   });
+
+  useEventListener(audioElement, "loadedmetadata", () => waiting.value = false, { passive: true });
 
   watch([src, audioElement], () => {
     error.value = undefined;
