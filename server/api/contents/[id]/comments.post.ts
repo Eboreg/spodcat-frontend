@@ -3,7 +3,7 @@ import type { CommentModel } from "~/types/api";
 export default defineEventHandler(async (event) => {
   const contentId = getRouterParam(event, "id");
   const body = await readBody(event);
-  const url = makeBackendUrl("v2/comments/", event);
+  const url = makeBackendUrl("comments/", event);
 
   return $fetch<CommentModel>(url, {
     body: { podcast_content: contentId, ...body },

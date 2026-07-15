@@ -3,7 +3,7 @@ import type { PostModel } from "~/types/api";
 export default defineEventHandler(async (event) => {
   const podcast = getRouterParam(event, "podcast_slug");
   const slug = getRouterParam(event, "post_slug");
-  const url = makeBackendUrl("v2/posts/", event);
+  const url = makeBackendUrl("posts/", event);
   const response = await $fetch<PostModel[]>(url, { query: { podcast, slug } });
 
   return response[0];

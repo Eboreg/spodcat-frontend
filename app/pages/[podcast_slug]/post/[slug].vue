@@ -18,7 +18,7 @@ useSpodcatHead({ podcast, post });
 watch(podcast, () => setLocale(detectLocale(podcast.value?.language)), { immediate: true });
 
 watchEffect(() => {
-  if (post.value) pling(`v2/posts/${post.value.id}/pling/`);
+  if (post.value) pling(`posts/${post.value.id}/pling/`);
 });
 </script>
 

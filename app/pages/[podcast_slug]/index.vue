@@ -13,7 +13,7 @@ const { setLocale } = useI18n();
 
 provide(podcastSlugKey, slug);
 useSpodcatHead({ podcast });
-pling(`v2/podcasts/${slug}/pling/`);
+pling(`podcasts/${slug}/pling/`);
 watch(podcast, () => setLocale(detectLocale(podcast.value?.language)), { immediate: true });
 </script>
 

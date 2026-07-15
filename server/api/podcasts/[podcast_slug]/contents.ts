@@ -2,7 +2,7 @@ import type { PartialEpisodePolymorphicModel, PartialPostPolymorphicModel } from
 
 export default defineEventHandler(async (event) => {
   const podcast = getRouterParam(event, "podcast_slug");
-  const url = makeBackendUrl("v2/podcast-contents/", event);
+  const url = makeBackendUrl("podcast-contents/", event);
 
   return $fetch<(PartialEpisodePolymorphicModel | PartialPostPolymorphicModel)[]>(url, {
     query: { podcast },

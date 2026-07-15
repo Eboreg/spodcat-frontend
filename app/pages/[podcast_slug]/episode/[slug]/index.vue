@@ -36,7 +36,7 @@ watch([episode, podcast], () => {
 watch(podcast, () => setLocale(detectLocale(podcast.value?.language)), { immediate: true });
 
 watchEffect(() => {
-  if (episode.value) pling(`v2/episodes/${episode.value.id}/pling/`);
+  if (episode.value) pling(`episodes/${episode.value.id}/pling/`);
 });
 </script>
 
