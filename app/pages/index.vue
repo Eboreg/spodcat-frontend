@@ -15,8 +15,8 @@ setLocale(detectLocale());
 
 <template>
   <main class="content-width column gap-half py-half">
-    <div class="spodcat-banner p-single border-radius-md">
-      <div class="row space-between align-center w-100">
+    <div class="spodcat-banner border-radius-md">
+      <div class="row space-between align-center p-single">
         <div>
           <div class="title">Spodcat</div>
           <div class="subtitle">{{ t("spodcat-subtitle") }}</div>
@@ -25,7 +25,7 @@ setLocale(detectLocale());
       </div>
     </div>
 
-    <Loading v-if="podcasts === undefined" height="150px" />
+    <Loading v-if="podcasts === undefined" height="120px" />
 
     <template v-else>
       <PodcastBanner v-for="podcast in podcasts" :key="podcast.slug" :podcast compact />
@@ -48,6 +48,7 @@ setLocale(detectLocale());
   .subtitle {
     color: black;
     font-weight: bold;
+    line-height: 1;
   }
 
   .title {
@@ -58,7 +59,7 @@ setLocale(detectLocale());
   }
 
   .logo {
-    height: 90px;
+    height: 88px;
   }
 }
 </style>

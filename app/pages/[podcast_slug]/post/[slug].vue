@@ -25,8 +25,20 @@ watchEffect(() => {
 <template>
   <PodcastMain>
     <PodcastGoToButton />
+    <div v-if="post?.is_draft" class="draft my-half">
+      DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT
+    </div>
     <PostCard :post expand>
       <ContentDescription :content="post" />
     </PostCard>
   </PodcastMain>
 </template>
+
+<style scoped lang="scss">
+.draft {
+  background-color: yellow;
+  color: black;
+  font-weight: bold;
+  white-space: nowrap;
+}
+</style>

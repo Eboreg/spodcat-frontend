@@ -96,6 +96,7 @@ export type PodcastContentType = "episode" | "post";
 
 export interface PartialPodcastContentModel {
   id: string;
+  is_draft: boolean;
   name: string;
   podcast: string;
   published: string;

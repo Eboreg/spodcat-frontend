@@ -32,7 +32,9 @@ function openShareModal() {
     <a v-if="content" :id="content.slug" />
 
     <div class="bg column">
-      <Loading v-if="!content" height="120px" class="m-single" />
+      <div v-if="!content" class="m-single">
+        <Loading height="120px" />
+      </div>
 
       <div v-else class="row">
         <MaybeLink is="div" :no-link="expand" :to="route" class="row align-center gap-single p-single fill">

@@ -43,6 +43,9 @@ watchEffect(() => {
 <template>
   <PodcastMain>
     <PodcastGoToButton />
+    <div v-if="episode?.is_draft" class="draft my-half">
+      DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT
+    </div>
     <EpisodeCard :episode expand>
       <ContentDescription :content="episode">
         <ClientOnly>
@@ -64,6 +67,13 @@ watchEffect(() => {
 </template>
 
 <style scoped lang="scss">
+.draft {
+  background-color: yellow;
+  color: black;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
 .episode-song {
   line-height: 1.5;
 

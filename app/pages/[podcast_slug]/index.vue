@@ -26,7 +26,7 @@ watch(podcast, () => setLocale(detectLocale(podcast.value?.language)), { immedia
     </template>
 
     <div class="column gap-half">
-      <Loading v-if="contents === undefined" height="150px" />
+      <Loading v-if="contents === undefined" height="120px" />
       <template v-for="content in contents" :key="content.id">
         <EpisodeCard v-if="content.resourcetype === 'episode'" :episode="content" />
         <PostCard v-else-if="content.resourcetype === 'post'" :post="content" />
