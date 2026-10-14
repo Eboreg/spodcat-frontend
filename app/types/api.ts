@@ -99,7 +99,7 @@ export interface PartialPodcastContentModel {
   is_draft: boolean;
   name: string;
   podcast: string;
-  published: string;
+  published: string | null;
   slug: string;
 }
 

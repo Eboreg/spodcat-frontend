@@ -95,10 +95,12 @@ export default function useSpodcatHead({
 
   const meta: ComputedRef<ResolvableMeta[]> = computed(() => {
     if (episodeRef.value) {
-      return [
-        { name: "music:duration", content: episodeRef.value.duration_seconds.toString() },
-        { name: "music:release_date", content: episodeRef.value.published },
-      ];
+      const ret = [{ name: "music:duration", content: episodeRef.value.duration_seconds.toString() }];
+
+      if (episodeRef.value.published) {
+        ret.push({ name: "music:release_date", content: episodeRef.value.published });
+      }
+      return ret;
     }
     return [];
   });

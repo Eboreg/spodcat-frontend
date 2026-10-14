@@ -97,7 +97,7 @@ function onKeyDown(event: KeyboardEvent) {
             <Podcast v-if="result.resourcetype === 'episode'" :size="24" />
             <FileText v-else-if="result.resourcetype === 'post'" :size="24" />
             <div class="column">
-              <div class="breadcrumbs mb-quarter">
+              <div v-if="result.published" class="breadcrumbs mb-quarter">
                 {{ getLocaleDateString(result.published, podcast?.language) }}
               </div>
               <div>{{ result.name }}</div>

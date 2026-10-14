@@ -44,7 +44,7 @@ function openShareModal() {
             <div class="fill column gap-quarter">
               <div class="font-weight-bold">{{ content.name }}</div>
               <div class="row column-gap-half row-gap-quarter wrap">
-                <Themed color="secondary" class="badge">
+                <Themed v-if="content.published" color="secondary" class="badge">
                   {{ getLocaleDateString(content.published, podcast?.language) }}
                 </Themed>
 
