@@ -34,3 +34,11 @@ const numberString = computed(() => props.episode?.number?.toLocaleString("sv") 
     <Podcast v-else />
   </RoundIcon>
 </template>
+
+<style scoped lang="scss">
+img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+</style>
