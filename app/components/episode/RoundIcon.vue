@@ -17,12 +17,17 @@ const { season, theme } = useSeason(
   () => props.episode?.season,
 );
 const numberString = computed(() => props.episode?.number?.toLocaleString("sv") ?? "");
+const thumbnail = computed(() => {
+  if (props.episode?.image_usage.includes("FRONTEND") && props.episode.image_thumbnail) {
+    return props.episode.image_thumbnail;
+  }
+  return season.value?.image_thumbnail;
+});
 </script>
 
 <template>
   <RoundIcon :size="{ xs: 35, sm: 38 }" :color="theme" :bg-diagonal class="font-weight-bold">
-    <img v-if="episode?.image_thumbnail" :src="episode.image_thumbnail" alt="">
-    <img v-else-if="season?.image_thumbnail" :src="season.image_thumbnail" alt="">
+    <img v-if="thumbnail" :src="thumbnail" alt="">
     <ResponsiveSize
       v-else-if="numberString"
       :size="{ xs: 16, sm: numberString.length <= 3 ? 20 : 16 }"

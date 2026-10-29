@@ -54,7 +54,7 @@ export default function useSpodcatHead({
   });
 
   const ogImage = computed(() => {
-    if (episodeRef.value?.image) {
+    if (episodeRef.value?.image_usage.includes("SOCIAL_MEDIA") && episodeRef.value?.image) {
       return {
         height: episodeRef.value.image_height ?? undefined,
         url: episodeRef.value.image,

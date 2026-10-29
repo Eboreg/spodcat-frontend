@@ -41,7 +41,7 @@ const useAudioStore = defineStore("audio", () => {
   const canPlay = computed(() => !waiting.value && !seeking.value && !error.value && !!episode.value);
 
   const coverImageUrl = computed(() => {
-    if (episode.value?.image) return episode.value.image;
+    if (episode.value?.image_usage.includes("FRONTEND") && episode.value?.image) return episode.value.image;
     if (episode.value?.description) {
       const imageUrl = extractImageUrlsFromMarkdown(episode.value.description)[0];
       if (imageUrl) return imageUrl;
@@ -64,19 +64,21 @@ const useAudioStore = defineStore("audio", () => {
   const episodeMediaImages = computed(() => {
     const mediaImages: MediaImage[] = [];
 
-    if (episode.value?.image) {
-      mediaImages.push({
-        src: episode.value.image,
-        sizes: `${episode.value.image_width}x${episode.value.image_height}`,
-        type: episode.value.image_mimetype ?? undefined,
-      });
-    }
-    if (episode.value?.image_thumbnail) {
-      mediaImages.push({
-        src: episode.value.image_thumbnail,
-        sizes: `${episode.value.image_thumbnail_width}x${episode.value.image_thumbnail_height}`,
-        type: episode.value.image_thumbnail_mimetype ?? undefined,
-      });
+    if (episode.value?.image_usage.includes("MEDIA_SESSION")) {
+      if (episode.value?.image) {
+        mediaImages.push({
+          src: episode.value.image,
+          sizes: `${episode.value.image_width}x${episode.value.image_height}`,
+          type: episode.value.image_mimetype ?? undefined,
+        });
+      }
+      if (episode.value?.image_thumbnail) {
+        mediaImages.push({
+          src: episode.value.image_thumbnail,
+          sizes: `${episode.value.image_thumbnail_width}x${episode.value.image_thumbnail_height}`,
+          type: episode.value.image_thumbnail_mimetype ?? undefined,
+        });
+      }
     }
     return mediaImages;
   });

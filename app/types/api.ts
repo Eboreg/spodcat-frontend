@@ -92,6 +92,8 @@ export interface VideoModel {
 
 /** PodcastContent/Episode/Post stuff below */
 
+export type ImageUsageType = "RSS" | "FRONTEND" | "SOCIAL_MEDIA" | "MEDIA_SESSION";
+
 export type PodcastContentType = "episode" | "post";
 
 export interface PartialPodcastContentModel {
@@ -120,6 +122,7 @@ export interface PartialEpisodeModel extends PartialPodcastContentModel {
   duration_seconds: number;
   has_songs: boolean;
   image_thumbnail: string | null;
+  image_usage: readonly ImageUsageType[];
   number: number | null;
   season: number | null;
 }

@@ -6,6 +6,11 @@ function makeBackendUrl(path: string): string {
 
 export default function (path: string) {
   if (import.meta.client) {
-    callOnce(() => navigator.sendBeacon(makeBackendUrl(path)), { mode: "navigation" });
+    callOnce(
+      () => {
+        navigator.sendBeacon(makeBackendUrl(path));
+      },
+      { mode: "navigation" },
+    );
   }
 }
